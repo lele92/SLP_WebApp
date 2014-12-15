@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Controller: MainCtrl', function () {
+describe('Controller: ArticlesAccordionCtrl', function () {
 
   // load the controller's module
   beforeEach(module('slpWebApp'));
 
-  var MainCtrl,
+  var ArticlesaccordionctrlCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    MainCtrl = $controller('MainCtrl', {
+    ArticlesaccordionctrlCtrl = $controller('ArticlesAccordionCtrl', {
       $scope: scope
     });
   }));

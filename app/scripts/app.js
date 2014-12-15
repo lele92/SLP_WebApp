@@ -2,17 +2,18 @@
 
 /**
  * @ngdoc overview
- * @name slpWebAppApp
+ * @name slpWebApp
  * @description
- * # slpWebAppApp
+ * # slpWebApp
  *
  * Main module of the application.
  */
 angular
-  .module('slpWebAppApp', [
+  .module('slpWebApp', [
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ui.bootstrap'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -24,7 +25,12 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
+      .when('/articlesDashboard', {
+        templateUrl: 'views/articles.html',
+        controller: 'ArticlesCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
-  });
+  })
+

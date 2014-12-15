@@ -1,0 +1,12 @@
+<div ng-controller="ArticlesCtrl as articlesCtrl"  >
+  <div ng-controller="ArticlesAccordionCtrl" class="row row-centered">
+    <accordion close-others="oneAtATime" class="col-xs-12 col-sm-10 col-md-10 col-lg-10 col-centered" >
+      <accordion-group is-open="status.open" ng-repeat="article in articlesCtrl.articles ">
+        <accordion-heading>
+          {{$index+1}}. {{article.title}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+        </accordion-heading>
+        {{article.abstract}}
+      </accordion-group>
+    </accordion>
+  </div>
+</div>
