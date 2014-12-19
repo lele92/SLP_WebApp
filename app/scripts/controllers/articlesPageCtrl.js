@@ -23,7 +23,7 @@ angular.module('slpWebApp')
       function(response) {
         self.articles = response.data.results.bindings;
         for (var key in self.articles) {
-          getArticleTitle(self.articles[key]);
+          getArticleInfo(self.articles[key]);
         }
         console.log(self.articles);
       },
@@ -35,8 +35,8 @@ angular.module('slpWebApp')
     );
 
     //todo: valutare se lasciarla qui questa funzione
-    /*per ottenere il titolo di un determinato article*/
-    var getArticleTitle = function(article) {
+    /*per ottenere il titolo di un determinato articolo*/
+    var getArticleInfo = function(article) {
 
       ArticleInfoService.getArticleInfo(article).then(
         /* success */
@@ -45,14 +45,44 @@ angular.module('slpWebApp')
           console.log(articleInfo);
           article.title = articleInfo.title.value;
           article.abstract = articleInfo.abstractTxt.value;
+          article.authorsListURI = articleInfo.authorsList.value;
+          article.publicationYear = articleInfo.publicationYear.value;
+          article.link = articleInfo.htmlItem.value;
+
+
+          /* per ottenere gli autori */
+          //todo: attenzione, un po' fragile come cosa: se cambiano i nomi delle proprietà, salta tutto!
+          ArticleInfoService.getArticleAuthors(article).then(
+            function(response){
+              var responseAuthors = response.data.results.bindings;
+              for (var key in responseAuthors) {
+                responseAuthors[key].authorName = responseAuthors[key].givenName.value + " " + responseAuthors[key].familyName.value
+              }
+              article.authors = responseAuthors;
+            },
+
+            //todo: da gestire
+            function(errResponse){}
+          );
+
+          ArticleInfoService.getIncomingCitations(article).then(
+            function(response){
+                article.incomingCitations = response.data.results.bindings;
+            },
+
+            //todo: da gestire
+            function(errResponse){}
+          );
         },
 
-        //todo: caso da gestire, se non riesco a recuperare il titolo di un articolo
+        //todo: caso da gestire, se non riesco a recuperare le info
         /* error */
         function(errResponse) {
           console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText)
         }
       );
+
+
     }
 
 

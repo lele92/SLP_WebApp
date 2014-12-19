@@ -43,6 +43,7 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/chartjs/Chart.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -54,5 +55,72 @@
         <script src="scripts/services/articleinfoservice.js"></script>
         <script src="scripts/controllers/articlesaccordionCtrl.js"></script>
         <!-- endbuild -->
+
+    <script id="prefixes" type="text/template">
+      PREFIX fabio: <http://purl.org/spar/fabio/>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX core: <http://purl.org/vocab/frbr/core#>
+      PREFIX co: <http://purl.org/co/>
+      PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+      PREFIX pro: <http://purl.org/spar/pro/>
+      PREFIX dcterms: <http://purl.org/dc/terms/>
+      PREFIX c4o: <http://purl.org/spar/c4o/>
+      PREFIX cito: <http://purl.org/spar/cito/>
+      PREFIX prism: <http://prismstandard.org/namespaces/basic/2.0/>
+      PREFIX sro: <http://salt.semanticauthoring.org/ontologies/sro#>
+      PREFIX biro: <http://purl.org/spar/biro>
+      PREFIX oa: <http://www.w3.org/ns/oa#>
+    </script>
+
+    <script id="query_articleInfo" type="text/template">
+      select ?title ?doi ?abstractTxt ?publicationYear ?absText ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
+      where {
+        <{{expression}}> a fabio:Expression;
+                      core:part [ a sro:Abstract;
+                                    c4o:hasContent ?abstractTxt];
+                      dcterms:title ?title;
+                      core:embodiment ?man;
+                      prism:doi ?doi;
+                      fabio:hasPublicationYear ?publicationYear;
+                      c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
+                                                          c4o:hasGlobalCountSource ?globalCountSource;
+                                                          c4o:hasGlobalCountValue ?globalCountValue;
+                                                          c4o:hasGlobalCountDate ?globalCountDate];
+                      core:realizationOf [ a fabio:Work;
+                                            core:creator ?authorsList ].
+
+        ?authorsList a co:List.
+
+        ?man a fabio:Manifestation, fabio:WebPage;
+              dcterms:format <http://purl.org/NET/mediatypes/text/html>;
+              core:exemplar ?htmlItem.
+      }
+    </script>
+
+    <script id="query_articleAuthors" type="text/template">
+      select ?givenName ?familyName
+      where {
+        <{{authorsList}}> a co:List;
+                                co:item ?item.
+
+        ?item a co:ListItem;
+            co:itemContent ?author.
+
+        ?author a foaf:Person;
+              foaf:givenName ?givenName;
+              foaf:familyName ?familyName.
+      }
+    </script>
+
+    <script id="query_incomingCitations" type="text/template">
+      select ?color (count(?color) as ?count)
+      where {
+      ?citAct a cito:CitationAct;
+            cito:hasCitingEntity ?citingEntity;
+            cito:hasCitedEntity <{{expression}}>;
+            cito:hasCitationCharacterization ?color
+      }
+      group by (?color)
+    </script>
 </body>
 </html>
