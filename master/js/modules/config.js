@@ -30,13 +30,16 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
 
   // 
   // Application Routes
-  // -----------------------------------   
+  // -----------------------------------
+  // https://github.com/angular-ui/ui-router/wiki
   $stateProvider
     .state('app', {
         url: '/app',
         abstract: true,
         templateUrl: basepath('app.html'),
+          //You can assign a controller to your template. Warning: The controller will not be instantiated if template is not defined
         controller: 'AppController',
+          // resolve is an optional map of dependencies which should be injected into the controller
         resolve: resolveFor('fastclick', 'modernizr', 'icons', 'screenfull', 'animo', 'sparklines', 'slimscroll', 'classyloader', 'toaster', 'whirl')
     })
     .state('app.dashboard', {
