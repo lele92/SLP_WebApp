@@ -4,7 +4,7 @@
 // angle to myAppName
 // ----------------------------------- 
 
-var myApp = angular.module('myAppName', ['angle']);
+var myApp = angular.module('SLP_WebApp', ['angle']);
 
 myApp.run(function($log) {
 
@@ -22,4 +22,17 @@ myApp.directive('oneOfMyOwnDirectives', function() {
 
 myApp.config(function($stateProvider /* ... */) {
   /* specific routes here (see file config.js) */
+  $stateProvider
+      .state('app.home-search', {
+        url: '/homeSearch',
+        title: 'Search',
+        templateUrl: getBasepath('home-search.html'),
+        controller: 'NullController'
+      })
 });
+
+// Set here the base of the relative path
+// for all app views
+function getBasepath(uri) {
+  return 'app/views/' + uri;
+}

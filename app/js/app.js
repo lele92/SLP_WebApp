@@ -1,18 +1,18 @@
 /*!
- *
+ * 
  * Angle - Bootstrap Admin App + AngularJS
- *
+ * 
  * Author: @themicon_co
  * Website: http://themicon.co
  * License: http://support.wrapbootstrap.com/knowledge_base/topics/usage-licenses
- *
+ * 
  */
 
 if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript requires jQuery'); }
 
 
 // APP START
-// -----------------------------------
+// ----------------------------------- 
 
 var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize', 'ngResource'])
           .run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', function ($rootScope, $state, $stateParams, $window, $templateCache) {
@@ -29,7 +29,7 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
               });*/
 
               // Scope Globals
-              // -----------------------------------
+              // ----------------------------------- 
               $rootScope.app = {
                 name: 'Angle',
                 description: 'Angular Bootstrap Admin Template',
@@ -68,7 +68,7 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
   App.value      = $provide.value;
 
   // LAZY MODULES
-  // -----------------------------------
+  // ----------------------------------- 
 
   $ocLazyLoadProvider.config({
     debug: false,
@@ -78,17 +78,23 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
 
 
   // defaults to dashboard
-  $urlRouterProvider.otherwise('/app/dashboard');
+  //$urlRouterProvider.otherwise('/app/dashboard');
 
-  //
+  // defaults to home-search
+  $urlRouterProvider.otherwise('/app/homeSearch');
+
+  // 
   // Application Routes
   // -----------------------------------
+  // https://github.com/angular-ui/ui-router/wiki
   $stateProvider
     .state('app', {
         url: '/app',
         abstract: true,
         templateUrl: basepath('app.html'),
+          //You can assign a controller to your template. Warning: The controller will not be instantiated if template is not defined
         controller: 'AppController',
+          // resolve is an optional map of dependencies which should be injected into the controller
         resolve: resolveFor('fastclick', 'modernizr', 'icons', 'screenfull', 'animo', 'sparklines', 'slimscroll', 'classyloader', 'toaster', 'whirl')
     })
     .state('app.dashboard', {
@@ -332,7 +338,7 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
         resolve: resolveFor('flatdoc')
     })
     // Mailbox
-    // -----------------------------------
+    // ----------------------------------- 
     .state('app.mailbox', {
         url: '/mailbox',
         title: 'Mailbox',
@@ -360,9 +366,9 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
         controller: 'NullController',
         resolve: resolveFor('ngWig')
     })
-    //
+    // 
     // Multiple level example
-    // -----------------------------------
+    // ----------------------------------- 
     .state('app.multilevel', {
         url: '/multilevel',
         title: 'Multilevel',
@@ -393,9 +399,9 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
         title: 'Multilevel - Level3 Item',
         template: '<div class="lead ba p"> Menu item @ Level 3</div>'
     })
-    //
+    // 
     // Single Page Routes
-    // -----------------------------------
+    // ----------------------------------- 
     .state('page', {
         url: '/page',
         templateUrl: 'app/pages/page.html',
@@ -426,12 +432,12 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
         title: "Not Found",
         templateUrl: 'app/pages/404.html'
     })
-    //
+    // 
     // CUSTOM RESOLVES
     //   Add your own resolves properties
     //   following this object extend
     //   method
-    // -----------------------------------
+    // ----------------------------------- 
     // .state('app.someroute', {
     //   url: '/some_url',
     //   templateUrl: 'path_to_template.html',
@@ -693,7 +699,7 @@ App.controller('RegisterFormController', ['$scope', '$http', '$state', function(
   $scope.account = {};
   // place the message if something goes wrong
   $scope.authMsg = '';
-
+    
   $scope.register = function() {
     $scope.authMsg = '';
 
@@ -716,7 +722,7 @@ App.controller('RegisterFormController', ['$scope', '$http', '$state', function(
 
 /**=========================================================
  * Module: calendar-ui.js
- * This script handle the calendar demo with draggable
+ * This script handle the calendar demo with draggable 
  * events and events creations
  =========================================================*/
 
@@ -734,9 +740,9 @@ App.controller('CalendarController', ['$scope', function($scope) {
    * @param jQuery Object elements Set of element as jQuery objects
    */
   var ExternalEvent = function (elements) {
-
+      
       if (!elements) return;
-
+      
       elements.each(function() {
           var $this = $(this);
           // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
@@ -786,9 +792,9 @@ App.controller('CalendarController', ['$scope', function($scope) {
               day:   'day'
           },
           editable: true,
-          droppable: true, // this allows things to be dropped onto the calendar
+          droppable: true, // this allows things to be dropped onto the calendar 
           drop: function(date, allDay) { // this function is called when something is dropped
-
+              
               var $this = $(this),
                   // retrieve the dropped element's stored Event Object
                   originalEventObject = $this.data('calendarEventObject');
@@ -806,10 +812,10 @@ App.controller('CalendarController', ['$scope', function($scope) {
               clonedEventObject.borderColor = $this.css('border-color');
 
               // render the event on the calendar
-              // the last `true` argument determines if the event "sticks"
+              // the last `true` argument determines if the event "sticks" 
               // (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
               calElement.fullCalendar('renderEvent', clonedEventObject, true);
-
+              
               // if necessary remove the element from the list
               if(removeAfterDrop.is(':checked')) {
                 $this.remove();
@@ -843,17 +849,17 @@ App.controller('CalendarController', ['$scope', function($scope) {
     // Color switchers
     var eventColorSelector = $('.external-event-color-selector .circle');
 
-    // Trash events Droparea
+    // Trash events Droparea 
     $('.external-events-trash').droppable({
       accept:       '.fc-event',
       activeClass:  'active',
       hoverClass:   'hovered',
       tolerance:    'touch',
       drop: function(event, ui) {
-
+        
         // You can use this function to send an ajax request
         // to remove the event from the repository
-
+        
         if(draggingEvent) {
           var eid = draggingEvent.id || draggingEvent._id;
           // Remove the event
@@ -879,12 +885,12 @@ App.controller('CalendarController', ['$scope', function($scope) {
 
     eventAddBtn.click(function(e) {
         e.preventDefault();
-
+        
         // Get event name from input
         var val = eventNameInput.val();
         // Dont allow empty values
         if ($.trim(val) === '') return;
-
+        
         // Create new event element
         var newEvent = $('<div/>').css({
                             'background-color': currColor,
@@ -918,7 +924,7 @@ App.controller('CalendarController', ['$scope', function($scope) {
               {
                   title: 'All Day Event',
                   start: new Date(y, m, 1),
-                  backgroundColor: '#f56954', //red
+                  backgroundColor: '#f56954', //red 
                   borderColor: '#f56954' //red
               },
               {
@@ -991,11 +997,11 @@ App.controller('DataTableController', ['$scope', '$timeout', function($scope, $t
 
     //
     // Zero configuration
-    //
+    // 
 
     $('#datatable1').dataTable({
         'paging':   true,  // Table pagination
-        'ordering': true,  // Column ordering
+        'ordering': true,  // Column ordering 
         'info':     true,  // Bottom left status text
         // Text translation options
         // Note the required keywords between underscores (e.g _MENU_)
@@ -1010,13 +1016,13 @@ App.controller('DataTableController', ['$scope', '$timeout', function($scope, $t
     });
 
 
-    //
+    // 
     // Filtering by Columns
-    //
+    // 
 
     var dtInstance2 = $('#datatable2').dataTable({
         'paging':   true,  // Table pagination
-        'ordering': true,  // Column ordering
+        'ordering': true,  // Column ordering 
         'info':     true,  // Bottom left status text
         // Text translation options
         // Note the required keywords between underscores (e.g _MENU_)
@@ -1039,13 +1045,13 @@ App.controller('DataTableController', ['$scope', '$timeout', function($scope, $t
       });
 
 
-    //
+    // 
     // Column Visibilty Extension
-    //
+    // 
 
     $('#datatable3').dataTable({
         'paging':   true,  // Table pagination
-        'ordering': true,  // Column ordering
+        'ordering': true,  // Column ordering 
         'info':     true,  // Bottom left status text
         // Text translation options
         // Note the required keywords between underscores (e.g _MENU_)
@@ -1181,14 +1187,14 @@ App.controller('DatepickerDemoCtrl', ['$scope', function ($scope) {
 /**=========================================================
  * Module: demo-dialog.js
  * Demo for multiple ngDialog Usage
- * - ngDialogProvider for default values not supported
+ * - ngDialogProvider for default values not supported 
  *   using lazy loader. Include plugin in base.js instead.
  =========================================================*/
 
 // Called from the route state. 'tpl' is resolved before
 App.controller('DialogIntroCtrl', ['$scope', 'ngDialog', 'tpl', function($scope, ngDialog, tpl) {
   'user strict';
-
+  
   // share with other controllers
   $scope.tpl = tpl;
   // open dialog window
@@ -1415,7 +1421,7 @@ App.controller('FormDemoCtrl', function($scope) {
   'use strict';
 
   // Chosen data
-  // -----------------------------------
+  // ----------------------------------- 
 
   $scope.states = [
     'Alabama',
@@ -1497,7 +1503,7 @@ App.controller('PaginationDemoCtrl', ['$scope', function ($scope) {
  =========================================================*/
 
 App.controller('PopoverDemoCtrl', ['$scope', function ($scope) {
-
+  
   $scope.dynamicPopover = 'Hello, World!';
   $scope.dynamicPopoverTitle = 'Title';
 
@@ -1673,7 +1679,7 @@ App.controller('TypeaheadCtrl', ['$scope', '$http', function ($scope, $http) {
 
 App.controller('FileUploadController', ['$scope', function($scope) {
   'use strict';
-
+  
   $scope.fileUploadList = [
     {file: 'some-file.txt'}
   ];
@@ -1729,7 +1735,7 @@ App.controller('FileUploadController', ['$scope', function($scope) {
 }]);
 /**=========================================================
  * Module: flot-chart.js
- * Initializes the flot chart plugin and attaches the
+ * Initializes the flot chart plugin and attaches the 
  * plugin to elements according to its type
  =========================================================*/
 
@@ -1737,7 +1743,7 @@ App.controller('FlotChartController', ['$scope', '$window','$http', function($sc
   'use strict';
 
   /**
-   * Global object to load data for charts using ajax
+   * Global object to load data for charts using ajax 
    * Request the chart data from the server via post
    * Expects a response in JSON format to init the plugin
    * Usage
@@ -1756,7 +1762,7 @@ App.controller('FlotChartController', ['$scope', '$window','$http', function($sc
     // Public method
     this.requestData = function (option, method, callback) {
       var self = this;
-
+      
       // support params (option), (option, method, callback) or (option, callback)
       callback = (method && $.isFunction(method)) ? method : callback;
       method = (method && typeof method == 'string') ? method : 'GET';
@@ -1768,9 +1774,9 @@ App.controller('FlotChartController', ['$scope', '$window','$http', function($sc
           cache:    false,
           method:   method
       }).success(function (data) {
-
+          
           $.plot( self.element, data, option );
-
+          
           if(callback) callback();
 
       }).error(function(){
@@ -1785,7 +1791,7 @@ App.controller('FlotChartController', ['$scope', '$window','$http', function($sc
     this.listen = function() {
       var self = this,
           chartPanel = this.element.parents('.panel').eq(0);
-
+      
       // attach custom event
       chartPanel.on('panel-refresh', function(event, panel) {
         // request data and remove spinner when done
@@ -1802,7 +1808,7 @@ App.controller('FlotChartController', ['$scope', '$window','$http', function($sc
 
   //
   // Start of Demo Script
-  //
+  // 
   angular.element(document).ready(function () {
 
     // Bar chart
@@ -1934,7 +1940,7 @@ App.controller('FlotChartController', ['$scope', '$window','$http', function($sc
                     },
                     shadowSize: 0
                 };
-
+            
             // Send Request and Listen for refresh events
             chart.requestData(option).listen();
 
@@ -1981,7 +1987,7 @@ App.controller('FlotChartController', ['$scope', '$window','$http', function($sc
                     },
                     shadowSize: 0
                 };
-
+            
             // Send Request and Listen for refresh events
             chart.requestData(option).listen();
 
@@ -2159,7 +2165,7 @@ App.controller('AppController',
     "use strict";
 
     // Loading bar transition
-    // -----------------------------------
+    // ----------------------------------- 
     var thBar;
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
         if($('.wrapper > section').length) // check if bar container exists
@@ -2221,7 +2227,7 @@ App.controller('AppController',
       $localStorage.layout = $scope.app.layout;
     }, true);
 
-
+    
     // Allows to use branding color with interpolation
     // {{ colorByName('primary') }}
     $scope.colorByName = colors.byName;
@@ -2297,7 +2303,7 @@ App.controller('ModalGmapController', ['$scope', '$modal', '$timeout', 'gmap', f
   var ModalInstanceCtrl = function ($scope, $modalInstance) {
 
     $modalInstance.opened.then(function () {
-      // When modal has been opened
+      // When modal has been opened 
       // set to true the initialization param
       $timeout(function(){
         $scope.initGmap = true;
@@ -2372,7 +2378,7 @@ App.controller('NotificationController', ['$scope', function($scope){
     return pos;
   };
 
-  // Predicts tooltip top position
+  // Predicts tooltip top position 
   // based on the trigger element
   function predictTooltipTop(el) {
     var top = el.offsetTop;
@@ -2385,7 +2391,7 @@ App.controller('NotificationController', ['$scope', function($scope){
     return (top - height) - (window.pageYOffset);
   }
 
-  // Predicts tooltip top position
+  // Predicts tooltip top position 
   // based on the trigger element
   function predictTooltipLeft(el) {
     var left = el.offsetLeft;
@@ -2445,13 +2451,13 @@ App.controller('portletsController', [ '$scope', '$timeout', '$window', function
   function savePortletOrder(event, ui) {
     var self = event.target;
     var data = angular.fromJson($scope.$storage[storageKeyName]);
-
+    
     if(!data) { data = {}; }
 
     data[self.id] = $(self).sortable('toArray');
 
     $scope.$storage[storageKeyName] = angular.toJson(data);
-
+      
     // save portlet size to avoid jumps
     saveListSize.apply(self);
   }
@@ -2461,13 +2467,13 @@ App.controller('portletsController', [ '$scope', '$timeout', '$window', function
     var data = angular.fromJson($scope.$storage[storageKeyName]);
 
     if(data) {
-
+      
       var porletId = self.id,
           panels   = data[porletId];
 
       if(panels) {
         var portlet = $('#'+porletId);
-
+        
         $.each(panels, function(index, value) {
            $('#'+value).appendTo(portlet);
         });
@@ -2492,7 +2498,7 @@ App.controller('portletsController', [ '$scope', '$timeout', '$window', function
 }]);
 /**=========================================================
  * Module: sidebar-menu.js
- * Provides a simple way to implement bootstrap collapse plugin using a target
+ * Provides a simple way to implement bootstrap collapse plugin using a target 
  * next to the current element (sibling)
  * Targeted elements must have [data-toggle="collapse-next"]
  =========================================================*/
@@ -2538,8 +2544,8 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$locatio
     };
 
     // Load menu from json file
-    // -----------------------------------
-
+    // ----------------------------------- 
+    
     $scope.getMenuItemPropClasses = function(item) {
       return (item.heading ? 'nav-heading' : '') +
              (isActive(item) ? ' active' : '') ;
@@ -2561,7 +2567,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$locatio
      $scope.loadSidebarMenu();
 
     // Handle sidebar collapse items
-    // -----------------------------------
+    // ----------------------------------- 
     var collapseList = [];
 
     $scope.addCollapse = function($index, item) {
@@ -2586,9 +2592,9 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$locatio
       else if ( isParentItem ) {
         closeAllBut(-1);
       }
-
+    
       return true;
-
+    
       function closeAllBut(index) {
         index += '';
         for(var i in collapseList) {
@@ -2601,7 +2607,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$locatio
     };
 
     // Helper checks
-    // -----------------------------------
+    // ----------------------------------- 
 
     function isMobile() {
       return $win.width() < mq.tablet;
@@ -2618,7 +2624,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$locatio
 }]);
 
 App.controller("TodoController", ['$scope', '$filter', function($scope, $filter) {
-
+  
   $scope.items = [
     {
       todo: {title: "Meeting with Mark at 7am.", description: "Pellentesque convallis mauris eu elit imperdiet quis eleifend quam aliquet. "},
@@ -2633,15 +2639,15 @@ App.controller("TodoController", ['$scope', '$filter', function($scope, $filter)
       complete: false
     }
     ];
-
+  
   $scope.editingTodo = false;
   $scope.todo = {};
 
   $scope.addTodo = function() {
-
+    
     if( $scope.todo.title === "" ) return;
     if( !$scope.todo.description ) $scope.todo.description = "";
-
+    
     if( $scope.editingTodo ) {
       $scope.todo = {};
       $scope.editingTodo = false;
@@ -2652,9 +2658,9 @@ App.controller("TodoController", ['$scope', '$filter', function($scope, $filter)
       $scope.todo.description = "";
     }
   };
-
+  
   $scope.editTodo = function(index, $event) {
-
+  
     $event.stopPropagation();
     $scope.todo = $scope.items[index].todo;
     $scope.editingTodo = true;
@@ -2663,7 +2669,7 @@ App.controller("TodoController", ['$scope', '$filter', function($scope, $filter)
   $scope.removeTodo = function(index, $event) {
     $scope.items.splice(index, 1);
   };
-
+  
   $scope.clearAll = function() {
     $scope.items = [];
   };
@@ -2695,7 +2701,7 @@ App.controller("TodoController", ['$scope', '$filter', function($scope, $filter)
 
         var $this    = this,
             $element = $(element);
-
+        
         options  = $.extend({}, xhrupload.defaults, UploadSelect.defaults, options);
 
         if ($element.data("uploadSelect")) return;
@@ -2714,7 +2720,7 @@ App.controller("TodoController", ['$scope', '$filter', function($scope, $filter)
         var $this      = this,
             $element   = $(element),
             hasdragCls = false;
-
+        
         options = $.extend({}, xhrupload.defaults, UploadDrop.defaults, options);
 
         if ($element.data("uploadDrop")) return;
@@ -2928,23 +2934,23 @@ App.controller("TodoController", ['$scope', '$filter', function($scope, $filter)
 App.controller('UserBlockController', ['$scope', function($scope) {
 
   $scope.userBlockVisible = true;
-
+  
   $scope.$on('toggleUserBlock', function(event, args) {
 
     $scope.userBlockVisible = ! $scope.userBlockVisible;
-
+    
   });
 
 }]);
 /**=========================================================
  * Module: utils.js
- * jQuery Utility functions library
+ * jQuery Utility functions library 
  * adapted from the core of UIKit
  =========================================================*/
 
 (function($, window, doc){
     'use strict';
-
+    
     var $html = $("html"), $win = $(window);
 
     $.support.transition = (function() {
@@ -3123,7 +3129,7 @@ App.controller('VectorMapController', ['$scope', function($scope) {
     'US': 839,     // USA
     'SA': 410      // Saudi Arabia
   };
-
+  
   $scope.markersData = [
     { latLng:[41.90, 12.45],  name:'Vatican City'          },
     { latLng:[43.73, 7.41],   name:'Monaco'                },
@@ -3196,12 +3202,12 @@ App.directive('classyloader', function($timeout) {
   return {
     restrict: 'A',
     link: function(scope, element, attrs) {
-      // run after interpolation
+      // run after interpolation  
       $timeout(function(){
-
+  
         var $element = $(element),
             options  = $element.data();
-
+        
         // At lease we need a data-percentage attribute
         if(options) {
           if( options.triggerInView ) {
@@ -3246,12 +3252,12 @@ App.directive('resetKey',  ['$state','$rootScope', function($state, $rootScope) 
       resetKey: '='
     },
     link: function(scope, element, attrs) {
-
+      
       scope.resetKey = attrs.resetKey;
 
     },
     controller: function($scope, $element) {
-
+    
       $element.on('click', function (e) {
           e.preventDefault();
 
@@ -3300,15 +3306,15 @@ App.directive('flatdoc', ['$location', function($location) {
       Flatdoc.run({
         fetcher: Flatdoc.file(attrs.src)
       });
-
+      
       var $root = $('html, body');
       $(document).on('flatdoc:ready', function() {
         var docMenu = $('[role="flatdoc-menu"]');
         docMenu.find('a').on('click', function(e) {
           e.preventDefault(); e.stopPropagation();
-
+          
           var $this = $(this);
-
+          
           docMenu.find('a.active').removeClass('active');
           $this.addClass('active');
 
@@ -3342,12 +3348,12 @@ App.directive('formWizard', function($parse){
   };
 
   function Wizard (quantity, validate, element) {
-
+    
     var self = this;
     self.quantity = parseInt(quantity,10);
     self.validate = validate;
     self.element = element;
-
+    
     self.init = function() {
       self.createsteps(self.quantity);
       self.go(1); // always start at fist step
@@ -3355,7 +3361,7 @@ App.directive('formWizard', function($parse){
     };
 
     self.go = function(step) {
-
+      
       if ( angular.isDefined(self.steps[step]) ) {
 
         if(self.validate && step !== 1) {
@@ -3407,9 +3413,9 @@ App.directive('toggleFullscreen', function() {
           e.preventDefault();
 
           if (screenfull.enabled) {
-
+            
             screenfull.toggle();
-
+            
             // Switch icon indicator
             if(screenfull.isFullscreen)
               $(this).children('em').removeClass('fa-expand').addClass('fa-compress');
@@ -3439,7 +3445,7 @@ App.directive('gmap', ['$window','gmap', function($window, gmap){
   // Get more styles from http://snazzymaps.com/style/29/light-monochrome
   // - Just replace and assign to 'MapStyles' the new style array
   var MapStyles = [{featureType:'water',stylers:[{visibility:'on'},{color:'#bdd1f9'}]},{featureType:'all',elementType:'labels.text.fill',stylers:[{color:'#334165'}]},{featureType:'landscape',stylers:[{color:'#e9ebf1'}]},{featureType:'road.highway',elementType:'geometry',stylers:[{color:'#c5c6c6'}]},{featureType:'road.arterial',elementType:'geometry',stylers:[{color:'#fff'}]},{featureType:'road.local',elementType:'geometry',stylers:[{color:'#fff'}]},{featureType:'transit',elementType:'geometry',stylers:[{color:'#d8dbe0'}]},{featureType:'poi',elementType:'geometry',stylers:[{color:'#cfd5e0'}]},{featureType:'administrative',stylers:[{visibility:'on'},{lightness:33}]},{featureType:'poi.park',elementType:'labels',stylers:[{visibility:'on'},{lightness:20}]},{featureType:'road',stylers:[{color:'#d8dbe0',lightness:20}]}];
-
+  
   gmap.setStyle( MapStyles );
 
   // Center Map marker on resolution change
@@ -3453,7 +3459,7 @@ App.directive('gmap', ['$window','gmap', function($window, gmap){
   return {
     restrict: 'A',
     link: function (scope, element) {
-
+      
       gmap.init(element);
 
     }
@@ -3524,7 +3530,7 @@ App.directive('markdownarea', function() {
       var area         = $(element),
           Markdownarea = $.fn["markdownarea"],
           options      = $.Utils.options(attrs.markdownarea);
-
+      
       var obj = new Markdownarea(area, $.Utils.options(attrs.markdownarea));
 
     }
@@ -3533,9 +3539,9 @@ App.directive('markdownarea', function() {
 
 
 // Markdown plugin defintion
-// Customized to work with bootstrap
+// Customized to work with bootstrap 
 // classnames
-// -----------------------------------
+// ----------------------------------- 
 
 (function($, window, document){
     'use strict';
@@ -3998,7 +4004,7 @@ App.directive('searchOpen', ['navSearch', function(navSearch) {
           if (e.keyCode == 27) // ESC
             navSearch.dismiss();
         });
-
+        
       // click anywhere closes the search
       $(document).on('click', navSearch.dismiss);
       // dismissable options
@@ -4022,7 +4028,7 @@ App.directive('notify', function($window){
   return {
     restrict: 'A',
     controller: function ($scope, $element) {
-
+      
       $element.on('click', function (e) {
         e.preventDefault();
         notifyNow($element);
@@ -4225,7 +4231,7 @@ App.directive("now", ['dateFilter', '$interval', function(dateFilter, $interval)
     return {
       restrict: 'E',
       link: function(scope, element, attrs){
-
+        
         var format = attrs.format;
 
         function updateTime() {
@@ -4240,7 +4246,7 @@ App.directive("now", ['dateFilter', '$interval', function(dateFilter, $interval)
 }]);
 /**=========================================================
  * Module panel-tools.js
- * Directive tools to control panels.
+ * Directive tools to control panels. 
  * Allows collapse, refresh and dismiss (remove)
  * Saves panel state in browser storage
  =========================================================*/
@@ -4259,7 +4265,7 @@ App.directive('paneltool', function(){
                <em class='fa fa-refresh'></em>\
              </a>"
   };
-
+  
   return {
     restrict: 'E',
     template: function( elem, attrs ){
@@ -4327,10 +4333,10 @@ App.directive('paneltool', function(){
  =========================================================*/
 .directive('panelCollapse', ['$timeout', function($timeout){
   'use strict';
-
+  
   var storageKeyName = 'panelState',
       storage;
-
+  
   return {
     restrict: 'A',
     // transclude: true,
@@ -4383,11 +4389,11 @@ App.directive('paneltool', function(){
  =========================================================*/
 .directive('panelRefresh', function(){
   'use strict';
-
+  
   return {
     restrict: 'A',
     controller: function ($scope, $element) {
-
+      
       var refreshEvent   = 'panel-refresh',
           whirlClass     = 'whirl',
           defaultSpinner = 'standard';
@@ -4422,15 +4428,15 @@ App.directive('paneltool', function(){
 
   /**
    * This function is only to show a demonstration
-   * of how to use the panel refresh system via
-   * custom event.
+   * of how to use the panel refresh system via 
+   * custom event. 
    * IMPORTANT: see how to remove the spinner.
    */
 (function($, window, document){
   'use strict';
 
   $(document).on('panel-refresh', '.panel.panel-demo', function(e, panel){
-
+    
     // perform any action when a .panel triggers a the refresh event
     setTimeout(function(){
       // when the action is done, just remove the spinner class
@@ -4446,13 +4452,13 @@ App.directive('paneltool', function(){
  * Provides a simple way to run animation with a trigger
  * Requires animo.js
  =========================================================*/
-
+ 
 App.directive('animate', function($window){
 
   'use strict';
 
   var $scroller = $(window).add('body, .wrapper');
-
+  
   return {
     restrict: 'A',
     link: function (scope, elem, attrs) {
@@ -4462,9 +4468,9 @@ App.directive('animate', function($window){
           offset    = $elem.data('offset'),
           delay     = $elem.data('delay')     || 100, // milliseconds
           animation = $elem.data('play')      || 'bounce';
-
+      
       if(typeof offset !== 'undefined') {
-
+        
         // test if the element starts visible
         testAnimation($elem);
         // test on scroll
@@ -4501,7 +4507,7 @@ App.directive('animate', function($window){
         if(target && target) {
           target.animo( { animation: animation } );
         }
-
+        
       });
     }
   };
@@ -4530,7 +4536,7 @@ App.directive('scrollable', function(){
  =========================================================*/
 
 App.directive('sidebar', ['$window', 'APP_MEDIAQUERY', function($window, mq) {
-
+  
   var $win  = $($window);
   var $html = $('html');
   var $body = $('body');
@@ -4543,7 +4549,7 @@ App.directive('sidebar', ['$window', 'APP_MEDIAQUERY', function($window, mq) {
     transclude: true,
     replace: true,
     link: function(scope, element, attrs) {
-
+      
       $scope   = scope;
       $sidebar = element;
 
@@ -4561,7 +4567,7 @@ App.directive('sidebar', ['$window', 'APP_MEDIAQUERY', function($window, mq) {
   };
 
 
-  // Open the collapse sidebar submenu items when on touch devices
+  // Open the collapse sidebar submenu items when on touch devices 
   // - desktop only opens on hover
   function toggleTouchItem($element){
     $element
@@ -4572,13 +4578,13 @@ App.directive('sidebar', ['$window', 'APP_MEDIAQUERY', function($window, mq) {
   }
 
   // Handles hover to open items under collapsed menu
-  // -----------------------------------
+  // ----------------------------------- 
   function toggleMenuItem($listItem) {
 
     removeFloatingNav();
 
     var ul = $listItem.children('ul');
-
+    
     if( !ul.length ) return;
     if( $listItem.hasClass('open') ) {
       toggleTouchItem($listItem);
@@ -4589,7 +4595,7 @@ App.directive('sidebar', ['$window', 'APP_MEDIAQUERY', function($window, mq) {
     var mar =  $scope.app.layout.isFixed ?  parseInt( $aside.css('margin-top'), 0) : 0;
 
     var subNav = ul.clone().appendTo( $aside );
-
+    
     toggleTouchItem($listItem);
 
     var itemTop = ($listItem.position().top + mar) - $sidebar.scrollTop();
@@ -4637,7 +4643,7 @@ App.directive('skycon', function(){
   return {
     restrict: 'A',
     link: function(scope, element, attrs) {
-
+      
       var skycons = new Skycons({'color': (attrs.color || 'white')});
 
       element.html('<canvas width="' + attrs.width + '" height="' + attrs.height + '"></canvas>');
@@ -4653,7 +4659,7 @@ App.directive('skycon', function(){
  * Module: sparkline.js
  * SparkLines Mini Charts
  =========================================================*/
-
+ 
 App.directive('sparkline', ['$timeout', '$window', function($timeout, $window){
 
   'use strict';
@@ -4693,11 +4699,11 @@ App.directive('sparkline', ['$timeout', '$window', function($timeout, $window){
 
 App.directive('checkAll', function() {
   'use strict';
-
+  
   return {
     restrict: 'A',
     controller: function($scope, $element){
-
+      
       $element.on('change', function() {
         var $this = $(this),
             index= $this.index() + 1,
@@ -4730,15 +4736,15 @@ App.directive('tagsinput', function() {
 
 /**=========================================================
  * Module: toggle-state.js
- * Toggle a classname from the BODY Useful to change a state that
- * affects globally the entire layout or more than one item
+ * Toggle a classname from the BODY Useful to change a state that 
+ * affects globally the entire layout or more than one item 
  * Targeted elements must have [toggle-state="CLASS-NAME-TO-TOGGLE"]
  * User no-persist to avoid saving the sate in browser storage
  =========================================================*/
 
 App.directive('toggleState', ['toggleStateService', function(toggle) {
   'use strict';
-
+  
   return {
     restrict: 'A',
     link: function(scope, element, attrs) {
@@ -4749,7 +4755,7 @@ App.directive('toggleState', ['toggleStateService', function(toggle) {
         .on('click', function (e) {
           e.preventDefault();
           var classname = attrs.toggleState;
-
+          
           if(classname) {
             if( $body.hasClass(classname) ) {
               $body.removeClass(classname);
@@ -4761,13 +4767,13 @@ App.directive('toggleState', ['toggleStateService', function(toggle) {
               if( ! attrs.noPersist)
                 toggle.addState(classname);
             }
-
+            
           }
 
       });
     }
   };
-
+  
 }]);
 
 /**=========================================================
@@ -4830,9 +4836,9 @@ App.directive('vectorMap', ['vectorMap', function(vectorMap){
             regionFill:   attrs.regionFill   || defaultColors.regionFill,
             mapName:      attrs.mapName      || 'world_mill_en'
           };
-
+      
       element.css('height', mapHeight);
-
+      
       vectorMap.init( element , options, scope.seriesData, scope.markersData);
 
     }
@@ -4941,9 +4947,9 @@ App.service('browser', function(){
  * Module: colors.js
  * Services to retrieve global colors
  =========================================================*/
-
+ 
 App.factory('colors', ['APP_COLORS', function(colors) {
-
+  
   return {
     byName: function(name) {
       return (colors[name] || '#fff');
@@ -5023,7 +5029,7 @@ App.service('gmap', function() {
 
         // set the styles
         if($element.data('styled') !== undefined) {
-
+          
           ref.setOptions({
             styles: self.MapStyles
           });
@@ -5037,18 +5043,18 @@ App.service('gmap', function() {
  * Module: nav-search.js
  * Services to share navbar search functions
  =========================================================*/
-
+ 
 App.service('navSearch', function() {
   var navbarFormSelector = 'form.navbar-form';
   return {
     toggle: function() {
-
+      
       var navbarForm = $(navbarFormSelector);
 
       navbarForm.toggleClass('open');
-
+      
       var isOpen = navbarForm.hasClass('open');
-
+      
       navbarForm.find('input')[isOpen ? 'focus' : 'blur']();
 
     },
@@ -5094,7 +5100,7 @@ App.service('toggleStateService', ['$rootScope', function($rootScope) {
     // Add a state to the browser storage to be restored later
     addState: function(classname){
       var data = angular.fromJson($rootScope.$storage[storageKeyName]);
-
+      
       if(!data)  {
         data = classname;
       }
@@ -5115,11 +5121,11 @@ App.service('toggleStateService', ['$rootScope', function($rootScope) {
 
       $rootScope.$storage[storageKeyName] = angular.toJson(data);
     },
-
+    
     // Load the state string and restore the classlist
     restoreState: function($elem) {
       var data = angular.fromJson($rootScope.$storage[storageKeyName]);
-
+      
       // nothing to restore
       if(!data) return;
       $elem.addClass(data);
@@ -5183,13 +5189,13 @@ App.service('vectorMap', function() {
         }
   };
 });
-// To run this code, edit file
+// To run this code, edit file 
 // index.html or index.jade and change
 // html data-ng-app attribute from
 // angle to myAppName
-// -----------------------------------
+// ----------------------------------- 
 
-var myApp = angular.module('myAppName', ['angle']);
+var myApp = angular.module('SLP_WebApp', ['angle']);
 
 myApp.run(function($log) {
 
@@ -5207,4 +5213,17 @@ myApp.directive('oneOfMyOwnDirectives', function() {
 
 myApp.config(function($stateProvider /* ... */) {
   /* specific routes here (see file config.js) */
+  $stateProvider
+      .state('app.home-search', {
+        url: '/homeSearch',
+        title: 'Search',
+        templateUrl: getBasepath('home-search.html'),
+        controller: 'NullController'
+      })
 });
+
+// Set here the base of the relative path
+// for all app views
+function getBasepath(uri) {
+  return 'app/views/' + uri;
+}

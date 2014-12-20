@@ -5,6 +5,11 @@
     "translate": "sidebar.heading.HEADER"
   },
   {
+    "text": "Search",
+    "sref": "app.home-search",
+    "icon": "icon-magnifier"
+  },
+  {
     "text": "Dashboard",
     "sref": "app.dashboard",
     "icon": "icon-speedometer",

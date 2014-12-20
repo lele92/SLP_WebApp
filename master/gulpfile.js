@@ -15,6 +15,7 @@ var gulp        = require('gulp'),
     through     = require('through2'),
     gutil       = require('gulp-util'),
     htmlify     = require('gulp-angular-htmlify'),
+    connect     = require('gulp-connect'),
     PluginError = gutil.PluginError;
 
 // LiveReload port. Change it only if there's a conflict
@@ -279,6 +280,13 @@ gulp.task('templates:views', function() {
         ;
 });
 
+gulp.task('connect', function() {
+    connect.server({
+        root: '..',
+        livereload: true
+    });
+});
+
 //---------------
 // WATCH
 //---------------
@@ -319,7 +327,8 @@ gulp.task('default', [
           'templates:app',
           'templates:pages',
           'templates:views',
-          'watch'
+          'watch',
+          'connect'
         ]);
 
 

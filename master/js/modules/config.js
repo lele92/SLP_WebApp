@@ -26,7 +26,10 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
 
 
   // defaults to dashboard
-  $urlRouterProvider.otherwise('/app/dashboard');
+  //$urlRouterProvider.otherwise('/app/dashboard');
+
+  // defaults to home-search
+  $urlRouterProvider.otherwise('/app/homeSearch');
 
   // 
   // Application Routes
