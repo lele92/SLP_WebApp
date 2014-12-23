@@ -1,13 +1,3 @@
-/*!
- * 
- * Angle - Bootstrap Admin App + AngularJS
- * 
- * Author: @themicon_co
- * Website: http://themicon.co
- * License: http://support.wrapbootstrap.com/knowledge_base/topics/usage-licenses
- * 
- */
-
 if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript requires jQuery'); }
 
 
@@ -31,8 +21,8 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
               // Scope Globals
               // ----------------------------------- 
               $rootScope.app = {
-                name: 'Angle',
-                description: 'Angular Bootstrap Admin Template',
+                name: 'SLP',
+                description: 'a Web App for Semantic Lancet Project ',
                 year: ((new Date()).getFullYear()),
                 layout: {
                   isFixed: true,
@@ -42,6 +32,8 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
                 },
                 viewAnimation: 'ng-fadeInUp'
               };
+
+              //todo: da eliminare
               $rootScope.user = {
                 name:     'John',
                 job:      'ng-Dev',

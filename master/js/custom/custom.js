@@ -6,20 +6,17 @@
 
 var myApp = angular.module('SLP_WebApp', ['angle']);
 
-myApp.run(function($log) {
+myApp.run(function($log,$rootScope, $state, $stateParams) {
+  //todo: aggiungere qui le inizializzazioni
+  $log.log('I\'m a line from custom.js'); //todo: da eliminare
 
-  $log.log('I\'m a line from custom.js');
+  //guide: https://github.com/angular-ui/ui-router/wiki/Quick-Reference#note-about-using-state-within-a-template
+  $rootScope.$state = $state;
+  $rootScope.$stateParams = $stateParams;
 
 });
 
-myApp.controller('oneOfMyOwnController', function($scope) {
-  /* controller code */
-});
-
-myApp.directive('oneOfMyOwnDirectives', function() {
-  /*directive code*/
-});
-
+//todo: valutare se spostare config, potrebbe aver senso creare una directory
 myApp.config(function($stateProvider /* ... */) {
   /* specific routes here (see file config.js) */
   $stateProvider
@@ -27,7 +24,24 @@ myApp.config(function($stateProvider /* ... */) {
         url: '/homeSearch',
         title: 'Search',
         templateUrl: getBasepath('home-search.html'),
-        controller: 'NullController'
+        controller: 'HomeSearchController',
+        controllerAs: 'HomeSearchCtrl'
+          //guide: https://docs.angularjs.org/api/ng/function/angular.extend
+          //guide: https://github.com/angular-ui/ui-router/wiki#resolve
+
+            //todo: valutare se e come usarlo
+          /*resolve: angular.extend(
+           resolveFor(), {
+
+           }
+         )*/
+      })
+      .state('app.articles-results', {
+        url: '/articles',
+        title: 'Articles',
+        templateUrl: getBasepath('articles-results.html'),
+        controller: 'ArticlesResultsController',
+        controllerAs: 'ArticlesResultsCtrl'
       })
 });
 

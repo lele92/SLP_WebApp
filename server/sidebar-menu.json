@@ -10,6 +10,11 @@
     "icon": "icon-magnifier"
   },
   {
+    "text": "Articles",
+    "sref": "app.articles-results",
+    "icon": "icon-book-open"
+  },
+  {
     "text": "Dashboard",
     "sref": "app.dashboard",
     "icon": "icon-speedometer",

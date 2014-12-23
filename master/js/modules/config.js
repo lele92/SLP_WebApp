@@ -390,6 +390,9 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
     //   url: '/some_url',
     //   templateUrl: 'path_to_template.html',
     //   controller: 'someController',
+
+         //guide: https://docs.angularjs.org/api/ng/function/angular.extend
+         //guide: https://github.com/angular-ui/ui-router/wiki#resolve
     //   resolve: angular.extend(
     //     resolveFor(), {
     //     // YOUR RESOLVES GO HERE

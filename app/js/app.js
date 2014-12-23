@@ -1,13 +1,3 @@
-/*!
- * 
- * Angle - Bootstrap Admin App + AngularJS
- * 
- * Author: @themicon_co
- * Website: http://themicon.co
- * License: http://support.wrapbootstrap.com/knowledge_base/topics/usage-licenses
- * 
- */
-
 if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript requires jQuery'); }
 
 
@@ -31,8 +21,8 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
               // Scope Globals
               // ----------------------------------- 
               $rootScope.app = {
-                name: 'Angle',
-                description: 'Angular Bootstrap Admin Template',
+                name: 'SLP',
+                description: 'a Web App for Semantic Lancet Project ',
                 year: ((new Date()).getFullYear()),
                 layout: {
                   isFixed: true,
@@ -42,6 +32,8 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
                 },
                 viewAnimation: 'ng-fadeInUp'
               };
+
+              //todo: da eliminare
               $rootScope.user = {
                 name:     'John',
                 job:      'ng-Dev',
@@ -442,6 +434,9 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
     //   url: '/some_url',
     //   templateUrl: 'path_to_template.html',
     //   controller: 'someController',
+
+         //guide: https://docs.angularjs.org/api/ng/function/angular.extend
+         //guide: https://github.com/angular-ui/ui-router/wiki#resolve
     //   resolve: angular.extend(
     //     resolveFor(), {
     //     // YOUR RESOLVES GO HERE
@@ -5197,20 +5192,17 @@ App.service('vectorMap', function() {
 
 var myApp = angular.module('SLP_WebApp', ['angle']);
 
-myApp.run(function($log) {
+myApp.run(function($log,$rootScope, $state, $stateParams) {
+  //todo: aggiungere qui le inizializzazioni
+  $log.log('I\'m a line from custom.js'); //todo: da eliminare
 
-  $log.log('I\'m a line from custom.js');
+  //guide: https://github.com/angular-ui/ui-router/wiki/Quick-Reference#note-about-using-state-within-a-template
+  $rootScope.$state = $state;
+  $rootScope.$stateParams = $stateParams;
 
 });
 
-myApp.controller('oneOfMyOwnController', function($scope) {
-  /* controller code */
-});
-
-myApp.directive('oneOfMyOwnDirectives', function() {
-  /*directive code*/
-});
-
+//todo: valutare se spostare config, potrebbe aver senso creare una directory
 myApp.config(function($stateProvider /* ... */) {
   /* specific routes here (see file config.js) */
   $stateProvider
@@ -5218,7 +5210,24 @@ myApp.config(function($stateProvider /* ... */) {
         url: '/homeSearch',
         title: 'Search',
         templateUrl: getBasepath('home-search.html'),
-        controller: 'NullController'
+        controller: 'HomeSearchController',
+        controllerAs: 'HomeSearchCtrl'
+          //guide: https://docs.angularjs.org/api/ng/function/angular.extend
+          //guide: https://github.com/angular-ui/ui-router/wiki#resolve
+
+            //todo: valutare se e come usarlo
+          /*resolve: angular.extend(
+           resolveFor(), {
+
+           }
+         )*/
+      })
+      .state('app.articles-results', {
+        url: '/articles',
+        title: 'Articles',
+        templateUrl: getBasepath('articles-results.html'),
+        controller: 'ArticlesResultsController',
+        controllerAs: 'ArticlesResultsCtrl'
       })
 });
 
@@ -5227,3 +5236,126 @@ myApp.config(function($stateProvider /* ... */) {
 function getBasepath(uri) {
   return 'app/views/' + uri;
 }
+/**=========================================================
+ * Module: article-item.js
+ * elemento per le informazioni su un singolo articolo
+ =========================================================*/
+
+myApp.directive('articleItem', function() {
+    'use strict';
+
+    return {
+        restrict: 'E',
+        templateUrl: 'app/views/article-item.html', //todo: path relativo
+        scope: {
+            testData: '=',
+            articleId: '@'
+        }
+    };
+
+});
+
+myApp.controller('ArticlesResultsController', function($rootScope, ArticleManagerService,$scope) {
+    var self = this;
+
+    self.articles = ArticleManagerService.getArticles();
+
+    //importante: articles deve essere tra apici, dannazione! ho perso 3 ore prima di capirlo!
+    //@guide http://stackoverflow.com/questions/15380140/service-variable-not-updating-in-controller
+    $scope.$watchCollection('articles',
+        function() {
+            //todo: implementazione da raffinare
+            //todo:idea qui si potrebbe aggiungere l'apertura di una dialog per avvisare che i risultati sono stati aggiornati
+            self.articles = ArticleManagerService.getArticles();
+        },
+        true); //todo:valutare se lasciare questo true
+})
+
+myApp.controller('HomeSearchController', function($rootScope,RequestArticlesService, ArticleManagerService) {
+    var self = this;
+
+    self.searchText = "";
+
+    self.searchArticles = function() {
+        ArticleManagerService.requestArticles();
+        //todo: da rivedere, per doc: http://angular-ui.github.io/ui-router/site/#/api/ui.router.state.$state
+        $rootScope.$state.go('app.articles-results');
+    }
+
+
+})
+/**=========================================================
+ * module: articles-manager.js
+ * servizio per gestire gli articoli
+ =========================================================*/
+'use strict';
+
+myApp
+    .factory('ArticleManagerService', function(RequestArticlesService, $rootScope) {
+        var articlesResults = [];
+
+        return {
+            getArticles: function() {
+                //fixme: attenzione! si sta passando un riferimento ad articlesResults, se viene cambiato è un casino
+                return articlesResults;
+            },
+
+            requestArticles: function() {
+                return RequestArticlesService.searchArticles().then(
+                    // success
+                    function(response) {
+                        angular.copy(response.data.results.bindings, articlesResults);
+                    },
+
+                    // error
+                    //todo caso da gestire meglio
+                    function(errResponse) {
+                        console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText)
+                    }
+                );
+            },
+
+            //importante! se si modifica articlesResults, non riassegnare altrimenti tutti i $watch non vanno più! modificare usando angular.copy
+            //@guide https://docs.angularjs.org/api/ng/function/angular.copy
+            /* per aggiornare gli articoli */
+            setArticles: function(newArticles) {
+                angular.copy(newArticles, articlesResults);
+            },
+
+            /* aggiunge un articol oalla lista di articoli */
+            addArticle: function(newArticle) {
+                articlesResults.push(newArticle);
+            }
+        }
+    });
+
+/**=========================================================
+ * module: request-articles.js
+ * servizio per ottenere i risultati di ricerca
+ =========================================================*/
+
+'use strict';
+
+myApp
+    .factory('RequestArticlesService', function($http) {
+        var self = this;
+        var textForRequest = "";    // testo per la ricerca
+
+        return {
+
+            /* todo: DA CAMBIARE. funzione stub, in realtà non faccio ancora nessuna richiesta a nessun server, prendo i risultati da un .json
+             * bisognerà usare textForRequest per fare la richiesta all'AbstractFinder*/
+            searchArticles: function() {
+                //guide http://nathanleclaire.com/blog/2014/01/04/5-smooth-angularjs-application-tips/
+                return $http.get('server/expResultsStub.json');
+            },
+
+            setSearchText: function(txt) {
+                textForRequest = txt;
+            },
+
+            getSearchText: function() {
+                return textForRequest;
+            }
+        }
+    });
