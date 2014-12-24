@@ -5209,7 +5209,7 @@ myApp.config(function($stateProvider /* ... */) {
       .state('app.home-search', {
         url: '/homeSearch',
         title: 'Search',
-        templateUrl: getBasepath('home-search.html'),
+        templateUrl: getMyBasepath('home-search.html'),
         controller: 'HomeSearchController',
         controllerAs: 'HomeSearchCtrl'
           //guide: https://docs.angularjs.org/api/ng/function/angular.extend
@@ -5225,7 +5225,7 @@ myApp.config(function($stateProvider /* ... */) {
       .state('app.articles-results', {
         url: '/articles',
         title: 'Articles',
-        templateUrl: getBasepath('articles-results.html'),
+        templateUrl: getMyBasepath('articles-results.html'),
         controller: 'ArticlesResultsController',
         controllerAs: 'ArticlesResultsCtrl'
       })
@@ -5233,28 +5233,9 @@ myApp.config(function($stateProvider /* ... */) {
 
 // Set here the base of the relative path
 // for all app views
-function getBasepath(uri) {
-  return 'app/views/' + uri;
+function getMyBasepath(uri) {
+  return 'app/views/myViews/' + uri;
 }
-/**=========================================================
- * Module: article-item.js
- * elemento per le informazioni su un singolo articolo
- =========================================================*/
-
-myApp.directive('articleItem', function() {
-    'use strict';
-
-    return {
-        restrict: 'E',
-        templateUrl: 'app/views/article-item.html', //todo: path relativo
-        scope: {
-            testData: '=',
-            articleId: '@'
-        }
-    };
-
-});
-
 myApp.controller('ArticlesResultsController', function($rootScope, ArticleManagerService,$scope) {
     var self = this;
 
@@ -5262,6 +5243,7 @@ myApp.controller('ArticlesResultsController', function($rootScope, ArticleManage
 
     //importante: articles deve essere tra apici, dannazione! ho perso 3 ore prima di capirlo!
     //@guide http://stackoverflow.com/questions/15380140/service-variable-not-updating-in-controller
+    //@guide http://stsc3000.github.io/blog/2013/10/26/a-tale-of-frankenstein-and-binding-to-service-values-in-angular-dot-js/
     $scope.$watchCollection('articles',
         function() {
             //todo: implementazione da raffinare
@@ -5277,13 +5259,30 @@ myApp.controller('HomeSearchController', function($rootScope,RequestArticlesServ
     self.searchText = "";
 
     self.searchArticles = function() {
-        ArticleManagerService.requestArticles();
+        ArticleManagerService.requestArticles(self.searchText);
         //todo: da rivedere, per doc: http://angular-ui.github.io/ui-router/site/#/api/ui.router.state.$state
         $rootScope.$state.go('app.articles-results');
     }
-
-
 })
+/**=========================================================
+ * Module: article-item.js
+ * elemento per le informazioni su un singolo articolo
+ =========================================================*/
+
+myApp.directive('articleItem', function() {
+    'use strict';
+
+    return {
+        restrict: 'E',
+        templateUrl: 'app/templates/article-item.html', //todo: path relativo
+        scope: {
+            testData: '=',
+            articleId: '@'
+        }
+    };
+
+});
+
 /**=========================================================
  * module: articles-manager.js
  * servizio per gestire gli articoli
@@ -5291,7 +5290,7 @@ myApp.controller('HomeSearchController', function($rootScope,RequestArticlesServ
 'use strict';
 
 myApp
-    .factory('ArticleManagerService', function(RequestArticlesService, $rootScope) {
+    .factory('ArticleManagerService', function(RequestArticlesService, ArticlesInfoService, $rootScope) {
         var articlesResults = [];
 
         return {
@@ -5300,11 +5299,39 @@ myApp
                 return articlesResults;
             },
 
-            requestArticles: function() {
-                return RequestArticlesService.searchArticles().then(
+            /* per richiedere i risultati della ricerca */
+            requestArticles: function(searchString) {
+
+                return RequestArticlesService.searchArticles(searchString).then(
                     // success
                     function(response) {
-                        angular.copy(response.data.results.bindings, articlesResults);
+                        articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
+                        //todo non è una bella soluzione usare così le proprietà della risposta, valutare alternative
+                        var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
+                        var results = "http://stanbol.apache.org/ontology/entityhub/query#queryResult";
+                        var tmpRes = response.data[resSet][results];
+
+                        //per ogni articolo, partendo dal work, richiedo tutte le informazioni generali
+                        /* @guide: perchè faccio tante chiamate ajax e non una sola?
+                         * perchè una query monolitica potrebbe richiedere molto tempo, usando un for invece, appena arriva
+                         * un articolo, lo aggiungo subito e vedo i risultati aggiornati nella viewe (grazie al watchCollection)
+                         */
+                        for (var key in tmpRes) {
+                            //fixme: una chiamata ajax e quindi una query a fuseki per ogni articolo, non molto efficiente
+                            ArticlesInfoService.getArticleGeneralInfo(tmpRes[key].value).then(
+                                //@guide http://stackoverflow.com/questions/939032/jquery-pass-more-parameters-into-callback
+                                function(response) {
+                                    var articleData = response.data.results.bindings[0];
+                                    articlesResults.push(articleData);
+
+                                },
+
+                                //todo caso da gestire meglio
+                                function(errResponse) {
+                                    console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText)
+                                }
+                            );
+                        }
                     },
 
                     // error
@@ -5330,6 +5357,39 @@ myApp
     });
 
 /**=========================================================
+ * module: info-articles.js
+ * servizio per reperire le informazioni relative agli articoli
+ =========================================================*/
+'use strict';
+
+myApp
+    .factory('ArticlesInfoService', function($http,$interpolate) {
+        var endpoint = "http://localhost:8181/data/query";
+        var prefixes = $('#prefixes').text();
+
+        return {
+            getArticleGeneralInfo: function(workURI) {
+                var q = $('#query_articleInfo').text();
+                var expr = {work: workURI};
+                var queryURL = this.buildQueryURL(q,expr);
+
+                return $http.get(queryURL);
+            },
+
+            //fixme: da spostare fuori dalla api
+            /* per costruire la query; query presa dallo script nell'hrml alla quale vengono sostituite le espressioni con ctx */
+            buildQueryURL: function(queryElement,ctx) {
+                var query = prefixes + $interpolate(queryElement)(ctx);
+                var encodedquery = encodeURIComponent(query);
+
+                return endpoint+"?format=json&query="+encodedquery;
+            }
+        }
+
+
+    });
+
+/**=========================================================
  * module: request-articles.js
  * servizio per ottenere i risultati di ricerca
  =========================================================*/
@@ -5338,24 +5398,25 @@ myApp
 
 myApp
     .factory('RequestArticlesService', function($http) {
-        var self = this;
-        var textForRequest = "";    // testo per la ricerca
+        var searchString = "";    // testo per la ricerca
+        var acceptHead = 'application/rdf+json';
+        var endpoint = "http://www.semanticlancet.eu/abstractfinder/";
 
         return {
-
-            /* todo: DA CAMBIARE. funzione stub, in realtà non faccio ancora nessuna richiesta a nessun server, prendo i risultati da un .json
-             * bisognerà usare textForRequest per fare la richiesta all'AbstractFinder*/
-            searchArticles: function() {
+            searchArticles: function(searchStr) {
+                searchString = searchStr;
+                var config = {
+                    method: "GET",
+                    params: {'query': searchString},
+                    headers: {'Accept': acceptHead},
+                    url: endpoint
+                }
                 //guide http://nathanleclaire.com/blog/2014/01/04/5-smooth-angularjs-application-tips/
-                return $http.get('server/expResultsStub.json');
+                return $http(config);
             },
 
-            setSearchText: function(txt) {
-                textForRequest = txt;
-            },
-
-            getSearchText: function() {
-                return textForRequest;
+            getSearchString: function() {
+                return searchString;
             }
         }
     });

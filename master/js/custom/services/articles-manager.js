@@ -5,7 +5,7 @@
 'use strict';
 
 myApp
-    .factory('ArticleManagerService', function(RequestArticlesService, $rootScope) {
+    .factory('ArticleManagerService', function(RequestArticlesService, ArticlesInfoService, $rootScope) {
         var articlesResults = [];
 
         return {
@@ -14,11 +14,39 @@ myApp
                 return articlesResults;
             },
 
-            requestArticles: function() {
-                return RequestArticlesService.searchArticles().then(
+            /* per richiedere i risultati della ricerca */
+            requestArticles: function(searchString) {
+
+                return RequestArticlesService.searchArticles(searchString).then(
                     // success
                     function(response) {
-                        angular.copy(response.data.results.bindings, articlesResults);
+                        articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
+                        //todo non è una bella soluzione usare così le proprietà della risposta, valutare alternative
+                        var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
+                        var results = "http://stanbol.apache.org/ontology/entityhub/query#queryResult";
+                        var tmpRes = response.data[resSet][results];
+
+                        //per ogni articolo, partendo dal work, richiedo tutte le informazioni generali
+                        /* @guide: perchè faccio tante chiamate ajax e non una sola?
+                         * perchè una query monolitica potrebbe richiedere molto tempo, usando un for invece, appena arriva
+                         * un articolo, lo aggiungo subito e vedo i risultati aggiornati nella viewe (grazie al watchCollection)
+                         */
+                        for (var key in tmpRes) {
+                            //fixme: una chiamata ajax e quindi una query a fuseki per ogni articolo, non molto efficiente
+                            ArticlesInfoService.getArticleGeneralInfo(tmpRes[key].value).then(
+                                //@guide http://stackoverflow.com/questions/939032/jquery-pass-more-parameters-into-callback
+                                function(response) {
+                                    var articleData = response.data.results.bindings[0];
+                                    articlesResults.push(articleData);
+
+                                },
+
+                                //todo caso da gestire meglio
+                                function(errResponse) {
+                                    console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText)
+                                }
+                            );
+                        }
                     },
 
                     // error

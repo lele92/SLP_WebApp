@@ -23,7 +23,7 @@ myApp.config(function($stateProvider /* ... */) {
       .state('app.home-search', {
         url: '/homeSearch',
         title: 'Search',
-        templateUrl: getBasepath('home-search.html'),
+        templateUrl: getMyBasepath('home-search.html'),
         controller: 'HomeSearchController',
         controllerAs: 'HomeSearchCtrl'
           //guide: https://docs.angularjs.org/api/ng/function/angular.extend
@@ -39,7 +39,7 @@ myApp.config(function($stateProvider /* ... */) {
       .state('app.articles-results', {
         url: '/articles',
         title: 'Articles',
-        templateUrl: getBasepath('articles-results.html'),
+        templateUrl: getMyBasepath('articles-results.html'),
         controller: 'ArticlesResultsController',
         controllerAs: 'ArticlesResultsCtrl'
       })
@@ -47,6 +47,6 @@ myApp.config(function($stateProvider /* ... */) {
 
 // Set here the base of the relative path
 // for all app views
-function getBasepath(uri) {
-  return 'app/views/' + uri;
+function getMyBasepath(uri) {
+  return 'app/views/myViews/' + uri;
 }

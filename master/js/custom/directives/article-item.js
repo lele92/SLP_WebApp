@@ -8,7 +8,7 @@ myApp.directive('articleItem', function() {
 
     return {
         restrict: 'E',
-        templateUrl: 'app/views/article-item.html', //todo: path relativo
+        templateUrl: 'app/templates/article-item.html', //todo: path relativo
         scope: {
             testData: '=',
             articleId: '@'

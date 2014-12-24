@@ -7,24 +7,25 @@
 
 myApp
     .factory('RequestArticlesService', function($http) {
-        var self = this;
-        var textForRequest = "";    // testo per la ricerca
+        var searchString = "";    // testo per la ricerca
+        var acceptHead = 'application/rdf+json';
+        var endpoint = "http://www.semanticlancet.eu/abstractfinder/";
 
         return {
-
-            /* todo: DA CAMBIARE. funzione stub, in realtà non faccio ancora nessuna richiesta a nessun server, prendo i risultati da un .json
-             * bisognerà usare textForRequest per fare la richiesta all'AbstractFinder*/
-            searchArticles: function() {
+            searchArticles: function(searchStr) {
+                searchString = searchStr;
+                var config = {
+                    method: "GET",
+                    params: {'query': searchString},
+                    headers: {'Accept': acceptHead},
+                    url: endpoint
+                }
                 //guide http://nathanleclaire.com/blog/2014/01/04/5-smooth-angularjs-application-tips/
-                return $http.get('server/expResultsStub.json');
+                return $http(config);
             },
 
-            setSearchText: function(txt) {
-                textForRequest = txt;
-            },
-
-            getSearchText: function() {
-                return textForRequest;
+            getSearchString: function() {
+                return searchString;
             }
         }
     });

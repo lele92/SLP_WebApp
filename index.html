@@ -16,6 +16,8 @@
    <div data-ui-view="" data-autoscroll="false" data-ng-class="mainViewAnimation" class="wrapper"></div>
    <script src="app/js/base.js"></script>
    <script src="app/js/app.js"></script>
+   <script src="app/js/app.js"></script>
+   <script src="app/vendor/rdfquery/dist/js/jquery.rdfquery.core-1.0.js"></script>
    <script id="prefixes" type="text/template">
       PREFIX fabio: <http://purl.org/spar/fabio/>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -33,27 +35,29 @@
    </script>
 
    <script id="query_articleInfo" type="text/template">
-      select ?title ?doi ?abstractTxt ?publicationYear ?absText ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
+      select ?title ?doi ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
       where {
-      <{{expression}}> a fabio:Expression;
-      core:part [ a sro:Abstract;
-      c4o:hasContent ?abstractTxt];
-      dcterms:title ?title;
-      core:embodiment ?man;
-      prism:doi ?doi;
-      fabio:hasPublicationYear ?publicationYear;
-      c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
-      c4o:hasGlobalCountSource ?globalCountSource;
-      c4o:hasGlobalCountValue ?globalCountValue;
-      c4o:hasGlobalCountDate ?globalCountDate];
-      core:realizationOf [ a fabio:Work;
-      core:creator ?authorsList ].
+         <{{work}}> a fabio:Work;
+                  core:creator ?authorsList;
+                  core:realization ?expression.
 
-      ?authorsList a co:List.
+         ?expression a fabio:Expression;
+                  core:part [ a sro:Abstract;
+                                 c4o:hasContent ?abstractTxt];
+                  dcterms:title ?title;
+                  core:embodiment ?man;
+                  prism:doi ?doi;
+                  fabio:hasPublicationYear ?publicationYear;
+                  c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
+                                                      c4o:hasGlobalCountSource ?globalCountSource;
+                                                      c4o:hasGlobalCountValue ?globalCountValue;
+                                                      c4o:hasGlobalCountDate ?globalCountDate].
 
-      ?man a fabio:Manifestation, fabio:WebPage;
-      dcterms:format <http://purl.org/NET/mediatypes/text/html>;
-      core:exemplar ?htmlItem.
+         ?authorsList a co:List.
+
+         ?man a fabio:Manifestation, fabio:WebPage;
+         dcterms:format <http://purl.org/NET/mediatypes/text/html>;
+         core:exemplar ?htmlItem.
       }
    </script>
 
