@@ -35,7 +35,7 @@
    </script>
 
    <script id="query_articleInfo" type="text/template">
-      select ?title ?doi ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
+      select ?title ?doi ?expression ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
       where {
          <{{work}}> a fabio:Work;
                   core:creator ?authorsList;

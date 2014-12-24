@@ -10,8 +10,11 @@ myApp.directive('articleItem', function() {
         restrict: 'E',
         templateUrl: 'app/templates/article-item.html', //todo: path relativo
         scope: {
-            testData: '=',
+            articleData: '=',
             articleId: '@'
+        },
+        link: function($scope) {
+
         }
     };
 

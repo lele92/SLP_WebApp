@@ -5251,6 +5251,10 @@ myApp.controller('ArticlesResultsController', function($rootScope, ArticleManage
             self.articles = ArticleManagerService.getArticles();
         },
         true); //todo:valutare se lasciare questo true
+
+    self.logResults = function() {
+        console.log(self.articles);
+    }
 })
 
 myApp.controller('HomeSearchController', function($rootScope,RequestArticlesService, ArticleManagerService) {
@@ -5276,8 +5280,11 @@ myApp.directive('articleItem', function() {
         restrict: 'E',
         templateUrl: 'app/templates/article-item.html', //todo: path relativo
         scope: {
-            testData: '=',
+            articleData: '=',
             articleId: '@'
+        },
+        link: function($scope) {
+
         }
     };
 
@@ -5295,7 +5302,7 @@ myApp
 
         return {
             getArticles: function() {
-                //fixme: attenzione! si sta passando un riferimento ad articlesResults, se viene cambiato è un casino
+                //fixme: attenzione! si sta passando un riferimento ad articlesResults
                 return articlesResults;
             },
 
@@ -5313,16 +5320,28 @@ myApp
 
                         //per ogni articolo, partendo dal work, richiedo tutte le informazioni generali
                         /* @guide: perchè faccio tante chiamate ajax e non una sola?
-                         * perchè una query monolitica potrebbe richiedere molto tempo, usando un for invece, appena arriva
+                         * perchè una query monolitica potrebbe richiedere molto tempo di caricamento, usando un for invece, appena arriva
                          * un articolo, lo aggiungo subito e vedo i risultati aggiornati nella viewe (grazie al watchCollection)
                          */
                         for (var key in tmpRes) {
-                            //fixme: una chiamata ajax e quindi una query a fuseki per ogni articolo, non molto efficiente
+
                             ArticlesInfoService.getArticleGeneralInfo(tmpRes[key].value).then(
                                 //@guide http://stackoverflow.com/questions/939032/jquery-pass-more-parameters-into-callback
                                 function(response) {
                                     var articleData = response.data.results.bindings[0];
+
+                                    //todo: qui si potrebbe risolvere con un chaining delle chiamate ajax
+                                    ArticlesInfoService.getArticleAuthors(articleData.authorsList.value).then(
+                                        function(response) {
+                                            articleData.authors = response.data.results.bindings;
+                                        },
+                                        //todo caso da gestire meglio
+                                        function(errResponse) {
+                                            console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+                                        }
+                                    );
                                     articlesResults.push(articleData);
+
 
                                 },
 
@@ -5371,6 +5390,14 @@ myApp
             getArticleGeneralInfo: function(workURI) {
                 var q = $('#query_articleInfo').text();
                 var expr = {work: workURI};
+                var queryURL = this.buildQueryURL(q,expr);
+
+                return $http.get(queryURL);
+            },
+
+            getArticleAuthors: function(authorsListURI) {
+                var q = $('#query_articleAuthors').text();
+                var expr = {authorsList: authorsListURI};
                 var queryURL = this.buildQueryURL(q,expr);
 
                 return $http.get(queryURL);

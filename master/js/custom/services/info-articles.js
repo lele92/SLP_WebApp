@@ -18,6 +18,14 @@ myApp
                 return $http.get(queryURL);
             },
 
+            getArticleAuthors: function(authorsListURI) {
+                var q = $('#query_articleAuthors').text();
+                var expr = {authorsList: authorsListURI};
+                var queryURL = this.buildQueryURL(q,expr);
+
+                return $http.get(queryURL);
+            },
+
             //fixme: da spostare fuori dalla api
             /* per costruire la query; query presa dallo script nell'hrml alla quale vengono sostituite le espressioni con ctx */
             buildQueryURL: function(queryElement,ctx) {

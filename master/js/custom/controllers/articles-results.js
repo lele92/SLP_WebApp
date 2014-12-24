@@ -13,4 +13,8 @@ myApp.controller('ArticlesResultsController', function($rootScope, ArticleManage
             self.articles = ArticleManagerService.getArticles();
         },
         true); //todo:valutare se lasciare questo true
+
+    self.logResults = function() {
+        console.log(self.articles);
+    }
 })

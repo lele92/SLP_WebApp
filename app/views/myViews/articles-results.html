@@ -1,6 +1,7 @@
 <div>
-    <accordion close-others="oneAtATime" ng-init="oneAtATime=false">
+    <button ng-click="ArticlesResultsCtrl.logResults()">log</button>
+   <accordion close-others="oneAtATime" ng-init="oneAtATime=false">
         <article-item class="article-item" ng-repeat="article in ArticlesResultsCtrl.articles"
-                      test-data="article" article-id="item_{{$index}}"></article-item>
+                      article-data="article" article-id="article_{{$index}}"></article-item>
     </accordion>
 </div>
