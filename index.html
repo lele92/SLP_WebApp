@@ -18,7 +18,13 @@
    <script src="app/js/app.js"></script>
    <script src="app/js/app.js"></script>
    <script src="app/vendor/rdfquery/dist/js/jquery.rdfquery.core-1.0.js"></script>
-
+   <script src="app/js/custom/custom.js"></script>
+   <script src="app/js/custom/controllers/articles-results.js"></script>
+   <script src="app/js/custom/controllers/home-search.js"></script>
+   <script src="app/js/custom/directives/article-item.js"></script>
+   <script src="app/js/custom/services/info-articles.js"></script>
+   <script src="app/js/custom/services/articles-manager.js"></script>
+   <script src="app/js/custom/services/request-articles.js"></script>
    <!--query: tutti i prefissi-->
    <script id="prefixes" type="text/template">
       PREFIX fabio: <http://purl.org/spar/fabio/>
@@ -116,6 +122,33 @@
                ?expr a fabio:Expression;
                cito:cites <{{expression}}>.
             }
+       }
+   </script>
+
+   <!-- query: info sulla citazione (colore) e sugli articoli citati (cited entity) da un paper (citing entity) a partire dai citation acts-->
+   <script id="query_outgoingCitations" type="text/template">
+       select ?color ?citedEntityExpr ?work ?authorsList ?title ?publicationYear ?htmlItem
+       where {
+            ?citAct a cito:CitationAct;
+                    cito:hasCitingEntity <{{expression}}>;
+                    cito:hasCitedEntity ?citedEntityExpr;
+                    cito:hasCitationCharacterization ?color.
+
+            ?citedEntityExpr a fabio:Expression;
+                    dcterms:title ?title;
+                    core:embodiment ?man;
+                    fabio:hasPublicationYear ?publicationYear;
+                    core:realizationOf ?work.
+
+            ?work a fabio:Work;
+                core:creator ?authorsList;
+
+
+           ?authorsList a co:List.
+
+           ?man a fabio:Manifestation, fabio:WebPage;
+                    dcterms:format <http://purl.org/NET/mediatypes/text/html>;
+                    core:exemplar ?htmlItem.
        }
    </script>
 
