@@ -9,7 +9,7 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
               // Set reference to access them from any scope
               $rootScope.$state = $state;
               $rootScope.$stateParams = $stateParams;
-              $rootScope.$storage = $window.localStorage;
+              $rootScope.$storage = $window.localStorage; //todo: ecco dove sta lo storage!
 
               // Uncomment this to disables template cache
               /*$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {

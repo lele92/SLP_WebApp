@@ -11,10 +11,10 @@ myApp.directive('articleItem', function() {
         templateUrl: 'app/templates/article-item.html', //todo: path relativo
         scope: {
             articleData: '=',
-            articleId: '@'
+            articleIndex: '@'
         },
         link: function($scope) {
-
+            //todo da completare
         }
     };
 

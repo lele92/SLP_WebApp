@@ -24,7 +24,7 @@ myApp
                         //todo non è una bella soluzione usare così le proprietà della risposta, valutare alternative
                         var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
                         var results = "http://stanbol.apache.org/ontology/entityhub/query#queryResult";
-                        var tmpRes = response.data[resSet][results];
+                        var tmpRes = response.data[resSet][results]; //contiene gli uri dei work
 
                         //per ogni articolo, partendo dal work, richiedo tutte le informazioni generali
                         /* @guide: perchè faccio tante chiamate ajax e non una sola?
@@ -35,29 +35,44 @@ myApp
 
                             ArticlesInfoService.getArticleGeneralInfo(tmpRes[key].value).then(
                                 //@guide http://stackoverflow.com/questions/939032/jquery-pass-more-parameters-into-callback
-                                function(response) {
+                                function (response) {
                                     var articleData = response.data.results.bindings[0];
+                                    articlesResults.push(articleData);
 
+                                    // richiedo la lista degli autori
                                     //todo: qui si potrebbe risolvere con un chaining delle chiamate ajax
                                     ArticlesInfoService.getArticleAuthors(articleData.authorsList.value).then(
-                                        function(response) {
+                                        function (response) {
                                             articleData.authors = response.data.results.bindings;
                                         },
                                         //todo caso da gestire meglio
-                                        function(errResponse) {
+                                        function (errResponse) {
                                             console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
                                         }
                                     );
-                                    articlesResults.push(articleData);
 
+                                    // richiedo le info sulle citazioni
+                                    //todo: da valutare: per adesso le info sulle citazioni le richiedo qui
+                                    ArticlesInfoService.getArticleCitationsInfo(articleData.expression.value).then(
+                                        function (response) {
+                                            articleData.inCitActs = response.data.results.bindings[0].numCitActs.value;
+                                            articleData.inNumCites = response.data.results.bindings[0].numCites.value;
 
+                                        },
+
+                                        //todo caso da gestire meglio
+                                        function (errResponse) {
+                                            console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+                                        }
+                                    );
                                 },
 
                                 //todo caso da gestire meglio
-                                function(errResponse) {
-                                    console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText)
+                                function (errResponse) {
+                                    console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
                                 }
                             );
+
                         }
                     },
 

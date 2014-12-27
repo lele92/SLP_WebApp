@@ -7,12 +7,92 @@
     This is just some content to illustrate fancy headings.
 </accordion-group>-->
 
-<div id="{{articleId}}" class="panel panel-default">
-    <div class="panel-heading"><h3>{{articleData.title.value}} - <small>{{articleData.publicationYear.value}}</small></h3></div>
-    <div class="panel-body">
-        <p><span ng-repeat="author in articleData.authors">{{author.givenName.value}} {{author.familyName.value}} </span> </p>
-        <p><strong>Abstract:</strong> {{articleData.abstractTxt.value}}</p>
-        <p><strong>doi:</strong> {{articleData.doi.value}}</p>
+<!--<div id="{{articleId}}" class="panel panel-primary">-->
+    <!--<div class="panel-heading">-->
+        <!--<h3>{{artIndex}}. {{articleData.title.value}} - <small>{{articleData.publicationYear.value}}</small></h3>-->
+        <!--<p><em class="icon-user"></em><span class="label label-primary" ng-repeat="author in articleData.authors"> {{author.givenName.value}} {{author.familyName.value}} </span></p>-->
+    <!--</div>-->
+    <!--<div class="panel-body">-->
+        <!--<p><strong>Abstract:</strong> {{articleData.abstractTxt.value}}</p>-->
+
+    <!--</div>-->
+    <!--<div class="panel-footer"><strong>doi:</strong>{{articleData.doi.value}}</div>-->
+<!--</div>-->
+
+<div id="article_{{articleIndex}}" class="panel panel-primary">
+    <div class="panel-heading">
+        <h3>{{articleIndex}}. {{articleData.title.value}} - <small>{{articleData.publicationYear.value}}</small></h3>
+        <p><em class="icon-user"></em>
+            <span class="author-label" ng-repeat="author in articleData.authors">  {{author.givenName.value}} {{author.familyName.value}} </span>
+        </p>
     </div>
-    <div class="panel-footer">Panel Footer</div>
+
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- START panel-->
+                <div id="abstract_{{articleIndex}}" class="panel panel-default" ng-init="isCollapsed = true">
+                    <div class="panel-heading">
+                        <span class="collapse-heading">Abstract</span>
+                        <i class="pull-right collapse-btn" ng-click="isCollapsed = !isCollapsed" ng-class="{'fa fa-plus-square fa-2x': isCollapsed, 'fa fa-minus-square fa-2x': !isCollapsed}"></i>
+                    </div>
+                    <div class="panel-body" collapse="isCollapsed">
+                        <p>{{articleData.abstractTxt.value}}</p>
+                    </div>
+                </div>
+                <!-- END panel-->
+            </div>
+        </div>
+
+        <div class="row">
+            <h3>Citations</h3>
+            <div class="col-lg-4 col-md-6">
+                <div class="panel widget bg-success">
+                    <div class="row row-table">
+                        <div class="col-xs-4 text-center bg-success-dark pv-lg">
+                            <em class="icon-globe fa-3x"></em>
+                        </div>
+                        <div class="col-xs-8 pv-lg">
+                            <div class="h1 m0 text-bold">{{articleData.globalCountValue.value}}</div>
+                            <div >Global Citations <a ng-href="{{articleData.globalCountSource.value}}">({{articleData.globalCountSource.value}})</a></div>
+                            <p>updated: {{articleData.globalCountDate.value}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <em class="fa fa-comments fa-5x"></em>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="text-lg">{{articleData.inCitActs}}<small>(unique= {{articleData.inNumCites}})</small></div>
+                                <p class="m0">Internal Citations</p> <!-- @fixme: internal citations non va bene, come posso chiamarlo?-->
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="panel-footer bg-gray-dark bt0 clearfix btn-block">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right">
+                           <em class="fa fa-chevron-circle-right"></em>
+                        </span>
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <a ng-href="{{articleData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i> link</a>
+        </div>
+
+
+    </div>
+
+    <div class="panel-footer"><strong>doi:</strong>{{articleData.doi.value}}</div>
 </div>

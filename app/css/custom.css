@@ -1,3 +1,31 @@
 .article-item {
     margin: 10px;
 }
+
+.author-label {
+    margin-right: 5px;
+    margin-left: 5px;
+    background-color: darkgray;
+    color: white;
+    font-size: large;
+}
+
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+
+i.collapse-btn {
+    cursor: pointer;
+}
+
+.collapse-heading {
+    font-size: x-large;
+}

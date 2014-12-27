@@ -18,6 +18,8 @@
    <script src="app/js/app.js"></script>
    <script src="app/js/app.js"></script>
    <script src="app/vendor/rdfquery/dist/js/jquery.rdfquery.core-1.0.js"></script>
+
+   <!--query: tutti i prefissi-->
    <script id="prefixes" type="text/template">
       PREFIX fabio: <http://purl.org/spar/fabio/>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -34,6 +36,7 @@
       PREFIX oa: <http://www.w3.org/ns/oa#>
    </script>
 
+   <!-- query: info generiche su un articolo -->
    <script id="query_articleInfo" type="text/template">
       select ?title ?doi ?expression ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
       where {
@@ -56,36 +59,67 @@
          ?authorsList a co:List.
 
          ?man a fabio:Manifestation, fabio:WebPage;
-         dcterms:format <http://purl.org/NET/mediatypes/text/html>;
-         core:exemplar ?htmlItem.
+               dcterms:format <http://purl.org/NET/mediatypes/text/html>;
+               core:exemplar ?htmlItem.
       }
    </script>
 
+   <!-- query: autori di un articolo -->
    <script id="query_articleAuthors" type="text/template">
       select ?givenName ?familyName
       where {
-      <{{authorsList}}> a co:List;
-      co:item ?item.
+         <{{authorsList}}> a co:List;
+                        co:item ?item.
 
       ?item a co:ListItem;
-      co:itemContent ?author.
+            co:itemContent ?author.
 
       ?author a foaf:Person;
-      foaf:givenName ?givenName;
-      foaf:familyName ?familyName.
+            foaf:givenName ?givenName;
+            foaf:familyName ?familyName.
       }
    </script>
 
-   <script id="query_incomingCitations" type="text/template">
+   <!-- query: numero di citation acts in entrata raggruppati per colore) -->
+   <script id="query_incomingCitationsActsColor" type="text/template">
       select ?color (count(?color) as ?count)
       where {
-      ?citAct a cito:CitationAct;
-      cito:hasCitingEntity ?citingEntity;
-      cito:hasCitedEntity <{{expression}}>;
-      cito:hasCitationCharacterization ?color
+         ?citAct a cito:CitationAct;
+               cito:hasCitingEntity ?citingEntity;
+               cito:hasCitedEntity <{{expression}}>;
+               cito:hasCitationCharacterization ?color
       }
       group by (?color)
    </script>
+
+   <!-- query: numero di citazioni uniche (cito:cites) in entrata -->
+   <script id="query_incomingCites" type="text/template">
+       select (count(?expr) as ?numCites)
+       where {
+            ?expr a fabio:Expression;
+            cito:cites <{{expression}}>.
+       }
+   </script>
+
+   <!-- query: numero di citation acts in entrata (partendo dal work) -->
+   <!--todo: con questa query potrei ottenere anche le citing entity-->
+   <!--todo: da aggiungere subito: posso fare una union e avere anche le citazioni uniche-->
+   <script id="query_incomingCitationsActs" type="text/template">
+       select (count(?citAct) as ?numCitActs) (count(?expr) as ?numCites)
+       where {
+            {
+                ?citAct a cito:CitationAct;
+                cito:hasCitedEntity <{{expression}}>
+            }
+            union
+            {
+               ?expr a fabio:Expression;
+               cito:cites <{{expression}}>.
+            }
+       }
+   </script>
+
+
 </body>
 
 </html>

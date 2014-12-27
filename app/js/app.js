@@ -9,7 +9,7 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
               // Set reference to access them from any scope
               $rootScope.$state = $state;
               $rootScope.$stateParams = $stateParams;
-              $rootScope.$storage = $window.localStorage;
+              $rootScope.$storage = $window.localStorage; //todo: ecco dove sta lo storage!
 
               // Uncomment this to disables template cache
               /*$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
@@ -5281,10 +5281,10 @@ myApp.directive('articleItem', function() {
         templateUrl: 'app/templates/article-item.html', //todo: path relativo
         scope: {
             articleData: '=',
-            articleId: '@'
+            articleIndex: '@'
         },
         link: function($scope) {
-
+            //todo da completare
         }
     };
 
@@ -5316,7 +5316,7 @@ myApp
                         //todo non è una bella soluzione usare così le proprietà della risposta, valutare alternative
                         var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
                         var results = "http://stanbol.apache.org/ontology/entityhub/query#queryResult";
-                        var tmpRes = response.data[resSet][results];
+                        var tmpRes = response.data[resSet][results]; //contiene gli uri dei work
 
                         //per ogni articolo, partendo dal work, richiedo tutte le informazioni generali
                         /* @guide: perchè faccio tante chiamate ajax e non una sola?
@@ -5327,29 +5327,44 @@ myApp
 
                             ArticlesInfoService.getArticleGeneralInfo(tmpRes[key].value).then(
                                 //@guide http://stackoverflow.com/questions/939032/jquery-pass-more-parameters-into-callback
-                                function(response) {
+                                function (response) {
                                     var articleData = response.data.results.bindings[0];
+                                    articlesResults.push(articleData);
 
+                                    // richiedo la lista degli autori
                                     //todo: qui si potrebbe risolvere con un chaining delle chiamate ajax
                                     ArticlesInfoService.getArticleAuthors(articleData.authorsList.value).then(
-                                        function(response) {
+                                        function (response) {
                                             articleData.authors = response.data.results.bindings;
                                         },
                                         //todo caso da gestire meglio
-                                        function(errResponse) {
+                                        function (errResponse) {
                                             console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
                                         }
                                     );
-                                    articlesResults.push(articleData);
 
+                                    // richiedo le info sulle citazioni
+                                    //todo: da valutare: per adesso le info sulle citazioni le richiedo qui
+                                    ArticlesInfoService.getArticleCitationsInfo(articleData.expression.value).then(
+                                        function (response) {
+                                            articleData.inCitActs = response.data.results.bindings[0].numCitActs.value;
+                                            articleData.inNumCites = response.data.results.bindings[0].numCites.value;
 
+                                        },
+
+                                        //todo caso da gestire meglio
+                                        function (errResponse) {
+                                            console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+                                        }
+                                    );
                                 },
 
                                 //todo caso da gestire meglio
-                                function(errResponse) {
-                                    console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText)
+                                function (errResponse) {
+                                    console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
                                 }
                             );
+
                         }
                     },
 
@@ -5383,6 +5398,7 @@ myApp
 
 myApp
     .factory('ArticlesInfoService', function($http,$interpolate) {
+        //var endpoint = "http://two.eelst.cs.unibo.it:8181/data/query"
         var endpoint = "http://localhost:8181/data/query";
         var prefixes = $('#prefixes').text();
 
@@ -5403,8 +5419,17 @@ myApp
                 return $http.get(queryURL);
             },
 
+
+            getArticleCitationsInfo: function(expressionURI) {
+                var q = $('#query_incomingCitationsActs').text();
+                var expr = {expression: expressionURI};
+                var queryURL = this.buildQueryURL(q,expr);
+
+                return $http.get(queryURL);
+            },
+
             //fixme: da spostare fuori dalla api
-            /* per costruire la query; query presa dallo script nell'hrml alla quale vengono sostituite le espressioni con ctx */
+            /* per costruire la query; query presa dallo script nell'html alla quale vengono sostituite le espressioni con ctx */
             buildQueryURL: function(queryElement,ctx) {
                 var query = prefixes + $interpolate(queryElement)(ctx);
                 var encodedquery = encodeURIComponent(query);

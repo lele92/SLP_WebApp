@@ -1,7 +1,100 @@
 <div>
     <button ng-click="ArticlesResultsCtrl.logResults()">log</button>
-   <accordion close-others="oneAtATime" ng-init="oneAtATime=false">
+    <div id="test_id" class="panel panel-primary">
+        <div class="panel-heading">
+            <h3>1. FaBiO and CiTO: Ontologies for describing bibliographic resources and citations - <small>2012</small></h3>
+            <p><em class="icon-user"></em>
+                <span class="author-label"> Silvio Peroni </span>
+                <span class="author-label"> Fabio Vitali </span>
+                <span class="author-label"> Angelo Di Iorio </span>
+            </p>
+
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- START panel-->
+                    <div id="panelDemo8" class="panel panel-default" ng-init="isCollapsed = true">
+                        <div class="panel-heading">
+                            <span class="collapse-heading">Abstract</span>
+                            <i class="pull-right collapse-btn" ng-click="isCollapsed = !isCollapsed" ng-class="{'fa fa-plus-square fa-2x': isCollapsed, 'fa fa-minus-square fa-2x': !isCollapsed}"></i>
+                        </div>
+                        <div class="panel-body" collapse="isCollapsed">
+                            <p>Semantic publishing is the use of Web and Semantic Web technologies to enhance the meaning of a published journal article,
+                                to facilitate its automated discovery, to enable its linking to semantically related articles, to provide access to data within
+                                the article in actionable form, and to facilitate integration of data between articles. Recently, semantic publishing has opened
+                                the possibility of a major step forward in the digital publishing world. For this to succeed, new semantic models and visualization
+                                tools are required to fully meet the specific needs of authors and publishers. In this article, we introduce the principles and
+                                architectures of two new ontologies central to the task of semantic publishing: FaBiO, the FRBR-aligned Bibliographic Ontology,
+                                an ontology for recording and publishing bibliographic records of scholarly endeavours on the Semantic Web, and CiTO, the Citation
+                                Typing Ontology, an ontology for the characterization of bibliographic citations both factually and rhetorically. We present those
+                                two models step by step, in order to emphasise their features and to stress their advantages relative to other pre-existing information
+                                models. Finally, we review the uptake of FaBiO and CiTO within the academic and publishing communities.</p>
+                        </div>
+                    </div>
+                    <!-- END panel-->
+                </div>
+            </div>
+
+
+            <div class="row">
+                <h3>Citations</h3>
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel widget bg-success">
+                        <div class="row row-table">
+                            <div class="col-xs-4 text-center bg-success-dark pv-lg">
+                                <em class="icon-globe fa-3x"></em>
+                            </div>
+                            <div class="col-xs-8 pv-lg">
+                                <div class="h1 m0 text-bold">127</div>
+                                <div >Global Citations <a href="http://www.scopus.com">(www.scopus.com)</a></div>
+                                <p>updated: 20/12/2014</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <em class="fa fa-comments fa-5x"></em>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="text-lg">26 <small>(unique= 5)</small></div>
+                                    <p class="m0">Internal Citations</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="panel-footer bg-gray-dark bt0 clearfix btn-block">
+                            <span class="pull-left">View Details</span>
+                        <span class="pull-right">
+                           <em class="fa fa-chevron-circle-right"></em>
+                        </span>
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <a href="www.google.it" target="_blank"><i class="fa fa-external-link"></i> link</a>
+        </div>
+
+        <div class="panel-footer"><strong>doi:</strong>10.1016/j.websem.2012.08.001</div>
+    </div>
+
+    <!--<article-item ng-repeat="article in ArticlesResultsCtrl.articles"-->
+                  <!--article-id="{{$index}}">-->
+
+    <!--</article-item>-->
+   <!--<accordion close-others="oneAtATime" ng-init="oneAtATime=false">-->
         <article-item class="article-item" ng-repeat="article in ArticlesResultsCtrl.articles"
-                      article-data="article" article-id="article_{{$index}}"></article-item>
-    </accordion>
+                    article-data="article"
+                    article-index="{{$index}}"
+
+        </article-item>
+    <!--</accordion>-->
 </div>

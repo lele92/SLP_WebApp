@@ -6,6 +6,7 @@
 
 myApp
     .factory('ArticlesInfoService', function($http,$interpolate) {
+        //var endpoint = "http://two.eelst.cs.unibo.it:8181/data/query"
         var endpoint = "http://localhost:8181/data/query";
         var prefixes = $('#prefixes').text();
 
@@ -26,8 +27,17 @@ myApp
                 return $http.get(queryURL);
             },
 
+
+            getArticleCitationsInfo: function(expressionURI) {
+                var q = $('#query_incomingCitationsActs').text();
+                var expr = {expression: expressionURI};
+                var queryURL = this.buildQueryURL(q,expr);
+
+                return $http.get(queryURL);
+            },
+
             //fixme: da spostare fuori dalla api
-            /* per costruire la query; query presa dallo script nell'hrml alla quale vengono sostituite le espressioni con ctx */
+            /* per costruire la query; query presa dallo script nell'html alla quale vengono sostituite le espressioni con ctx */
             buildQueryURL: function(queryElement,ctx) {
                 var query = prefixes + $interpolate(queryElement)(ctx);
                 var encodedquery = encodeURIComponent(query);
