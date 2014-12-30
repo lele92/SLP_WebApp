@@ -2,31 +2,10 @@
     <div>
         <button ng-click="ArticlesResultsCtrl.logResults()">log</button>
 
-        <!--todo: da spostare nella side bar a destra-->
-        <select  class="form-control" ng-model="ArticlesResultsCtrl.publicationYearFil">
-            <option></option>
-            <option>2002</option>
-            <option>2003</option>
-            <option>2004</option>
-            <option>2005</option>
-            <option>2006</option>
-            <option>2007</option>
-            <option>2008</option>
-            <option>2009</option>
-            <option>2010</option>
-            <option>2011</option>
-            <option>2012</option>
-        </select>
-
-        <p ng-repeat="z in ArticlesResultsCtrl.test | myFilter:ArticlesResultsCtrl.testParam">{{z}}</p>
-
-        <!--end-->
-
-
         <article-item class="article-item" ng-repeat="article in ArticlesResultsCtrl.articles"
                       article-data="article"
                       article-index="{{$index}}"
-                      year-filter="{{ArticlesResultsCtrl.publicationYearFil}}">
+                      year-filter="{{ArticlesResultsCtrl.publicationYearFil.value}}">
         </article-item>
     </div>
 </div>

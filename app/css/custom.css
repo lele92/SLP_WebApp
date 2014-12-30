@@ -29,3 +29,20 @@ i.collapse-btn {
 .collapse-heading {
     font-size: x-large;
 }
+
+.filter-enabled-heading {
+    color: #008000;
+    font-weight: bold;
+}
+
+.filter-text-disabled {
+    color: #696969;
+}
+
+.filter-text-enabled {
+    color: #0055aa;
+}
+
+.filter-navbar {
+    background-color: #277D68
+}

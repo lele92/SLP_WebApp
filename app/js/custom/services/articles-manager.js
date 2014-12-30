@@ -8,36 +8,36 @@ myApp
     .factory('ArticleManagerService', function(RequestArticlesService, ArticlesInfoService, $rootScope) {
         var articlesResults = [];
         var mockResults = [
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            //} ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            } ,
             {
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
             } ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            //} ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            } ,
             {
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
             } ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
-            //}
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
+            }
         ];
 
         return {
@@ -174,6 +174,7 @@ myApp
 
             //importante! se si modifica articlesResults, non riassegnare altrimenti tutti i $watch non vanno più! modificare usando angular.copy
             //@guide https://docs.angularjs.org/api/ng/function/angular.copy
+            //@guide http://stackoverflow.com/questions/17995229/changed-value-on-angularjs-service-not-triggering-watch-within-directive
             /* per aggiornare gli articoli */
             setArticles: function(newArticles) {
                 angular.copy(newArticles, articlesResults);
