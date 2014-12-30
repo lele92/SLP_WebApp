@@ -22,17 +22,16 @@
 <div id="article_{{articleIndex}}" class="panel panel-primary">
     <div class="panel-heading">
         <h3>{{articleIndex}}. {{articleData.title.value}} - <small>{{articleData.publicationYear.value}}</small></h3>
-        <p><em class="icon-user"></em>
+        <p><em class="icon-user fa-2x"></em>
             <span class="author-label" ng-repeat="author in articleData.authors">  {{author.givenName.value}} {{author.familyName.value}} </span>
         </p>
     </div>
 
     <div class="panel-body">
-
         <div class="row">
             <div class="col-lg-12">
                 <!-- START panel-->
-                <div id="abstract_{{articleIndex}}" class="panel panel-default" ng-init="isCollapsed = true">
+                <div id="abstract_{{articleIndex}}" class="panel panel-default" ng-init="isCollapsed = false">
                     <div class="panel-heading">
                         <span class="collapse-heading">Abstract</span>
                         <i class="pull-right collapse-btn" ng-click="isCollapsed = !isCollapsed" ng-class="{'fa fa-plus-square fa-2x': isCollapsed, 'fa fa-minus-square fa-2x': !isCollapsed}"></i>
@@ -85,6 +84,10 @@
                 </div>
             </div>
 
+        </div>
+        <div class="row">
+            <biblio-item ng-repeat="biblioItem in articleData.biblioInfo"
+                            item-data="biblioItem"></biblio-item>
         </div>
 
         <div class="row">

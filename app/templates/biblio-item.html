@@ -1,0 +1,29 @@
+<!-- START widget-->
+<div class="panel widget">
+    <div class="row row-table row-flush">
+        <div class="col-xs-1 col-lg-1 bg-info text-center">
+            <em class="fa fa-users fa-2x"></em>
+        </div>
+        <div class="col-xs-11 col-lg-11">
+            <div class="panel-body ">
+                <div class="row">
+                    <h3 class="mt0">{{itemData.title.value}} - {{itemData.publicationYear.value}}</h3>
+                    <div>
+                        <h4>authors</h4>
+                        <ul>
+                            <li ng-repeat="author in itemData.authors">{{author.givenName.value}}  {{author.familyName.value}}</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>citation acts</h4>
+                        <ul>
+                            <li ng-repeat="citAct in itemData.citActsInfo">{{citAct.color.value}} {{citAct.numCitActs.value}} </li>
+                        </ul>
+                    </div>
+                    <a ng-href="{{ itemData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i> link</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END widget-->

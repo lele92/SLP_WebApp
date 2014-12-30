@@ -11,35 +11,53 @@ myApp
         var prefixes = $('#prefixes').text();
 
         return {
+            //@guide per le info generali su un articolo
             getArticleGeneralInfo: function(workURI) {
-                var q = $('#query_articleInfo').text();
                 var expr = {work: workURI};
-                var queryURL = this.buildQueryURL(q,expr);
+                var queryURL = this.buildQueryURL('#query_articleInfo',expr);
 
                 return $http.get(queryURL);
             },
 
+            //@guide per la lista di autori di un articolo
             getArticleAuthors: function(authorsListURI) {
-                var q = $('#query_articleAuthors').text();
                 var expr = {authorsList: authorsListURI};
-                var queryURL = this.buildQueryURL(q,expr);
+                var queryURL = this.buildQueryURL('#query_articleAuthors',expr);
 
                 return $http.get(queryURL);
             },
 
 
             getArticleCitationsInfo: function(expressionURI) {
-                var q = $('#query_incomingCitationsActs').text();
                 var expr = {expression: expressionURI};
-                var queryURL = this.buildQueryURL(q,expr);
+                var queryURL = this.buildQueryURL('#query_incomingCitationsActs',expr);
 
                 return $http.get(queryURL);
             },
 
+            //@guide per le info generiche sugli articoli citati da un certo articolo
+            getBiblioInfo: function(expressionURI) {
+                var expr = {expression: expressionURI};
+                var queryURL = this.buildQueryURL('#query_citedArticles',expr);
+
+                return $http.get(queryURL);
+            },
+
+            //@guide per le info aggiuntive sugli articoli citati da un certo articolo: numero di citazioni e colore
+            getCitationActsInfo: function(citingExp, citedExp) {
+                var expr = {artExpression: citingExp,
+                            citedExpression: citedExp};
+                var queryURL = this.buildQueryURL('#query_citationActsInfo',expr);
+
+                return $http.get(queryURL);
+
+            },
+
             //fixme: da spostare fuori dalla api
             /* per costruire la query; query presa dallo script nell'html alla quale vengono sostituite le espressioni con ctx */
-            buildQueryURL: function(queryElement,ctx) {
-                var query = prefixes + $interpolate(queryElement)(ctx);
+            buildQueryURL: function(queryId,ctx) {
+                var queryText = $(queryId).text();
+                var query = prefixes + $interpolate(queryText)(ctx);
                 var encodedquery = encodeURIComponent(query);
 
                 return endpoint+"?format=json&query="+encodedquery;

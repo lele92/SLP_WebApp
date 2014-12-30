@@ -10,21 +10,29 @@
    <link rel="stylesheet" href="app/css/app.css" data-ng-if="!app.layout.isRTL">
    <link rel="stylesheet" href="app/css/app-rtl.css" data-ng-if="app.layout.isRTL">
    <link rel="stylesheet" href="app/css/custom.css">
+    <link rel="stylesheet" href="app/vendor/ng-table/ng-table.css">
 </head>
 
 <body data-ng-class="{ 'layout-fixed' : app.layout.isFixed, 'aside-collapsed' : app.layout.isCollapsed, 'layout-boxed' : app.layout.isBoxed }">
    <div data-ui-view="" data-autoscroll="false" data-ng-class="mainViewAnimation" class="wrapper"></div>
    <script src="app/js/base.js"></script>
    <script src="app/js/app.js"></script>
-   <script src="app/js/app.js"></script>
-   <script src="app/vendor/rdfquery/dist/js/jquery.rdfquery.core-1.0.js"></script>
+
+   <script src="app/vendor/ng-table/ng-table.js"></script> <!-- todo: da spostare: da gestire con bower e gulp tasks-->
+
+
    <script src="app/js/custom/custom.js"></script>
+   <script src="app/js/custom/filters/biblioFilters.js"></script>
    <script src="app/js/custom/controllers/articles-results.js"></script>
    <script src="app/js/custom/controllers/home-search.js"></script>
    <script src="app/js/custom/directives/article-item.js"></script>
+   <script src="app/js/custom/directives/biblio-item.js"></script>
    <script src="app/js/custom/services/info-articles.js"></script>
    <script src="app/js/custom/services/articles-manager.js"></script>
    <script src="app/js/custom/services/request-articles.js"></script>
+
+
+
    <!--query: tutti i prefissi-->
    <script id="prefixes" type="text/template">
       PREFIX fabio: <http://purl.org/spar/fabio/>
@@ -126,7 +134,7 @@
    </script>
 
    <!-- query: info sulla citazione (colore) e sugli articoli citati (cited entity) da un paper (citing entity) a partire dai citation acts-->
-   <script id="query_outgoingCitations" type="text/template">
+   <script id="query_biblioInfo" type="text/template">
        select ?color ?citedEntityExpr ?work ?authorsList ?title ?publicationYear ?htmlItem
        where {
             ?citAct a cito:CitationAct;
@@ -141,7 +149,7 @@
                     core:realizationOf ?work.
 
             ?work a fabio:Work;
-                core:creator ?authorsList;
+                core:creator ?authorsList.
 
 
            ?authorsList a co:List.
@@ -152,7 +160,68 @@
        }
    </script>
 
+   <!-- query: info sugli articoli citati (cito:cites, quindi articoli unici) da un articolo (partendo dall'expression)-->
+   <script id="query_citedArticles" type="text/template">
+       select ?citedExpression ?articleWork ?authorsList ?title ?publicationYear ?htmlItem
+       where {
+            <{{expression}}> cito:cites ?citedExpression.
 
+            ?citedExpression a fabio:Expression;
+                            dcterms:title ?title;
+                            core:embodiment ?man;
+                            fabio:hasPublicationYear ?publicationYear;
+                            core:realizationOf ?articleWork.
+
+            ?articleWork a fabio:Work;
+                core:creator ?authorsList.
+
+            ?authorsList a co:List.
+
+            ?man a fabio:Manifestation, fabio:WebPage;
+                dcterms:format <http://purl.org/NET/mediatypes/text/html>;
+                core:exemplar ?htmlItem.
+       }
+   </script>
+
+   <!-- query: quante volte un citing entity cita un cited entity per un certo motivo (colore)-->
+   <script id="query_citationActsInfo" type="text/template">
+       select ?color (count(?citationAct) as ?numCitActs)
+       where {
+            ?citationAct a cito:CitationAct;
+                        cito:hasCitingEntity <{{artExpression}}>;
+                        cito:hasCitedEntity <{{citedExpression}}>;
+                        cito:hasCitationCharacterization ?color
+       } group by (?color)
+   </script>
+
+   <!--todo: query da eliminare, non viene usata-->
+   <script id="query_tempQuery" type="text/template">
+   select ?work ?citAct1 ?citAct2
+   where {
+       ?work a fabio:Work;
+            core:realization ?exp.
+
+       ?exp a fabio:Expression.
+
+       ?citAct1 a cito:CitationAct;
+                cito:hasCitingEntity ?exp;
+                cito:hasCitedEntity ?citedExp1.
+
+       ?citAct2 a cito:CitationAct;
+                cito:hasCitingEntity ?exp;
+                cito:hasCitedEntity ?citedExp2.
+
+       ?citAct3 a cito:CitationAct;
+               cito:hasCitingEntity ?exp;
+               cito:hasCitedEntity ?citedExp3.
+
+       ?citedExp1 a fabio:Expression.
+       ?citedExp2 a fabio:Expression.
+   ?citedExp3 a fabio:Expression.
+
+       filter (?citAct1 != ?citAct2 && ?citAct1 != ?citAct3 && ?citAct2 != ?citAct3)
+        filter (?citedExp1 != ?citedExp2 && ?citedExp1 != ?citedExp3 && ?citedExp2 != ?citedExp3)
+   } limit 1
+   </script>
 </body>
-
 </html>
