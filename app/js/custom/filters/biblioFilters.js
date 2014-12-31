@@ -6,7 +6,7 @@ myApp.filter('afterYear', function () {
             var item;
             for (var i=0; i<items.length; i++) {
                 item = items[i]
-                if (item.publicationYear.value >= year) {
+                if (item.publicationYear >= year) {
                     filtered.push(item);
                 }
             }

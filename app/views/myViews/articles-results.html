@@ -3,9 +3,11 @@
         <button ng-click="ArticlesResultsCtrl.logResults()">log</button>
 
         <article-item class="article-item" ng-repeat="article in ArticlesResultsCtrl.articles"
-                      article-data="article"
-                      article-index="{{$index}}"
-                      year-filter="{{ArticlesResultsCtrl.publicationYearFil.value}}">
+                        article-data="article"
+                        article-index="{{$index}}"
+                        year-filter="{{ArticlesResultsCtrl.publicationYearFil.value}}"
+                        order-filter="{{ArticlesResultsCtrl.orderByFil.value}}"
+                        sort-filter="{{ArticlesResultsCtrl.sortFil.value}}">
         </article-item>
     </div>
 </div>

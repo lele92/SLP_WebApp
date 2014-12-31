@@ -86,7 +86,9 @@
 
         </div>
         <div class="row">
-            <biblio-item ng-repeat="biblioItem in articleData.biblioInfo | afterYear:yearFilter"
+            <biblio-item ng-repeat="biblioItem in articleData.biblioInfo |
+                                        afterYear:yearFilter |
+                                        orderBy:orderFilter:sortFilter"
                             item-data="biblioItem"></biblio-item>
         </div>
 

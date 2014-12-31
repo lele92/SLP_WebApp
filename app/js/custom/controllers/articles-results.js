@@ -5,6 +5,10 @@ myApp.controller('ArticlesResultsController', function($rootScope, ArticleManage
 
     self.publicationYearFil =  FiltersManagerService.getStartingPublicationYear(); // prende il filtro dell'anno da applicare agli articoli mostrati nella view
 
+    self.orderByFil = FiltersManagerService.getOrderBy(); //prende l'ordinamento da applicare alla bibliografia
+
+    self.sortFil = FiltersManagerService.getSort(); //prende il sort da applicare alla bibliografia
+
     //importante: articles deve essere tra apici, dannazione! ho perso 3 ore prima di capirlo!
     //@guide http://stackoverflow.com/questions/15380140/service-variable-not-updating-in-controller
     //@guide http://stsc3000.github.io/blog/2013/10/26/a-tale-of-frankenstein-and-binding-to-service-values-in-angular-dot-js/

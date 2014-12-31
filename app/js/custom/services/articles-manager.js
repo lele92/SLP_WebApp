@@ -13,7 +13,7 @@ myApp
             } ,
             {
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
-            } ,
+            },
             {
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
             } ,
@@ -63,6 +63,16 @@ myApp
                     );
                 };
 
+                /* utility per convertire la stringa anno in int */
+                var parseYear= function(year) {
+                    //se l'anno è una stringa lo converte in numero; so già che è una stringa, ma non si sa mai...
+                    if (angular.isString(year)) {
+                        return parseInt(year);
+                    }
+
+                    return year;
+                };
+
                 /* per le info sui citacion acts di un certo item X della bibliografia:  per ogni elemento della bibliografia, quante volte X è citato dal citingEntity per un certo motivo*/
                 var getBiblioItemCitActsInfo = function(citingEntity, biblioItem) {
                     //I param: citing entity - II param: cited entity
@@ -75,7 +85,7 @@ myApp
                             console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
                         }
                     );
-                }
+                };
 
                 return RequestArticlesService.searchArticles(searchString).then(
                     // success
@@ -89,7 +99,7 @@ myApp
                         //@guide per ogni articolo, partendo dal work, richiedo tutte le informazioni generali + info bibliografiche
                         /* @guide: perchè faccio tante chiamate ajax e non una sola?
                          * perchè una query monolitica potrebbe richiedere molto tempo di caricamento, usando un for invece, appena arriva
-                         * un articolo, lo aggiungo subito e vedo i risultati aggiornati nella viewe (grazie al watchCollection)
+                         * un articolo, lo aggiungo subito e vedo i risultati aggiornati nella view (grazie al watchCollection)
                          */
                         for (var key in tmpRes) {
 
@@ -99,7 +109,9 @@ myApp
                                 //@guide http://stackoverflow.com/questions/939032/jquery-pass-more-parameters-into-callback
                                 function (response) {
                                     var articleData = response.data.results.bindings[0];
-                                    articlesResults.push(articleData);
+                                    articleData.publicationYear.value = parseYear(articleData.publicationYear.value);
+
+                                    articlesResults.push(articleData); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia
 
                                     //@guide richiedo la lista degli autori
                                     //todo: qui si potrebbe risolvere con un chaining delle chiamate ajax
@@ -139,7 +151,13 @@ myApp
                                             //fixme trovare un modo alternativo, altrimenti si fanno troppe chiamate ajax e query a fuseki
                                             //idea: info sulla bibliografia potrebbero essere richieste al drill down come nel caso delle ulteriori info sulle citazioni
                                             for (var i in articleData.biblioInfo) {
+                                                //faccio i segenti riassegnamenti per facilitare filtri e ordinamenti dei risultati in bibliografia
+                                                // così le properties non sono più oggetti ma stringhe o numeri
+                                                articleData.biblioInfo[i].publicationYear = parseYear(articleData.biblioInfo[i].publicationYear.value);
+                                                articleData.biblioInfo[i].title = articleData.biblioInfo[i].title.value;
 
+
+                                                //metodi utili anche per avere uno scope isolato e non avere problemi con l'indice nelle callback
                                                 //@guide autori dell'articolo citato
                                                 getBiblioItemAuthors(articleData.biblioInfo[i]);
 

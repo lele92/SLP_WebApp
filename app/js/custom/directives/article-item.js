@@ -13,7 +13,9 @@ myApp.directive('articleItem', function() {
             articleData: '=',
             articleIndex: '@',
             //biblioFilters: '=' //@todo DA VALUTARE usare un solo oggetto per passare tutti i filtri da applicare alla bibliografia
-            yearFilter: '@' //@guide attributo per passare il filtro per anno di pubblicazione
+            yearFilter: '@', //@guide attributo per passare il filtro per anno di pubblicazione
+            orderFilter: '@', //@guide  attributo per passare l'ordinamento da usare
+            sortFilter: '@' //@guide attributo per passare il sort da usare
         },
         link: function($scope) {
             //todo da completare
