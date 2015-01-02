@@ -19,7 +19,7 @@ myApp.directive('articleItem', function() {
             onlySelfcitationFilter: '='  //@guide attributo per passare il filtro per le autocitazioni
         },
         link: function(attrs, $scope) {
-            console.log(attrs);
+            //console.log(attrs);
         }
     };
 

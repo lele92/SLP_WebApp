@@ -11,7 +11,7 @@
                     <div>
                         <h4>authors</h4>
                         <ul>
-                            <li ng-repeat="author in itemData.authors">{{author.givenName.value}}  {{author.familyName.value}}</li>
+                            <li ng-class="{'shared-author': isSharedAuthor(author) }" ng-repeat="author in itemData.authors">{{author.givenName.value}}  {{author.familyName.value}}</li>
                         </ul>
                     </div>
                     <div>
