@@ -15,10 +15,23 @@
                         </ul>
                     </div>
                     <div>
-                        <h4>citation acts</h4>
+                        <h4>self-citation</h4>
+                        <span> {{itemData.isSelfcitation}}</span>
+                        <h4>shared authors</h4>
                         <ul>
-                            <li ng-repeat="citAct in itemData.citActsInfo">{{citAct.color.value}} {{citAct.numCitActs.value}} </li>
+                            <li ng-repeat="author in itemData.sharedAuthors">{{author}}</li>
                         </ul>
+                    </div>
+                    <div>
+                        <h4>citation acts</h4>
+                        <p>total citation acts: {{itemData.totCitActs}}</p>
+                        <ul>
+                            <li ng-repeat="citAct in itemData.citActsInfo">{{citAct.color}}: {{citAct.numCitActs}} </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Global Citations: </h4>
+                        {{itemData.globalCountValue}} ({{itemData.globalCountDate}})
                     </div>
                     <a ng-href="{{ itemData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i> link</a>
                 </div>

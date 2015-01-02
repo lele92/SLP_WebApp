@@ -1,7 +1,8 @@
 myApp.controller('BiblioFiltersController', function(FiltersManagerService) {
     var self = this;
     /* filters value */ //'F' -> convenzione per Filter
-    self.publicationYearF;
+    self.publicationYearF = FiltersManagerService.getStartingPublicationYear();
+    self.onlySelfcitationsF = FiltersManagerService.getOnlySelfCitations();
 
     /* orderBy value */ //'V' -> convenzione per Value
     self.orderByV = FiltersManagerService.getOrderBy().value;   //ordinamento di default stabilito nel service
@@ -13,9 +14,14 @@ myApp.controller('BiblioFiltersController', function(FiltersManagerService) {
     /* order option vars */
     self.publicationYear = "publicationYear";
     self.title = "title";
+    self.globalCitations = "globalCountValue";
+    self.totCitActs = "totCitActs";
 
     /* checkboxes*/
     self.checkYear = false;
+    self.checkOnlySelfCitations = false;
+
+    /* funzioni invocate all'interazione con i filtri */
 
     self.switchYearFilter = function() {
         if (self.checkYear) {
@@ -24,6 +30,11 @@ myApp.controller('BiblioFiltersController', function(FiltersManagerService) {
             console.log('filtro anno disattivato');
             self.publicationYearF = 0; //fixme: barbatrucco momentaneo, da eliminare (tutti gli articoli sono stati pubblicati dopo l'anno 0, credo...)
         }
+    }
+
+    self.switchOnlySelfcitations = function() {
+        self.checkOnlySelfCitations = !self.checkOnlySelfCitations;
+        console.log("modificato checkOnlySelfCitations");
     }
 
     self.applySort = function() {
@@ -41,5 +52,6 @@ myApp.controller('BiblioFiltersController', function(FiltersManagerService) {
     self.applyFilters = function() {
         console.log("filtri applicati");
         FiltersManagerService.setStartingPublicationYear(self.publicationYearF);
+        FiltersManagerService.setOnlySelfCitations(self.onlySelfcitationsF);
     }
 })

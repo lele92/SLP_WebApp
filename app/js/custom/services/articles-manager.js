@@ -8,36 +8,36 @@ myApp
     .factory('ArticleManagerService', function(RequestArticlesService, ArticlesInfoService, $rootScope) {
         var articlesResults = [];
         var mockResults = [
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            } ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            //} ,
             {
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
             }
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
+            //}
         ];
 
         return {
@@ -51,10 +51,16 @@ myApp
             /* per richiedere i risultati della ricerca */
             requestArticles: function(searchString) {
                 /* per la lista degli autori di un certo item della bibliografia */
-                var getBiblioItemAuthors = function(biblioItem) {
+                //I param: elemento bibliografia, II param: array autori articolo citante; II param serve per capire se si tratta di autocitazione
+                var getBiblioItemAuthors = function(biblioItem, citingArticleAuthors) {
                     ArticlesInfoService.getArticleAuthors(biblioItem.authorsList.value).then(
                         function (response) {
                             biblioItem.authors = response.data.results.bindings;
+                            for (var i in biblioItem.authors) {
+                                biblioItem.authors[i].fullName = biblioItem.authors[i].fullName.value;
+                            }
+
+                            setSelfcitationInfo(biblioItem, citingArticleAuthors);
                         },
                         //todo caso da gestire meglio
                         function (errResponse) {
@@ -63,15 +69,25 @@ myApp
                     );
                 };
 
-                /* utility per convertire la stringa anno in int */
-                var parseYear= function(year) {
-                    //se l'anno è una stringa lo converte in numero; so già che è una stringa, ma non si sa mai...
-                    if (angular.isString(year)) {
-                        return parseInt(year);
+                /* utility per convertire la stringa in int */
+                var stringToInt = function(obj) {
+                    //se obj è una stringa lo converte in numero; so già che è una stringa, ma non si sa mai...
+                    if (angular.isString(obj)) {
+                        return parseInt(obj);
                     }
 
-                    return year;
+                    return obj;
                 };
+
+                /* calcola il numero di atti citazionali da un articolo ad un altro */
+                var countNumCitActs = function(citActsInfo) {
+                    var count = 0;
+                    for (var i in citActsInfo) {
+                        count += citActsInfo[i].numCitActs;
+                    }
+
+                    return count;
+                }
 
                 /* per le info sui citacion acts di un certo item X della bibliografia:  per ogni elemento della bibliografia, quante volte X è citato dal citingEntity per un certo motivo*/
                 var getBiblioItemCitActsInfo = function(citingEntity, biblioItem) {
@@ -79,6 +95,13 @@ myApp
                     ArticlesInfoService.getCitationActsInfo(citingEntity.value, biblioItem.citedExpression.value).then(
                         function (response) {
                             biblioItem.citActsInfo = response.data.results.bindings;
+                            var tmpCitActsInfo;
+                            for (var j in biblioItem.citActsInfo) {
+                                tmpCitActsInfo = biblioItem.citActsInfo[j];
+                                tmpCitActsInfo.color = tmpCitActsInfo.color.value;
+                                tmpCitActsInfo.numCitActs = stringToInt(tmpCitActsInfo.numCitActs.value);
+                            }
+                            biblioItem.totCitActs = countNumCitActs(biblioItem.citActsInfo);
                         },
                         //todo caso da gestire meglio
                         function (errResponse) {
@@ -86,6 +109,37 @@ myApp
                         }
                     );
                 };
+
+                /* cerca autori in comune tra l'articolo citante e il citato:
+                 * - se ce n'è almeno uno allora si tratta di una autocitazione
+                  * - il nome di ogni autore condiviso viene aggiunto ad un array: verrà poi usato per evidenziare gli autori condivisi nell'elemento bibliografico*/
+                var setSelfcitationInfo = function(biblioItem, citingArticleAuthors) {
+                    //fixme: potenziale problema di sincronizzazione: vengono confrontati gli autori dell'elemento bibliografico con gli autori dell'articolo citante,
+                    // ma questi ultimi sono il risultato di una chiamata asincrona, quindi in teoria potrebbero non essere ancora disponibili quando si effettuano i controlli
+                    // per il momento se si verifica un caso del genere non faccio nessun confronto e notifico il problema, per questo il seguente if
+                    // prima idea per risolvere: se non ci sono i citingArticleAuthors, chiederli qui
+                    if(citingArticleAuthors !== undefined && biblioItem.authors !== undefined) {
+                        biblioItem.sharedAuthors = [];
+                        biblioItem.isSelfcitation = false;
+                        var tmpAuthor;
+
+                        for (var bIndex in biblioItem.authors) {
+                            tmpAuthor = biblioItem.authors[bIndex];
+
+                            for (var index in citingArticleAuthors) {
+
+                                if (citingArticleAuthors[index].fullName === tmpAuthor.fullName) {
+                                    biblioItem.isSelfcitation = true; //si, lo reimposto a true più volte, non dovrebbe essere un problema
+                                    biblioItem.sharedAuthors.push(tmpAuthor.fullName);
+                                }
+                            }
+                        }
+                    } else {
+                        alert("Non è stato possibile stabilire se '"+biblioItem.title+"' sia una autocitazione");
+                    }
+
+
+                }
 
                 return RequestArticlesService.searchArticles(searchString).then(
                     // success
@@ -109,7 +163,7 @@ myApp
                                 //@guide http://stackoverflow.com/questions/939032/jquery-pass-more-parameters-into-callback
                                 function (response) {
                                     var articleData = response.data.results.bindings[0];
-                                    articleData.publicationYear.value = parseYear(articleData.publicationYear.value);
+                                    articleData.publicationYear.value = stringToInt(articleData.publicationYear.value);
 
                                     articlesResults.push(articleData); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia
 
@@ -118,6 +172,10 @@ myApp
                                     ArticlesInfoService.getArticleAuthors(articleData.authorsList.value).then(
                                         function (response) {
                                             articleData.authors = response.data.results.bindings;
+                                            for (var i in articleData.authors) {
+                                                articleData.authors[i].fullName = articleData.authors[i].fullName.value;
+                                            }
+
                                         },
                                         //todo caso da gestire meglio
                                         function (errResponse) {
@@ -151,15 +209,18 @@ myApp
                                             //fixme trovare un modo alternativo, altrimenti si fanno troppe chiamate ajax e query a fuseki
                                             //idea: info sulla bibliografia potrebbero essere richieste al drill down come nel caso delle ulteriori info sulle citazioni
                                             for (var i in articleData.biblioInfo) {
-                                                //faccio i segenti riassegnamenti per facilitare filtri e ordinamenti dei risultati in bibliografia
+                                                //faccio i seguenti riassegnamenti per facilitare filtri e ordinamenti dei risultati in bibliografia
                                                 // così le properties non sono più oggetti ma stringhe o numeri
-                                                articleData.biblioInfo[i].publicationYear = parseYear(articleData.biblioInfo[i].publicationYear.value);
+                                                //todo: ristrutturazione del'oggetto da eseguire in una funzione
                                                 articleData.biblioInfo[i].title = articleData.biblioInfo[i].title.value;
+                                                articleData.biblioInfo[i].publicationYear = stringToInt(articleData.biblioInfo[i].publicationYear.value);
+                                                articleData.biblioInfo[i].globalCountDate = articleData.biblioInfo[i].globalCountDate.value;
+                                                articleData.biblioInfo[i].globalCountValue = stringToInt(articleData.biblioInfo[i].globalCountValue.value);
 
 
                                                 //metodi utili anche per avere uno scope isolato e non avere problemi con l'indice nelle callback
                                                 //@guide autori dell'articolo citato
-                                                getBiblioItemAuthors(articleData.biblioInfo[i]);
+                                                getBiblioItemAuthors(articleData.biblioInfo[i], articleData.authors);
 
                                                 //@guide info sugli atti citazioni per ogni cito:cites (quante volte un citing entity cita un cited entity per un certo motivo (colore) )
                                                 getBiblioItemCitActsInfo(articleData.expression, articleData.biblioInfo[i]);

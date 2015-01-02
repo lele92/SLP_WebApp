@@ -2,8 +2,8 @@
     <h2 class="text-center text-thin">Order by </h2>
     <div class="row row-centered">
         <div class="btn-group col col-centered">
-            <label class="btn btn-primary" ng-model="biblioFilterCtrl.sortV"  btn-radio="'false'"  ng-change="biblioFilterCtrl.applySort()" ><em class="fa fa-sort-amount-asc fa-lg"></em> asc</label>
-            <label class="btn btn-primary" ng-model="biblioFilterCtrl.sortV"  btn-radio="'true'" ng-change="biblioFilterCtrl.applySort()" ><em class="fa fa-sort-amount-desc fa-lg"></em> desc</label>
+            <label class="btn btn-primary" ng-model="biblioFilterCtrl.sortV"  btn-radio="false"  ng-change="biblioFilterCtrl.applySort()" ><em class="fa fa-sort-amount-asc fa-lg"></em> asc</label>
+            <label class="btn btn-primary" ng-model="biblioFilterCtrl.sortV"  btn-radio="true" ng-change="biblioFilterCtrl.applySort()" ><em class="fa fa-sort-amount-desc fa-lg"></em> desc</label>
         </div>
     </div>
 
@@ -26,21 +26,52 @@
                 </label>
             </div>
         </div>
+        <div class="clearfix">
+            <p class="pull-left">Global Citations</p>
+            <div class="pull-right">
+                <label class="switch switch-lg">
+                    <input type="radio" name="orderBySwitch" ng-model="biblioFilterCtrl.orderByV" ng-value="biblioFilterCtrl.globalCitations" ng-change="biblioFilterCtrl.applyOrderBy()"/>
+                    <span></span>
+                </label>
+            </div>
+        </div>
+        <div class="clearfix">
+            <p class="pull-left">Citation Acts (internal)</p>
+            <div class="pull-right">
+                <label class="switch switch-lg">
+                    <input type="radio" name="orderBySwitch" ng-model="biblioFilterCtrl.orderByV" ng-value="biblioFilterCtrl.totCitActs" ng-change="biblioFilterCtrl.applyOrderBy()"/>
+                    <span></span>
+                </label>
+            </div>
+        </div>
+
 
     </div>
 
 
     <h2 class="text-center text-thin">Filters</h2>
     <div class="p" >
-        <legend>
-            <span ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkYear}">Year</span>
-            <label class="switch pull-right">
-                <input type="checkbox"  ng-model="biblioFilterCtrl.checkYear" ng-change="biblioFilterCtrl.switchYearFilter()"/>
-                <span></span>
-            </label>
-        </legend>
-        <span ng-class="{'filter-text-disabled': !biblioFilterCtrl.checkYear, 'filter-text-enabled': biblioFilterCtrl.checkYear}">start from year: </span>
-        <input ng-disabled="!biblioFilterCtrl.checkYear" type="number" ng-model="biblioFilterCtrl.publicationYearF" min="1900" max="2015"> <!-- todo: da correggere gli anni -->
+        <div>
+            <legend>
+                <span ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkYear}">Year</span>
+                <label class="switch pull-right">
+                    <input type="checkbox"  ng-model="biblioFilterCtrl.checkYear" ng-change="biblioFilterCtrl.switchYearFilter()"/>
+                    <span></span>
+                </label>
+            </legend>
+            <span ng-class="{'filter-text-disabled': !biblioFilterCtrl.checkYear, 'filter-text-enabled': biblioFilterCtrl.checkYear}">start from year: </span>
+            <input ng-disabled="!biblioFilterCtrl.checkYear" type="number" ng-model="biblioFilterCtrl.publicationYearF" min="1900" max="2015"> <!-- todo: da correggere gli anni -->
+        </div>
+        <div>
+            <legend>
+                <span ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkOnlySelfCitations}">Only self-citations</span>
+                <label class="switch pull-right">
+                    <input type="checkbox"  ng-model="biblioFilterCtrl.onlySelfcitationsF" ng-change="biblioFilterCtrl.switchOnlySelfcitations()"/>
+                    <span></span>
+                </label>
+            </legend>
+        </div>
+
         <button type="button" class="btn btn-oval btn-primary" ng-click="biblioFilterCtrl.applyFilters()">Applica</button>
     </div>
 </div>

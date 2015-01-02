@@ -8,6 +8,7 @@
    <meta name="keywords" content="app, responsive, angular, bootstrap, dashboard, admin">
    <title data-ng-bind="pageTitle()">SLP_WebApp</title>
    <link rel="stylesheet" href="app/css/app.css" data-ng-if="!app.layout.isRTL">
+    <link rel="stylesheet" href="app/css/theme-f.css" >
    <link rel="stylesheet" href="app/css/app-rtl.css" data-ng-if="app.layout.isRTL">
    <link rel="stylesheet" href="app/css/custom.css">
     <link rel="stylesheet" href="app/vendor/ng-table/ng-table.css">
@@ -81,7 +82,7 @@
 
    <!-- query: autori di un articolo -->
    <script id="query_articleAuthors" type="text/template">
-      select ?givenName ?familyName
+      select ?givenName ?familyName (concat(?givenName, " ",?familyName) as ?fullName)
       where {
          <{{authorsList}}> a co:List;
                         co:item ?item.
@@ -163,7 +164,7 @@
 
    <!-- query: info sugli articoli citati (cito:cites, quindi articoli unici) da un articolo (partendo dall'expression)-->
    <script id="query_citedArticles" type="text/template">
-       select ?citedExpression ?articleWork ?authorsList ?title ?publicationYear ?htmlItem
+       select ?citedExpression ?articleWork ?authorsList ?title ?publicationYear ?htmlItem ?globalCountValue ?globalCountDate
        where {
             <{{expression}}> cito:cites ?citedExpression.
 
@@ -171,7 +172,10 @@
                             dcterms:title ?title;
                             core:embodiment ?man;
                             fabio:hasPublicationYear ?publicationYear;
-                            core:realizationOf ?articleWork.
+                            core:realizationOf ?articleWork;
+                            c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
+                                                                c4o:hasGlobalCountValue ?globalCountValue;
+                                                                c4o:hasGlobalCountDate ?globalCountDate].
 
             ?articleWork a fabio:Work;
                 core:creator ?authorsList.

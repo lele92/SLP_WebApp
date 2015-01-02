@@ -3,11 +3,10 @@ myApp.controller('ArticlesResultsController', function($rootScope, ArticleManage
 
     self.articles = ArticleManagerService.getArticles(); //prende gli articoli da mostrare nella view
 
-    self.publicationYearFil =  FiltersManagerService.getStartingPublicationYear(); // prende il filtro dell'anno da applicare agli articoli mostrati nella view
-
-    self.orderByFil = FiltersManagerService.getOrderBy(); //prende l'ordinamento da applicare alla bibliografia
-
-    self.sortFil = FiltersManagerService.getSort(); //prende il sort da applicare alla bibliografia
+    self.publicationYearFil =  FiltersManagerService.getStartingPublicationYear();  // prende il filtro dell'anno da applicare agli articoli mostrati nella view
+    self.orderByFil = FiltersManagerService.getOrderBy();                           // prende l'ordinamento da applicare alla bibliografia
+    self.sortFil = FiltersManagerService.getSort();                                 // prende il sort da applicare alla bibliografia
+    self.onlySelfcitationsFil = FiltersManagerService.getOnlySelfCitations();           // prender il filtro per le autocitazioni
 
     //importante: articles deve essere tra apici, dannazione! ho perso 3 ore prima di capirlo!
     //@guide http://stackoverflow.com/questions/15380140/service-variable-not-updating-in-controller

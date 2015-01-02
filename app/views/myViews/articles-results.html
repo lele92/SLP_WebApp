@@ -5,9 +5,10 @@
         <article-item class="article-item" ng-repeat="article in ArticlesResultsCtrl.articles"
                         article-data="article"
                         article-index="{{$index}}"
-                        year-filter="{{ArticlesResultsCtrl.publicationYearFil.value}}"
-                        order-filter="{{ArticlesResultsCtrl.orderByFil.value}}"
-                        sort-filter="{{ArticlesResultsCtrl.sortFil.value}}">
+                        year-filter=ArticlesResultsCtrl.publicationYearFil
+                        order-filter=ArticlesResultsCtrl.orderByFil
+                        sort-filter=ArticlesResultsCtrl.sortFil
+                        only-selfcitation-filter=ArticlesResultsCtrl.onlySelfcitationsFil>
         </article-item>
     </div>
 </div>

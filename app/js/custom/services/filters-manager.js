@@ -8,16 +8,18 @@
 
 myApp
     .factory('FiltersManagerService', function() {
-        /* vars filtri */
+        /* default vars filtri */
         var startingPublicationYear =  { value: 0};     // anno di partenza per filtri. è un oggetto perchè sto valutando di aggiungere altre property e perchè lo trovo più conveniente
+        var onlySelfcitations = { value: false};        // inizialmente mostro tutte le citazioni
 
         /* vars order by */
         var defaultOrderByValue = "publicationYear";    // l'ordinamento di default è per anno di pubblicazione
-        var defaultSort = "true";                      // true-> decrescente, false->crescente
+        var defaultSort = true;                      // true-> decrescente, false->crescente
         var orderBy = { value: defaultOrderByValue};    // angular.copy(defaultOrderBy, orderBy); orderBy inzializzato al default; deep copy, non assegnazione per riferimento
         var sort = { value: defaultSort};
 
         return {
+            /* getters e setters per i filtri */
             getStartingPublicationYear: function() {
                 return startingPublicationYear;
             },
@@ -27,8 +29,16 @@ myApp
                 startingPublicationYear.value = newStartingYear;
             },
 
+            getOnlySelfCitations: function() {
+                return onlySelfcitations;
+            },
 
-            /* getters e setters particolari: per l'ordinamento dei risultati */ //todo: da valutare: conviene creare un altro servizio solo per l'ordinamento?
+            setOnlySelfCitations: function(newOnlySelfcitations) {
+                onlySelfcitations.value = newOnlySelfcitations;
+            },
+
+
+            /* getters e setters per l'ordinamento dei risultati */ //todo: da valutare: conviene creare un altro servizio solo per l'ordinamento?
 
             getOrderBy: function() {
                 return orderBy;
