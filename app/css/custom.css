@@ -1,12 +1,40 @@
-.article-item {
-    margin: 10px;
+.panel-article-item {
+    -webkit-box-shadow: 0px 4px 10px 0px rgba(50, 50, 50, 0.2);
+    -moz-box-shadow:    0px 4px 10px 0px rgba(50, 50, 50, 0.2);
+    box-shadow:         0px 4px 10px 0px rgba(50, 50, 50, 0.2);
 }
 
-.author-label {
-    margin-right: 5px;
-    margin-left: 5px;
-    background-color: darkgray;
+.panel-biblio-item {
+    border: 1px solid lightgray;
+    margin: 15px;
+}
+
+.collaps-btn {
+    cursor: pointer;
+}
+
+.icon-biblio-item {
+    background-color: #5D637A;
+}
+
+.label-author {
+    margin: 2px;
+    background-color: #33AF90;
     color: white;
+    font-size: medium;
+    display: inline-block;
+}
+
+.label-author-light {
+    margin: 2px;
+    background-color: #d3d3d3;
+    color: #656565;
+    font-size: medium;
+    display: inline-block;
+}
+
+.article-year {
+    color: #2f80e7;
     font-size: large;
 }
 
@@ -20,10 +48,6 @@
     text-align:left;
     /* inline-block space fix */
     margin-right:-4px;
-}
-
-i.collapse-btn {
-    cursor: pointer;
 }
 
 .collapse-heading {
@@ -48,5 +72,41 @@ i.collapse-btn {
 }
 
 .shared-author {
-    color: red;
+    background-color: #33AF90;
+    color: white;
+}
+
+.article-header {
+    background-color: #ECEBFF !important;
+}
+
+.biblio-item-selfcitation {
+    background-color: #564aa3;
+}
+
+.panel-min-padding {
+    padding: 1px 1px;
+}
+
+.article-header-info {
+    padding: 10px 15px;
+}
+
+.show-article-info {
+    background-color: #E2E1F2;
+}
+
+.show-article-info:hover {
+    background-color: #CBCAE3;
+    cursor: pointer;
+}
+
+.article-item-header {
+    border-bottom: 2px solid #dde6e9;
+    margin: 15px;
+}
+
+#search-btn {
+    margin: 10px;
+    font-size: large;
 }

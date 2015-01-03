@@ -1,33 +1,21 @@
-<!-- todo: IMPORTANTE! usare il collapsible panel del template!-->
+<div id="article_{{articleIndex}}" class="panel panel-default panel-article-item" ng-init="articleIsCollapsed = true">
+    <div class="panel-heading article-header panel-min-padding">
+        <div class="article-header-info">
+            <h4>{{articleIndex}}. {{articleData.title.value}} - <span class="article-year">{{articleData.publicationYear.value}}</span></h4>
 
-<!--<accordion-group is-open="status.open" id="{{articleIdaaa}}">
-    <accordion-heading>
-        <i class="icon-doc"></i> {{articleData.title.value}} <i class="pull-right glyphicon" ng-class="{'fa fa-minus': status.open, 'fa fa-plus': !status.open}"></i>
-    </accordion-heading>
-    This is just some content to illustrate fancy headings.
-</accordion-group>-->
+            <div>
+                <em class="fa fa-users fa-2x"></em>
+                <span class="label label-author" ng-repeat="author in articleData.authors">  {{author.givenName.value}} {{author.familyName.value}} </span>
+            </div>
+        </div>
 
-<!--<div id="{{articleId}}" class="panel panel-primary">-->
-    <!--<div class="panel-heading">-->
-        <!--<h3>{{artIndex}}. {{articleData.title.value}} - <small>{{articleData.publicationYear.value}}</small></h3>-->
-        <!--<p><em class="icon-user"></em><span class="label label-primary" ng-repeat="author in articleData.authors"> {{author.givenName.value}} {{author.familyName.value}} </span></p>-->
-    <!--</div>-->
-    <!--<div class="panel-body">-->
-        <!--<p><strong>Abstract:</strong> {{articleData.abstractTxt.value}}</p>-->
+        <div align="center" class="show-article-info" ng-click="articleIsCollapsed = !articleIsCollapsed">
+            <i ng-class="{'fa fa-chevron-down fa-2x': articleIsCollapsed, 'fa fa-chevron-up fa-2x': !articleIsCollapsed}"></i>
+        </div>
 
-    <!--</div>-->
-    <!--<div class="panel-footer"><strong>doi:</strong>{{articleData.doi.value}}</div>-->
-<!--</div>-->
-
-<div id="article_{{articleIndex}}" class="panel panel-primary">
-    <div class="panel-heading">
-        <h3>{{articleIndex}}. {{articleData.title.value}} - <small>{{articleData.publicationYear.value}}</small></h3>
-        <p><em class="icon-user fa-2x"></em>
-            <span class="author-label" ng-repeat="author in articleData.authors">  {{author.givenName.value}} {{author.familyName.value}} </span>
-        </p>
     </div>
 
-    <div class="panel-body">
+    <div class="panel-body" collapse="articleIsCollapsed">
         <div class="row">
             <div class="col-lg-12">
                 <!-- START panel-->
@@ -43,30 +31,29 @@
                 <!-- END panel-->
             </div>
         </div>
-
         <div class="row">
-            <h3>Citations</h3>
-            <div class="col-lg-4 col-md-6">
+            <h3 class="article-item-header">Citations</h3>
+
+            <div class="col col-lg-4 col-md-6">
                 <div class="panel widget bg-success">
                     <div class="row row-table">
-                        <div class="col-xs-4 text-center bg-success-dark pv-lg">
-                            <em class="icon-globe fa-3x"></em>
+                        <div class="col-xs-2 col-lg-2 text-center bg-success-dark pv-lg">
+                            <em class="icon-globe fa-2x"></em>
                         </div>
-                        <div class="col-xs-8 pv-lg">
+                        <div class="col-xs-10 col-lg-10 pv-lg">
                             <div class="h1 m0 text-bold">{{articleData.globalCountValue.value}}</div>
-                            <div >Global Citations <a ng-href="{{articleData.globalCountSource.value}}">({{articleData.globalCountSource.value}})</a></div>
+                            <div><h5>Global Citations <a ng-href="{{articleData.globalCountSource.value}}" target="_blank"><em class="fa fa-external-link"></em></a></h5></div>
                             <p>updated: {{articleData.globalCountDate.value}}</p>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-lg-4 col-md-6">
+            <div class="col col-lg-4 col-md-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3">
-                                <em class="fa fa-comments fa-5x"></em>
+                                <em class="fa fa-quote-left fa-3x"></em>
                             </div>
                             <div class="col-xs-9 text-right">
                                 <div class="text-lg">{{articleData.inCitActs}}<small>(unique= {{articleData.inNumCites}})</small></div>
@@ -85,14 +72,26 @@
             </div>
 
         </div>
-        <div class="row">
-            <biblio-item ng-repeat="biblioItem in articleData.biblioInfo |
-                                        afterYear:yearFilter.value |
-                                        onlySelfcitation:onlySelfcitationFilter.value |
-                                        characterizations:characterizationsFilter.value |
-                                        orderBy:orderFilter.value:sortFilter.value"
-                            item-data="biblioItem"
-                            citing-article-authors="articleData.authors"></biblio-item>
+        <div class="row"  ng-init="showBiblio = false">
+            <h3 class="article-item-header">Bibliography ({{articleData.biblioInfo.length}} item<span ng-show="articleData.biblioInfo.length > 1">s</span>)</h3>
+
+            <div align="center">
+                <button type="button" ng-model="showBiblio" btn-checkbox="btn-checkbox" btn-checkbox-true=true btn-checkbox-false=false class="btn btn-primary btn-lg">
+                    <span ng-show="!showBiblio">Show </span>
+                    <span ng-show="showBiblio">Hide </span>
+                    item<span ng-show="articleData.biblioInfo.length > 1">s</span>
+                </button>
+            </div>
+
+            <biblio-item ng-show="showBiblio"  ng-repeat="biblioItem in articleData.biblioInfo |
+                                    afterYear:yearFilter.value |
+                                    onlySelfcitation:onlySelfcitationFilter.value |
+                                    characterizations:characterizationsFilter.value |
+                                    orderBy:orderFilter.value:sortFilter.value"
+                         item-data="biblioItem"
+                         citing-article-authors="articleData.authors"></biblio-item>
+
+
         </div>
 
         <div class="row">
@@ -102,5 +101,5 @@
 
     </div>
 
-    <div class="panel-footer"><strong>doi:</strong>{{articleData.doi.value}}</div>
+    <div class="panel-footer" collapse="articleIsCollapsed"><strong>doi:</strong>{{articleData.doi.value}}</div>
 </div>

@@ -1,7 +1,43 @@
-<h3>Search</h3>
-<div id="panelSearch" class="panel panel-default">
-    <div class="panel-body">
-        <textarea class="form-control" rows="3" ng-model="HomeSearchCtrl.searchText"></textarea>
-        <button type="button" class="mb-sm btn btn-primary" ng-click="HomeSearchCtrl.searchArticles()"><i class="fa fa-search"></i> Search</button>
+<h3>Welcome in [nome da definire] - a Web App to search and browse the contents of <a href="http://www.semanticlancet.eu/" target="_blank">Semantic Lancet Project</a> LOD</h3>
+<div id="panelSearch" class="panel panel-default row">
+    <div align="center" class="panel-body">
+        <h1>Search articles</h1>
+        <textarea class="form-control" rows="3" ng-model="HomeSearchCtrl.searchText" placeholder="Type some search text and then click on 'search'"></textarea>
+        <button id="search-btn" type="button" class="mb-sm btn btn-primary btn-lg" ng-click="HomeSearchCtrl.searchArticles()"><i class="fa fa-search fa-1x"></i> Search</button>
     </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <!-- START panel-->
+        <div id="panel_top_authors" class="panel panel-primary">
+            <div class="panel-heading">Primary Panel</div>
+            <div class="panel-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+            </div>
+            <div class="panel-footer">Panel Footer</div>
+        </div>
+        <!-- END panel-->
+    </div>
+    <div class="col-md-4">
+        <!-- START panel-->
+        <div id="panel_top_articles" class="panel panel-primary">
+            <div class="panel-heading">Primary Panel</div>
+            <div class="panel-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+            </div>
+            <div class="panel-footer">Panel Footer</div>
+        </div>
+        <!-- END panel-->
+    </div>
+    <div class="col-md-4">
+        <!-- START panel-->
+        <div id="panel_top_something" class="panel panel-primary">
+            <div class="panel-heading">Primary Panel</div>
+            <div class="panel-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+            </div>
+            <div class="panel-footer">Panel Footer</div>
+        </div>
+        <!-- END panel-->
+    </div
 </div>

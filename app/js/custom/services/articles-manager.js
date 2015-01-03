@@ -8,36 +8,36 @@ myApp
     .factory('ArticleManagerService', function(RequestArticlesService, ArticlesInfoService, $rootScope) {
         var articlesResults = [];
         var mockResults = [
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            //} ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            } ,
             {
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
             }
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
-            //}
         ];
 
         var colorsMap = {

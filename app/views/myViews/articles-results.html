@@ -1,10 +1,20 @@
+<h3>Results</h3>
 <div>
-    <div>
-        <button ng-click="ArticlesResultsCtrl.logResults()">log</button>
+    <div class="row row-centered" ng-show="ArticlesResultsCtrl.articles.length == 0">
+        <div class="col-centered col-lg-6 ">
+            <div align="center" class="well well-lg">
+                <h3>Nothing to show (yet)</h3>
+                <p>There are no articles to show</p>
+                <p>*To begin a search, select the first menu item (Search)</p>
+            </div>
+        </div>
+    </div>
 
+    <div class="row">
+        <button ng-click="ArticlesResultsCtrl.logResults()">log</button>
         <article-item class="article-item" ng-repeat="article in ArticlesResultsCtrl.articles"
                         article-data="article"
-                        article-index="{{$index}}"
+                        article-index="{{$index + 1}}"
                         year-filter=ArticlesResultsCtrl.publicationYearFil
                         order-filter=ArticlesResultsCtrl.orderByFil
                         sort-filter=ArticlesResultsCtrl.sortFil
