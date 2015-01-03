@@ -40,10 +40,54 @@ myApp
             //}
         ];
 
+        var colorsMap = {
+            "http://purl.org/spar/cito/citesForInformation": { toString: "cites For Information", value: "http://purl.org/spar/cito/citesForInformation" },
+            "http://purl.org/spar/cito/citesAsMetadataDocument": { toString: "cites As Metadata Document", value: "http://purl.org/spar/cito/citesAsMetadataDocument" },
+            "http://purl.org/spar/cito/citesAsDataSource": { toString: "cites As Data Source", value: "http://purl.org/spar/cito/citesAsDataSource" },
+            "http://purl.org/spar/cito/citesAsAuthority": { toString: "cites As Authority", value: "http://purl.org/spar/cito/citesAsAuthority" },
+            "http://purl.org/spar/cito/obtainsSupportFrom": { toString: "obtains Support From", value: "http://purl.org/spar/cito/obtainsSupportFrom" },
+            "http://purl.org/spar/cito/includesExcerptFrom": { toString: "includes Excerpt From", value: "http://purl.org/spar/cito/includesExcerptFrom" },
+            "http://purl.org/spar/cito/confirms": { toString: "confirms", value: "http://purl.org/spar/cito/confirms" },
+            "http://purl.org/spar/cito/containsAssertionFrom": { toString: "contains Assertion From", value: "http://purl.org/spar/cito/containsAssertionFrom" },
+            "http://purl.org/spar/cito/derides": { toString: "derides", value: "http://purl.org/spar/cito/derides" },
+            "http://purl.org/spar/cito/includesQuotationFrom": { toString: "includes Quotation From", value: "http://purl.org/spar/cito/includesQuotationFrom" },
+            "http://purl.org/spar/cito/citesAsRelated": { toString: "cites As Related", value: "http://purl.org/spar/cito/citesAsRelated" },
+            "http://purl.org/spar/cito/usesMethodIn": { toString: "uses Method In", value: "http://purl.org/spar/cito/usesMethodIn" },
+            "http://purl.org/spar/cito/documents": { toString: "documents", value: "http://purl.org/spar/cito/documents" },
+            "http://purl.org/spar/cito/describes": { toString: "describes", value: "http://purl.org/spar/cito/describes" },
+            "http://purl.org/spar/cito/usesConclusionsFrom": { toString: "uses Conclusions From", value: "http://purl.org/spar/cito/usesConclusionsFrom" },
+            "http://purl.org/spar/cito/repliesTo": { toString: "replies To", value: "http://purl.org/spar/cito/repliesTo" },
+            "http://purl.org/spar/cito/qualifies": { toString: "qualifies", value: "http://purl.org/spar/cito/qualifies" },
+            "http://purl.org/spar/cito/corrects": { toString: "corrects", value: "http://purl.org/spar/cito/corrects" },
+            "http://purl.org/spar/cito/agreesWith": { toString: "agrees With", value: "http://purl.org/spar/cito/agreesWith" },
+            "http://purl.org/spar/cito/citesAsEvidence": { toString: "cites As Evidence", value: "http://purl.org/spar/cito/citesAsEvidence" },
+            "http://purl.org/spar/cito/usesDataFrom": { toString: "uses Data From", value: "http://purl.org/spar/cito/usesDataFrom" },
+            "http://purl.org/spar/cito/parodies": { toString: "parodies", value: "http://purl.org/spar/cito/parodies" },
+            "http://purl.org/spar/cito/critiques": { toString: "critiques", value: "http://purl.org/spar/cito/critiques" },
+            "http://purl.org/spar/cito/compiles": { toString: "compiles", value: "http://purl.org/spar/cito/compiles" },
+            "http://purl.org/spar/cito/speculatesOn": { toString: "speculates On", value: "http://purl.org/spar/cito/speculatesOn" },
+            "http://purl.org/spar/cito/extends": { toString: "extends", value: "http://purl.org/spar/cito/extends" },
+            "http://purl.org/spar/cito/citesAsSourceDocument": { toString: "cites As Source Document", value: "http://purl.org/spar/cito/citesAsSourceDocument" },
+            "http://purl.org/spar/cito/updates": { toString: "updates", value: "http://purl.org/spar/cito/updates" },
+            "http://purl.org/spar/cito/discusses": { toString: "discusses", value: "http://purl.org/spar/cito/discusses" },
+            "http://purl.org/spar/cito/citesAsPotentialSolution": { toString: "cites As Potential Solution", value: "http://purl.org/spar/cito/citesAsPotentialSolution" },
+            "http://purl.org/spar/cito/obtainsBackgroundFrom": { toString: "obtains Background From", value: "http://purl.org/spar/cito/obtainsBackgroundFrom" },
+            "http://purl.org/spar/cito/reviews": { toString: "reviews", value: "http://purl.org/spar/cito/reviews" },
+            "http://purl.org/spar/cito/supports": { toString: "supports", value: "http://purl.org/spar/cito/supports" },
+            "http://purl.org/spar/cito/citesAsRecommendedReading": { toString: "cites As Recommended Reading", value: "http://purl.org/spar/cito/citesAsRecommendedReading" },
+            "http://purl.org/spar/cito/credits": { toString: "credits", value: "http://purl.org/spar/cito/credits" },
+            "http://purl.org/spar/cito/disagreesWith": { toString: "disagrees With", value: "http://purl.org/spar/cito/disagreesWith" },
+            "http://purl.org/spar/cito/plagiarizes": { toString: "plagiarizes", value: "http://purl.org/spar/cito/plagiarizes" }
+        };
+
         return {
             getArticles: function() {
                 //fixme: attenzione! si sta passando un riferimento ad articlesResults
                 return articlesResults;
+            },
+
+            getColorsMap: function() {
+              return colorsMap;
             },
 
 
@@ -89,6 +133,11 @@ myApp
                     return count;
                 }
 
+                /* converte uri colore citazione in stringa facilmente leggibile */
+                var mapColorToString = function(colorURI) {
+                    return colorsMap[colorURI].toString;
+                }
+
                 /* per le info sui citacion acts di un certo item X della bibliografia:  per ogni elemento della bibliografia, quante volte X è citato dal citingEntity per un certo motivo*/
                 var getBiblioItemCitActsInfo = function(citingEntity, biblioItem) {
                     //I param: citing entity - II param: cited entity
@@ -98,7 +147,8 @@ myApp
                             var tmpCitActsInfo;
                             for (var j in biblioItem.citActsInfo) {
                                 tmpCitActsInfo = biblioItem.citActsInfo[j];
-                                tmpCitActsInfo.color = tmpCitActsInfo.color.value;
+                                tmpCitActsInfo.colorURI = tmpCitActsInfo.color.value;
+                                tmpCitActsInfo.color = mapColorToString(tmpCitActsInfo.color.value);
                                 tmpCitActsInfo.numCitActs = stringToInt(tmpCitActsInfo.numCitActs.value);
                             }
                             biblioItem.totCitActs = countNumCitActs(biblioItem.citActsInfo);
@@ -140,6 +190,8 @@ myApp
 
 
                 }
+
+
 
                 return RequestArticlesService.searchArticles(searchString).then(
                     // success

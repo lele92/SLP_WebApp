@@ -89,6 +89,7 @@
             <biblio-item ng-repeat="biblioItem in articleData.biblioInfo |
                                         afterYear:yearFilter.value |
                                         onlySelfcitation:onlySelfcitationFilter.value |
+                                        characterizations:characterizationsFilter.value |
                                         orderBy:orderFilter.value:sortFilter.value"
                             item-data="biblioItem"
                             citing-article-authors="articleData.authors"></biblio-item>
