@@ -201,6 +201,8 @@ myApp
             }
         }; //todo: valutare di strutturarlo in modo diverso
 
+        var filterActivated = { value: false} //true se c'è almeno un filtro attivo, false altrimenti
+
         /* vars order by */
         var defaultOrderByValue = "publicationYear";    // l'ordinamento di default è per anno di pubblicazione
         var defaultSort = true;                      // true-> decrescente, false->crescente
@@ -209,12 +211,19 @@ myApp
 
         return {
             /* getters e setters per i filtri */
+            getFilterActivated: function() {
+                return filterActivated;
+            },
+
+            setFilterActivated: function(newFilterActivated) {
+                filterActivated.value = newFilterActivated;
+            },
+
             getStartingPublicationYear: function() {
                 return startingPublicationYear;
             },
 
             setStartingPublicationYear: function(newStartingYear) {
-                //angular.copy(newStartingYear, startingPublicationYear);
                 startingPublicationYear.value = newStartingYear;
             },
 

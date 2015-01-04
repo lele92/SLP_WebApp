@@ -1,7 +1,7 @@
 <div id="article_{{articleIndex}}" class="panel panel-default panel-article-item" ng-init="articleIsCollapsed = true">
     <div class="panel-heading article-header panel-min-padding">
         <div class="article-header-info">
-            <h4>{{articleIndex}}. {{articleData.title.value}} - <span class="article-year">{{articleData.publicationYear.value}}</span></h4>
+            <h4><a ng-href="{{articleData.htmlItem.value}}" target="_blank">{{articleIndex}}. {{articleData.title.value}}</a> - <span class="article-year">{{articleData.publicationYear.value}}</span></h4>
 
             <div>
                 <em class="fa fa-users fa-2x"></em>
@@ -72,11 +72,13 @@
             </div>
 
         </div>
-        <div class="row"  ng-init="showBiblio = false">
-            <h3 class="article-item-header">Bibliography ({{articleData.biblioInfo.length}} item<span ng-show="articleData.biblioInfo.length > 1">s</span>)</h3>
+        <div class="row" ng-init="showBiblio = false">
+            <h3 class="article-item-header">Bibliography
+                ({{articleData.biblioInfo.length}} item<span ng-show="articleData.biblioInfo.length > 1">s</span>)
+            </h3>
 
             <div align="center">
-                <button type="button" ng-model="showBiblio" btn-checkbox="btn-checkbox" btn-checkbox-true=true btn-checkbox-false=false class="btn btn-primary btn-lg">
+                <button  ng-show="articleData.biblioInfo.length > 0" type="button" ng-model="showBiblio" btn-checkbox="btn-checkbox" btn-checkbox-true=true btn-checkbox-false=false class="btn btn-primary btn-lg">
                     <span ng-show="!showBiblio">Show </span>
                     <span ng-show="showBiblio">Hide </span>
                     item<span ng-show="articleData.biblioInfo.length > 1">s</span>
@@ -93,12 +95,6 @@
 
 
         </div>
-
-        <div class="row">
-            <a ng-href="{{articleData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i> link</a>
-        </div>
-
-
     </div>
 
     <div class="panel-footer" collapse="articleIsCollapsed"><strong>doi:</strong>{{articleData.doi.value}}</div>

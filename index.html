@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="app/css/theme-f.css" >
    <link rel="stylesheet" href="app/css/app-rtl.css" data-ng-if="app.layout.isRTL">
    <link rel="stylesheet" href="app/css/custom.css">
-    <link rel="stylesheet" href="app/vendor/ng-table/ng-table.css">
 </head>
 
 <body data-ng-class="{ 'layout-fixed' : app.layout.isFixed, 'aside-collapsed' : app.layout.isCollapsed, 'layout-boxed' : app.layout.isBoxed }">
@@ -19,13 +18,13 @@
    <script src="app/js/base.js"></script>
    <script src="app/js/app.js"></script>
 
-   <script src="app/vendor/ng-table/ng-table.js"></script> <!-- todo: da spostare: da gestire con bower e gulp tasks-->
-
    <script src="app/js/custom/custom.js"></script>
    <script src="app/js/custom/filters/biblioFilters.js"></script>
    <script src="app/js/custom/controllers/articles-results.js"></script>
    <script src="app/js/custom/controllers/home-search.js"></script>
    <script src="app/js/custom/controllers/filters-offsidebar.js"></script>
+   <script src="app/js/custom/controllers/right-navbar.js"></script>
+   <script src="app/js/custom/controllers/orderby-offsidebar.js"></script>
    <script src="app/js/custom/services/filters-manager.js"></script>
    <script src="app/js/custom/directives/article-item.js"></script>
    <script src="app/js/custom/directives/biblio-item.js"></script>

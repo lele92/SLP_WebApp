@@ -5,7 +5,7 @@
 'use strict';
 
 myApp
-    .factory('ArticleManagerService', function(RequestArticlesService, ArticlesInfoService, $rootScope) {
+    .factory('ArticleManagerService', function(RequestArticlesService, ArticlesInfoService, $rootScope, $interval) {
         var articlesResults = [];
         var mockResults = [
             {
@@ -13,6 +13,9 @@ myApp
             } ,
             {
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000088"
             },
             {
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
@@ -39,7 +42,6 @@ myApp
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
             }
         ];
-
         var colorsMap = {
             "http://purl.org/spar/cito/citesForInformation": { toString: "cites For Information", value: "http://purl.org/spar/cito/citesForInformation" },
             "http://purl.org/spar/cito/citesAsMetadataDocument": { toString: "cites As Metadata Document", value: "http://purl.org/spar/cito/citesAsMetadataDocument" },
@@ -79,6 +81,9 @@ myApp
             "http://purl.org/spar/cito/disagreesWith": { toString: "disagrees With", value: "http://purl.org/spar/cito/disagreesWith" },
             "http://purl.org/spar/cito/plagiarizes": { toString: "plagiarizes", value: "http://purl.org/spar/cito/plagiarizes" }
         };
+        var isRetrievingArticlesInfo = false; //indica se è in atto un'interrogazione a fuseki per avere le info sugli articoli (risultati di ricerca)
+        var articlesNum = 0;                        // numero totale di articoli di cui richiedere le info
+        var completedArticles = articlesResults.length;                  // numero di richieste completate = numero di articoli nella lista degli articoli...semplice
 
         return {
             getArticles: function() {
@@ -90,7 +95,21 @@ myApp
               return colorsMap;
             },
 
+            isRetrievingArticlesInfo: function() {
+              return isRetrievingArticlesInfo;
+            },
 
+            setCompletedRetrievingArticlesInfo: function() {
+              isRetrievingArticlesInfo = false;
+            },
+
+            getArticlesNum: function() {
+                return articlesNum;
+            },
+
+            getCompletedArticles: function() {
+                return completedArticles = articlesResults.length;
+            },
 
             /* per richiedere i risultati della ricerca */
             requestArticles: function(searchString) {
@@ -187,8 +206,6 @@ myApp
                     } else {
                         alert("Non è stato possibile stabilire se '"+biblioItem.title+"' sia una autocitazione");
                     }
-
-
                 }
 
 
@@ -197,11 +214,16 @@ myApp
                     // success
                     function(response) {
                         articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
+                        RequestArticlesService.setCompletedRequest();   //la richiesta all'abstract finder è conclusa e lo notifico
+                        isRetrievingArticlesInfo = true; //si notifica che stanno per iniziare le interrogazione per ottenere le info sugli articoli
+
                         //todo non è una bella soluzione usare così le proprietà della risposta, valutare alternative
                         var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
                         var results = "http://stanbol.apache.org/ontology/entityhub/query#queryResult";
-                        //var tmpRes = response.data[resSet][results]; //contiene gli uri dei work //todo da scommentare
-                        var tmpRes = mockResults;  //todo da eliminare
+                        var tmpRes = response.data[resSet][results]; //contiene gli uri dei work
+                        tmpRes = mockResults;  //todo da eliminare
+                        articlesNum = tmpRes.length;                        // numero totale di articoli di cui richiedere le info
+                        completedArticles = articlesResults.length;          // numero di richieste completate = numero di articoli nella lista degli articoli...semplice
                         //@guide per ogni articolo, partendo dal work, richiedo tutte le informazioni generali + info bibliografiche
                         /* @guide: perchè faccio tante chiamate ajax e non una sola?
                          * perchè una query monolitica potrebbe richiedere molto tempo di caricamento, usando un for invece, appena arriva
@@ -209,16 +231,19 @@ myApp
                          */
                         for (var key in tmpRes) {
 
-                            //@guide richiedo le info generali sull'articolo interrogando l'abstract finder e fuseki
+                            //@guide richiedo le info generali sull'articolo interrogando fuseki
                             ArticlesInfoService.getArticleGeneralInfo(tmpRes[key].value).then(
 
-                                //@guide http://stackoverflow.com/questions/939032/jquery-pass-more-parameters-into-callback
+                                // http://stackoverflow.com/questions/939032/jquery-pass-more-parameters-into-callback
                                 function (response) {
                                     var articleData = response.data.results.bindings[0];
                                     articleData.publicationYear.value = stringToInt(articleData.publicationYear.value);
+                                    articlesResults.push(articleData); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia (si aggiorna comunque perchè articlese è passato per riferimento, ma con il watch aggiungo del comportamento )
 
-                                    articlesResults.push(articleData); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia
 
+                                    if (articlesResults.length == tmpRes.length) {
+                                        isRetrievingArticlesInfo = false;
+                                    }
                                     //@guide richiedo la lista degli autori
                                     //todo: qui si potrebbe risolvere con un chaining delle chiamate ajax
                                     ArticlesInfoService.getArticleAuthors(articleData.authorsList.value).then(
@@ -298,6 +323,7 @@ myApp
                     // error
                     //todo caso da gestire meglio
                     function(errResponse) {
+                        RequestArticlesService.setCompletedRequest(); //la richiesta è conclusa, c'è stato un errore, ma è conclusa
                         console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText)
                     }
                 );

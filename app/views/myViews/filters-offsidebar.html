@@ -1,69 +1,22 @@
 <div ng-controller="BiblioFiltersController as biblioFilterCtrl">
-    <h2 class="text-center text-thin">Order by </h2>
-    <div class="p row-centered">
-        <div class="btn-group col col-centered">
-            <label class="btn btn-primary" ng-model="biblioFilterCtrl.sortV"  btn-radio="false"  ng-change="biblioFilterCtrl.applySort()" ><em class="fa fa-sort-amount-asc fa-lg"></em> asc</label>
-            <label class="btn btn-primary" ng-model="biblioFilterCtrl.sortV"  btn-radio="true" ng-change="biblioFilterCtrl.applySort()" ><em class="fa fa-sort-amount-desc fa-lg"></em> desc</label>
-        </div>
-    </div>
-
-    <div class="p" >
-        <div class="clearfix">
-            <p class="pull-left">Year (default)</p>
-            <div class="pull-right">
-                <label class="switch switch-lg">
-                    <input type="radio" name="orderBySwitch" ng-model="biblioFilterCtrl.orderByV" ng-value="biblioFilterCtrl.publicationYear" ng-change="biblioFilterCtrl.applyOrderBy()"/>
-                    <span></span>
-                </label>
-            </div>
-        </div>
-        <div class="clearfix">
-            <p class="pull-left">Title</p>
-            <div class="pull-right">
-                <label class="switch switch-lg">
-                    <input type="radio" name="orderBySwitch" ng-model="biblioFilterCtrl.orderByV" ng-value="biblioFilterCtrl.title" ng-change="biblioFilterCtrl.applyOrderBy()"/>
-                    <span></span>
-                </label>
-            </div>
-        </div>
-        <div class="clearfix">
-            <p class="pull-left">Global Citations</p>
-            <div class="pull-right">
-                <label class="switch switch-lg">
-                    <input type="radio" name="orderBySwitch" ng-model="biblioFilterCtrl.orderByV" ng-value="biblioFilterCtrl.globalCitations" ng-change="biblioFilterCtrl.applyOrderBy()"/>
-                    <span></span>
-                </label>
-            </div>
-        </div>
-        <div class="clearfix">
-            <p class="pull-left">Citation Acts (internal)</p>
-            <div class="pull-right">
-                <label class="switch switch-lg">
-                    <input type="radio" name="orderBySwitch" ng-model="biblioFilterCtrl.orderByV" ng-value="biblioFilterCtrl.totCitActs" ng-change="biblioFilterCtrl.applyOrderBy()"/>
-                    <span></span>
-                </label>
-            </div>
-        </div>
-
-
-    </div>
-
-
     <h2 class="text-center text-thin">Filters</h2>
     <div class="p" >
         <div>
-            <legend>
+            <legend class="filter-legend">
                 <span ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkYear}">Year</span>
                 <label class="switch pull-right">
                     <input type="checkbox"  ng-model="biblioFilterCtrl.checkYear" ng-change="biblioFilterCtrl.switchYearFilter()"/>
                     <span></span>
                 </label>
             </legend>
-            <span ng-class="{'filter-text-disabled': !biblioFilterCtrl.checkYear, 'filter-text-enabled': biblioFilterCtrl.checkYear}">start from year: </span>
-            <input ng-disabled="!biblioFilterCtrl.checkYear" type="number" ng-model="biblioFilterCtrl.publicationYearV" min="1900" max="2015"> <!-- todo: da correggere gli anni -->
+            <div align="center">
+                <span class="large-text" ng-class="{'filter-text-disabled': !biblioFilterCtrl.checkYear, 'filter-text-enabled': biblioFilterCtrl.checkYear}">start from year: </span>
+                <input ng-disabled="!biblioFilterCtrl.checkYear" type="number" ng-model="biblioFilterCtrl.publicationYearV" min="1970" max="{{biblioFilterCtrl.year}}">
+            </div>
+
         </div>
         <div>
-            <legend>
+            <legend class="filter-legend">
                 <span ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkOnlySelfcitations}">Only self-citations</span>
                 <label class="switch pull-right">
                     <input type="checkbox"  ng-model="biblioFilterCtrl.checkOnlySelfcitations" ng-change="biblioFilterCtrl.switchOnlySelfcitations()"/>
@@ -71,39 +24,31 @@
                 </label>
             </legend>
         </div>
-        <div>
-            <legend>
+        <div class="col-centered">
+            <legend class="filter-legend">
                 <span ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkCharacterizations}">Characterizations</span>
                 <label class="switch pull-right">
                     <input type="checkbox"  ng-model="biblioFilterCtrl.checkCharacterizations" ng-change="biblioFilterCtrl.switchColorsFilter()"/>
                     <span></span>
                 </label>
             </legend>
-            <button type="button" ng-click="biblioFilterCtrl.setAllChecked(true)" ng-disabled="!biblioFilterCtrl.checkCharacterizations" class="btn btn-primary btn-sm"><em class="fa fa-check-square-o"></em> Select all</button>
-            <button type="button" ng-click="biblioFilterCtrl.setAllChecked(false)" ng-disabled="!biblioFilterCtrl.checkCharacterizations" class="btn btn-primary btn-sm"><em class="fa fa-square-o"></em> Deselect all</button>
-            <scrollable height="180" class="form-group">
+            <div align="center">
+                <button type="button" ng-click="biblioFilterCtrl.setAllChecked(true)" ng-disabled="!biblioFilterCtrl.checkCharacterizations" class="btn btn-primary btn-sm"><em class="fa fa-check-square-o"></em> Select all</button>
+                <button type="button" ng-click="biblioFilterCtrl.setAllChecked(false)" ng-disabled="!biblioFilterCtrl.checkCharacterizations" class="btn btn-primary btn-sm"><em class="fa fa-square-o"></em> Deselect all</button>
+            </div>
+
+            <scrollable class="form-group well filter-well">
                 <div class="checkbox c-checkbox" ng-repeat="color in biblioFilterCtrl.characterizationsV">
                     <label>
                         <input type="checkbox" ng-model="color.checked" ng-checked="color.checked" ng-disabled="!biblioFilterCtrl.checkCharacterizations"  ng-value="color.valueURI" />
                         <span class="fa fa-check"></span>{{color.toString}}
                     </label>
                 </div>
-
-
-
-                <!--<div class="checkbox c-checkbox">-->
-                    <!--<label>-->
-                        <!--<input type="checkbox" checked="" disabled="" value="" />-->
-                        <!--<span class="fa fa-check"></span>Option three checked and disabled</label>-->
-                <!--</div>-->
-                <!--<div class="checkbox c-checkbox">-->
-                    <!--<label>-->
-                        <!--<input type="checkbox" disabled="" value="" />-->
-                        <!--<span class="fa fa-check"></span>Option four disabled</label>-->
-                <!--</div>-->
             </scrollable>
         </div>
+        <div align="center">
+            <button id="apply-filters" type="button" class="btn btn-oval btn-success btn-lg" ng-click="biblioFilterCtrl.applyFilters()"><em class="fa fa-check"></em> Apply filters</button>
+        </div>
 
-        <button type="button" class="btn btn-oval btn-primary" ng-click="biblioFilterCtrl.applyFilters()">Apply filters</button>
     </div>
 </div>

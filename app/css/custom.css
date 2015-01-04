@@ -9,7 +9,7 @@
     margin: 15px;
 }
 
-.collaps-btn {
+.collapse-btn {
     cursor: pointer;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .article-year {
-    color: #2f80e7;
+    color: #1e983b;
     font-size: large;
 }
 
@@ -108,5 +108,40 @@
 
 #search-btn {
     margin: 10px;
+    font-size: large;
+}
+
+.articles-alert {
+    background-color: #D8E2E6;
+    font-size: x-large;
+    color: #575C6E;
+    font-weight: bold;
+    -webkit-box-shadow: 0px 0px 30px 0px rgba(50, 50, 50, 0.29);
+    -moz-box-shadow:    0px 0px 30px 0px rgba(50, 50, 50, 0.29);
+    box-shadow:         0px 0px 30px 0px rgba(50, 50, 50, 0.29);
+}
+
+#filter-check-circle {
+    color: #f47f7f;
+}
+
+.filter-well {
+    padding: 0px;
+    padding-left: 5px;
+    margin: 5px;
+    background-color: #EBEEF2;
+}
+
+#apply-filters {
+    margin: 20px;
+    font-size: large;
+}
+
+.filter-legend {
+    margin-bottom: 10px !important;
+    margin-top: 10px !important;
+}
+
+.large-text {
     font-size: large;
 }

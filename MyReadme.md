@@ -18,4 +18,5 @@
 - in article-item.html, nel ng-repeat della direttiva biblio-item usare il nuovo filtro passando come parametro il valore (property "value") dell'oggetto delll'attributo prima definito (trattino diventa gobba di cammello)
 - in filters-offsidebar.js aggiungere variabili e funzioni necessarie
 - in filters-offsidebar.js, per settare il valore del filtro, usare il relativo setter di FiltersManagerService, invocandolo nella funzione applyFilters()
+- in filters-offsidebar.js aggiungere una condizione nell'if di checkCheckboxes()
 - in filters-offsidebar.html aggiungere gli elementi necessari

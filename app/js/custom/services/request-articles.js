@@ -10,9 +10,19 @@ myApp
         var searchString = "";    // testo per la ricerca
         var acceptHead = 'application/rdf+json';
         var endpoint = "http://www.semanticlancet.eu/abstractfinder/";
+        var pendingRequest = false;
 
         return {
+            setCompletedRequest: function() {
+                pendingRequest = false;
+            },
+
+            isRequestPending: function() {
+                return pendingRequest;
+            },
+
             searchArticles: function(searchStr) {
+                pendingRequest = true;
                 searchString = searchStr;
                 var config = {
                     method: "GET",

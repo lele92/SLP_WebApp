@@ -1,27 +1,16 @@
-myApp.controller('BiblioFiltersController', function(FiltersManagerService, ArticleManagerService) {
+myApp.controller('BiblioFiltersController', function(FiltersManagerService) {
     var self = this;
     /* filters and order objs: oggetti {value: aaa} di filterManagerService */ //'F' -> convenzione per Filter
     self.publicationYearF = FiltersManagerService.getStartingPublicationYear();
     self.onlySelfcitationsF = FiltersManagerService.getOnlySelfCitations();
-    self.orderByF = FiltersManagerService.getOrderBy();   //ordinamento di default stabilito nel service
-    self.sortF = FiltersManagerService.getSort();
     self.characterizationsF = FiltersManagerService.getCharacterizations();
+    var date = new Date();
+    self.year = date.getFullYear();
 
     /* values: valori dei filtri in html */ //'V' -> convenzione per Value
-    self.orderByV = self.orderByF.value;    //ordinamento di default stabilito nel service
-    self.sortV = self.sortF.value;          //sort di default stabilito nel service
     self.publicationYearV = self.publicationYearF.value;
     self.onlySelfcitationsV =  self.onlySelfcitationsF.value;
     self.characterizationsV = self.characterizationsF.value;
-
-    //@guide: valori del ng-value dei radio button: li metto qui (invece di usare value) così posso cambiarli semplicemente
-    //todo: si potrebbe fare in modo che le stringhe dei filtri qui sotto vengano prese dal FiltersManagerService
-    //todo: mettere in filtersManagerService metodi getter e setter per le stringhe delle opzioni di sorting, sarebbe una buona cosa: filtri dinamici!
-    /* order option vars */
-    self.publicationYear = "publicationYear";
-    self.title = "title";
-    self.globalCitations = "globalCountValue";
-    self.totCitActs = "totCitActs";
 
     /* checkboxes*/
     self.checkYear = false;
@@ -64,22 +53,22 @@ myApp.controller('BiblioFiltersController', function(FiltersManagerService, Arti
         }
     }
 
-    self.applySort = function() {
-        console.log("ordinamento: "+self.sortV);
-        FiltersManagerService.setSort(self.sortV);
-    }
-
-    /* applica l'ordinamento selezionato */
-    self.applyOrderBy = function() {
-        console.log("ordinamento selezionato: " + self.orderByV);
-        FiltersManagerService.setOrderBy(self.orderByV);
+    /* controlla lo stato delle checkboxes: s'è c'è almeno un filtro attivo ritorna true, false altrimenti */
+    //chiunque legga mi scusi, non ho resistito alla tentazione di chiamarla così
+    self.checkCheckboxes = function() {
+        if (self.checkYear || self.checkOnlySelfcitations || self.checkCharacterizations) {
+            console.log("c'è almeno un filtro impostato");
+            return true;
+        }
+        return false;
     }
 
     /* applica tutti i filtri selezionati */
     self.applyFilters = function() {
-        console.log("filtri applicati");
+        FiltersManagerService.setFilterActivated(self.checkCheckboxes()); //se c'è un filtro attivo lo comunica a filtersManager
         FiltersManagerService.setStartingPublicationYear(self.publicationYearV);
         FiltersManagerService.setOnlySelfCitations(self.onlySelfcitationsV);
         FiltersManagerService.setCharacterizations(self.characterizationsV);
+        console.log("filtri applicati");
     }
 })
