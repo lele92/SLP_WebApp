@@ -13,7 +13,6 @@ var gulp = require('gulp'),
   processSrc = [],
   env = 'dist/',
   sources = {
-    docs: "src/jade/index.jade",
     templates: "src/jade/**/*.jade",
     less: "src/less/**/*.less",
     scss: "src/scss/**/*.scss",
