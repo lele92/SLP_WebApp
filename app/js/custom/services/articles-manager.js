@@ -221,7 +221,7 @@ myApp
                         var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
                         var results = "http://stanbol.apache.org/ontology/entityhub/query#queryResult";
                         var tmpRes = response.data[resSet][results]; //contiene gli uri dei work
-                        tmpRes = mockResults;  //todo da eliminare
+                        //tmpRes = mockResults;  //todo da eliminare
                         articlesNum = tmpRes.length;                        // numero totale di articoli di cui richiedere le info
                         completedArticles = articlesResults.length;          // numero di richieste completate = numero di articoli nella lista degli articoli...semplice
                         //@guide per ogni articolo, partendo dal work, richiedo tutte le informazioni generali + info bibliografiche
