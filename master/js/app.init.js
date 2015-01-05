@@ -32,12 +32,5 @@ var App = angular.module('angle', ['ngRoute','ngAnimate', 'ngStorage', 'ngCookie
                 },
                 viewAnimation: 'ng-fadeInUp'
               };
-
-              //todo: da eliminare
-              $rootScope.user = {
-                name:     'John',
-                job:      'ng-Dev',
-                picture:  'app/img/user/02.jpg'
-              };
             }
           ]);
