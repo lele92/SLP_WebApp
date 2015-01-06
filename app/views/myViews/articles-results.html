@@ -1,26 +1,7 @@
 <h3>Results</h3>
 <div>
-    <div class="row row-centered">
-        <div class="col-centered col-lg-6 ">
-            <div align="center" class="alert alert-info row articles-alert" role="alert" ng-show="ArticlesResultsCtrl.isRequestPending">
-                <div class="panel-body whirl traditional no-overlay col-lg-1 col-md-1 col-sm-1"></div>
-                <div class="col-lg-11 col-md-11 col-sm-11"><span > Retrieving articles informations... </span></div>
-            </div>
-            <div align="center" class="alert alert-info row articles-alert" role="alert" ng-show="ArticlesResultsCtrl.articles.length > 0">
-                {{ArticlesResultsCtrl.completedArticles}} / {{ArticlesResultsCtrl.articlesNum}}
-                <progressbar max=100 value=ArticlesResultsCtrl.completedPercent>
-                    <span class="text-nowrap">{{ArticlesResultsCtrl.completedArticles}} / {{ArticlesResultsCtrl.articlesNum}}</span>
-                </progressbar>
-            </div>
-            <div align="center" class="well well-lg"  ng-show="ArticlesResultsCtrl.articles.length == 0">
-                <h3>Nothing to show (yet)</h3>
-                <p>There are no articles to show</p>
-                <p>*To begin a search, select the first menu item (Search)</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
+    <!--<biblio-item  chart-id="test" ></biblio-item>-->
+   <div class="row">
         <button ng-click="ArticlesResultsCtrl.logResults()">log</button>
         <article-item class="article-item" ng-repeat="article in ArticlesResultsCtrl.articles"
                         article-data="article"

@@ -4,7 +4,7 @@
 // angle to myAppName
 // ----------------------------------- 
 
-var myApp = angular.module('SLP_WebApp', ['angle']); //todo: dipendenza dei filtri da mettere in app.init.js
+var myApp = angular.module('SLP_WebApp', ['angle','ngDialog']); //todo: dipendenza dei filtri da mettere in app.init.js
 myApp.run(function($log,$rootScope, $state, $stateParams) {
   //todo: aggiungere qui le inizializzazioni
   $log.log('I\'m a line from custom.js'); //todo: da eliminare

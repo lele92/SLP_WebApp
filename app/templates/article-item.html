@@ -1,7 +1,9 @@
 <div id="article_{{articleIndex}}" class="panel panel-default panel-article-item" ng-init="articleIsCollapsed = true">
     <div class="panel-heading article-header panel-min-padding">
         <div class="article-header-info">
-            <h4><a ng-href="{{articleData.htmlItem.value}}" target="_blank">{{articleIndex}}. {{articleData.title.value}}</a> - <span class="article-year">{{articleData.publicationYear.value}}</span></h4>
+            <h4>{{articleIndex}}. {{articleData.title.value}} - <span class="article-year">{{articleData.publicationYear.value}}</span>
+                <a class="btn btn-oval btn-primary" ng-href="{{articleData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i></a>
+            </h4>
 
             <div>
                 <em class="fa fa-users fa-2x"></em>
@@ -34,7 +36,7 @@
         <div class="row">
             <h3 class="article-item-header">Citations</h3>
 
-            <div class="col col-lg-4 col-md-6">
+            <div class="col col-lg-4 col-md-6 col-xs-6">
                 <div class="panel widget bg-success">
                     <div class="row row-table">
                         <div class="col-xs-2 col-lg-2 text-center bg-success-dark pv-lg">
@@ -48,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col col-lg-4 col-md-6">
+            <div class="col col-lg-4 col-md-6 col-xs-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <div class="row">
@@ -91,9 +93,8 @@
                                     characterizations:characterizationsFilter.value |
                                     orderBy:orderFilter.value:sortFilter.value"
                          item-data="biblioItem"
+                         chart-id="{{articleData.doi.value}}_chart{{$index}}"
                          citing-article-authors="articleData.authors"></biblio-item>
-
-
         </div>
     </div>
 

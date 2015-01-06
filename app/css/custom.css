@@ -14,7 +14,7 @@
 }
 
 .icon-biblio-item {
-    background-color: #5D637A;
+    background-color: #5d9cec;
 }
 
 .label-author {
@@ -145,3 +145,49 @@
 .large-text {
     font-size: large;
 }
+
+.no-padding {
+    padding: 0px;
+}
+
+.no-top-padding {
+    padding-top: 0px !important;
+}
+
+.no-bottom-padding {
+    padding-bottom: 0px !important;
+}
+
+.biblio-info-body {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.chart-panel {
+    height: 150px;
+    padding: 0px;
+}
+
+.panel-hover {
+    background-color: #E8E8E8;
+    color: #C2C2C2;
+    border-left: 2px solid #ADAEB3;
+}
+
+.col-tot-cit {
+    background-color: #dde6e9;
+    color: #3a3f51 !important;
+}
+
+.x-large-text {
+    font-size: x-large;
+}
+
+.round-icon {
+    margin: 3px;
+    border: 1px solid lightslategray;
+    padding: 12px;
+    background-color: lightslategray;
+    border-radius: 50%;
+}
+

@@ -1,36 +1,35 @@
 <!-- START widget-->
-<div class="panel widget panel-biblio-item">
+<div  class="panel widget panel-biblio-item">
     <div class="row row-table row-flush">
-        <div class="col-xs-1 col-lg-1 bg-info text-center icon-biblio-item" ng-class="{'biblio-item-selfcitation': itemData.isSelfcitation }">
-            <em ng-show="!itemData.isSelfcitation" class="fa icon-pencil fa-2x"></em>
-            <em ng-show="itemData.isSelfcitation" class="fa icon-reload fa-2x"></em>
+
+        <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 bg-info text-center icon-biblio-item" ng-class="{'biblio-item-selfcitation': itemData.isSelfcitation }">
+            <em ng-show="!itemData.isSelfcitation" class="fa icon-pencil fa-2x round-icon"></em>
+            <em ng-show="itemData.isSelfcitation" class="fa icon-reload fa-2x round-icon"></em>
+            <h2>{{itemData.totCitActs}}</h2>
+            <h4>Citations</h4>
         </div>
-        <div class="col-xs-11 col-lg-11">
-            <div class="panel-body ">
-                <div class="row">
-                    <div class="col col-lg-10">
-                        <h3 class="mt0">{{itemData.title}} - {{itemData.publicationYear}}</h3>
-                        <div>
-                            <em class="icon-user fa-2x"></em>
+
+
+        <div class="col-lg-11 col-md-10 col-sm-10 col-xs-10">
+            <div class="panel-body no-top-padding no-bottom-padding">
+                <div class="row biblio-row">
+                    <div class="col-lg-8 col-md-12 col-sm-12 biblio-info-body">
+                        <h4 class="mt0">{{itemData.title}} - <span class="article-year">{{itemData.publicationYear}}</span>
+                            <a class="btn btn-oval btn-primary" ng-href="{{ itemData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i></a>
+                        </h4>
+                        <div class="row">
+                            <em class="fa fa-users fa-2x"></em>
                             <span class="label label-author-light" ng-class="{'shared-author': isSharedAuthor(author) }" ng-repeat="author in itemData.authors">
                                 <em class="fa fa-users" ng-show="isSharedAuthor(author)"></em>
                                 {{author.givenName.value}} {{author.familyName.value}}
                             </span>
                         </div>
-
-                        <a ng-href="{{ itemData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i> link</a>
                     </div>
-                    <div class="col col-lg-2">
-                        <div>
-                            <h4>citation acts</h4>
-                            <p>total citation acts: {{itemData.totCitActs}}</p>
-                            <ul>
-                                <li ng-repeat="citAct in itemData.citActsInfo">{{citAct.color}}: {{citAct.numCitActs}} </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4>Global Citations: </h4>
-                            {{itemData.globalCountValue}} ({{itemData.globalCountDate}})
+                    <div id={{chartId}} align="center" class="chart-panel col-lg-4 col-md-12 col-sm-12">
+                        <div class="col-lg-12 no-padding panel-hover" ng-mouseover="renderChart(itemData.citActsInfo, itemData.totCitActs)">
+                            <h4>Hover with mouse or tap to load</h4>
+                            <h2>Citations Chart</h2>
+                            <em class="fa fa-pie-chart fa-4x"></em>
                         </div>
                     </div>
                 </div>
