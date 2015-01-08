@@ -47,8 +47,9 @@ myApp.directive('biblioItem', function() {
                 // configura il donut
                 var chart = new CanvasJS.Chart(attributes.chartId,
                     {
-                        height: 150,
-                        width: 350,
+                        //height: 170,
+                        //width: 350,
+                        //backgroundColor: "#EBECED",
                         data: [
                             {
                                 type: "doughnut",

@@ -200,6 +200,37 @@
        } group by (?color)
    </script>
 
+   <!-- query: info sulle citazioni ad un certo articolo-->
+   <script id="query_citationsInfo" type="text/template">
+       select ?citingExp ?color ?citingPubYear ?title ?abstractTxt ?authorsList ?globalCountValue ?globalCountDate ?authorsList ?htmlItem
+       where {
+            ?citAct a cito:CitationAct;
+                    cito:hasCitingEntity ?citingExp;
+                    cito:hasCitedEntity <{{citedExpression}}>;
+                    cito:hasCitationCharacterization ?color.
+
+            ?citingExp a fabio:Expression;
+                       core:part [ a sro:Abstract;
+                                     c4o:hasContent ?abstractTxt];
+                       dcterms:title ?title;
+                       core:embodiment ?man;
+                       fabio:hasPublicationYear ?citingPubYear;
+                       core:realizationOf [ a fabio:Work;
+                                                core:creator ?authorsList];
+                       c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
+                                                            c4o:hasGlobalCountValue ?globalCountValue;
+                                                            c4o:hasGlobalCountDate ?globalCountDate].
+
+                        ?authorsList a co:List.
+                       ?man a fabio:Manifestation, fabio:WebPage;
+                                    dcterms:format <http://purl.org/NET/mediatypes/text/html>;
+                                    core:exemplar ?htmlItem.
+
+       }
+   </script>
+
+
+
    <!--todo: query da eliminare, non viene usata-->
    <script id="query_tempQuery" type="text/template">
    select ?work ?citAct1 ?citAct2

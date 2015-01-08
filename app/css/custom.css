@@ -1,4 +1,7 @@
 .panel-article-item {
+    margin-left: 10px;
+    margin-right: 5px;
+    margin-bottom: 20px;
     -webkit-box-shadow: 0px 4px 10px 0px rgba(50, 50, 50, 0.2);
     -moz-box-shadow:    0px 4px 10px 0px rgba(50, 50, 50, 0.2);
     box-shadow:         0px 4px 10px 0px rgba(50, 50, 50, 0.2);
@@ -164,11 +167,23 @@
 }
 
 .chart-panel {
-    height: 150px;
+    height: 170px;
     padding: 0px;
 }
 
+.chart-panel-lg {
+    height: 250px;
+    padding: 0px;
+}
+
+.chart-panel-xl {
+    height: 350px;
+    padding: 0px;
+}
+
+
 .panel-hover {
+    height: 170px;
     background-color: #E8E8E8;
     color: #C2C2C2;
     border-left: 2px solid #ADAEB3;
@@ -189,5 +204,19 @@
     padding: 12px;
     background-color: lightslategray;
     border-radius: 50%;
+}
+
+.biblio-round-icon {
+    color: white;
+    background-color: #3a3f51;
+    border: 2px solid #3a3f51;
+    padding: 6px;
+    border-radius: 50%;
+}
+
+.biblio-info-body>.row {
+    margin-left: 5px;
+    margin-bottom: 10px;
+    margin-right: 5px;
 }
 

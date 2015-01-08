@@ -19,6 +19,14 @@ myApp
                 return $http.get(queryURL);
             },
 
+            //@guide per le info citazionali di un articolo (di quelli mostrati nei risultati di ricerca)
+            requestCitationsInfo: function(expressionURI) {
+                var expr = {citedExpression: expressionURI};
+                var queryURL = this.buildQueryURL('#query_citationsInfo',expr);
+
+                return $http.get(queryURL);
+            },
+
             //@guide per la lista di autori di un articolo
             getArticleAuthors: function(authorsListURI) {
                 var expr = {authorsList: authorsListURI};

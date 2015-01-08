@@ -1,17 +1,17 @@
-<div id="article_{{articleIndex}}" class="panel panel-default panel-article-item" ng-init="articleIsCollapsed = true">
+<div id="article_{{articleIndex}}" class="panel panel-default panel-article-item">
     <div class="panel-heading article-header panel-min-padding">
         <div class="article-header-info">
-            <h4>{{articleIndex}}. {{articleData.title.value}} - <span class="article-year">{{articleData.publicationYear.value}}</span>
+            <h3>{{articleIndex}}. {{articleData.title.value}} - <span class="article-year">{{articleData.publicationYear.value}}</span>
                 <a class="btn btn-oval btn-primary" ng-href="{{articleData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i></a>
-            </h4>
+            </h3>
 
             <div>
-                <em class="fa fa-users fa-2x"></em>
+                <em class="fa fa-users fa-2x biblio-round-icon"></em>
                 <span class="label label-author" ng-repeat="author in articleData.authors">  {{author.givenName.value}} {{author.familyName.value}} </span>
             </div>
         </div>
 
-        <div align="center" class="show-article-info" ng-click="articleIsCollapsed = !articleIsCollapsed">
+        <div align="center" class="show-article-info" ng-click="toggleArticleDetails(articleData.expression.value)">
             <i ng-class="{'fa fa-chevron-down fa-2x': articleIsCollapsed, 'fa fa-chevron-up fa-2x': !articleIsCollapsed}"></i>
         </div>
 
@@ -34,45 +34,57 @@
             </div>
         </div>
         <div class="row">
-            <h3 class="article-item-header">Citations</h3>
+            <h3 class="article-item-header">Incoming Citations</h3>
 
-            <div class="col col-lg-4 col-md-6 col-xs-6">
-                <div class="panel widget bg-success">
-                    <div class="row row-table">
-                        <div class="col-xs-2 col-lg-2 text-center bg-success-dark pv-lg">
-                            <em class="icon-globe fa-2x"></em>
-                        </div>
-                        <div class="col-xs-10 col-lg-10 pv-lg">
-                            <div class="h1 m0 text-bold">{{articleData.globalCountValue.value}}</div>
-                            <div><h5>Global Citations <a ng-href="{{articleData.globalCountSource.value}}" target="_blank"><em class="fa fa-external-link"></em></a></h5></div>
-                            <p>updated: {{articleData.globalCountDate.value}}</p>
-                        </div>
-                    </div>
+            <div class="panel widget col-lg-3 col-md-6">
+                <div class="panel-body bg-success-dark text-center no-padding">
+                    <h1>{{articleData.globalCountValue.value}}</h1>
+                    <h3>Global Citations</h3>
+                    <div class="mb-lg"></div>
+                    <em class="icon-globe fa-2x" style="margin:10px"></em>
                 </div>
             </div>
-            <div class="col col-lg-4 col-md-6 col-xs-6">
+            <div class="col-lg-4 col-md-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <div class="row">
-                            <div class="col-xs-3">
-                                <em class="fa fa-quote-left fa-3x"></em>
+                            <div class="col-lg-1">
+                                <em class="fa fa-quote-left fa-2x"></em>
                             </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="text-lg">{{articleData.inCitActs}}<small>(unique= {{articleData.inNumCites}})</small></div>
-                                <p class="m0">Internal Citations</p> <!-- @fixme: internal citations non va bene, come posso chiamarlo?-->
+                            <div class="col-lg-8 text-right">
+                                <h2>{{articleData.inCitActs}} (unique= {{articleData.inNumCites}})</h2>
+                                <h4 class="m0">Internal Citations</h4>
                             </div>
                         </div>
                     </div>
                     <a href="#" class="panel-footer bg-gray-dark bt0 clearfix btn-block">
-                        <span class="pull-left">View Details</span>
+                        <span class="pull-left" >View Details</span>
                         <span class="pull-right">
-                           <em class="fa fa-chevron-circle-right"></em>
+                           <em ng-click="showCitDetails()" class="fa fa-chevron-circle-right fa-2x"></em>
                         </span>
                     </a>
 
                 </div>
             </div>
 
+        </div>
+        <div class="row">
+            <div id="{{generateDonutDivId(articleData.doi.value)}}" align="center" class="chart-panel-lg col-lg-6 col-md-12 col-sm-12">
+                <div class="col-lg-12 no-padding panel-hover" ng-mouseover="renderCitDonutChart(articleData.citationsInfo)">
+                    <h4>Hover with mouse or tap to load</h4>
+                    <h2>Citations Chart</h2>
+                    <em class="fa fa-pie-chart fa-4x"></em>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="{{generateStackedDivId(articleData.doi.value)}}" align="center" class="chart-panel-lg col-lg-6 col-md-12 col-sm-12">
+                <div class="col-lg-12 no-padding panel-hover" ng-mouseover="renderCitStackedChart(articleData.citationsInfo)">
+                    <h4>Hover with mouse or tap to load</h4>
+                    <h2>Citations Chart</h2>
+                    <em class="fa fa-pie-chart fa-4x"></em>
+                </div>
+            </div>
         </div>
         <div class="row" ng-init="showBiblio = false">
             <h3 class="article-item-header">Bibliography

@@ -8,39 +8,67 @@ myApp
     .factory('ArticleManagerService', function(RequestArticlesService, ArticlesInfoService, $rootScope, $interval) {
         var articlesResults = [];
         var mockResults = [
+
             {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
             },
             {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
             },
             {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000088"
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
             },
             {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
-            } ,
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000413" //cit
+            },
             {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
-            } ,
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S157082680500017X" //cit
+            },
             {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            } ,
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000144" //cit
+            },
             {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000132" //cit
             }
+            ////{
+            ////    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000041" //todo: questo è un caso di errore in bibliografia
+            ////},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000027"
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000088"
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
+            //}
         ];
         var colorsMap = {
             "http://purl.org/spar/cito/citesForInformation": { toString: "cites For Information", value: "http://purl.org/spar/cito/citesForInformation" },
@@ -126,7 +154,44 @@ myApp
                 return articlesResultsState;
             },
 
+            getCitationsInfo: function(expression) {
+                //todo controllare che articlesResults sia definito
+                //todo controllare che le info che si stanno richiedendo non siano già disponibili
+
+                return ArticlesInfoService.requestCitationsInfo(expression).then(
+                    // success
+                    function(response) {
+                        var tmpArt;
+                        var res = response.data.results.bindings;
+
+                        /*  semplicemente per convertire uri del colore in stringa */
+                        for (var j in res) {
+                            res[j].color = colorsMap[res[j].color.value].toString;
+                            res[j].citingPubYear = parseInt(res[j].citingPubYear.value);
+                        }
+
+                        //todo: un metodo migliore per prendere l'oggetto con quell'expression?
+                        for (var key in articlesResults) {
+                            tmpArt = articlesResults[key];
+                            if (tmpArt.expression.value == expression) {
+                                tmpArt.citationsInfo = res;
+                                break; //almeno non me lo scorro tutto
+                            }
+                        }
+                    },
+
+                    // error
+                    //todo caso da gestire meglio
+                    function(errResponse) {
+
+                        console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText)
+                    }
+                );
+            },
+
+
             /* per richiedere i risultati della ricerca */
+            //todo: cambiare nome in qualcosa tipo "getArticlesResult": per motivi di astrazione per i controller
             requestArticles: function(searchString) {
                 /* per la lista degli autori di un certo item della bibliografia */
                 //I param: elemento bibliografia, II param: array autori articolo citante; II param serve per capire se si tratta di autocitazione
@@ -148,13 +213,13 @@ myApp
                 };
 
                 /* utility per convertire la stringa in int */
-                var stringToInt = function(obj) {
+                var stringToInt = function(str) {
                     //se obj è una stringa lo converte in numero; so già che è una stringa, ma non si sa mai...
-                    if (angular.isString(obj)) {
-                        return parseInt(obj);
+                    if (angular.isString(str)) {
+                        return parseInt(str);
                     }
 
-                    return obj;
+                    return str;
                 };
 
                 /* calcola il numero di atti citazionali da un articolo ad un altro */
@@ -237,6 +302,7 @@ myApp
                         var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
                         var results = "http://stanbol.apache.org/ontology/entityhub/query#queryResult";
                         var tmpRes = null; //conterrà gli uri dei work dei risultati (se ci sono risultati)
+                        response = []; //todo: da eliminare, barbatrucco per passare il controllo
 
                         //todo: righe da scommentare
                         if (noData(response)) {
@@ -248,8 +314,8 @@ myApp
                         } else {
                             articlesResultsState = states.RESULTS;              // ci sono risultati
                             console.log("RESULTS!");
-                            tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
-                            //tmpRes = mockResults;  //todo da eliminare
+                            //tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
+                            tmpRes = mockResults;  //todo da eliminare
                             articlesNum = tmpRes.length;                        // numero totale di articoli di cui richiedere le info
                             completedArticles = articlesResults.length;         // numero di richieste completate = numero di articoli nella lista degli articoli...semplice
 
