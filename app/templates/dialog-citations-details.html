@@ -1,4 +1,39 @@
-<h1>Article title</h1>
-<h2>Citations</h2>
-asdasdasd
+<h3>{{ngDialogData.articleData.title.value}}</h3>
+<div class="citing-details-header">
+    <h3>Overview on citations</h3>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <!-- START panel-->
+        <div id="donutPanel" class="panel panel-default">
+            <div class="panel-heading"><h4>Functions</h4></div>
+            <div class="panel-body">
+                <div id="donut_chart" align="center" class="chart-panel-xl"></div>
+            </div>
+        </div>
+        <!-- END panel-->
+    </div>
+    <div class="col-lg-6">
+        <!-- START panel-->
+        <div id="stackedPanel" class="panel panel-default">
+            <div class="panel-heading"><h4>Functions yearly</h4></div>
+            <div class="panel-body">
+                <div id="stacked_chart" align="center" class="chart-panel-xl"></div>
+            </div>
+        </div>
+        <!-- END panel-->
+    </div>
+
+
+</div>
+
+<div class="citing-details-header">
+    <h3>Citing articles</h3>
+</div>
+
+<div class="row row-masonry row-masonry-xl-2 row-masonry-lg-2 row-masonry-md-2 row-masonry-sm-1">
+    <div class="col-masonry" ng-repeat="citingItem in ngDialogData.articleData.citingArticles">
+        <citing-item item-data="citingItem" cited-article-authors="ngDialogData.articleData.authors" ></citing-item>
+    </div>
 </div>

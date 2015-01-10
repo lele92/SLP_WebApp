@@ -38,7 +38,7 @@
 
 .article-year {
     color: #1e983b;
-    font-size: large;
+    font-size: x-large;
 }
 
 .row-centered {
@@ -205,6 +205,10 @@
     color: #3a3f51 !important;
 }
 
+.large-text {
+    font-size: large;
+}
+
 .x-large-text {
     font-size: x-large;
 }
@@ -251,3 +255,11 @@
     background-color: #564aa3;
 }
 
+.citing-info-body {
+    padding: 5px;
+}
+
+.citing-details-header {
+    border-bottom: 1px solid #d3d3d3;
+    margin: 10px;
+}

@@ -3,7 +3,7 @@
     <div class="p" >
         <div>
             <legend class="filter-legend">
-                <span ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkYear}">Year</span>
+                <span tooltip="enabling this filter will show only articles with publication year greater than or equal to the one entered" tooltip-placement="right" tooltip-popup-delay="500" ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkYear}">Year</span>
                 <label class="switch pull-right">
                     <input type="checkbox"  ng-model="biblioFilterCtrl.checkYear" ng-change="biblioFilterCtrl.switchYearFilter()"/>
                     <span></span>

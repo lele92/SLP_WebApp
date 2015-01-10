@@ -9,36 +9,36 @@ myApp
         var articlesResults = [];
         var mockResults = [
 
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000413" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S157082680500017X" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000144" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000132" //cit
+            },
             //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000041" //todo: questo è un caso di errore in bibliografia
             //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000413" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S157082680500017X" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000144" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000132" //cit
-            //},
-            ////{
-            ////    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000041" //todo: questo è un caso di errore in bibliografia
-            ////},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000027"
-            //},
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000027"
+            },
             {
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
             },
@@ -147,9 +147,9 @@ myApp
         }
 
         /* per le info sui citacion acts di un certo item X della bibliografia:  per ogni elemento della bibliografia, quante volte X è citato dal citingEntity per un certo motivo*/
-        var getBiblioItemCitActsInfo = function(citingEntity, biblioItem) {
+        var getBiblioItemCitActsInfo = function(citingEntityExpression, biblioItem) {
             //I param: citing entity - II param: cited entity
-            ArticlesInfoService.getCitationActsInfo(citingEntity.value, biblioItem.citedExpression.value).then(
+            ArticlesInfoService.getCitationActsInfo(citingEntityExpression, biblioItem.citedExpression.value).then(
                 function (response) {
                     biblioItem.citActsInfo = response.data.results.bindings;
                     var tmpCitActsInfo;
@@ -364,6 +364,53 @@ myApp
                 );
             },
 
+            getBiblioInfo: function(citingArticleExpression, citingArticleAuthors) {
+                //@guide richiedo le info sulla bibliografia
+                /* @guide  parto prima dai cito:cites di un articolo (unici per definizione) in modo da interrogare il dataset
+                 * una sola volta per ottenere le info generiche; in seguito chiedo le info sui citation acts (quanti e di che tipo)
+                 * relativi ad ogni citazione; così facendo mi risparmio di fare interrogazioni inutili per avere info che già ho (ad esempio titolo e autori).
+                 * le info le richiedo una sola volta per ogni cito:cites invece che più volte per ogni citation acts*/
+                ArticlesInfoService.requestBiblioInfo(citingArticleExpression).then(
+                    function(response){
+                        var res = response.data.results.bindings;
+
+                        //@guide per ogni elemento della bibliografia recupero gli autori e le info sui citation acts
+                        //fixme trovare un modo alternativo, altrimenti si fanno troppe chiamate ajax e query a fuseki
+                        //idea: info sulla bibliografia potrebbero essere richieste al drill down come nel caso delle ulteriori info sulle citazioni
+                        for (var i in res) {
+                            //faccio i seguenti riassegnamenti per facilitare filtri e ordinamenti dei risultati in bibliografia
+                            // così le properties non sono più oggetti ma stringhe o numeri
+                            //todo: ristrutturazione del'oggetto da eseguire in una funzione
+                            res[i].title = res[i].title.value;
+                            res[i].publicationYear = stringToInt(res[i].publicationYear.value);
+                            res[i].globalCountDate = res[i].globalCountDate.value;
+                            res[i].globalCountValue = stringToInt(res[i].globalCountValue.value);
+
+
+                            //metodi utili anche per avere uno scope isolato e non avere problemi con l'indice nelle callback
+                            //@guide autori dell'articolo citato
+                            getSubItemAuthors(res[i], citingArticleAuthors);
+
+                            //@guide info sugli atti citazioni per ogni cito:cites (quante volte un citing entity cita un cited entity per un certo motivo (colore) )
+                            getBiblioItemCitActsInfo(citingArticleExpression, res[i]);
+                        }
+
+                        for (var key in articlesResults) {
+                            var tmpArt = articlesResults[key];
+                            if (tmpArt.expression.value == citingArticleExpression) {
+                                tmpArt.biblioInfo = res;
+                                break; //almeno non me lo scorro tutto
+                            }
+                        }
+                    },
+
+                    //todo caso da gestire meglio
+                    function (errResponse) {
+                        console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+                    }
+                );
+            },
+
             /* per richiedere i risultati della ricerca */
             //todo: cambiare nome in qualcosa tipo "getArticlesResult": per motivi di astrazione per i controller
             requestArticles: function(searchString) {
@@ -434,42 +481,7 @@ myApp
                                             }
                                         );
 
-                                        //@guide richiedo le info sulla bibliografia
-                                        /* @guide  parto prima dai cito:cites di un articolo (unici per definizione) in modo da interrogare il dataset
-                                         * una sola volta per ottenere le info generiche; in seguito chiedo le info sui citation acts (quanti e di che tipo)
-                                         * relativi ad ogni citazione; così facendo mi risparmio di fare interrogazioni inutili per avere info che già ho (ad esempio titolo e autori).
-                                         * le info le richiedo una sola volta per ogni cito:cites invece che più volte per ogni citation acts*/
-                                        ArticlesInfoService.getBiblioInfo(articleData.expression.value).then(
-                                            function(response){
-                                                articleData.biblioInfo = response.data.results.bindings;
 
-                                                //@guide per ogni elemento della bibliografia recupero gli autori e le info sui citation acts
-                                                //fixme trovare un modo alternativo, altrimenti si fanno troppe chiamate ajax e query a fuseki
-                                                //idea: info sulla bibliografia potrebbero essere richieste al drill down come nel caso delle ulteriori info sulle citazioni
-                                                for (var i in articleData.biblioInfo) {
-                                                    //faccio i seguenti riassegnamenti per facilitare filtri e ordinamenti dei risultati in bibliografia
-                                                    // così le properties non sono più oggetti ma stringhe o numeri
-                                                    //todo: ristrutturazione del'oggetto da eseguire in una funzione
-                                                    articleData.biblioInfo[i].title = articleData.biblioInfo[i].title.value;
-                                                    articleData.biblioInfo[i].publicationYear = stringToInt(articleData.biblioInfo[i].publicationYear.value);
-                                                    articleData.biblioInfo[i].globalCountDate = articleData.biblioInfo[i].globalCountDate.value;
-                                                    articleData.biblioInfo[i].globalCountValue = stringToInt(articleData.biblioInfo[i].globalCountValue.value);
-
-
-                                                    //metodi utili anche per avere uno scope isolato e non avere problemi con l'indice nelle callback
-                                                    //@guide autori dell'articolo citato
-                                                    getSubItemAuthors(articleData.biblioInfo[i], articleData.authors);
-
-                                                    //@guide info sugli atti citazioni per ogni cito:cites (quante volte un citing entity cita un cited entity per un certo motivo (colore) )
-                                                    getBiblioItemCitActsInfo(articleData.expression, articleData.biblioInfo[i]);
-                                                }
-                                            },
-
-                                            //todo caso da gestire meglio
-                                            function (errResponse) {
-                                                console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
-                                            }
-                                        );
                                     },
 
                                     //todo caso da gestire meglio

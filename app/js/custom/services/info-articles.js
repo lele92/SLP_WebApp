@@ -52,7 +52,7 @@ myApp
             },
 
             //@guide per le info generiche sugli articoli citati da un certo articolo
-            getBiblioInfo: function(expressionURI) {
+            requestBiblioInfo: function(expressionURI) {
                 var expr = {expression: expressionURI};
                 var queryURL = this.buildQueryURL('#query_citedArticles',expr);
 
@@ -79,6 +79,4 @@ myApp
                 return endpoint+"?format=json&query="+encodedquery;
             }
         }
-
-
     });

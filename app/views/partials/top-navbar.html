@@ -19,7 +19,7 @@
          <li>
             <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
             <a href="#" ng-click="app.layout.isCollapsed = !app.layout.isCollapsed" class="hidden-xs">
-               <em class="fa fa-navicon"></em>
+               <em tooltip-placement="bottom" tooltip="Toggle Sidebar" tooltip-popup-delay="1000" class="fa fa-navicon"></em>
             </a>
             <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
             <a href="#" toggle-state="aside-toggled" no-persist="no-persist" class="visible-xs sidebar-toggle">
@@ -39,7 +39,7 @@
             </li>
             <!-- Fullscreen (only desktops)-->
             <li class="visible-lg">
-               <a href="#" toggle-fullscreen="toggle-fullscreen">
+               <a tooltip-placement="bottom" tooltip="Toggle fullscreen" tooltip-popup-delay="1000" href="#" toggle-fullscreen="toggle-fullscreen">
                   <em class="fa fa-expand"></em>
                </a>
             </li>
@@ -110,9 +110,9 @@
             <!--</li>-->
             <!-- END Alert menu-->
             <!-- START filter button-->
-            <li class="filter-navbar">
-               <a href="#" toggle-state="offsidebar-open" no-persist="no-persist">
-                  <em class="icon-equalizer"></em>
+            <li  class="filter-navbar">
+               <a tooltip-placement="bottom" tooltip="Filters" tooltip-popup-delay="1000" href="#" toggle-state="offsidebar-open" no-persist="no-persist">
+                  <em  class="icon-equalizer"></em>
                   <em id="filter-check-circle" class="fa fa-check-circle" ng-show="RightNavbarCtrl.filterActivatedF.value"></em>
                </a>
             </li>

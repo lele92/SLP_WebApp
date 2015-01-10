@@ -24,24 +24,24 @@ myApp.directive('citingItem', function( $modal) {
 
                 return false;
             }
-
-            scope.open = function() {
-                var modalInstance = $modal.open({
-                    templateUrl: '/app/templates/dialog-abstract.html',
-                    controller: ModalInstanceCtrl,
-                    size: 'lg'
-                });
-            }
-
-            var ModalInstanceCtrl = function ($scope, $modalInstance) {
-
-                $scope.close = function () {
-                    $modalInstance.close('closed');
-                };
-
-                $scope.absText = scope.itemData.abstractTxt.value;
-                $scope.title = scope.itemData.title.value;
-            };
+            //
+            //scope.open = function() {
+            //    var modalInstance = $modal.open({
+            //        templateUrl: '/app/templates/dialog-abstract.html',
+            //        controller: ModalInstanceCtrl,
+            //        size: 'lg'
+            //    });
+            //}
+            //
+            //var ModalInstanceCtrl = function ($scope, $modalInstance) {
+            //
+            //    $scope.close = function () {
+            //        $modalInstance.close('closed');
+            //    };
+            //
+            //    $scope.absText = scope.itemData.abstractTxt.value;
+            //    $scope.title = scope.itemData.title.value;
+            //};
         }
     };
 

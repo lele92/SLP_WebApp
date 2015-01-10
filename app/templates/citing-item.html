@@ -9,7 +9,7 @@
             <a class="btn btn-oval btn-primary" ng-href="{{ itemData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i></a>
         </h4>
     </div>
-    <div class="citing-info-body">
+    <div class="citing-info-body" ng-init="showAbstract = false">
         <div class="row">
             <em class="fa fa-users biblio-round-icon"></em>
             <span class="label label-author-light" ng-class="{'shared-author': isSharedAuthor(author) }" ng-repeat="author in itemData.authors">
@@ -20,7 +20,13 @@
             <em class="icon-globe biblio-round-icon"></em>
             <span class="large-text">Global Citations: {{itemData.globalCountValue.value}} (updated: {{itemData.globalCountDate.value}})</span>
         </div>
-        <button popover-trigger="mouseenter" popover="Read the abstract" class="btn btn-info" ng-click="open()"><em class="fa fa-file-text"></em> Show abstract</button>
+        <div align="center">
+            <button popover-trigger="mouseenter"  ng-click="showAbstract = !showAbstract" popover="Read the abstract" type="button" class="btn btn-square btn-primary large-text"><em class="fa fa-file-text"></em> Abstract</button>
+        </div>
+
+        <div ng-show="showAbstract" class="well">
+            {{itemData.abstractTxt.value}}
+        </div>
     </div>
     <div class="panel-body bg-gray-light">
         <div class="row row-table">
