@@ -19,10 +19,18 @@ myApp
                 return $http.get(queryURL);
             },
 
-            //@guide per le info citazionali di un articolo (di quelli mostrati nei risultati di ricerca)
+            //@guide per le info citazionali di un articolo (di quelli mostrati nei risultati di ricerca) con expression = expressionURI
             requestCitationsInfo: function(expressionURI) {
                 var expr = {citedExpression: expressionURI};
                 var queryURL = this.buildQueryURL('#query_citationsInfo',expr);
+
+                return $http.get(queryURL);
+            },
+
+            //@guide per le info generiche sugli articoli che citano un articolo con expression = expressionURI
+            requestCitingArticles: function(expressionURI) {
+                var expr = {citedExpression: expressionURI};
+                var queryURL = this.buildQueryURL('#query_citingArticles',expr);
 
                 return $http.get(queryURL);
             },

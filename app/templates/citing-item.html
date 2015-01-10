@@ -1,0 +1,33 @@
+<div class="panel widget citing-item-panel">
+    <div class="citing-item-year" align="center" ng-class="{'citing-item-selfcitation': itemData.isSelfcitation }">
+        <em ng-show="itemData.isSelfcitation" class="fa icon-reload round-icon"></em>
+        <span class="xx-large-text">{{itemData.publicationYear}}</span>
+    </div>
+    <div class="panel-body text-center">
+        <h4 class="m0">
+            {{itemData.title.value}}
+            <a class="btn btn-oval btn-primary" ng-href="{{ itemData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i></a>
+        </h4>
+    </div>
+    <div class="citing-info-body">
+        <div class="row">
+            <em class="fa fa-users biblio-round-icon"></em>
+            <span class="label label-author-light" ng-class="{'shared-author': isSharedAuthor(author) }" ng-repeat="author in itemData.authors">
+            {{author.givenName.value}} {{author.familyName.value}}
+            </span>
+        </div>
+        <div class="row">
+            <em class="icon-globe biblio-round-icon"></em>
+            <span class="large-text">Global Citations: {{itemData.globalCountValue.value}} (updated: {{itemData.globalCountDate.value}})</span>
+        </div>
+        <button popover-trigger="mouseenter" popover="Read the abstract" class="btn btn-info" ng-click="open()"><em class="fa fa-file-text"></em> Show abstract</button>
+    </div>
+    <div class="panel-body bg-gray-light">
+        <div class="row row-table">
+            <span>Functions</span>
+            <ul>
+                <li ng-repeat="color in itemData.colors">{{color}}</li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -3,7 +3,7 @@
  * elemento per le informazioni su un singolo elemento di una bibliografia
  =========================================================*/
 
-myApp.directive('biblioItem', function() {
+myApp.directive('biblioItem', function($modal) {
     'use strict';
 
     return {
@@ -15,7 +15,7 @@ myApp.directive('biblioItem', function() {
             citingArticleAuthors: "="
         },
         link: function(scope, element, attributes) {
-            /* se un autore di un biblio-item é anche autore dell'articolo citante, allora ritorn true, altrimenti false */
+            /* se un autore di un biblio-item é anche autore dell'articolo citante, allora ritorna true, altrimenti false */
             scope.isSharedAuthor = function(author) {
                 for (var i in scope.citingArticleAuthors) {
                     if (scope.citingArticleAuthors[i].fullName === author.fullName) {
@@ -71,6 +71,24 @@ myApp.directive('biblioItem', function() {
 
                 // visualizza il donut
                 chart.render();
+            }
+
+            scope.open = function() {
+                var modalInstance = $modal.open({
+                    templateUrl: '/app/templates/dialog-abstract.html',
+                    controller: ModalBiblioCtrl,
+                    size: 'lg'
+                });
+            }
+
+            var ModalBiblioCtrl = function ($scope, $modalInstance) {
+
+                $scope.close = function () {
+                    $modalInstance.close('closed');
+                };
+
+                $scope.absText = scope.itemData.abstractTxt.value;
+                $scope.title = scope.itemData.title;
             }
 
 

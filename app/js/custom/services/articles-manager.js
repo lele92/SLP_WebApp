@@ -9,27 +9,27 @@ myApp
         var articlesResults = [];
         var mockResults = [
 
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000413" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S157082680500017X" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000144" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000132" //cit
-            }
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000413" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S157082680500017X" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000144" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000132" //cit
+            //},
             ////{
             ////    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000041" //todo: questo è un caso di errore in bibliografia
             ////},
@@ -39,36 +39,36 @@ myApp
             //{
             //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000027"
             //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000088"
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
-            //}
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000088"
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
+            }
         ];
         var colorsMap = {
             "http://purl.org/spar/cito/citesForInformation": { toString: "cites For Information", value: "http://purl.org/spar/cito/citesForInformation" },
@@ -121,6 +121,183 @@ myApp
         var articlesResultsState = states.NOT_AVAILABLE;    // in che stato si trovano i risultati di ricerca
 
 
+        /* utility per convertire la stringa in int */
+        var stringToInt = function(str) {
+            //se obj è una stringa lo converte in numero; so già che è una stringa, ma non si sa mai...
+            if (angular.isString(str)) {
+                return parseInt(str);
+            }
+
+            return str;
+        };
+
+        /* calcola il numero di atti citazionali da un articolo ad un altro */
+        var countNumCitActs = function(citActsInfo) {
+            var count = 0;
+            for (var i in citActsInfo) {
+                count += citActsInfo[i].numCitActs;
+            }
+
+            return count;
+        }
+
+        /* converte uri colore citazione in stringa facilmente leggibile */
+        var mapColorToString = function(colorURI) {
+            return colorsMap[colorURI].toString;
+        }
+
+        /* per le info sui citacion acts di un certo item X della bibliografia:  per ogni elemento della bibliografia, quante volte X è citato dal citingEntity per un certo motivo*/
+        var getBiblioItemCitActsInfo = function(citingEntity, biblioItem) {
+            //I param: citing entity - II param: cited entity
+            ArticlesInfoService.getCitationActsInfo(citingEntity.value, biblioItem.citedExpression.value).then(
+                function (response) {
+                    biblioItem.citActsInfo = response.data.results.bindings;
+                    var tmpCitActsInfo;
+                    for (var j in biblioItem.citActsInfo) {
+                        tmpCitActsInfo = biblioItem.citActsInfo[j];
+                        tmpCitActsInfo.colorURI = tmpCitActsInfo.color.value;
+                        tmpCitActsInfo.color = mapColorToString(tmpCitActsInfo.color.value);
+                        tmpCitActsInfo.numCitActs = stringToInt(tmpCitActsInfo.numCitActs.value);
+                    }
+                    biblioItem.totCitActs = countNumCitActs(biblioItem.citActsInfo);
+                },
+                //todo caso da gestire meglio
+                function (errResponse) {
+                    console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+                }
+            );
+        }
+
+        var noData = function(res) {
+            return res.data == "";
+        }
+
+        /* cerca autori in comune tra l'articolo dei risultati di ricerca e il citato/citante:
+         * - se ce n'è almeno uno allora si tratta di una autocitazione
+         * - il nome di ogni autore condiviso viene aggiunto ad un array: verrà poi usato per evidenziare gli autori condivisi nel subItem*/
+        var setSelfcitationInfo = function(subItem, citingArticleAuthors) {
+            //fixme: potenziale problema di sincronizzazione: vengono confrontati gli autori del subItem con gli autori dell'articolo citante,
+            // ma questi ultimi sono il risultato di una chiamata asincrona, quindi in teoria potrebbero non essere ancora disponibili quando si effettuano i controlli
+            // per il momento se si verifica un caso del genere non faccio nessun confronto e notifico il problema, per questo il seguente if
+            // prima idea per risolvere: se non ci sono i citingArticleAuthors, chiederli qui
+            if(citingArticleAuthors !== undefined && subItem.authors !== undefined) {
+                subItem.sharedAuthors = [];
+                subItem.isSelfcitation = false;
+                var tmpAuthor;
+
+                for (var bIndex in subItem.authors) {
+                    tmpAuthor = subItem.authors[bIndex];
+
+                    for (var index in citingArticleAuthors) {
+
+                        if (citingArticleAuthors[index].fullName === tmpAuthor.fullName) {
+                            subItem.isSelfcitation = true; //si, lo reimposto a true più volte, non dovrebbe essere un problema
+                            subItem.sharedAuthors.push(tmpAuthor.fullName);
+                        }
+                    }
+                }
+            } else {
+                alert("Non è stato possibile stabilire se '"+subItem.title+"' sia una autocitazione");
+            }
+        }
+
+        /* per recuperare gli autori di un articolo dei risultati di ricerca */
+        var getArticleAuthors = function(article) {
+            ArticlesInfoService.getArticleAuthors(article.authorsList.value).then(
+                function (response) {
+                    article.authors = response.data.results.bindings;
+                    for (var i in article.authors) {
+                        article.authors[i].fullName = article.authors[i].fullName.value;
+                    }
+
+                },
+                //todo caso da gestire meglio
+                function (errResponse) {
+                    console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+                }
+            );
+        }
+
+        /* per la lista degli autori di un certo subItem
+        * subItem: articolo citato o citante dall'/l' articolo dei risultati di ricerca*/
+        //I param: subItem, II param: array autori articolo citante/citato; II param serve per capire se si tratta di autocitazione
+        var getSubItemAuthors = function(subItem, resultArticleAuthors) {
+            ArticlesInfoService.getArticleAuthors(subItem.authorsList.value).then(
+                function (response) {
+                    subItem.authors = response.data.results.bindings;
+                    for (var i in subItem.authors) {
+                        subItem.authors[i].fullName = subItem.authors[i].fullName.value;
+                    }
+
+                    setSelfcitationInfo(subItem, resultArticleAuthors);
+                },
+                //todo caso da gestire meglio
+                function (errResponse) {
+                    console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+                }
+            );
+        };
+
+        var setCitingArticleColors = function(citingArticle, citationsInfo) {
+            citingArticle.colors = [];
+
+            var colorsDuplicate = [];
+            var tmpColor;
+            var prev = "";
+
+            // prendo tutti i colori per citing article cita
+            for (var key in citationsInfo) {
+                //se l'expression (citing entity) del citation act che sto considerando == l'expression dell'articolo di cui voglio sapere i motivi citazionali
+                if (citationsInfo[key].citingExp.value == citingArticle.citingExp.value) {
+                    colorsDuplicate.push(citationsInfo[key].color); //allora lo aggiungo alla lista
+                }
+
+            }
+            colorsDuplicate.sort();
+
+            for (var i=0; i<colorsDuplicate.length; i++) {
+                tmpColor = colorsDuplicate[i];
+                if ( tmpColor !== prev) {
+                    citingArticle.colors.push(tmpColor);
+                }
+
+                prev = tmpColor;
+            }
+        }
+
+        /* per ottenere le info sugli articoli citanti, presi singolarmente */
+        // expression: expression del citedArticle
+        // citedArticleAuthors: lista degli autori dell'articolo citato, mi serve per vedere se ce ne sono di condivisi
+        // citationsInfo: triple (expression,anno,colore) su tutte le citazioni verso l'articolo citato, quindi con expression potenzialmente duplicati
+        //todo: questo metodo potrebbe essere rifattorizzato meglio
+        var getCitingArticles = function(citedArticle, expression, citedArticleAuthors, citationsInfo) {
+            //todo controllare che articlesResults sia definito
+            //todo controllare che le info che si stanno richiedendo non siano già disponibili
+
+            return ArticlesInfoService.requestCitingArticles(expression).then(
+                // success
+                function(response) {
+                    citedArticle.citingArticles = response.data.results.bindings;
+
+                    //per ogni articolo citante
+                    for (var j in citedArticle.citingArticles) {
+                        var citingArticle = citedArticle.citingArticles[j];
+                        citingArticle.publicationYear = parseInt(citingArticle.publicationYear.value);
+
+                        getSubItemAuthors(citingArticle, citedArticleAuthors);  //prendo gli autori e controllo se ce ne sono di condivisi con l'articolo citato
+                        setCitingArticleColors(citingArticle, citationsInfo)           //per ogni articolo prendo i motivi per cui cita
+                    }
+                },
+
+                // error
+                //todo caso da gestire meglio
+                function(errResponse) {
+                    console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText);
+                }
+            );
+        }
+
+
         return {
             getArticles: function() {
                 return articlesResults;
@@ -154,27 +331,25 @@ myApp
                 return articlesResultsState;
             },
 
-            getCitationsInfo: function(expression) {
+            getCitationsInfo: function(expression, citedArticleAuthors) {
                 //todo controllare che articlesResults sia definito
                 //todo controllare che le info che si stanno richiedendo non siano già disponibili
 
                 return ArticlesInfoService.requestCitationsInfo(expression).then(
                     // success
                     function(response) {
-                        var tmpArt;
                         var res = response.data.results.bindings;
 
-                        /*  semplicemente per convertire uri del colore in stringa */
                         for (var j in res) {
                             res[j].color = colorsMap[res[j].color.value].toString;
                             res[j].citingPubYear = parseInt(res[j].citingPubYear.value);
                         }
 
-                        //todo: un metodo migliore per prendere l'oggetto con quell'expression?
                         for (var key in articlesResults) {
-                            tmpArt = articlesResults[key];
+                            var tmpArt = articlesResults[key];
                             if (tmpArt.expression.value == expression) {
-                                tmpArt.citationsInfo = res;
+                                tmpArt.citationsInfo = res;                                           // qui aggiungo le info citazioniali (anni, colori, etc...)
+                                getCitingArticles(tmpArt, expression, citedArticleAuthors, res);      // qui aggiungo le info sugli articoli citanti
                                 break; //almeno non me lo scorro tutto
                             }
                         }
@@ -189,110 +364,9 @@ myApp
                 );
             },
 
-
             /* per richiedere i risultati della ricerca */
             //todo: cambiare nome in qualcosa tipo "getArticlesResult": per motivi di astrazione per i controller
             requestArticles: function(searchString) {
-                /* per la lista degli autori di un certo item della bibliografia */
-                //I param: elemento bibliografia, II param: array autori articolo citante; II param serve per capire se si tratta di autocitazione
-                var getBiblioItemAuthors = function(biblioItem, citingArticleAuthors) {
-                    ArticlesInfoService.getArticleAuthors(biblioItem.authorsList.value).then(
-                        function (response) {
-                            biblioItem.authors = response.data.results.bindings;
-                            for (var i in biblioItem.authors) {
-                                biblioItem.authors[i].fullName = biblioItem.authors[i].fullName.value;
-                            }
-
-                            setSelfcitationInfo(biblioItem, citingArticleAuthors);
-                        },
-                        //todo caso da gestire meglio
-                        function (errResponse) {
-                            console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
-                        }
-                    );
-                };
-
-                /* utility per convertire la stringa in int */
-                var stringToInt = function(str) {
-                    //se obj è una stringa lo converte in numero; so già che è una stringa, ma non si sa mai...
-                    if (angular.isString(str)) {
-                        return parseInt(str);
-                    }
-
-                    return str;
-                };
-
-                /* calcola il numero di atti citazionali da un articolo ad un altro */
-                var countNumCitActs = function(citActsInfo) {
-                    var count = 0;
-                    for (var i in citActsInfo) {
-                        count += citActsInfo[i].numCitActs;
-                    }
-
-                    return count;
-                }
-
-                /* converte uri colore citazione in stringa facilmente leggibile */
-                var mapColorToString = function(colorURI) {
-                    return colorsMap[colorURI].toString;
-                }
-
-                /* per le info sui citacion acts di un certo item X della bibliografia:  per ogni elemento della bibliografia, quante volte X è citato dal citingEntity per un certo motivo*/
-                var getBiblioItemCitActsInfo = function(citingEntity, biblioItem) {
-                    //I param: citing entity - II param: cited entity
-                    ArticlesInfoService.getCitationActsInfo(citingEntity.value, biblioItem.citedExpression.value).then(
-                        function (response) {
-                            biblioItem.citActsInfo = response.data.results.bindings;
-                            var tmpCitActsInfo;
-                            for (var j in biblioItem.citActsInfo) {
-                                tmpCitActsInfo = biblioItem.citActsInfo[j];
-                                tmpCitActsInfo.colorURI = tmpCitActsInfo.color.value;
-                                tmpCitActsInfo.color = mapColorToString(tmpCitActsInfo.color.value);
-                                tmpCitActsInfo.numCitActs = stringToInt(tmpCitActsInfo.numCitActs.value);
-                            }
-                            biblioItem.totCitActs = countNumCitActs(biblioItem.citActsInfo);
-                        },
-                        //todo caso da gestire meglio
-                        function (errResponse) {
-                            console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
-                        }
-                    );
-                };
-
-                /* cerca autori in comune tra l'articolo citante e il citato:
-                 * - se ce n'è almeno uno allora si tratta di una autocitazione
-                  * - il nome di ogni autore condiviso viene aggiunto ad un array: verrà poi usato per evidenziare gli autori condivisi nell'elemento bibliografico*/
-                var setSelfcitationInfo = function(biblioItem, citingArticleAuthors) {
-                    //fixme: potenziale problema di sincronizzazione: vengono confrontati gli autori dell'elemento bibliografico con gli autori dell'articolo citante,
-                    // ma questi ultimi sono il risultato di una chiamata asincrona, quindi in teoria potrebbero non essere ancora disponibili quando si effettuano i controlli
-                    // per il momento se si verifica un caso del genere non faccio nessun confronto e notifico il problema, per questo il seguente if
-                    // prima idea per risolvere: se non ci sono i citingArticleAuthors, chiederli qui
-                    if(citingArticleAuthors !== undefined && biblioItem.authors !== undefined) {
-                        biblioItem.sharedAuthors = [];
-                        biblioItem.isSelfcitation = false;
-                        var tmpAuthor;
-
-                        for (var bIndex in biblioItem.authors) {
-                            tmpAuthor = biblioItem.authors[bIndex];
-
-                            for (var index in citingArticleAuthors) {
-
-                                if (citingArticleAuthors[index].fullName === tmpAuthor.fullName) {
-                                    biblioItem.isSelfcitation = true; //si, lo reimposto a true più volte, non dovrebbe essere un problema
-                                    biblioItem.sharedAuthors.push(tmpAuthor.fullName);
-                                }
-                            }
-                        }
-                    } else {
-                        alert("Non è stato possibile stabilire se '"+biblioItem.title+"' sia una autocitazione");
-                    }
-                }
-
-                var noData = function(res) {
-                    return res.data == "";
-                }
-
-
 
                 return RequestArticlesService.searchArticles(searchString).then(
                     // success
@@ -345,19 +419,7 @@ myApp
                                         }
                                         //@guide richiedo la lista degli autori
                                         //todo: qui si potrebbe risolvere con un chaining delle chiamate ajax
-                                        ArticlesInfoService.getArticleAuthors(articleData.authorsList.value).then(
-                                            function (response) {
-                                                articleData.authors = response.data.results.bindings;
-                                                for (var i in articleData.authors) {
-                                                    articleData.authors[i].fullName = articleData.authors[i].fullName.value;
-                                                }
-
-                                            },
-                                            //todo caso da gestire meglio
-                                            function (errResponse) {
-                                                console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
-                                            }
-                                        );
+                                        getArticleAuthors(articleData);
 
                                         //@guide richiedo le info sulle citazioni (in entrata)
                                         //todo: da valutare: per adesso le info sulle citazioni le richiedo qui
@@ -396,7 +458,7 @@ myApp
 
                                                     //metodi utili anche per avere uno scope isolato e non avere problemi con l'indice nelle callback
                                                     //@guide autori dell'articolo citato
-                                                    getBiblioItemAuthors(articleData.biblioInfo[i], articleData.authors);
+                                                    getSubItemAuthors(articleData.biblioInfo[i], articleData.authors);
 
                                                     //@guide info sugli atti citazioni per ogni cito:cites (quante volte un citing entity cita un cited entity per un certo motivo (colore) )
                                                     getBiblioItemCitActsInfo(articleData.expression, articleData.biblioInfo[i]);

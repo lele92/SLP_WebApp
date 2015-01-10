@@ -165,12 +165,12 @@ myApp.directive('articleItem', function(ngDialog, ArticleManagerService) {
                 return citStackedChartId = doi+"_citStacked"
             }
 
-            $scope.toggleArticleDetails = function(expression) {
+            $scope.toggleArticleDetails = function(expression, citedArticleAuthors) {
                 $scope.articleIsCollapsed = !$scope.articleIsCollapsed;
-
+                //@guide è qui che chiedo le ulteriori info sull'articolo: nel momento in cui lui si dichiara interessato e vuole approfondire
                 // se il panel non è collassato (vuol dire che pochi attimi fa era collassato, lo stato cambia qui sopra) e se le info non sono già state richieste
                 if (!$scope.articleIsCollapsed && !detailsAlreadyFetched) {
-                    ArticleManagerService.getCitationsInfo(expression);
+                    ArticleManagerService.getCitationsInfo(expression,citedArticleAuthors);
                 }
             }
 
@@ -227,6 +227,26 @@ myApp.directive('articleItem', function(ngDialog, ArticleManagerService) {
                 ngDialog.open({
                             template: "app/templates/dialog-citations-details.html"
                         });
+            }
+
+            $scope.getUniqueCitingItems = function(citingItems) {
+                var prevExp = "";
+                var tmpExp = "";
+                var data = [];
+                console.log(citingItems);
+
+                for (var key in citingItems) {
+                    var tmpItem = citingItems[key];
+                    tmpExp = tmpItem.citingExp.value;
+
+                    if (tmpExp !== prevExp) {
+                        data.push(tmpItem)
+                    }
+
+                    prevExp = tmpExp;
+                }
+
+                console.log(data);
             }
         }
     };

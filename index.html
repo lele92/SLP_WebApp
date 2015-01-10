@@ -32,6 +32,7 @@
    <script src="app/js/custom/services/filters-manager.js"></script>
    <script src="app/js/custom/directives/article-item.js"></script>
    <script src="app/js/custom/directives/biblio-item.js"></script>
+   <script src="app/js/custom/directives/citing-item.js"></script>
    <script src="app/js/custom/services/info-articles.js"></script>
    <script src="app/js/custom/services/articles-manager.js"></script>
    <script src="app/js/custom/services/request-articles.js"></script>
@@ -120,7 +121,6 @@
 
    <!-- query: numero di citation acts in entrata -->
    <!--todo: con questa query potrei ottenere anche le citing entity-->
-   <!--todo: da aggiungere subito: posso fare una union e avere anche le citazioni uniche-->
    <script id="query_incomingCitationsActs" type="text/template">
        select (count(?citAct) as ?numCitActs) (count(?expr) as ?numCites)
        where {
@@ -165,7 +165,7 @@
 
    <!-- query: info sugli articoli citati (cito:cites, quindi articoli unici) da un articolo (partendo dall'expression)-->
    <script id="query_citedArticles" type="text/template">
-       select ?citedExpression ?articleWork ?authorsList ?title ?publicationYear ?htmlItem ?globalCountValue ?globalCountDate
+       select ?citedExpression ?articleWork ?authorsList ?title ?publicationYear ?abstractTxt ?htmlItem ?globalCountValue ?globalCountDate
        where {
             <{{expression}}> cito:cites ?citedExpression.
 
@@ -174,6 +174,8 @@
                             core:embodiment ?man;
                             fabio:hasPublicationYear ?publicationYear;
                             core:realizationOf ?articleWork;
+                           core:part [ a sro:Abstract;
+                                            c4o:hasContent ?abstractTxt];
                             c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
                                                                 c4o:hasGlobalCountValue ?globalCountValue;
                                                                 c4o:hasGlobalCountDate ?globalCountDate].
@@ -200,9 +202,9 @@
        } group by (?color)
    </script>
 
-   <!-- query: info sulle citazioni ad un certo articolo-->
+   <!-- query: info sulle citazioni (citation acts) ad un certo articolo-->
    <script id="query_citationsInfo" type="text/template">
-       select ?citingExp ?color ?citingPubYear ?title ?abstractTxt ?authorsList ?globalCountValue ?globalCountDate ?authorsList ?htmlItem
+       select ?citingExp ?color ?citingPubYear
        where {
             ?citAct a cito:CitationAct;
                     cito:hasCitingEntity ?citingExp;
@@ -210,22 +212,34 @@
                     cito:hasCitationCharacterization ?color.
 
             ?citingExp a fabio:Expression;
-                       core:part [ a sro:Abstract;
-                                     c4o:hasContent ?abstractTxt];
-                       dcterms:title ?title;
-                       core:embodiment ?man;
-                       fabio:hasPublicationYear ?citingPubYear;
-                       core:realizationOf [ a fabio:Work;
-                                                core:creator ?authorsList];
-                       c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
-                                                            c4o:hasGlobalCountValue ?globalCountValue;
-                                                            c4o:hasGlobalCountDate ?globalCountDate].
+                   fabio:hasPublicationYear ?citingPubYear;
+       }
+   </script>
 
-                        ?authorsList a co:List.
-                       ?man a fabio:Manifestation, fabio:WebPage;
-                                    dcterms:format <http://purl.org/NET/mediatypes/text/html>;
-                                    core:exemplar ?htmlItem.
+   <!-- query: info generiche sugli articoli citanti-->
+   <script id="query_citingArticles" type="text/template">
+       select ?citingExp ?articleWork  ?title ?authorsList ?abstractTxt ?publicationYear ?htmlItem ?globalCountValue ?globalCountDate
+       where {
+            ?citingExp a fabio:Expression;
+                    cito:cites <{{citedExpression}}>;
+                   dcterms:title ?title;
+                   core:part [ a sro:Abstract;
+                                c4o:hasContent ?abstractTxt];
+                   core:embodiment ?man;
+                   fabio:hasPublicationYear ?publicationYear;
+                   core:realizationOf ?articleWork;
+                   c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
+                                                       c4o:hasGlobalCountValue ?globalCountValue;
+                                                       c4o:hasGlobalCountDate ?globalCountDate].
 
+       ?articleWork a fabio:Work;
+                core:creator ?authorsList.
+
+       ?authorsList a co:List.
+
+       ?man a fabio:Manifestation, fabio:WebPage;
+                dcterms:format <http://purl.org/NET/mediatypes/text/html>;
+                core:exemplar ?htmlItem.
        }
    </script>
 
@@ -260,5 +274,7 @@
         filter (?citedExp1 != ?citedExp2 && ?citedExp1 != ?citedExp3 && ?citedExp2 != ?citedExp3)
    } limit 1
    </script>
+
+
 </body>
 </html>

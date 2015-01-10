@@ -11,29 +11,28 @@
 
 
         <div class="col-lg-11 col-md-10 col-sm-10 col-xs-10">
-            <div class="panel-body no-top-padding no-bottom-padding">
-                <div class="row biblio-row">
-                    <div class="col-lg-8 col-md-12 col-sm-12 biblio-info-body">
-                        <h4 class="mt0">{{itemData.title}} - <span class="article-year">{{itemData.publicationYear}}</span>
-                            <a class="btn btn-oval btn-primary" ng-href="{{ itemData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i></a>
-                        </h4>
-                        <div class="row">
-                            <em class="fa fa-users biblio-round-icon"></em>
-                            <span class="label label-author-light" ng-class="{'shared-author': isSharedAuthor(author) }" ng-repeat="author in itemData.authors">
-                                {{author.givenName.value}} {{author.familyName.value}}
-                            </span>
-                        </div>
-                        <div class="row">
-                            <em class="icon-globe biblio-round-icon"></em>
-                            <span class="large-text">Global Citations: {{itemData.globalCountValue}} (updated: {{itemData.globalCountDate}})</span>
-                        </div>
+            <div class="panel-body no-top-padding no-bottom-padding row">
+                <div class="col-lg-8 col-md-12 col-sm-12 biblio-info-body">
+                    <h4 class="mt0">{{itemData.title}} - <span class="article-year">{{itemData.publicationYear}}</span>
+                        <a class="btn btn-oval btn-primary" ng-href="{{ itemData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i></a>
+                    </h4>
+                    <div class="row">
+                        <em class="fa fa-users biblio-round-icon"></em>
+                        <span class="label label-author-light" ng-class="{'shared-author': isSharedAuthor(author) }" ng-repeat="author in itemData.authors">
+                            {{author.givenName.value}} {{author.familyName.value}}
+                        </span>
                     </div>
-                    <div id={{chartId}} align="center" class="chart-panel col-lg-4 col-md-12 col-sm-12">
-                        <div class="col-lg-12 no-padding panel-hover" ng-mouseover="renderChart(itemData.citActsInfo, itemData.totCitActs)">
-                            <h4>Hover with mouse or tap to load</h4>
-                            <h2>Citations Chart</h2>
-                            <em class="fa fa-pie-chart fa-4x"></em>
-                        </div>
+                    <div class="row">
+                        <em class="icon-globe biblio-round-icon"></em>
+                        <span class="large-text">Global Citations: {{itemData.globalCountValue}} (updated: {{itemData.globalCountDate}})</span>
+                    </div>
+                    <button popover-trigger="mouseenter" popover="Read the abstract" class="btn btn-info" ng-click="open()"><em class="fa fa-file-text"></em> Show abstract</button>
+                </div>
+                <div id={{chartId}} align="center" class="chart-panel col-lg-4 col-md-12 col-sm-12">
+                    <div class="col-lg-12 no-padding panel-hover" ng-mouseover="renderChart(itemData.citActsInfo, itemData.totCitActs)">
+                        <h4>Hover with mouse or tap to load</h4>
+                        <h2>Citations Chart</h2>
+                        <em class="fa fa-pie-chart fa-4x"></em>
                     </div>
                 </div>
             </div>

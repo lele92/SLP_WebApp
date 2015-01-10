@@ -166,6 +166,17 @@
     padding-bottom: 15px;
 }
 
+.citing-info-body {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.citing-info-body>.row {
+    margin-left: 5px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+}
+
 .chart-panel {
     height: 170px;
     padding: 0px;
@@ -198,6 +209,10 @@
     font-size: x-large;
 }
 
+.xx-large-text {
+    font-size: xx-large;
+}
+
 .round-icon {
     margin: 3px;
     border: 1px solid lightslategray;
@@ -218,5 +233,21 @@
     margin-left: 5px;
     margin-bottom: 10px;
     margin-right: 5px;
+}
+
+.citing-item-year {
+    background-color: #243948;
+    padding: 5px;
+    font-size: x-large;
+    font-weight: bold;
+    color: white;
+}
+
+.citing-item-panel {
+    border: 1px solid lightgray;
+}
+
+.citing-item-selfcitation {
+    background-color: #564aa3;
 }
 

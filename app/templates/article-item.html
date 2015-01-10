@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <div align="center" class="show-article-info" ng-click="toggleArticleDetails(articleData.expression.value)">
+        <div align="center" class="show-article-info" ng-click="toggleArticleDetails(articleData.expression.value, articleData.authors)">
             <i ng-class="{'fa fa-chevron-down fa-2x': articleIsCollapsed, 'fa fa-chevron-up fa-2x': !articleIsCollapsed}"></i>
         </div>
 
@@ -86,6 +86,13 @@
                 </div>
             </div>
         </div>
+
+        <div class="row row-masonry row-masonry-xl-2 row-masonry-lg-2 row-masonry-md-2 row-masonry-sm-1">
+            <div class="col-masonry" ng-repeat="citingItem in articleData.citingArticles">
+                <citing-item item-data="citingItem" cited-article-authors="articleData.authors" ></citing-item>
+            </div>
+        </div>
+
         <div class="row" ng-init="showBiblio = false">
             <h3 class="article-item-header">Bibliography
                 ({{articleData.biblioInfo.length}} item<span ng-show="articleData.biblioInfo.length > 1">s</span>)
