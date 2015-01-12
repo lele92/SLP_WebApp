@@ -18,6 +18,15 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
     var requestPendingDialog;
     var loadingInfoDialog;
 
+    /* order option vars */
+    self.publicationYear = "publicationYear";
+    self.title = "title";
+    self.globalCitations = "globalCountValue";
+    self.totCitActs = "totCitActs";
+
+    self.orderByV = self.publicationYear;
+    self.sortByV = true;                      // true-> decrescente, false->crescente
+
     // se non si stanno richiedendo info e non ci sono articoli da mostrare (di una precedente ricerca) allora mostra un dialog di avviso
     if (!self.isRequestPending && ArticleManagerService.getArticlesResultsState() == self.states.NOT_AVAILABLE) {
          ngDialog.open({

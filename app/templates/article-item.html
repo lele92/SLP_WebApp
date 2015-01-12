@@ -1,7 +1,7 @@
 <div id="article_{{articleIndex}}" class="panel panel-default panel-article-item">
     <div class="panel-heading article-header panel-min-padding">
         <div class="article-header-info">
-            <h3>{{articleIndex}}. {{articleData.title.value}} - <span class="article-year">{{articleData.publicationYear.value}}</span>
+            <h3>{{articleIndex}}. {{articleData.title}} - <span class="article-year">{{articleData.publicationYear}}</span>
                 <a tooltip="External link"  tooltip-popup-delay="500"class="btn btn-oval btn-primary" ng-href="{{articleData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i></a>
             </h3>
 
@@ -38,7 +38,7 @@
 
             <div class="panel widget col-lg-3 col-md-6">
                 <div class="panel-body bg-success-dark text-center no-padding">
-                    <h1>{{articleData.globalCountValue.value}}</h1>
+                    <h1>{{articleData.globalCountValue}}</h1>
                     <h3>Global Citations</h3>
                     <div class="mb-lg"></div>
                     <em class="icon-globe fa-2x" style="margin:10px"></em>

@@ -218,6 +218,17 @@
        }
    </script>
 
+
+   <!-- query: tutti gli autori -->
+   <script id="query_allAuthors" type="text/template">
+       select distinct (concat(?givenName, " ",?familyName) as ?fullName)
+       where {
+            ?person a foaf:Person;
+               foaf:givenName ?givenName;
+               foaf:familyName ?familyName.
+       }
+   </script>
+
    <!-- query: info generiche sugli articoli citanti-->
    <script id="query_citingArticles" type="text/template">
        select ?citingExp ?articleWork  ?title ?authorsList ?abstractTxt ?publicationYear ?htmlItem ?globalCountValue ?globalCountDate
@@ -276,7 +287,5 @@
         filter (?citedExp1 != ?citedExp2 && ?citedExp1 != ?citedExp3 && ?citedExp2 != ?citedExp3)
    } limit 1
    </script>
-
-
 </body>
 </html>

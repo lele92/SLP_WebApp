@@ -69,6 +69,15 @@ myApp
 
             },
 
+            //@guide per ottenere tutti gli autori
+            getAllAuthors: function() {
+                var queryText = $("#query_allAuthors").text();
+                var query = prefixes + queryText;
+                var encodedquery = encodeURIComponent(query);
+
+                return $http.get(endpoint+"?format=json&query="+encodedquery);
+            },
+
             //fixme: da spostare fuori dalla api
             /* per costruire la query; query presa dallo script nell'html alla quale vengono sostituite le espressioni con ctx */
             buildQueryURL: function(queryId,ctx) {

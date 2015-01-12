@@ -63,3 +63,25 @@ myApp
             return items; //se le condizioni dell'if non sono verificate, ritorno l'input (potrebbe essere undefined) originale
         }
     })
+    .filter('authors', function () {
+        return function (items, authorsList) {
+            if (!angular.isUndefined(items) && !angular.isUndefined(authorsList)) {
+                var filtered = [];
+                var item;
+                var authors;
+                for (var i in items) {    //per ogni item della bibliogrfia
+                    item = items[i];
+                    authors = item.authors;
+                    for (var j in authors) {        //per ogni info citazionale
+                        if (authorsList[citActsInfo[j].colorURI].checked == true) {     //se il colore dell'atto citazionale è "attivo" (true) in authorsList
+                            filtered.push(item); //vuol dire che nell'item bibliografico c'è almeno una citazione di un colore che mi interessa, quindi l'item bibliografico è da mostrare
+                            break; //fondamentale questo break, altrimenti nel filtered ci potrebbe finire più volte lo stesso elemento
+                        }
+                    }
+                }
+                return filtered;
+            }
+
+            return items; //se le condizioni dell'if non sono verificate, ritorno l'input (potrebbe essere undefined) originale
+        }
+    })

@@ -7,10 +7,12 @@
 'use strict';
 
 myApp
-    .factory('FiltersManagerService', function() {
+    .factory('FiltersManagerService', function(ArticlesInfoService) {
+        var filterActivated = { value: false}               //true se c'è almeno un filtro attivo, false altrimenti
+        var allAuthors
         /* default vars filtri */
-        var startingPublicationYear =  { value: 0};     // anno di partenza per filtri. è un oggetto perchè sto valutando di aggiungere altre property e perchè lo trovo più conveniente
-        var onlySelfcitations = { value: false};        // inizialmente mostro tutte le citazioni
+        var startingPublicationYear =  { value: 0};         // anno di partenza per filtri. è un oggetto perchè sto valutando di aggiungere altre property e perchè lo trovo più conveniente
+        var onlySelfcitations = { value: false};            // inizialmente mostro tutte le citazioni
         var characterizations = { value:
             {
                 "http://purl.org/spar/cito/citesForInformation": {
@@ -199,15 +201,38 @@ myApp
                     checked: true
                 }
             }
-        }; //todo: valutare di strutturarlo in modo diverso
+        };                      //todo: richiederlo in modo dinamico come con gli autori
+        var authors = { value: [] };                //in questo caso articles sono gli elementi della bibliografia
 
-        var filterActivated = { value: false} //true se c'è almeno un filtro attivo, false altrimenti
+
+
 
         /* vars order by */
         var defaultOrderByValue = "publicationYear";    // l'ordinamento di default è per anno di pubblicazione
         var defaultSort = true;                      // true-> decrescente, false->crescente
         var orderBy = { value: defaultOrderByValue};    // angular.copy(defaultOrderBy, orderBy); orderBy inzializzato al default; deep copy, non assegnazione per riferimento
         var sort = { value: defaultSort};
+
+        //todo: da testare
+        var isEmpty = function(obj) {
+
+            // null and undefined are "empty"
+            if (obj == null) return true;
+
+            // Assume if it has a length property with a non-zero value
+            // that that property is correct.
+            if (obj.length > 0)    return false;
+            if (obj.length === 0)  return true;
+
+            // Otherwise, does it have any properties of its own?
+            // Note that this doesn't handle
+            // toString and valueOf enumeration bugs in IE < 9
+            for (var key in obj) {
+                if (hasOwnProperty.call(obj, key)) return false;
+            }
+
+            return true;
+        }
 
         return {
             /* getters e setters per i filtri */
@@ -225,6 +250,50 @@ myApp
 
             setStartingPublicationYear: function(newStartingYear) {
                 startingPublicationYear.value = newStartingYear;
+            },
+
+            // articles in questo caso sono gli elementi della bibliografia
+            getArticlesAuthors: function() {
+                if (isEmpty(authors.value)) {
+                    ArticlesInfoService.getAllAuthors().then(
+                        function (response) {
+                            var authorsFullName = response.data.results.bindings;
+
+                            for (var i in authorsFullName) {
+                                authors.value.push(authorsFullName[i].fullName.value);
+                            }
+
+                            console.log( authors);
+                        },
+                        //todo caso da gestire meglio
+                        function (errResponse) {
+                            console.error("Error while fetching authors. " + errResponse.status + ": " + errResponse.statusText)
+                        }
+                    );
+                }
+
+                return authors; //non è un problema questo return, è un riferimento
+            },
+
+            //da invocare quando che si effettua il drilldown per avere dettagli su un articolo (e quindi anche i dettagli bibliografici)
+            //@guide aggiunge un autore alla lista di autori per il filtro
+            //addAuthor: function(newAuthor) {
+            //
+            //    var existing = false // impostato a true se in articlesAuthors c'è già l'autore che si sta cercando di aggiungere ( newAuthors[i] )
+            //    for (var j in articlesAuthors) {
+            //        if (newAuthor == articlesAuthors.value[j]) {
+            //            existing = true;
+            //            break;
+            //        }
+            //    }
+            //
+            //    if (!existing) {
+            //        articlesAuthors.value[newAuthor] = {checked: true};
+            //    }
+            //},
+
+            setArticlesAuthors: function(newArticlesAuthors) {
+                authors.value = newArticlesAuthors;
             },
 
             getOnlySelfCitations: function() {

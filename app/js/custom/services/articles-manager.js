@@ -5,31 +5,31 @@
 'use strict';
 
 myApp
-    .factory('ArticleManagerService', function(RequestArticlesService, ArticlesInfoService, $rootScope, $interval) {
+    .factory('ArticleManagerService', function(RequestArticlesService, FiltersManagerService,  ArticlesInfoService, $rootScope, $interval) {
         var articlesResults = [];
         var mockResults = [
 
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000413" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S157082680500017X" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000144" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000132" //cit
-            },
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000413" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S157082680500017X" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000144" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000132" //cit
+            //},
             //{
             //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000041" //todo: questo è un caso di errore in bibliografia
             //},
@@ -220,13 +220,18 @@ myApp
 
         /* per la lista degli autori di un certo subItem
         * subItem: articolo citato o citante dall'/l' articolo dei risultati di ricerca*/
-        //I param: subItem, II param: array autori articolo citante/citato; II param serve per capire se si tratta di autocitazione
-        var getSubItemAuthors = function(subItem, resultArticleAuthors) {
+        //I param: subItem, II param: array autori articolo citante/citato, III param: true se gli autori vanno aggiunti alla lista degli autori per i filtri; II param serve per capire se si tratta di autocitazione
+        var getSubItemAuthors = function(subItem, resultArticleAuthors, addToFilterAuthors) {
             ArticlesInfoService.getArticleAuthors(subItem.authorsList.value).then(
                 function (response) {
                     subItem.authors = response.data.results.bindings;
                     for (var i in subItem.authors) {
                         subItem.authors[i].fullName = subItem.authors[i].fullName.value;
+
+                        //per aggiungere l'autore alla lista degli autori per il filtro
+                        //if (addToFilterAuthors) {
+                        //    FiltersManagerService.addAuthor( subItem.authors[i].fullName);
+                        //}
                     }
 
                     setSelfcitationInfo(subItem, resultArticleAuthors);
@@ -284,7 +289,7 @@ myApp
                         var citingArticle = citedArticle.citingArticles[j];
                         citingArticle.publicationYear = parseInt(citingArticle.publicationYear.value);
 
-                        getSubItemAuthors(citingArticle, citedArticleAuthors);  //prendo gli autori e controllo se ce ne sono di condivisi con l'articolo citato
+                        getSubItemAuthors(citingArticle, citedArticleAuthors, false);  //prendo gli autori e controllo se ce ne sono di condivisi con l'articolo citato
                         setCitingArticleColors(citingArticle, citationsInfo)           //per ogni articolo prendo i motivi per cui cita
                     }
                 },
@@ -389,7 +394,7 @@ myApp
 
                             //metodi utili anche per avere uno scope isolato e non avere problemi con l'indice nelle callback
                             //@guide autori dell'articolo citato
-                            getSubItemAuthors(res[i], citingArticleAuthors);
+                            getSubItemAuthors(res[i], citingArticleAuthors, true);
 
                             //@guide info sugli atti citazioni per ogni cito:cites (quante volte un citing entity cita un cited entity per un certo motivo (colore) )
                             getBiblioItemCitActsInfo(citingArticleExpression, res[i]);
@@ -457,7 +462,9 @@ myApp
                                     // http://stackoverflow.com/questions/939032/jquery-pass-more-parameters-into-callback
                                     function (response) {
                                         var articleData = response.data.results.bindings[0];
-                                        articleData.publicationYear.value = stringToInt(articleData.publicationYear.value);
+                                        articleData.publicationYear = stringToInt(articleData.publicationYear.value);
+                                        articleData.title = articleData.title.value;
+                                        articleData.globalCountValue = stringToInt(articleData.globalCountValue.value);
                                         articlesResults.push(articleData); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia (si aggiorna comunque perchè articlese è passato per riferimento, ma con il watch aggiungo del comportamento )
 
                                         // se sono state richieste le info per tutti gli articoli

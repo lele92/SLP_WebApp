@@ -133,16 +133,22 @@
     padding-left: 5px;
     margin: 5px;
     background-color: #EBEEF2;
+    height: 95% !important
+}
+
+.slimScrollDiv {
+    height: 180px !important;
 }
 
 #apply-filters {
-    margin: 20px;
+    margin: 10px;
     font-size: large;
 }
 
 .filter-legend {
     margin-bottom: 10px !important;
     margin-top: 10px !important;
+    font-size: large;
 }
 
 .large-text {
@@ -182,6 +188,11 @@
     padding: 0px;
 }
 
+.chart-panel-md {
+    height: 200px;
+    padding: 0px;
+}
+
 .chart-panel-lg {
     height: 250px;
     padding: 0px;
@@ -194,10 +205,11 @@
 
 
 .panel-hover {
-    height: 170px;
+    height: 200px;
     background-color: #E8E8E8;
     color: #C2C2C2;
-    border-left: 2px solid #ADAEB3;
+    border: 2px solid #ADAEB3;
+    vertical-align: middle;
 }
 
 .col-tot-cit {
@@ -262,4 +274,46 @@
 .citing-details-header {
     border-bottom: 1px solid #d3d3d3;
     margin: 10px;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.filters-header {
+    marging: 5px !important;
+}
+
+.author-label {
+    text-align: left !important;
+    display: block;
+    margin: 5px;
+    padding: 5px;
+}
+
+.author-remove:hover {
+    font-size: larger;
+    cursor: pointer;
+}
+
+.input-error {
+    border-color: #f05050 !important;
+    background-color:  #FFBDBD;
+}
+
+.input-error-text {
+    font-size: 13px;
+    color: #f05050;
+}
+
+.input-warning {
+    border-color: #ff902b !important;
+    background-color:  #FFDAB8;
+    display: block;
+}
+
+.input-warning-text {
+    font-size: 13px;
+    color: #ff902b;
+    display: block;
 }
