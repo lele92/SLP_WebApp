@@ -1,7 +1,7 @@
 SLP_WebApp
 ==========
 
-<h4>Lanciare l'app (provvisorio)</h4>:
+<h4>Lanciare l'app (provvisorio):</h4>
 <ul>
 <li> posizionarsi nella directory "master" del progetto </li>
 <li> lanciare il comando "gulp" </li>
