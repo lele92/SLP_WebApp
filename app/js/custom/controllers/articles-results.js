@@ -3,17 +3,18 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
     self.articles = ArticleManagerService.getArticles(); //prende gli articoli da mostrare nella view
     self.states = ArticleManagerService.getStates();
 
-    self.publicationYearFil =  FiltersManagerService.getStartingPublicationYear();  // prende il filtro dell'anno da applicare agli articoli mostrati nella view
-    self.orderByFil = FiltersManagerService.getOrderBy();                           // prende l'ordinamento da applicare alla bibliografia
-    self.sortFil = FiltersManagerService.getSort();                                 // prende il sort da applicare alla bibliografia
-    self.onlySelfcitationsFil = FiltersManagerService.getOnlySelfCitations();           // prende il filtro per le autocitazioni
-    self.characterizationsFil = FiltersManagerService.getCharacterizations();
+    self.publicationYearFil =  FiltersManagerService.getStartingPublicationYearF();     // prende il filtro dell'anno da applicare agli articoli mostrati nella view
+    self.orderByFil = FiltersManagerService.getOrderBy();                               // prende l'ordinamento da applicare alla bibliografia
+    self.sortFil = FiltersManagerService.getSort();                                     // prende il sort da applicare alla bibliografia
+    self.onlySelfcitationsFil = FiltersManagerService.getOnlySelfCitationsF();          // prende il filtro per le autocitazioni
+    self.characterizationsFil = FiltersManagerService.getCharacterizationsF();          // prende il filtro per i colori
+    self.authorsFil = FiltersManagerService.getAuthorsF();                              // prende il filtro per gli autori
 
     self.isRequestPending = RequestArticlesService.isRequestPending();                  // I -> è in corso la richiesta all'abstractFinder?
     self.isRetrievingArticlesInfo = ArticleManagerService.isRetrievingArticlesInfo();   // II -> è in corso la richiesta delle info sugli articoli? (questa richiesta parte solo all'arrivo della risposta della richiesta I)
-    self.articlesNum = self.articles.length;           // numero di articoli (risultati di ricerca)
-    self.completedArticles = 0;     // numero di articoli completati ( = le cui info generiche sono disponibili)
-    self.completedPercent = 0;
+    self.articlesNum = {value: self.articles.length};           // numero di articoli (risultati di ricerca)
+    self.completedArticles = {value: 0};                        // numero di articoli completati ( = le cui info generiche sono disponibili)
+    self.completedPercent = {value: 0};
 
     var requestPendingDialog;
     var loadingInfoDialog;
@@ -38,6 +39,10 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
                 }
             }
         });
+    }
+
+    self.getSearchText = function() {
+        return RequestArticlesService.getSearchString();
     }
 
 
@@ -68,17 +73,36 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
                 });
             } else {
                 console.log("1.2 - REQUEST NOT PENDING");
+                self.articlesNum.value = ArticleManagerService.getArticlesNum();
                 if (requestPendingDialog) {
                     requestPendingDialog.close();
                 }
 
+                //se dall'abs finder non ci sono risultati mostro una notifica
                 if (ArticleManagerService.getArticlesResultsState() == self.states.NO_RESULTS) {
+                    self.articlesNum.value = 0;
                     ngDialog.open({
                         template: "app/templates/dialog-no-results.html",
                         closeByEscape: true,
                         showClose: true,
                         closeByDocument: true
                     });
+                }
+
+                //todo: per adesso non mi viene una soluzione migliore
+                //se dall'abs finder ci sono risultati
+                if (ArticleManagerService.getArticlesResultsState() == self.states.RESULTS) {
+                    self.articlesNum.value = ArticleManagerService.getArticlesNum();
+                    //loadingInfoDialog = ngDialog.open({
+                    //    template: "app/templates/dialog-loading-info.html",
+                    //    closeByEscape: false,
+                    //    showClose: false,
+                    //    closeByDocument: false,
+                    //    data: {
+                    //        articlesNum: self.articlesNum,
+                    //        completedArticles: self.completedArticles
+                    //    }
+                    //})
                 }
 
             }
@@ -88,35 +112,44 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
     $scope.$watch(ArticleManagerService.isRetrievingArticlesInfo,
         function() {
             self.isRetrievingArticlesInfo = ArticleManagerService.isRetrievingArticlesInfo();
-            self.articlesNum = ArticleManagerService.getArticlesNum(); //aggiorno il numero degli articoli
+            self.articlesNum.value = ArticleManagerService.getArticlesNum(); //aggiorno il numero degli articoli
             //fixme: problema con la dialog di caricamento info
-            //if (self.isRetrievingArticlesInfo) {
-            //    console.log("2.1 - RETRIEVING ARTICLES INFO");
-            //    loadingInfoDialog = ngDialog.open({
-            //        template: "app/templates/dialog-loading-info.html",
-            //        closeByEscape: false,
-            //        showClose: false,
-            //        closeByDocument: false
-            //    });
-            //} else {
-            //    console.log("2.3 - ARTICLES INFO RETRIEVED");
-            //    if (loadingInfoDialog) {
-            //        console.log("baaaaaang");
-            //        loadingInfoDialog.close();
-            //        //loadingInfoDialog.close();
-            //    }
-            //}
+            if (self.isRetrievingArticlesInfo) {
+                console.log("2.1 - RETRIEVING ARTICLES INFO");
+                //loadingInfoDialog = ngDialog.open({
+                //    template: "app/templates/dialog-loading-info.html",
+                //    closeByEscape: false,
+                //    showClose: false,
+                //    closeByDocument: false
+                //});
+            } else {
+                console.log("2.3 - ARTICLES INFO RETRIEVED");
+                //if (loadingInfoDialog) {
+                //    console.log("baaaaaang");
+                //    ngDialog.closeAll();
+                //}
+            }
         });
 
     //@guide: per essere aggiornato sul numero di articoli completati ( = le cui info generiche sono disponibili)
     $scope.$watch(ArticleManagerService.getCompletedArticles,
         function() {
-            self.completedArticles = ArticleManagerService.getCompletedArticles();
-            self.completedPercent = ( self.completedArticles / self.articlesNum) * 100;
-            console.log("2.2 - completed articles: "+ self.completedArticles);
+            self.completedArticles.value = ArticleManagerService.getCompletedArticles();
+            self.completedPercent.value = ( self.completedArticles.value / self.articlesNum.value) * 100;
+            console.log("2.2 - completed articles: "+ self.completedArticles.value);
+            //if (self.articlesNum == self.completedArticles) {
+            //    console.log("aaaaaaaaaaaaa");
+            //    ngDialog.closeAll();
+            //}
         });
 
     self.logResults = function() {
         console.log(self.articles);
     }
+
+    //$rootScope.$on('ngDialog.opened', function (e, $dialog) {
+    //    if (self.articlesNum == self.completedArticles && loadingInfoDialog) {
+    //        loadingInfoDialog.close();
+    //    }
+    //});
 })

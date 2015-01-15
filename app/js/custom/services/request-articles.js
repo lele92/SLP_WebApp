@@ -34,6 +34,10 @@ myApp
                 return $http(config);
             },
 
+            setSearchString: function(str) {
+                searchString = str
+            },
+
             getSearchString: function() {
                 return searchString;
             }

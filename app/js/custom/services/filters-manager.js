@@ -202,7 +202,9 @@ myApp
                 }
             }
         };                      //todo: richiederlo in modo dinamico come con gli autori
-        var authors = { value: [] };                //in questo caso articles sono gli elementi della bibliografia
+        var authors = {value: [], enabled:false}            // lista degli autori per il filtro autori, di default non ce n'è nessuno (non ci posso mettere 930 autori!)...con enabled si decide se (in biblioFilters) gli items devono essere filtrati
+
+        var allAuthors = { value: [] };                //tutti gli autori
 
 
 
@@ -244,7 +246,7 @@ myApp
                 filterActivated.value = newFilterActivated;
             },
 
-            getStartingPublicationYear: function() {
+            getStartingPublicationYearF: function() {
                 return startingPublicationYear;
             },
 
@@ -252,18 +254,36 @@ myApp
                 startingPublicationYear.value = newStartingYear;
             },
 
-            // articles in questo caso sono gli elementi della bibliografia
-            getArticlesAuthors: function() {
-                if (isEmpty(authors.value)) {
+            // per la lista degli autori filtrati
+            getAuthorsF: function() {
+
+                return authors;
+            },
+
+            // per impostare la lista degli autori filtrati
+            setAuthors: function(newAuthors) {
+
+                authors.value = newAuthors;
+                console.log(authors.value);
+            },
+
+            setAuthorsEnabled: function(newAuthorsEnabled) {
+                authors.enabled = newAuthorsEnabled;
+                console.log(authors.value);
+            },
+
+            //questo è per ottenre tutti gli autori (usato nel typeahead
+            getAllArticlesAuthors: function() {
+                if (isEmpty(allAuthors.value)) {
                     ArticlesInfoService.getAllAuthors().then(
                         function (response) {
                             var authorsFullName = response.data.results.bindings;
 
                             for (var i in authorsFullName) {
-                                authors.value.push(authorsFullName[i].fullName.value);
+                                allAuthors.value.push(authorsFullName[i].fullName.value);
                             }
 
-                            console.log( authors);
+                            console.log( allAuthors);
                         },
                         //todo caso da gestire meglio
                         function (errResponse) {
@@ -272,7 +292,7 @@ myApp
                     );
                 }
 
-                return authors; //non è un problema questo return, è un riferimento
+                return allAuthors; //non è un problema questo return, è un riferimento
             },
 
             //da invocare quando che si effettua il drilldown per avere dettagli su un articolo (e quindi anche i dettagli bibliografici)
@@ -292,11 +312,9 @@ myApp
             //    }
             //},
 
-            setArticlesAuthors: function(newArticlesAuthors) {
-                authors.value = newArticlesAuthors;
-            },
 
-            getOnlySelfCitations: function() {
+
+            getOnlySelfCitationsF: function() {
                 return onlySelfcitations;
             },
 
@@ -304,7 +322,7 @@ myApp
                 onlySelfcitations.value = newOnlySelfcitations;
             },
 
-            getCharacterizations: function() {
+            getCharacterizationsF: function() {
                 return characterizations;
             },
 

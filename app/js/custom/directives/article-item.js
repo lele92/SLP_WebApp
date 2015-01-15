@@ -17,7 +17,8 @@ myApp.directive('articleItem', function(ngDialog, ArticleManagerService) {
             orderFilter: '=',               //@guide attributo per passare l'ordinamento da usare
             sortFilter: '=',                //@guide attributo per passare il sort da usare
             onlySelfcitationFilter: '=',    //@guide attributo per passare il filtro per le autocitazioni
-            characterizationsFilter: '='    //@guide attributo per passare il filtro per i colori delle citazioni
+            characterizationsFilter: '=',   //@guide attributo per passare il filtro per i colori delle citazioni
+            authorsFilter: '='              //@guide attributo per passare il filtro per gli autori
         },
         link: function($scope, $element, $attributes) {
             $scope.articleIsCollapsed = true;

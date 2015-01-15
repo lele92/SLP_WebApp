@@ -9,27 +9,27 @@ myApp
         var articlesResults = [];
         var mockResults = [
 
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000413" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S157082680500017X" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000144" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000132" //cit
-            //},
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000413" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S157082680500017X" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000144" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000132" //cit
+            },
             //{
             //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000041" //todo: questo è un caso di errore in bibliografia
             //},
@@ -424,11 +424,11 @@ myApp
                     // success
                     function(response) {
                         articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
-                        //todo non è una bella soluzione usare così le proprietà della risposta, valutare alternative
+
                         var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
                         var results = "http://stanbol.apache.org/ontology/entityhub/query#queryResult";
                         var tmpRes = null; //conterrà gli uri dei work dei risultati (se ci sono risultati)
-                        response = []; //todo: da eliminare, barbatrucco per passare il controllo
+                        //response = []; //todo: da eliminare, barbatrucco per passare il controllo
 
                         //todo: righe da scommentare
                         if (noData(response)) {
@@ -440,8 +440,8 @@ myApp
                         } else {
                             articlesResultsState = states.RESULTS;              // ci sono risultati
                             console.log("RESULTS!");
-                            //tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
-                            tmpRes = mockResults;  //todo da eliminare
+                            tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
+                            //tmpRes = mockResults;  //todo da eliminare
                             articlesNum = tmpRes.length;                        // numero totale di articoli di cui richiedere le info
                             completedArticles = articlesResults.length;         // numero di richieste completate = numero di articoli nella lista degli articoli...semplice
 

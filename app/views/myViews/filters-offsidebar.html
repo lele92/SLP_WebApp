@@ -9,12 +9,15 @@
                     <span></span>
                 </label>
             </legend>
-            <div class="input-group">
-                <input placeholder="Year to start from" class="form-control" ng-disabled="!biblioFilterCtrl.checkYear" type="number" ng-model="biblioFilterCtrl.publicationYearV" min="1970" max="{{biblioFilterCtrl.year}}">
+            <div collapse="!biblioFilterCtrl.checkYear">
+                <div class="input-group" >
+                    <input placeholder="Year to start from" class="form-control" ng-disabled="!biblioFilterCtrl.checkYear" type="number" ng-model="biblioFilterCtrl.publicationYearV" min="1970" max="{{biblioFilterCtrl.year}}">
                  <span class="input-group-btn">
                     <button ng-disabled="!biblioFilterCtrl.checkYear" type="button" class="btn btn-default" ng-click="biblioFilterCtrl.applyYearFilter()">Set</button>
                  </span>
+                </div>
             </div>
+
         </div>
         <div>
             <legend class="filter-legend">
@@ -35,16 +38,16 @@
             </legend>
             <div collapse="!biblioFilterCtrl.checkAuthors">
                 <div class="input-group">
-                    <input ng-class="{'input-error': biblioFilterCtrl.inputNotValid, 'input-warning': biblioFilterCtrl.authorAlreadyInList}" placeholder="Type author name" type="text" ng-model="biblioFilterCtrl.selected" typeahead-editable="false" typeahead-on-select="biblioFilterCtrl.onSelect($item, $model, $label)" typeahead="author for author in biblioFilterCtrl.authorsV | filter:$viewValue | limitTo:12" class="form-control" />
+                    <input ng-class="{'input-error': biblioFilterCtrl.inputNotValid, 'input-warning': biblioFilterCtrl.authorAlreadyInList}" placeholder="Type author name" type="text" ng-model="biblioFilterCtrl.selectedAuthor" typeahead-editable="false" typeahead-on-select="biblioFilterCtrl.onSelect($item, $model, $label)" typeahead="author for author in biblioFilterCtrl.allAuthors.value | filter:$viewValue | limitTo:8" class="form-control" />
                     <span class="input-group-btn">
-                        <button type="button"  class="btn btn-default" ng-click="biblioFilterCtrl.addSelectedAuthorToFilter()">Add</button>
+                        <button type="button"  class="btn btn-default" ng-click="biblioFilterCtrl.updateAuthorFilter()">Add</button>
                     </span>
                 </div>
                 <span class="input-error-text" ng-show="biblioFilterCtrl.inputNotValid">invalid input</span>
                 <span class="input-warning-text" ng-show="biblioFilterCtrl.authorAlreadyInList">selected author is already in the list</span>
 
                 <scrollable class="form-group well filter-well">
-                    <div class="large-text label label-primary author-label" ng-repeat="author in biblioFilterCtrl.authorsList">
+                    <div class="large-text label label-primary author-label" ng-repeat="author in biblioFilterCtrl.authorsV">
                         <em class="fa fa-times-circle author-remove" ng-click="biblioFilterCtrl.removeAuthorFromFilter(author)"></em>
                         <span>{{author}}</span>
                     </div>

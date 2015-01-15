@@ -64,8 +64,9 @@ myApp
         }
     })
     .filter('authors', function () {
-        return function (items, authorsList) {
-            if (!angular.isUndefined(items) && !angular.isUndefined(authorsList)) {
+        //enabled mi dice se devo filtrare i risultati....lo uso per non dovermi portare dietro un array di più di 900 autori nel widget dei filtri
+        return function (items, authorsList, enabled) {
+            if (!angular.isUndefined(items) && !angular.isUndefined(authorsList) && enabled) {
                 var filtered = [];
                 var item;
                 var authors;
@@ -73,8 +74,8 @@ myApp
                     item = items[i];
                     authors = item.authors;
                     for (var j in authors) {        //per ogni info citazionale
-                        if (authorsList[citActsInfo[j].colorURI].checked == true) {     //se il colore dell'atto citazionale è "attivo" (true) in authorsList
-                            filtered.push(item); //vuol dire che nell'item bibliografico c'è almeno una citazione di un colore che mi interessa, quindi l'item bibliografico è da mostrare
+                        if (authorsList.indexOf(authors[j].fullName) > -1) {     //se in authorsList (lista degli autori da filtrare) c'è (almeno) un autore dell'elemento
+                            filtered.push(item); //vuol dire che l'item bibliografico ha tra gli autori (almeno) uno di quelli che si vuole filtrare
                             break; //fondamentale questo break, altrimenti nel filtered ci potrebbe finire più volte lo stesso elemento
                         }
                     }

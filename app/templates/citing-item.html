@@ -21,10 +21,10 @@
             <span class="large-text">Global Citations: {{itemData.globalCountValue.value}} (updated: {{itemData.globalCountDate.value}})</span>
         </div>
         <div align="center">
-            <button popover-trigger="mouseenter"  ng-click="showAbstract = !showAbstract" popover="Read the abstract" type="button" class="btn btn-square btn-primary large-text"><em class="fa fa-file-text"></em> Abstract</button>
+            <button ng-click="showAbstract = !showAbstract" tooltip="Read the abstract" type="button" class="btn btn-square btn-primary large-text"><em class="fa fa-file-text"></em> Abstract</button>
         </div>
 
-        <div ng-show="showAbstract" class="well">
+        <div  collapse="!showAbstract" class="well">
             {{itemData.abstractTxt.value}}
         </div>
     </div>

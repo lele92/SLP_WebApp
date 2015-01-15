@@ -137,7 +137,7 @@
 }
 
 .slimScrollDiv {
-    height: 180px !important;
+    height: 165px !important;
 }
 
 #apply-filters {
@@ -281,7 +281,7 @@
 }
 
 .filters-header {
-    marging: 5px !important;
+    margin: 5px !important;
 }
 
 .author-label {
@@ -316,4 +316,19 @@
     font-size: 13px;
     color: #ff902b;
     display: block;
+}
+
+.col-center{
+    float: none;
+    margin: 0 auto;
+}
+
+.content-wrapper > div.header-div {
+    margin: -20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-weight: normal;
+    background-color: #fafbfc;
+    border-bottom: 1px solid #cfdbe2;
+    color: #929292
 }

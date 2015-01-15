@@ -1,16 +1,17 @@
 myApp.controller('BiblioFiltersController', function(FiltersManagerService, $scope) {
     var self = this;
-    /* filters and order objs: oggetti {value: aaa} di filterManagerService */ //'F' -> convenzione per Filter
-    self.publicationYearF = FiltersManagerService.getStartingPublicationYear();
-    self.onlySelfcitationsF = FiltersManagerService.getOnlySelfCitations();
-    self.characterizationsF = FiltersManagerService.getCharacterizations();
+    /* filters and order objs: oggetti {value: ...} di filterManagerService */ //'F' -> convenzione per Filter
+    self.publicationYearF = FiltersManagerService.getStartingPublicationYearF();
+    self.onlySelfcitationsF = FiltersManagerService.getOnlySelfCitationsF();
+    self.characterizationsF = FiltersManagerService.getCharacterizationsF();
+    self.authorsF = FiltersManagerService.getAuthorsF();        //con questo prendo la lista di autori del filtro
+
+    self.allAuthors = FiltersManagerService.getAllArticlesAuthors(); //con questo prendo tutti gli autori
+
     //self.authorsF = { value: {}}; //non richiedo subuito gli autori per motivi di efficienza....sono più di 900
 
     //todo: per test, da modificare
-    self.selected;
-    self.authorsf = FiltersManagerService.getArticlesAuthors(); //fixme: per adesso questa funzione è in FiltersManager, valutare di spostarla in ArticlesInfoService
-    self.authorsV = self.authorsf.value;
-    self.authorsList = [];
+    self.selectedAuthor = ""; //
     self.authorAlreadyInList = false;
     self.inputNotValid = false;
 
@@ -21,7 +22,7 @@ myApp.controller('BiblioFiltersController', function(FiltersManagerService, $sco
     self.publicationYearV = self.publicationYearF.value;
     self.onlySelfcitationsV =  self.onlySelfcitationsF.value;
     self.characterizationsV = self.characterizationsF.value;
-    //self.authorsV = self.authorsF.value;
+    self.authorsV = self.authorsF.value;
 
     /* checkboxes*/
     self.checkYear = false;
@@ -74,8 +75,10 @@ myApp.controller('BiblioFiltersController', function(FiltersManagerService, $sco
     self.switchAuthors = function() {
         if (self.checkAuthors) {
             console.log('filtro autori attivato');
+            FiltersManagerService.setAuthorsEnabled(true);
         } else {
             console.log('filtro autori disattivato');
+            FiltersManagerService.setAuthorsEnabled(false);
         }
         FiltersManagerService.setFilterActivated(self.checkCheckboxes());
     }
@@ -98,31 +101,34 @@ myApp.controller('BiblioFiltersController', function(FiltersManagerService, $sco
     }
 
     //todo: controlli da rivedere
-    self.addSelectedAuthorToFilter = function() {
-        if (alreadyInList(self.selected)) {
+    self.updateAuthorFilter = function() {
+        if (alreadyInList(self.selectedAuthor)) {
             self.authorAlreadyInList = true;
             console.log("autore già in lista")
-        } else if (!validInput(self.selected)) {
+        } else if (!validInput(self.selectedAuthor)) {
             self.inputNotValid = true;
             console.log("input non valido")
         } else {
             self.inputNotValid = false;
             self.authorAlreadyInList = false;
-            self.authorsList.push(self.selected);
+            self.authorsV.push(self.selectedAuthor);
+            FiltersManagerService.setAuthors(self.authorsV);
         }
     }
 
     self.removeAuthorFromFilter = function(author) {
-        for (var i in self.authorsList) {
-            if (self.authorsList[i] == author) {
-                self.authorsList.splice(i, 1);
+        for (var i in self.authorsV) {
+            if (self.authorsV[i] == author) {
+                self.authorsV.splice(i, 1);
+
             }
         }
+        FiltersManagerService.setAuthors(self.authorsV);
     }
 
     var alreadyInList = function(author) {
-        for (var i in self.authorsList) {
-            if (self.authorsList[i] == author) {
+        for (var i in self.authorsV) {
+            if (self.authorsV[i] == author) {
                 return true;
             }
         }
