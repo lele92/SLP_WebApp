@@ -36,43 +36,43 @@
         <div class="row">
             <h3 class="article-item-header">Incoming Citations</h3>
 
-            <div class="panel widget col-lg-3 col-md-6">
-                <div class="panel-body bg-success-dark text-center no-padding">
-                    <h1>{{articleData.globalCountValue}}</h1>
-                    <h3>Global Citations</h3>
-                    <div class="mb-lg"></div>
-                    <em class="icon-globe fa-2x" style="margin:10px"></em>
+            <div class="col-lg-5 col-md-6">
+                <div class="panel widget bg-success">
+                    <div class="row row-table">
+                        <div class=" col-lg-3 col-xs-4 text-center bg-success-dark pv-lg">
+                            <em class="icon-globe fa-3x"></em>
+                        </div>
+                        <div class="col-lg-9 col-xs-8 pv-lg">
+                            <div class="h1 m0 text-bold">{{articleData.globalCountValue}}<span class="x-large-text"> Global Citations</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-lg-1">
-                                <em class="fa fa-quote-left fa-2x"></em>
+
+            <div class="col-lg-6 col-md-6">
+                <div class="panel widget bg-success">
+                    <div class="row row-table">
+                        <div class="col-lg-2 col-xs-4 text-center bg-primary-dark pv-lg">
+                            <em class="fa fa-quote-left fa-3x"></em>
+                        </div>
+                        <div class="col-lg-10 col-xs-8 bg-primary pv-lg row">
+                            <div class="col-lg-10">
+                                <span class="x-large-text text-bold"> Cited {{articleData.inCitActs}} times by {{articleData.inNumCites}} articles </span>
                             </div>
-                            <div class="col-lg-8">
-                                <h3>{{articleData.inNumCites}} citing articles</h3>
-                                <h3>{{articleData.inCitActs}} citations</h3>
+                            <div class="col-lg-2">
+                                <span class="pull-right">
+                                   <em ng-show="articleData.inCitActs > 0" ng-click="showCitDetails()" class="fa fa-chevron-circle-right fa-3x pointer"></em>
+                                </span>
                             </div>
                         </div>
                     </div>
-                    <a href="#"  class="panel-footer bg-gray-dark bt0 clearfix btn-block">
-                        <span class="pull-left" ng-show="articleData.inCitActs > 0">View Details</span>
-                        <span class="pull-left" ng-show="articleData.inCitActs == 0"><em class="icon-info"></em> There is no information on citations</span>
-                        <span class="pull-right">
-                           <em ng-show="articleData.inCitActs > 0" ng-click="showCitDetails()" class="fa fa-chevron-circle-right fa-2x"></em>
-                        </span>
-                    </a>
-
                 </div>
             </div>
-
         </div>
 
 
         <div class="row" ng-init="showBiblio = false">
-            <h3 class="article-item-header">Bibliography
+            <h3 class="article-item-header">Cited articles (in the dataset)
                 ({{articleData.biblioInfo.length}} item<span ng-show="articleData.biblioInfo.length > 1">s</span>)
             </h3>
 

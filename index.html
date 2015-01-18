@@ -38,6 +38,7 @@
    <script src="app/js/custom/services/info-articles.js"></script>
    <script src="app/js/custom/services/articles-manager.js"></script>
    <script src="app/js/custom/services/request-articles.js"></script>
+   <script src="app/js/custom/services/states-manager.js"></script>
 
    <!--query: tutti i prefissi-->
    <script id="prefixes" type="text/template">
@@ -171,7 +172,7 @@
 
    <!-- query: info sugli articoli citati (cito:cites, quindi articoli unici) da un articolo (partendo dall'expression)-->
    <script id="query_citedArticles" type="text/template">
-       select ?citedExpression ?articleWork ?authorsList ?title ?publicationYear ?abstractTxt ?htmlItem ?globalCountValue ?globalCountDate
+       select ?citedExpression ?articleWork ?articleExpression ?authorsList ?title ?publicationYear ?abstractTxt ?htmlItem ?globalCountValue ?globalCountDate
        where {
             <{{expression}}> cito:cites ?citedExpression.
 
@@ -180,13 +181,14 @@
                             core:embodiment ?man;
                             fabio:hasPublicationYear ?publicationYear;
                             core:realizationOf ?articleWork;
-                           core:part [ a sro:Abstract;
+                            core:part [ a sro:Abstract;
                                             c4o:hasContent ?abstractTxt];
                             c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
                                                                 c4o:hasGlobalCountValue ?globalCountValue;
                                                                 c4o:hasGlobalCountDate ?globalCountDate].
 
             ?articleWork a fabio:Work;
+                core:realization ?articleExpression;
                 core:creator ?authorsList.
 
             ?authorsList a co:List.
@@ -235,7 +237,7 @@
 
    <!-- query: info generiche sugli articoli citanti-->
    <script id="query_citingArticles" type="text/template">
-       select ?citingExp ?articleWork  ?title ?authorsList ?abstractTxt ?publicationYear ?htmlItem ?globalCountValue ?globalCountDate
+       select ?citingExp ?articleWork ?articleExpression ?title ?authorsList ?abstractTxt ?publicationYear ?htmlItem ?globalCountValue ?globalCountDate
        where {
             ?citingExp a fabio:Expression;
                     cito:cites <{{citedExpression}}>;
@@ -250,6 +252,7 @@
                                                        c4o:hasGlobalCountDate ?globalCountDate].
 
        ?articleWork a fabio:Work;
+                core:realization ?articleExpression;
                 core:creator ?authorsList.
 
        ?authorsList a co:List.
@@ -257,6 +260,37 @@
        ?man a fabio:Manifestation, fabio:WebPage;
                 dcterms:format <http://purl.org/NET/mediatypes/text/html>;
                 core:exemplar ?htmlItem.
+       }
+   </script>
+
+
+   <!-- query: info generiche su un articolo (partendo dall'expression) -->
+   <script id="query_singleArticle" type="text/template">
+       select ?title ?doi ?expression ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
+       where {
+
+           <{{expression}}> a fabio:Expression;
+               core:part [ a sro:Abstract;
+                                c4o:hasContent ?abstractTxt];
+               dcterms:title ?title;
+               core:embodiment ?man;
+               core:realizationOf ?articleWork;
+               prism:doi ?doi;
+               fabio:hasPublicationYear ?publicationYear;
+               c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
+                                                   c4o:hasGlobalCountSource ?globalCountSource;
+                                                   c4o:hasGlobalCountValue ?globalCountValue;
+                                                   c4o:hasGlobalCountDate ?globalCountDate].
+
+           ?articleWork a fabio:Work;
+               core:creator ?authorsList;
+               core:realization ?expression.
+
+           ?authorsList a co:List.
+
+           ?man a fabio:Manifestation, fabio:WebPage;
+               dcterms:format <http://purl.org/NET/mediatypes/text/html>;
+               core:exemplar ?htmlItem.
        }
    </script>
 

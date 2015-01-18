@@ -7,7 +7,7 @@
 myApp
     .factory('ArticlesInfoService', function($http,$interpolate) {
         var endpoint = "http://two.eelst.cs.unibo.it:8181/data/query"
-        //endpoint = "http://localhost:8181/data/query"; //todo: endpoint locale
+        endpoint = "http://localhost:8181/data/query"; //todo: endpoint locale
         var prefixes = $('#prefixes').text();
 
         return {
@@ -59,7 +59,7 @@ myApp
                 return $http.get(queryURL);
             },
 
-            //@guide per le info aggiuntive sugli articoli citati da un certo articolo: numero di citazioni e colore
+            //@guide per le info aggiuntive sugli articoli citati da un certo articolo: numero di citazioni e colore (da articolo citante ad articolo citato)
             getCitationActsInfo: function(citingExp, citedExp) {
                 var expr = {artExpression: citingExp,
                             citedExpression: citedExp};
@@ -76,6 +76,14 @@ myApp
                 var encodedquery = encodeURIComponent(query);
 
                 return $http.get(endpoint+"?format=json&query="+encodedquery);
+            },
+
+            //@guide per ottenere un singolo articolo
+            getArticle: function(expressionURI) {
+                var expr = {expression: expressionURI};
+                var queryURL = this.buildQueryURL('#query_singleArticle',expr);
+
+                return $http.get(queryURL);
             },
 
             //fixme: da spostare fuori dalla api

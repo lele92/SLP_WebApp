@@ -1,8 +1,11 @@
 <div class="header-div">
-    <h3>Results <span ng-show="ArticlesResultsCtrl.getSearchText() != ''">for "{{ArticlesResultsCtrl.getSearchText()}}"</span></h3>
+    <ol class="breadcrumb breadcrumb-header">
+        <li class="breadcrumb-item" ng-click="ArticlesResultsCtrl.restoreArticles($index, $last)" ng-repeat="state in ArticlesResultsCtrl.states" ng-class="{'active':$last, 'selectable-breadcrumb':!$last}">{{state.stateValue}}</li>
+    </ol>
 </div>
+
 <div>
-    <div class="row" ng-show="ArticlesResultsCtrl.articlesNum.value > 0">
+    <div class="row" ng-show="ArticlesResultsCtrl.articlesNum.value > 1">
         <div class="well well-sm col-lg-8 col-md-8" >
             <span class="x-large-text col-lg-2 no-padding text-center">Sort by</span>
             <div class="col-lg-6">

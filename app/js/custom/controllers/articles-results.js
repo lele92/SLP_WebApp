@@ -1,7 +1,7 @@
-myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, ArticleManagerService, FiltersManagerService, RequestArticlesService, $scope) {
+myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, ArticleManagerService, FiltersManagerService, RequestArticlesService, StatesManagerService, $scope, $timeout) {
     var self = this;
     self.articles = ArticleManagerService.getArticles(); //prende gli articoli da mostrare nella view
-    self.states = ArticleManagerService.getStates();
+    self.resultsStates = ArticleManagerService.getResultsStates();
 
     self.publicationYearFil =  FiltersManagerService.getStartingPublicationYearF();     // prende il filtro dell'anno da applicare agli articoli mostrati nella view
     self.orderByFil = FiltersManagerService.getOrderBy();                               // prende l'ordinamento da applicare alla bibliografia
@@ -15,9 +15,10 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
     self.articlesNum = {value: self.articles.length};           // numero di articoli (risultati di ricerca)
     self.completedArticles = {value: 0};                        // numero di articoli completati ( = le cui info generiche sono disponibili)
     self.completedPercent = {value: 0};
+    self.states = StatesManagerService.getStates();
+    self.currentState = "Results";
 
     var requestPendingDialog;
-    var loadingInfoDialog;
 
     /* order option vars */
     self.publicationYear = "publicationYear";
@@ -29,7 +30,7 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
     self.sortByV = true;                      // true-> decrescente, false->crescente
 
     // se non si stanno richiedendo info e non ci sono articoli da mostrare (di una precedente ricerca) allora mostra un dialog di avviso
-    if (!self.isRequestPending && ArticleManagerService.getArticlesResultsState() == self.states.NOT_AVAILABLE) {
+    if (!self.isRequestPending && ArticleManagerService.getArticlesResultsState() == self.resultsStates.NOT_AVAILABLE) {
          ngDialog.open({
             template: "app/templates/dialog-empty-results.html",
             controller: function($rootScope, $scope) {
@@ -45,18 +46,22 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
         return RequestArticlesService.getSearchString();
     }
 
+    self.restoreArticles = function(stateIndex, lastBreadcrumb) {
+        if (!lastBreadcrumb) {
+            ArticleManagerService.setArticlesResults(stateIndex);
+        }
 
-    //importante: articles deve essere tra apici, dannazione! ho perso 3 ore prima di capirlo!
+    }
+
+
     //@guide http://stackoverflow.com/questions/15380140/service-variable-not-updating-in-controller
     //@guide http://stsc3000.github.io/blog/2013/10/26/a-tale-of-frankenstein-and-binding-to-service-values-in-angular-dot-js/
-    $scope.$watchCollection('articles',
+    $scope.$watchCollection(function() { return self.articles},
         function() {
-            console.log('articoli aggiornati');
+            console.log('ARTICOLI AGGIORNATI');
+            self.articlesNum.value = ArticleManagerService.getArticlesNum(); //aggiorno il numero degli articoli
             //todo: implementazione da raffinare
-            //todo:idea qui si potrebbe aggiungere l'apertura di una dialog per avvisare che i risultati sono stati aggiornati
-            self.articles = ArticleManagerService.getArticles();
-        },
-        true); //todo:valutare se lasciare questo true
+        }, true); //todo:valutare se lasciare questo true
 
     //@guide: per essere aggiornato sullo stato della richiesta all'abstract finder
     $scope.$watch(RequestArticlesService.isRequestPending,
@@ -70,16 +75,25 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
                     closeByEscape: false,
                     showClose: false,
                     closeByDocument: false
+                    //todo: cancellare righe commentate
+                    //controller: function($scope, RequestArticlesService) {
+                    //    $scope.$watch(RequestArticlesService.isRequestPending(),
+                    //    function() {
+                    //        console.log("-------------------")
+                    //        console.log(RequestArticlesService.isRequestPending())
+                    //        console.log("-------------------")
+                    //    })
+                    //}
                 });
             } else {
                 console.log("1.2 - REQUEST NOT PENDING");
                 self.articlesNum.value = ArticleManagerService.getArticlesNum();
                 if (requestPendingDialog) {
-                    requestPendingDialog.close();
+                    $timeout(requestPendingDialog.close, 500) //uso timeout per risolvere un problema di ngDialog (e anche per non flashare l'utente)
                 }
 
                 //se dall'abs finder non ci sono risultati mostro una notifica
-                if (ArticleManagerService.getArticlesResultsState() == self.states.NO_RESULTS) {
+                if (ArticleManagerService.getArticlesResultsState() == self.resultsStates.NO_RESULTS) {
                     self.articlesNum.value = 0;
                     ngDialog.open({
                         template: "app/templates/dialog-no-results.html",
@@ -91,8 +105,9 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
 
                 //todo: per adesso non mi viene una soluzione migliore
                 //se dall'abs finder ci sono risultati
-                if (ArticleManagerService.getArticlesResultsState() == self.states.RESULTS) {
+                if (ArticleManagerService.getArticlesResultsState() == self.resultsStates.RESULTS) {
                     self.articlesNum.value = ArticleManagerService.getArticlesNum();
+                    //todo:cancellare righe commentate
                     //loadingInfoDialog = ngDialog.open({
                     //    template: "app/templates/dialog-loading-info.html",
                     //    closeByEscape: false,
@@ -137,19 +152,14 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
             self.completedArticles.value = ArticleManagerService.getCompletedArticles();
             self.completedPercent.value = ( self.completedArticles.value / self.articlesNum.value) * 100;
             console.log("2.2 - completed articles: "+ self.completedArticles.value);
-            //if (self.articlesNum == self.completedArticles) {
-            //    console.log("aaaaaaaaaaaaa");
-            //    ngDialog.closeAll();
-            //}
         });
+
+    $scope.$watchCollection(StatesManagerService.getStates,
+        function() {
+            console.log('STATES AGGIORNATI');
+        }, true); //todo:valutare se lasciare questo true
 
     self.logResults = function() {
         console.log(self.articles);
     }
-
-    //$rootScope.$on('ngDialog.opened', function (e, $dialog) {
-    //    if (self.articlesNum == self.completedArticles && loadingInfoDialog) {
-    //        loadingInfoDialog.close();
-    //    }
-    //});
 })
