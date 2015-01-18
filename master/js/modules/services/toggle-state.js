@@ -27,7 +27,7 @@ App.service('toggleStateService', ['$rootScope', function($rootScope) {
   // Return service public methods
   return {
     // Add a state to the browser storage to be restored later
-    addState: function(classname){
+    saveCurrentStateArticles: function(classname){
       var data = angular.fromJson($rootScope.$storage[storageKeyName]);
       
       if(!data)  {

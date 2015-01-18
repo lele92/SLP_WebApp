@@ -5,34 +5,38 @@
 'use strict';
 
 myApp
-    .factory('ArticleManagerService', function(RequestArticlesService, FiltersManagerService,  ArticlesInfoService, $rootScope, $interval) {
+    .factory('ArticleManagerService', function(RequestArticlesService, FiltersManagerService,  ArticlesInfoService, StatesManagerService, $rootScope, $interval) {
         var articlesResults = [];
         var mockResults = [
 
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000413" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S157082680500017X" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000144" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000132" //cit
+            //},
             {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000413" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S157082680500017X" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000144" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000132" //cit
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826807000169" //cit
             },
             //{
             //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000041" //todo: questo è un caso di errore in bibliografia
             //},
+
             {
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
             },
@@ -113,12 +117,12 @@ myApp
         var articlesNum = 0;                                // numero totale di articoli di cui richiedere le info
         var completedArticles = articlesResults.length;     // numero di richieste completate = numero di articoli nella lista degli articoli...semplice
         //todo: non è la migliore delle soluzioni, valutare alternative
-        var states = {                                      // stati dei risultati
+        var resultsStates = {                                      // stati dei risultati
             "NOT_AVAILABLE" : 0,    // non disponibili, non ancora richiesti: non è ancora partita una richiesta o arrivata una risposta dall'abstract finder
             "RESULTS" : 1,          // sono presenti dei risultati
             "NO_RESULTS" : 2        // non sono presenti risultati
         }
-        var articlesResultsState = states.NOT_AVAILABLE;    // in che stato si trovano i risultati di ricerca
+        var articlesResultsState = resultsStates.NOT_AVAILABLE;    // in che stato si trovano i risultati di ricerca
 
 
         /* utility per convertire la stringa in int */
@@ -146,7 +150,7 @@ myApp
             return colorsMap[colorURI].toString;
         }
 
-        /* per le info sui citacion acts di un certo item X della bibliografia:  per ogni elemento della bibliografia, quante volte X è citato dal citingEntity per un certo motivo*/
+        /* per le info sui citation acts di un certo item X della bibliografia:  per ogni elemento della bibliografia, quante volte X è citato dal citingEntity per un certo motivo*/
         var getBiblioItemCitActsInfo = function(citingEntityExpression, biblioItem) {
             //I param: citing entity - II param: cited entity
             ArticlesInfoService.getCitationActsInfo(citingEntityExpression, biblioItem.citedExpression.value).then(
@@ -290,7 +294,7 @@ myApp
                         citingArticle.publicationYear = parseInt(citingArticle.publicationYear.value);
 
                         getSubItemAuthors(citingArticle, citedArticleAuthors, false);  //prendo gli autori e controllo se ce ne sono di condivisi con l'articolo citato
-                        setCitingArticleColors(citingArticle, citationsInfo)           //per ogni articolo prendo i motivi per cui cita
+                        setCitingArticleColors(citingArticle, citationsInfo);           //per ogni articolo prendo i motivi per cui cita
                     }
                 },
 
@@ -300,6 +304,44 @@ myApp
                     console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText);
                 }
             );
+        }
+
+        var getSingleArticleInfo = function(artExpression) {
+            return ArticlesInfoService.getArticle(artExpression).then(
+                function(response) {
+                    var art = response.data.results.bindings[0];
+                    articlesResults.length = 0;
+
+                    art.publicationYear = stringToInt(art.publicationYear.value);
+                    art.title = art.title.value;
+                    art.globalCountValue = stringToInt(art.globalCountValue.value);
+                    articlesResults.push(art); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia (si aggiorna comunque perchè articles è passato per riferimento, ma con il watch aggiungo del comportamento )
+                    articlesNum = 1;
+                    completedArticles = 1;
+
+                    //@guide richiedo la lista degli autori
+                    getArticleAuthors(art);
+
+                    //@guide richiedo le info sulle citazioni (in entrata)
+                    ArticlesInfoService.getArticleCitationsInfo(art.expression.value).then(
+                        function (response) {
+                            art.inCitActs = response.data.results.bindings[0].numCitActs.value; //numero di citation acts
+                            art.inNumCites = response.data.results.bindings[0].numCites.value;  //numero di cites (<= numero di citation acts), citazioni uniche
+                        },
+                        //todo caso da gestire meglio
+                        function (errResponse) {
+                            console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+                        }
+                    );
+                },
+
+                //todo caso da gestire meglio
+                function (errResponse) {
+                    console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+                }
+            );
+
+
         }
 
 
@@ -328,8 +370,8 @@ myApp
                 return completedArticles = articlesResults.length;
             },
 
-            getStates: function() {
-                return states;
+            getResultsStates: function() {
+                return resultsStates;
             },
 
             getArticlesResultsState: function() {
@@ -380,8 +422,6 @@ myApp
                         var res = response.data.results.bindings;
 
                         //@guide per ogni elemento della bibliografia recupero gli autori e le info sui citation acts
-                        //fixme trovare un modo alternativo, altrimenti si fanno troppe chiamate ajax e query a fuseki
-                        //idea: info sulla bibliografia potrebbero essere richieste al drill down come nel caso delle ulteriori info sulle citazioni
                         for (var i in res) {
                             //faccio i seguenti riassegnamenti per facilitare filtri e ordinamenti dei risultati in bibliografia
                             // così le properties non sono più oggetti ma stringhe o numeri
@@ -423,30 +463,32 @@ myApp
                 return RequestArticlesService.searchArticles(searchString).then(
                     // success
                     function(response) {
+                        StatesManagerService.removeAllStates(); //svuota la lista degli stati
+                        StatesManagerService.addEmptyState("Results for '"+searchString+"'");
+                        console.log(StatesManagerService.getStates());
                         articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
 
                         var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
                         var results = "http://stanbol.apache.org/ontology/entityhub/query#queryResult";
                         var tmpRes = null; //conterrà gli uri dei work dei risultati (se ci sono risultati)
-                        //response = []; //todo: da eliminare, barbatrucco per passare il controllo
+                        response = []; //todo: da eliminare, barbatrucco per passare il controllo
 
                         //todo: righe da scommentare
                         if (noData(response)) {
-                            articlesResultsState = states.NO_RESULTS;           // non ci sono risultati
+                            articlesResultsState = resultsStates.NO_RESULTS;           // non ci sono risultati
                             console.log("NO RESULTS!");
                             tmpRes = [];
 
                             RequestArticlesService.setCompletedRequest();       // la richiesta all'abstract finder è conclusa e lo notifico
                         } else {
-                            articlesResultsState = states.RESULTS;              // ci sono risultati
+                            articlesResultsState = resultsStates.RESULTS;              // ci sono risultati
                             console.log("RESULTS!");
-                            tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
-                            //tmpRes = mockResults;  //todo da eliminare
+                            //tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
+                            tmpRes = mockResults;  //todo da eliminare
                             articlesNum = tmpRes.length;                        // numero totale di articoli di cui richiedere le info
-                            completedArticles = articlesResults.length;         // numero di richieste completate = numero di articoli nella lista degli articoli...semplice
+                            completedArticles = articlesResults.length;         // numero di richieste completate = numero di articoli nella lista degli articoli (inizialmente zero)...semplice
 
                             RequestArticlesService.setCompletedRequest();       //la richiesta all'abstract finder è conclusa e lo notifico
-                            //todo non è una bella soluzione usare così le proprietà della risposta, valutare alternative
 
                             //@guide per ogni articolo, partendo dal work, richiedo tutte le informazioni generali + info bibliografiche
                             /* @guide: perchè faccio tante chiamate ajax e non una sola?
@@ -476,7 +518,6 @@ myApp
                                         getArticleAuthors(articleData);
 
                                         //@guide richiedo le info sulle citazioni (in entrata)
-                                        //todo: da valutare: per adesso le info sulle citazioni le richiedo qui
                                         ArticlesInfoService.getArticleCitationsInfo(articleData.expression.value).then(
                                             function (response) {
                                                 articleData.inCitActs = response.data.results.bindings[0].numCitActs.value; //numero di citation acts
@@ -498,6 +539,7 @@ myApp
                                 );
 
                             }
+
                         }
 
                     },
@@ -509,7 +551,35 @@ myApp
                         console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText)
                     }
                 );
+            },
+
+            //questa è invocata in biblioItem per visualizzare le info su un solo articolo
+            singleArticleInfo: function(artExpression, stateVal) {
+                //todo da rivedere
+                var resultsCopy = angular.copy(articlesResults);                // creo una deep copy dei risultati
+                StatesManagerService.saveCurrentStateArticles(resultsCopy);     // salvo i risultati correnti A ( prima di modificare articlesResults ) nello stato creato precedentemente
+                StatesManagerService.addEmptyState(stateVal);                  // creo un nuovo stato vuoto che andrà ad accogliere i risultati B (che sto per chiedere) nel momento in cui si passerà ad un' altro stato C
+
+                getSingleArticleInfo(artExpression);          // richiedo l'articolo da mostrare
+                console.log(">>> STATES:");
+                console.log(StatesManagerService.getStates());
+
+            },
+
+            setArticlesResults: function(stateIndex) {
+                var restoredState = StatesManagerService.restoreState(stateIndex);
+                console.log("------------");
+                console.log(restoredState);
+                console.log("------------");
+                angular.copy(restoredState.articles, articlesResults);
+                articlesNum = articlesResults.length;
+                completedArticles = articlesResults.length;
+                console.log(">>> STATES:");
+                console.log(StatesManagerService.getStates());
+
             }
+
+
 
             //importante! se si modifica articlesResults, non riassegnare altrimenti tutti i $watch non vanno più! modificare usando angular.copy
             //@guide https://docs.angularjs.org/api/ng/function/angular.copy

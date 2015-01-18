@@ -276,6 +276,18 @@
     margin: 10px;
 }
 
+.self-cit-badge {
+    padding: 3px;
+    color: #564aa3;
+    background-color: white;
+    font-size: x-large;
+    font-weight: bold;
+    border-radius: 25%;
+    width: 30px;
+    margin: 5px;
+    margin-top: -2px;
+}
+
 .text-bold {
     font-weight: bold;
 }
@@ -331,4 +343,48 @@
     background-color: #fafbfc;
     border-bottom: 1px solid #cfdbe2;
     color: #929292
+}
+
+.header-div li {
+    font-size: large !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.self-cit {
+    color: #564aa3;
+    background-color: white;
+    margin: 20px;
+    font-size: xx-large;
+    font-weight: bold;
+    border-radius: 10%;
+}
+
+.breadcrumb-item {
+
+}
+
+.selectable-breadcrumb {
+    color: #5d9cec;
+}
+
+.selectable-breadcrumb:hover {
+    color: #3370BD;
+    cursor: pointer;
+    font-weight: bolder;
+
+}
+
+.breadcrumb-header {
+    margin: 0px;
+}
+
+.explore-biblio:hover {
+    font-size: 5em;
+}
+
+.biblio-item-more-info {
+
 }

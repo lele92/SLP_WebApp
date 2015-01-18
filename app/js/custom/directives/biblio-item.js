@@ -3,7 +3,7 @@
  * elemento per le informazioni su un singolo elemento di una bibliografia
  =========================================================*/
 
-myApp.directive('biblioItem', function($modal) {
+myApp.directive('biblioItem', function($modal, ArticleManagerService) {
     'use strict';
 
     return {
@@ -15,6 +15,14 @@ myApp.directive('biblioItem', function($modal) {
             citingArticleAuthors: "="
         },
         link: function(scope, element, attributes) {
+
+            /* per avere maggiori info sul corrente elemento bibliografico */
+            scope.exploreBiblioItem = function() {
+                var strBreadCrumb = "["+scope.itemData.publicationYear+"] "+scope.itemData.title.substr(0,40)+"...";
+                ArticleManagerService.singleArticleInfo(scope.itemData.articleExpression.value, strBreadCrumb);
+
+            }
+
             /* se un autore di un biblio-item é anche autore dell'articolo citante, allora ritorna true, altrimenti false */
             scope.isSharedAuthor = function(author) {
                 for (var i in scope.citingArticleAuthors) {

@@ -29,7 +29,7 @@ App.directive('toggleState', ['toggleStateService', function(toggle) {
             else {
               $body.addClass(classname);
               if( ! attrs.noPersist)
-                toggle.addState(classname);
+                toggle.saveCurrentStateArticles(classname);
             }
             
           }

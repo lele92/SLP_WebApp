@@ -3,14 +3,12 @@
     <div class="row row-table row-flush">
 
         <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 bg-info text-center icon-biblio-item" ng-class="{'biblio-item-selfcitation': itemData.isSelfcitation }">
-            <em ng-show="!itemData.isSelfcitation" class="fa icon-pencil fa-2x round-icon"></em>
-            <em ng-show="itemData.isSelfcitation" class="fa icon-reload fa-2x round-icon"></em>
+            <div tooltip="Self-citation" tooltip-placement="bottom" ng-show="itemData.isSelfcitation" class="self-cit"> S </div>
             <h2>{{itemData.totCitActs}}</h2>
-            <h4>Incoming Citation<span ng-show="itemData.totCitActs > 1">s</span></h4>
+            <h4>Citation<span ng-show="itemData.totCitActs > 1">s</span></h4>
         </div>
 
-
-        <div class="col-lg-11 col-md-10 col-sm-10 col-xs-10">
+        <div class="col-lg-10 col-md-9 col-sm-9 col-xs-9">
             <div class="panel-body no-top-padding no-bottom-padding row">
                 <div class="col-lg-8 col-md-12 col-sm-12 biblio-info-body">
                     <h4 class="mt0">{{itemData.title}} - <span class="article-year">{{itemData.publicationYear}}</span>
@@ -27,16 +25,22 @@
                         <span class="large-text">Global Citations: {{itemData.globalCountValue}} (updated: {{itemData.globalCountDate}})</span>
                     </div>
                     <button tooltip="Read abstract"  tooltip-popup-delay="500" class="btn btn-default" ng-click="open()"><em class="fa fa-file-text"></em> Abstract</button>
+
                 </div>
                 <div id={{chartId}} align="center" class="chart-panel-md col-lg-4 col-md-12 col-sm-12">
                     <div class="col-lg-12 no-padding panel-hover" ng-mouseover="renderChart(itemData.citActsInfo, itemData.totCitActs)">
                         <h4>Hover with mouse or tap to load</h4>
-                        <h2>Citations Chart</h2>
+                        <h2>Motivations Chart</h2>
                         <em class="fa fa-pie-chart fa-4x"></em>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 text-center biblio-item-more-info">
+            <em tooltip="Show more information" class="fa fa-arrow-circle-right fa-4x pointer explore-biblio" ng-click="exploreBiblioItem()"></em>
+        </div>
+
     </div>
 </div>
 <!-- END widget-->
