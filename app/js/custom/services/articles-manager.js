@@ -5,7 +5,7 @@
 'use strict';
 
 myApp
-    .factory('ArticleManagerService', function(RequestArticlesService, FiltersManagerService,  ArticlesInfoService, StatesManagerService, $rootScope, $interval) {
+    .factory('ArticleManagerService', function(RequestArticlesService, FiltersManagerService,  ArticlesInfoService, StatesManagerService, AuthorInfoService, $rootScope, $interval) {
         var articlesResults = [];
         var mockResults = [
 
@@ -514,7 +514,6 @@ myApp
                                             isRetrievingArticlesInfo = false;
                                         }
                                         //@guide richiedo la lista degli autori
-                                        //todo: qui si potrebbe risolvere con un chaining delle chiamate ajax
                                         getArticleAuthors(articleData);
 
                                         //@guide richiedo le info sulle citazioni (in entrata)
@@ -577,6 +576,75 @@ myApp
                 console.log(">>> STATES:");
                 console.log(StatesManagerService.getStates());
 
+            },
+
+            getAuthorArticles: function(givenName, familyName) {
+                AuthorInfoService.requestAuthorArticles(familyName, givenName).then(
+                    // success
+                    function(response) {
+                        var resultsCopy = angular.copy(articlesResults);                // creo una deep copy dei risultati
+                        StatesManagerService.saveCurrentStateArticles(resultsCopy);     // salvo i risultati correnti A ( prima di modificare articlesResults ) nello stato creato precedentemente (l'ultimo creato con addEmptyState)
+                        StatesManagerService.addEmptyState(givenName+" "+familyName);
+                        console.log(StatesManagerService.getStates());
+                        articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
+                        var tmpRes = response.data.results.bindings;
+                        articlesNum = tmpRes.length;                        // numero totale di articoli di cui richiedere le info
+                        completedArticles = articlesResults.length;         // numero di richieste completate = numero di articoli nella lista degli articoli (inizialmente zero)...semplice
+
+                        //@guide per ogni articolo, partendo dal work, richiedo tutte le informazioni generali + info bibliografiche
+                        /* @guide: perchè faccio tante chiamate ajax e non una sola?
+                         * perchè una query monolitica potrebbe richiedere molto tempo di caricamento, usando un for invece, appena arriva
+                         * un articolo, lo aggiungo subito e vedo i risultati aggiornati nella view (grazie al watchCollection)
+                         */
+                        isRetrievingArticlesInfo = true; //si notifica che stanno per iniziare le interrogazioni per ottenere le info sugli articoli
+                        for (var key in tmpRes) {
+                            //@guide richiedo le info generali sull'articolo interrogando fuseki
+                            ArticlesInfoService.getArticleGeneralInfo(tmpRes[key].work.value).then(
+
+                                // http://stackoverflow.com/questions/939032/jquery-pass-more-parameters-into-callback
+                                function (response) {
+                                    var articleData = response.data.results.bindings[0];
+                                    articleData.publicationYear = stringToInt(articleData.publicationYear.value);
+                                    articleData.title = articleData.title.value;
+                                    articleData.globalCountValue = stringToInt(articleData.globalCountValue.value);
+                                    articlesResults.push(articleData); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia (si aggiorna comunque perchè articles è passato per riferimento, ma con il watch aggiungo del comportamento )
+
+                                    // se sono state richieste le info per tutti gli articoli
+                                    if (articlesResults.length == tmpRes.length) {
+                                        isRetrievingArticlesInfo = false;
+                                    }
+                                    //@guide richiedo la lista degli autori
+                                    getArticleAuthors(articleData);
+
+                                    //@guide richiedo le info sulle citazioni (in entrata)
+                                    ArticlesInfoService.getArticleCitationsInfo(articleData.expression.value).then(
+                                        function (response) {
+                                            articleData.inCitActs = response.data.results.bindings[0].numCitActs.value; //numero di citation acts
+                                            articleData.inNumCites = response.data.results.bindings[0].numCites.value;  //numero di cites (<= numero di citation acts), citazioni uniche
+                                        },
+                                        //todo caso da gestire meglio
+                                        function (errResponse) {
+                                            console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+                                        }
+                                    );
+
+
+                                },
+
+                                //todo caso da gestire meglio
+                                function (errResponse) {
+                                    console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+                                }
+                            );
+                        }
+                    },
+
+                    // error
+                    //todo caso da gestire meglio
+                    function(errResponse) {
+                        console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText)
+                    }
+                );
             }
 
 

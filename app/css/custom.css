@@ -30,8 +30,8 @@
 
 .label-author-light {
     margin: 2px;
-    background-color: #d3d3d3;
-    color: #656565;
+    background-color: #8bb8f1;
+    color: white;
     font-size: medium;
     display: inline-block;
 }
@@ -381,10 +381,33 @@
     margin: 0px;
 }
 
-.explore-biblio:hover {
+.explore-biblio:hover{
     font-size: 5em;
 }
 
 .biblio-item-more-info {
 
+}
+
+.label-author:hover, .label-author-light:hover {
+    -webkit-box-shadow: 0px 0px 13px 0px rgba(50, 50, 50, 0.32);
+    -moz-box-shadow:    0px 0px 13px 0px rgba(50, 50, 50, 0.32);
+    box-shadow:         0px 0px 13px 0px rgba(50, 50, 50, 0.32);
+}
+
+.link-white {
+    color: white;
+}
+
+.link-white:hover {
+    color: #5d9cec;
+}
+
+.citing-item-footer {
+    border-top: 1px solid #cfdbe2 !important
+}
+
+.btn-article {
+    background-color: #2b957a;
+    color: white;
 }

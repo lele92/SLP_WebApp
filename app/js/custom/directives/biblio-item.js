@@ -23,6 +23,12 @@ myApp.directive('biblioItem', function($modal, ArticleManagerService) {
 
             }
 
+            /* per visualizzare tutti gli articoli di un autore */
+            scope.exploreAuthor = function(givenName, familyName) {
+                ArticleManagerService.getAuthorArticles(givenName, familyName);
+            }
+
+
             /* se un autore di un biblio-item é anche autore dell'articolo citante, allora ritorna true, altrimenti false */
             scope.isSharedAuthor = function(author) {
                 for (var i in scope.citingArticleAuthors) {

@@ -140,7 +140,6 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
             } else {
                 console.log("2.3 - ARTICLES INFO RETRIEVED");
                 //if (loadingInfoDialog) {
-                //    console.log("baaaaaang");
                 //    ngDialog.closeAll();
                 //}
             }

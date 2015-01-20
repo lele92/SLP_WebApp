@@ -50,6 +50,11 @@ myApp.directive('articleItem', function(ngDialog, ArticleManagerService) {
                 });
             }
 
+            /* per visualizzare tutti gli articoli di un autore */
+            $scope.exploreAuthor = function(givenName, familyName) {
+                ArticleManagerService.getAuthorArticles(givenName, familyName);
+            }
+
             //$scope.getUniqueCitingItems = function(citingItems) {
             //    var prevExp = "";
             //    var tmpExp = "";

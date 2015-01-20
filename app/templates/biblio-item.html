@@ -16,7 +16,7 @@
                     </h4>
                     <div class="row">
                         <em tooltip="Authors"  tooltip-popup-delay="500" class="fa fa-users biblio-round-icon"></em>
-                        <span class="label label-author-light" ng-class="{'shared-author': isSharedAuthor(author) }" ng-repeat="author in itemData.authors">
+                        <span tooltip="show author articles" class="label label-author-light pointer " ng-class="{'shared-author': isSharedAuthor(author) }" ng-repeat="author in itemData.authors" ng-click="exploreAuthor(author.givenName.value, author.familyName.value)">
                             {{author.givenName.value}} {{author.familyName.value}}
                         </span>
                     </div>
@@ -38,7 +38,7 @@
         </div>
 
         <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 text-center biblio-item-more-info">
-            <em tooltip="Show more information" class="fa fa-arrow-circle-right fa-4x pointer explore-biblio" ng-click="exploreBiblioItem()"></em>
+            <em tooltip="Go to Article" class="fa fa-arrow-circle-right fa-4x pointer explore-biblio" ng-click="exploreBiblioItem()"></em>
         </div>
 
     </div>

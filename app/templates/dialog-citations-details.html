@@ -32,8 +32,8 @@
     <h3>Cited by (in the dataset)</h3>
 </div>
 
-<div class="row row-masonry row-masonry-xl-2 row-masonry-lg-2 row-masonry-md-2 row-masonry-sm-1">
-    <div class="col-masonry" ng-repeat="citingItem in ngDialogData.articleData.citingArticles">
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12" ng-repeat="citingItem in ngDialogData.articleData.citingArticles">
         <citing-item item-data="citingItem" cited-article-authors="ngDialogData.articleData.authors" ></citing-item>
     </div>
 </div>

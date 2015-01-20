@@ -1,20 +1,18 @@
 <div id="article_{{articleIndex}}" class="panel panel-default panel-article-item">
     <div class="panel-heading article-header panel-min-padding">
         <div class="article-header-info">
-            <h3>{{articleIndex}}. {{articleData.title}} - <span class="article-year">{{articleData.publicationYear}}</span>
-                <a tooltip="External link"  tooltip-popup-delay="500"class="btn btn-oval btn-primary" ng-href="{{articleData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i></a>
-            </h3>
+            <a tooltip="External link" tooltip-placement="bottom"  tooltip-popup-delay="500"class="btn btn-oval btn-primary pull-right" ng-href="{{articleData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i></a>
+            <h3>{{articleIndex}}. {{articleData.title}} - <span class="article-year">{{articleData.publicationYear}} </span></h3>
 
             <div>
                 <em tooltip="Authors"  tooltip-popup-delay="500" class="fa fa-users fa-2x biblio-round-icon"></em>
-                <span class="label label-author" ng-repeat="author in articleData.authors">  {{author.givenName.value}} {{author.familyName.value}} </span>
+                <span class="label label-author pointer" ng-repeat="author in articleData.authors" ng-click="exploreAuthor(author.givenName.value, author.familyName.value)">  {{author.givenName.value}} {{author.familyName.value}} </span>
             </div>
         </div>
 
         <div  tooltip="Show details"  tooltip-popup-delay="500" align="center" class="show-article-info" ng-click="toggleArticleDetails(articleData.expression.value, articleData.authors)">
             <i ng-class="{'fa fa-chevron-down fa-2x': articleIsCollapsed, 'fa fa-chevron-up fa-2x': !articleIsCollapsed}"></i>
         </div>
-
     </div>
 
     <div class="panel-body" collapse="articleIsCollapsed">

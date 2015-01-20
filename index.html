@@ -36,6 +36,7 @@
    <script src="app/js/custom/directives/biblio-item.js"></script>
    <script src="app/js/custom/directives/citing-item.js"></script>
    <script src="app/js/custom/services/info-articles.js"></script>
+   <script src="app/js/custom/services/info-author.js"></script>
    <script src="app/js/custom/services/articles-manager.js"></script>
    <script src="app/js/custom/services/request-articles.js"></script>
    <script src="app/js/custom/services/states-manager.js"></script>
@@ -294,36 +295,16 @@
        }
    </script>
 
-
-
-   <!--todo: query da eliminare, non viene usata-->
-   <script id="query_tempQuery" type="text/template">
-   select ?work ?citAct1 ?citAct2
-   where {
-       ?work a fabio:Work;
-            core:realization ?exp.
-
-       ?exp a fabio:Expression.
-
-       ?citAct1 a cito:CitationAct;
-                cito:hasCitingEntity ?exp;
-                cito:hasCitedEntity ?citedExp1.
-
-       ?citAct2 a cito:CitationAct;
-                cito:hasCitingEntity ?exp;
-                cito:hasCitedEntity ?citedExp2.
-
-       ?citAct3 a cito:CitationAct;
-               cito:hasCitingEntity ?exp;
-               cito:hasCitedEntity ?citedExp3.
-
-       ?citedExp1 a fabio:Expression.
-       ?citedExp2 a fabio:Expression.
-   ?citedExp3 a fabio:Expression.
-
-       filter (?citAct1 != ?citAct2 && ?citAct1 != ?citAct3 && ?citAct2 != ?citAct3)
-        filter (?citedExp1 != ?citedExp2 && ?citedExp1 != ?citedExp3 && ?citedExp2 != ?citedExp3)
-   } limit 1
+   <!-- query: tutti gli articoli (work) di un autore -->
+   <script id="query_authorArticles" type="text/template">
+       select ?work
+       where {
+            ?author a foaf:Person;
+                    foaf:givenName "{{authorGivenName}}";
+                    foaf:familyName "{{authorFamilyName}}";
+                    pro:holdsRoleInTime [ a pro:RoleInTime;
+                                            pro:relatesToDocument ?work ]
+       }
    </script>
 </body>
 </html>
