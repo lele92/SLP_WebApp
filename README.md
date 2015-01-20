@@ -1,15 +1,21 @@
 SLP_WebApp
 ==========
 
-<h4>Lanciare l'app (provvisorio):</h4>
+<h2>Tutorial per il WebServer</h2>
+<h3>Requisiti</h3>
 <ul>
-<li> posizionarsi nella directory "master" del progetto </li>
-<li> lanciare il comando "gulp" </li>
-<li> dopo qualche secondo di esecuzione (nel terminale viene stampata la stringa "* was reloaded") l'app è disponibile all'indirizzo http://localhost:8088/ </li>
+	<li> Node.js v0.8 o maggiore. (<a href="http://nodejs.org/">Nodejs.org</a>, <a href="https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-an-ubuntu-14-04-server">How To Install Node.js on an Ubuntu</a></li>
+	<li> Package manager npm: <a href="https://www.npmjs.com/package/npm">https://www.npmjs.com/package/npm</a></li>
+</ul>
+<h3>Lanciare il server</h3>
+<ul>
+	<li>installare http-server tramite npm: $ npm install http-server -g</li>
+	<li>posizionarsi nella directory principale dell'applicazione (contenente index.html)</li>
+	<li>lanciare il server: $ http-server -a [indirizzo da usare (default 0.0.0.0)] -p [porta da usare (default 8080)]</li>
 </ul>
 
 <div>
-<h5>Per far girare l'applicazione con un server fuseki disponibile in locale:</h5>
+<h3>Per far girare l'applicazione con un server fuseki disponibile in locale:</h3>
 <ul>
   <li>aprire /SLP_WebApp/app/js/custom/services/info-articles.js </li>
 <li>scommentare la riga 10 fornendo l'indirizzo dell'endpoint locale </li>
