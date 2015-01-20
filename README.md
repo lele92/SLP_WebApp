@@ -4,7 +4,7 @@ SLP_WebApp
 <h2>Tutorial per il WebServer</h2>
 <h3>Requisiti</h3>
 <ul>
-	<li> Node.js v0.8 o maggiore. (<a href="http://nodejs.org/">Nodejs.org</a>, <a href="https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-an-ubuntu-14-04-server">How To Install Node.js on an Ubuntu</a></li>
+	<li> Node.js v0.8 o maggiore. (<a href="http://nodejs.org/">Nodejs.org</a>, <a href="https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-an-ubuntu-14-04-server">How To Install Node.js on an Ubuntu</a>)</li>
 	<li> Package manager npm: <a href="https://www.npmjs.com/package/npm">https://www.npmjs.com/package/npm</a></li>
 </ul>
 <h3>Lanciare il server</h3>
