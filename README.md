@@ -13,6 +13,7 @@ SLP_WebApp
 	<li>posizionarsi nella directory principale dell'applicazione (contenente index.html)</li>
 	<li>lanciare il server: $ http-server -a [indirizzo da usare (default 0.0.0.0)] -p [porta da usare (default 8080)]</li>
 </ul>
+<p>per ulteriori dettagli sulla configurazione di http-server: <a href="https://www.npmjs.com/package/http-server">https://www.npmjs.com/package/http-server</a></p>
 
 <div>
 <h3>Per far girare l'applicazione con un server fuseki disponibile in locale:</h3>
