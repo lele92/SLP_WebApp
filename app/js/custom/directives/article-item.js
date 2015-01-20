@@ -22,14 +22,15 @@ myApp.directive('articleItem', function(ngDialog, ArticleManagerService) {
         },
         link: function($scope, $element, $attributes) {
             $scope.articleIsCollapsed = true;
-            var detailsAlreadyFetched = false; //todo: da cambiare: questa info deve stare in ArticleManagerService
+            var detailsAlreadyRequested = false; //todo: da cambiare: questa info deve stare in ArticleManagerService
 
             //todo: cambiare nome a questa funzione, fa pena
             $scope.toggleArticleDetails = function(expression, articleAuthors) {
                 $scope.articleIsCollapsed = !$scope.articleIsCollapsed;
                 //@guide è qui che chiedo le ulteriori info sull'articolo: nel momento in cui lui si dichiara interessato e vuole approfondire
                 // se il panel non è collassato (vuol dire che pochi attimi fa era collassato, lo stato cambia qui sopra) e se le info non sono già state richieste
-                if (!$scope.articleIsCollapsed && !detailsAlreadyFetched) {
+                if (!$scope.articleIsCollapsed && !detailsAlreadyRequested) {
+                    detailsAlreadyRequested = !detailsAlreadyRequested
                     ArticleManagerService.getCitationsInfo(expression, articleAuthors);
                     ArticleManagerService.getBiblioInfo(expression, articleAuthors);
                 }

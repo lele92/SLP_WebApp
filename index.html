@@ -304,6 +304,22 @@
                     foaf:familyName "{{authorFamilyName}}";
                     pro:holdsRoleInTime [ a pro:RoleInTime;
                                             pro:relatesToDocument ?work ]
+
+            FILTER NOT EXISTS { ?work core:realization [ a fabio:JournalEditorial ] }
+            FILTER EXISTS {
+                ?work core:realization [ a fabio:Expression;
+                                               core:part [ a sro:Abstract;
+                                                                c4o:hasContent ?abstractTxt];
+                                               dcterms:title ?title;
+                                               core:embodiment ?man;
+                                               prism:doi ?doi;
+                                               fabio:hasPublicationYear ?publicationYear;
+                                               c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
+                                                                                   c4o:hasGlobalCountSource ?globalCountSource;
+                                                                                   c4o:hasGlobalCountValue ?globalCountValue;
+                                                                                   c4o:hasGlobalCountDate ?globalCountDate]
+                                       ]
+            }
        }
    </script>
 </body>

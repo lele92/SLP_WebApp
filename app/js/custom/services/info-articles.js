@@ -7,7 +7,7 @@
 myApp
     .factory('ArticlesInfoService', function($http,$interpolate) {
         var endpoint = "http://two.eelst.cs.unibo.it:8181/data/query"
-        endpoint = "http://localhost:8181/data/query"; //todo: endpoint locale
+        //endpoint = "http://localhost:8181/data/query"; //todo: endpoint locale
         var prefixes = $('#prefixes').text();
 
         return {
