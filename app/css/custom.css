@@ -411,3 +411,12 @@
     background-color: #2b957a;
     color: white;
 }
+
+.vol-info {
+    color: #5d9cec;
+}
+
+.sort-by {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}

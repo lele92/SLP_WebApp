@@ -36,7 +36,9 @@ myApp.directive('articleItem', function(ngDialog, ArticleManagerService) {
                 }
             }
 
-
+            $scope.availableIssue = function(articleData) {
+                return articleData.hasOwnProperty("issueNumber") && articleData.hasOwnProperty("volumeNumber");
+            }
 
             $scope.showCitDetails = function() {
                 ngDialog.open({

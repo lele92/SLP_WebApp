@@ -5,17 +5,20 @@
 </div>
 
 <div>
-    <div class="row" ng-show="ArticlesResultsCtrl.articlesNum.value > 1">
-        <div class="well well-sm col-lg-8 col-md-8" >
-            <span class="x-large-text col-lg-2 no-padding text-center">Sort by</span>
-            <div class="col-lg-6">
+    <div class="row" ng-show="ArticlesResultsCtrl.articlesNum.value > 1" align="center">
+        <div class="well well-sm col-lg-7 col-md-10 col-centered" >
+            <div align="center" class="col-lg-2 col-md-2 no-padding sort-by">
+                <span class="x-large-text text-center">Sort by</span>
+            </div>
+
+            <div class="col-lg-6 col-md-6 sort-by" align="center">
                 <div class="row btn-group">
                     <label ng-model="ArticlesResultsCtrl.orderByV" btn-radio="ArticlesResultsCtrl.publicationYear" class="btn btn-primary"><span class="large-text">Year</span></label>
                     <label ng-model="ArticlesResultsCtrl.orderByV" btn-radio="ArticlesResultsCtrl.title" class="btn btn-primary"><span class="large-text">Title</span></label>
                     <label ng-model="ArticlesResultsCtrl.orderByV" btn-radio="ArticlesResultsCtrl.globalCitations" class="btn btn-primary"><span class="large-text">Global citations</span></label>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4 sort-by" align="center">
                 <div class="row btn-group">
                     <label ng-model="ArticlesResultsCtrl.sortByV" btn-radio="false" class="btn btn-success"><span class="large-text"><em class="fa fa-sort-amount-asc fa-lg"></em> asc</span></label>
                     <label ng-model="ArticlesResultsCtrl.sortByV" btn-radio="true" class="btn btn-success"><span class="large-text"><em class="fa fa-sort-amount-desc fa-lg"></em> desc</span></label>

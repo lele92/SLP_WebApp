@@ -61,7 +61,7 @@
    <!--@TODO: DA CONTROLLARE-->
    <!-- query: info generiche su un articolo -->
    <script id="query_articleInfo" type="text/template">
-      select ?title ?doi ?expression ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
+      select ?title ?doi ?expression ?volumeNumber ?issueNumber ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
       where {
          <{{work}}> a fabio:Work;
                   core:creator ?authorsList;
@@ -84,6 +84,16 @@
          ?man a fabio:Manifestation, fabio:WebPage;
                dcterms:format <http://purl.org/NET/mediatypes/text/html>;
                core:exemplar ?htmlItem.
+
+          OPTIONAL {
+              ?expression ^core:part ?issue.
+              ?issue a fabio:JournalIssue;
+                    prism:issueIdentifier ?issueNumber;
+                    core:partOf ?volume.
+
+              ?volume a fabio:JournalVolume;
+                    prism:volume ?volumeNumber.
+          }
       }
    </script>
 
@@ -222,7 +232,7 @@
                     cito:hasCitationCharacterization ?color.
 
             ?citingExp a fabio:Expression;
-                   fabio:hasPublicationYear ?citingPubYear;
+                   fabio:hasPublicationYear ?citingPubYear.
        }
    </script>
 

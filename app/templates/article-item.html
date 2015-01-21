@@ -2,7 +2,7 @@
     <div class="panel-heading article-header panel-min-padding">
         <div class="article-header-info">
             <a tooltip="External link" tooltip-placement="bottom"  tooltip-popup-delay="500"class="btn btn-oval btn-primary pull-right" ng-href="{{articleData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i></a>
-            <h3>{{articleIndex}}. {{articleData.title}} - <span class="article-year">{{articleData.publicationYear}} </span></h3>
+            <h3>{{articleIndex}}. {{articleData.title}} <span ng-show="availableIssue(articleData)" class="vol-info"> - vol. {{articleData.volumeNumber.value}} ({{articleData.issueNumber.value}})</span> - <span class="article-year">{{articleData.publicationYear}} </span></h3>
 
             <div>
                 <em tooltip="Authors"  tooltip-popup-delay="500" class="fa fa-users fa-2x biblio-round-icon"></em>

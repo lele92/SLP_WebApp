@@ -99,7 +99,13 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
                         template: "app/templates/dialog-no-results.html",
                         closeByEscape: true,
                         showClose: true,
-                        closeByDocument: true
+                        closeByDocument: true,
+                        controller: function($rootScope, $scope) {
+                            $scope.goToHomeSearch = function() {
+                                $rootScope.$state.go('app.home-search');
+                                ngDialog.close();
+                            }
+                        }
                     });
                 }
 

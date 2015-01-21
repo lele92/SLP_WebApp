@@ -30,49 +30,49 @@ myApp
             //{
             //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000132" //cit
             //},
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826807000169" //cit
-            },
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826807000169" //cit
+            //},
             //{
             //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000041" //todo: questo è un caso di errore in bibliografia
             //},
 
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            },
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            //},
             {
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000027"
             },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000088"
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
-            }
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000088"
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
+            //}
         ];
         var colorsMap = {
             "http://purl.org/spar/cito/citesForInformation": { toString: "cites For Information", value: "http://purl.org/spar/cito/citesForInformation" },
@@ -267,7 +267,9 @@ myApp
             for (var i=0; i<colorsDuplicate.length; i++) {
                 tmpColor = colorsDuplicate[i];
                 if ( tmpColor !== prev) {
-                    citingArticle.colors.push(tmpColor);
+                    citingArticle.colors.push({colorStr: tmpColor, count: 1});
+                } else {
+                    citingArticle.colors[citingArticle.colors.length -1].count++;
                 }
 
                 prev = tmpColor;
@@ -278,10 +280,8 @@ myApp
         // expression: expression del citedArticle
         // citedArticleAuthors: lista degli autori dell'articolo citato, mi serve per vedere se ce ne sono di condivisi
         // citationsInfo: triple (expression,anno,colore) su tutte le citazioni verso l'articolo citato, quindi con expression potenzialmente duplicati
-        //todo: questo metodo potrebbe essere rifattorizzato meglio
         var getCitingArticles = function(citedArticle, expression, citedArticleAuthors, citationsInfo) {
             //todo controllare che articlesResults sia definito
-            //todo controllare che le info che si stanno richiedendo non siano già disponibili
 
             return ArticlesInfoService.requestCitingArticles(expression).then(
                 // success
@@ -380,7 +380,6 @@ myApp
 
             getCitationsInfo: function(expression, citedArticleAuthors) {
                 //todo controllare che articlesResults sia definito
-                //todo controllare che le info che si stanno richiedendo non siano già disponibili
 
                 return ArticlesInfoService.requestCitationsInfo(expression).then(
                     // success
@@ -471,7 +470,7 @@ myApp
                         var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
                         var results = "http://stanbol.apache.org/ontology/entityhub/query#queryResult";
                         var tmpRes = null; //conterrà gli uri dei work dei risultati (se ci sono risultati)
-                        response = []; //todo: da eliminare, barbatrucco per passare il controllo
+//                        response = []; //todo: da eliminare, barbatrucco per passare il controllo
 
                         //todo: righe da scommentare
                         if (noData(response)) {
@@ -483,8 +482,8 @@ myApp
                         } else {
                             articlesResultsState = resultsStates.RESULTS;              // ci sono risultati
                             console.log("RESULTS!");
-                            //tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
-                            tmpRes = mockResults;  //todo da eliminare
+                            tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
+//                            tmpRes = mockResults;  //todo da eliminare
                             articlesNum = tmpRes.length;                        // numero totale di articoli di cui richiedere le info
                             completedArticles = articlesResults.length;         // numero di richieste completate = numero di articoli nella lista degli articoli (inizialmente zero)...semplice
 

@@ -14,7 +14,7 @@
         <div class="row">
             <em class="fa fa-question-circle fa-4x"></em>
             <span class="x-large-text text-bold">Motivations for citation: </span>
-            <span ng-repeat="color in itemData.colors"> {{color}} </span>
+            <span ng-repeat="color in itemData.colors"> {{color.colorStr}}: {{color.count}} </span>
         </div>
 
         <!-- START panel-->
