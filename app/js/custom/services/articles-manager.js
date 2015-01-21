@@ -9,15 +9,15 @@ myApp
         var articlesResults = [];
         var mockResults = [
 
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
-            //},
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
+            },
             //{
             //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000413" //cit
             //},
@@ -37,42 +37,42 @@ myApp
             //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000041" //todo: questo è un caso di errore in bibliografia
             //},
 
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            //},
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            },
             {
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000027"
             },
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000088"
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
-            //}
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000088"
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
+            }
         ];
         var colorsMap = {
             "http://purl.org/spar/cito/citesForInformation": { toString: "cites For Information", value: "http://purl.org/spar/cito/citesForInformation" },

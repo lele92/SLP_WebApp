@@ -7,7 +7,7 @@
     <div class="citing-info-body" ng-init="showAbstract = false">
         <div class="row">
             <em class="fa fa-users biblio-round-icon fa-2x"></em>
-            <span class="label label-author-light pointer" ng-class="{'shared-author': isSharedAuthor(author) }" ng-repeat="author in itemData.authors" ng-click="exploreAuthor(author.givenName.value, author.familyName.value)">
+            <span tooltip="show author articles" class="label label-author-light pointer" ng-class="{'shared-author': isSharedAuthor(author) }" ng-repeat="author in itemData.authors" ng-click="exploreAuthor(author.givenName.value, author.familyName.value)">
             {{author.givenName.value}} {{author.familyName.value}}
             </span>
         </div>
