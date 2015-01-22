@@ -223,6 +223,27 @@
        } group by (?color)
    </script>
 
+   <!-- query: quante volte un citing entity cita un cited entity per un certo motivo (colore), senza raggruppamento-->
+   <script id="query_citationActsInfoNotGrouped" type="text/template">
+       select ?color ?irpTxt ?sentenceTxt
+               where {
+               ?citationAct a cito:CitationAct;
+                   cito:hasCitingEntity <{{artExpression}}>;
+                   cito:hasCitedEntity <{{citedExpression}}>;
+                   cito:hasCitationCharacterization ?color.
+
+               ?citationAct ^oa:hasBody ?ann.
+
+               ?ann a oa:Annotation;
+                   oa:hasTarget ?irp.
+
+               ?irp a c4o:InTextReferencePointer;
+                   c4o:hasContent ?irpTxt;
+                   c4o:hasContext [ a doco:Sentence;
+                                     c4o:hasContent ?sentenceTxt].
+       }
+   </script>
+
    <!-- query: info sulle citazioni (citation acts) ad un certo articolo-->
    <script id="query_citationsInfo" type="text/template">
        select ?citingExp ?color ?citingPubYear ?irpTxt ?sentenceTxt

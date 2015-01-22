@@ -51,6 +51,8 @@ myApp
                 return $http.get(queryURL);
             },
 
+
+
             //@guide per le info generiche sugli articoli citati da un certo articolo
             requestBiblioInfo: function(expressionURI) {
                 var expr = {expression: expressionURI};
@@ -64,6 +66,16 @@ myApp
                 var expr = {artExpression: citingExp,
                             citedExpression: citedExp};
                 var queryURL = this.buildQueryURL('#query_citationActsInfo',expr);
+
+                return $http.get(queryURL);
+
+            },
+
+            //@guide per le info aggiuntive sugli articoli citati da un certo articolo: numero di citazioni e colore (da articolo citante ad articolo citato)
+            getCitationActsInfoNotGrouped: function(citingExp, citedExp) {
+                var expr = {artExpression: citingExp,
+                    citedExpression: citedExp};
+                var queryURL = this.buildQueryURL('#query_citationActsInfoNotGrouped',expr);
 
                 return $http.get(queryURL);
 

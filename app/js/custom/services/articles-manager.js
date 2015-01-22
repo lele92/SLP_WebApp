@@ -40,12 +40,12 @@ myApp
             //{
             //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
             //},
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000027"
-            },
             //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000027"
             //},
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
+            },
             //{
             //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000088"
             //},
@@ -150,19 +150,61 @@ myApp
             return colorsMap[colorURI].toString;
         }
 
+        /* per raggruppare gli atti citazionali per colore */
+        var groupCitActsInfo = function(citActsInfo) {
+            var groupedCitActInfo = [];
+
+            for (var key in citActsInfo) {
+                citActsInfo[key].colorURI = citActsInfo[key].color.value;
+                citActsInfo[key].color = mapColorToString(citActsInfo[key].color.value);
+            }
+
+            citActsInfo.sort(function compare(a,b) {
+                if (a.color < b.color)
+                    return -1;
+                if (a.color > b.color)
+                    return 1;
+                return 0;
+            });
+
+            var tmpInfo;
+            var prev = {color: ""};
+
+            for (var i=0; i<citActsInfo.length; i++) {
+                var tmpInfo = citActsInfo[i];
+                if ( tmpInfo.color !== prev.color) {
+                    groupedCitActInfo.push({
+                        colorURI: tmpInfo.colorURI,
+                        color: tmpInfo.color,
+                        numCitActs: 1,
+                        inTextRefPointers: [{
+                            irpTxt: tmpInfo.irpTxt.value,
+                            sentenceTxt: tmpInfo.sentenceTxt.value
+                        }]
+                    });
+                } else {
+                    groupedCitActInfo[groupedCitActInfo.length-1].numCitActs++;
+                    groupedCitActInfo[groupedCitActInfo.length-1].inTextRefPointers.push({
+                        irpTxt: tmpInfo.irpTxt.value,
+                        sentenceTxt: tmpInfo.sentenceTxt.value
+                    });
+                }
+
+                prev = tmpInfo;
+            }
+            return groupedCitActInfo;
+        }
+
         /* per le info sui citation acts di un certo item X della bibliografia:  per ogni elemento della bibliografia, quante volte X è citato dal citingEntity per un certo motivo*/
         var getBiblioItemCitActsInfo = function(citingEntityExpression, biblioItem) {
             //I param: citing entity - II param: cited entity
-            ArticlesInfoService.getCitationActsInfo(citingEntityExpression, biblioItem.citedExpression.value).then(
+            ArticlesInfoService.getCitationActsInfoNotGrouped(citingEntityExpression, biblioItem.citedExpression.value).then(
                 function (response) {
-                    biblioItem.citActsInfo = response.data.results.bindings;
-                    var tmpCitActsInfo;
-                    for (var j in biblioItem.citActsInfo) {
-                        tmpCitActsInfo = biblioItem.citActsInfo[j];
-                        tmpCitActsInfo.colorURI = tmpCitActsInfo.color.value;
-                        tmpCitActsInfo.color = mapColorToString(tmpCitActsInfo.color.value);
-                        tmpCitActsInfo.numCitActs = stringToInt(tmpCitActsInfo.numCitActs.value);
-                    }
+                    var citActsInfoNotGrouped = response.data.results.bindings;
+                    console.log("############");
+                    console.log(citActsInfoNotGrouped);
+                    console.log("############");
+                    biblioItem.citActsInfo = groupCitActsInfo(citActsInfoNotGrouped);
                     biblioItem.totCitActs = countNumCitActs(biblioItem.citActsInfo);
                 },
                 //todo caso da gestire meglio
@@ -497,7 +539,7 @@ myApp
                         var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
                         var results = "http://stanbol.apache.org/ontology/entityhub/query#queryResult";
                         var tmpRes = null; //conterrà gli uri dei work dei risultati (se ci sono risultati)
-                        response = []; //todo: da eliminare, barbatrucco per passare il controllo
+//                        response = []; //todo: da eliminare, barbatrucco per passare il controllo
 
                         //todo: righe da scommentare
                         if (noData(response)) {
@@ -509,8 +551,8 @@ myApp
                         } else {
                             articlesResultsState = resultsStates.RESULTS;              // ci sono risultati
                             console.log("RESULTS!");
-    //                       tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
-                            tmpRes = mockResults;  //todo da eliminare
+                            tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
+//                            tmpRes = mockResults;  //todo da eliminare
                             articlesNum = tmpRes.length;                        // numero totale di articoli di cui richiedere le info
                             completedArticles = articlesResults.length;         // numero di richieste completate = numero di articoli nella lista degli articoli (inizialmente zero)...semplice
 

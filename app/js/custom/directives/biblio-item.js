@@ -87,10 +87,18 @@ myApp.directive('biblioItem', function($modal, ArticleManagerService) {
                 chart.render();
             }
 
-            scope.open = function() {
-                var modalInstance = $modal.open({
+            scope.openAbstractDialog = function() {
+                var modalInstanceA = $modal.open({
                     templateUrl: '/app/templates/dialog-abstract.html',
                     controller: ModalBiblioCtrl,
+                    size: 'lg'
+                });
+            }
+
+            scope.openMotivationsDialog = function() {
+                var modalInstanceB = $modal.open({
+                    templateUrl: '/app/templates/dialog-motivations.html',
+                    controller: ModalMotivationsCtrl,
                     size: 'lg'
                 });
             }
@@ -102,6 +110,16 @@ myApp.directive('biblioItem', function($modal, ArticleManagerService) {
                 };
 
                 $scope.absText = scope.itemData.abstractTxt.value;
+                $scope.title = scope.itemData.title;
+            }
+
+            var ModalMotivationsCtrl = function ($scope, $modalInstance) {
+
+                $scope.close = function () {
+                    $modalInstance.close('closed');
+                };
+
+                $scope.citActsInfo = scope.itemData.citActsInfo;
                 $scope.title = scope.itemData.title;
             }
 
