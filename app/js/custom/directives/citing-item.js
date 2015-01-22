@@ -14,6 +14,11 @@ myApp.directive('citingItem', function( ngDialog, ArticleManagerService) {
             citedArticleAuthors: "="
         },
         link: function(scope, element, attributes) {
+            scope.emphasizeInTxtRefPointer = function(sentenceTxt, irpTxt) {
+                //todo da implementare
+                return sentenceTxt;
+            }
+
             /* per avere maggiori info sul corrente elemento citante */
             scope.exploreCitingItem = function() {
                 ngDialog.closeAll();

@@ -11,21 +11,34 @@
             {{author.givenName.value}} {{author.familyName.value}}
             </span>
         </div>
-        <div class="row">
-            <em class="fa fa-question-circle fa-4x"></em>
-            <span class="x-large-text text-bold">Motivations for citation: </span>
-            <span ng-repeat="color in itemData.colors"> {{color.colorStr}}: {{color.count}} </span>
+        <div class="row" ng-show="itemData.motivations.length > 0">
+            <em class="icon-tag biblio-round-icon fa-2x"></em>
+            <span class="x-large-text text-bold">Motivations for citation</span>
+            <div class="col-lg-10 col-md-10 col-sm-12 motivations-div">
+                <accordion close-others="false">
+                    <accordion-group ng-repeat="motivation in itemData.motivations">
+                        <accordion-heading>{{motivation.colorStr}} ({{motivation.inTextRefPointers.length}})</accordion-heading>
+                        <div>
+                            <ul>
+                                <li ng-repeat="irp in motivation.inTextRefPointers">{{emphasizeInTxtRefPointer(irp.sentenceTxt, irp.irpTxt)}}</li>
+                            </ul>
+                        </div>
+                    </accordion-group>
+                </accordion>
+            </div>
         </div>
 
         <!-- START panel-->
-        <div class="row" align="center">
-            <div class="panel panel-default col-lg-8 col-md-10 col-sm-12 col-centered" ng-init="isCollapsed = true">
-                <div class="panel-heading" align="center">
-                    <span class="collapse-heading">Abstract</span>
-                    <i class="pull-right collapse-btn" ng-click="isCollapsed = !isCollapsed" ng-class="{'fa fa-plus-square fa-2x': isCollapsed, 'fa fa-minus-square fa-2x': !isCollapsed}"></i>
-                </div>
-                <div class="panel-body" collapse="isCollapsed">
-                    <p>{{itemData.abstractTxt.value}}</p>
+        <div class="row" ng-init="isCollapsed = true">
+            <em class="fa fa-file-o  biblio-round-icon fa-2x"></em>
+            <span class="x-large-text text-bold">Abstract</span>
+            <em class="collapse-btn abs-collapse" ng-class="{'fa fa-plus-square-o fa-2x': isCollapsed, 'fa fa-minus-square-o fa-2x': !isCollapsed}" ng-click="isCollapsed = !isCollapsed"></em>
+
+            <div class="row" align="center"  collapse="isCollapsed">
+                <div class="col-lg-8 col-md-10 col-sm-12 col-centered">
+                    <div class="well well-sm">
+                        <p>{{itemData.abstractTxt.value}}</p>
+                    </div>
                 </div>
             </div>
         </div>

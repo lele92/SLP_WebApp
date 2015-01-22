@@ -56,6 +56,7 @@
       PREFIX sro: <http://salt.semanticauthoring.org/ontologies/sro#>
       PREFIX biro: <http://purl.org/spar/biro>
       PREFIX oa: <http://www.w3.org/ns/oa#>
+      PREFIX doco: <http://purl.org/spar/doco/>
    </script>
 
    <!--@TODO: DA CONTROLLARE-->
@@ -224,12 +225,22 @@
 
    <!-- query: info sulle citazioni (citation acts) ad un certo articolo-->
    <script id="query_citationsInfo" type="text/template">
-       select ?citingExp ?color ?citingPubYear
+       select ?citingExp ?color ?citingPubYear ?irpTxt ?sentenceTxt
        where {
             ?citAct a cito:CitationAct;
                     cito:hasCitingEntity ?citingExp;
                     cito:hasCitedEntity <{{citedExpression}}>;
                     cito:hasCitationCharacterization ?color.
+
+           ?citAct ^oa:hasBody ?ann.
+
+           ?ann a oa:Annotation;
+                    oa:hasTarget ?irp.
+
+           ?irp a c4o:InTextReferencePointer;
+                   c4o:hasContent ?irpTxt;
+                   c4o:hasContext [ a doco:Sentence;
+                                        c4o:hasContent ?sentenceTxt].
 
             ?citingExp a fabio:Expression;
                    fabio:hasPublicationYear ?citingPubYear.

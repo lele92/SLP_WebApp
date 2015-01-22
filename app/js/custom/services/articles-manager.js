@@ -9,15 +9,15 @@ myApp
         var articlesResults = [];
         var mockResults = [
 
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
-            },
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
+            //},
             //{
             //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000413" //cit
             //},
@@ -37,80 +37,80 @@ myApp
             //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000041" //todo: questo è un caso di errore in bibliografia
             //},
 
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            },
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            //},
             {
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000027"
             },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000088"
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
-            }
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000088"
+            //},
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
+            //} ,
+            //{
+            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
+            //}
         ];
         var colorsMap = {
-            "http://purl.org/spar/cito/citesForInformation": { toString: "cites For Information", value: "http://purl.org/spar/cito/citesForInformation" },
-            "http://purl.org/spar/cito/citesAsMetadataDocument": { toString: "cites As Metadata Document", value: "http://purl.org/spar/cito/citesAsMetadataDocument" },
-            "http://purl.org/spar/cito/citesAsDataSource": { toString: "cites As Data Source", value: "http://purl.org/spar/cito/citesAsDataSource" },
-            "http://purl.org/spar/cito/citesAsAuthority": { toString: "cites As Authority", value: "http://purl.org/spar/cito/citesAsAuthority" },
-            "http://purl.org/spar/cito/obtainsSupportFrom": { toString: "obtains Support From", value: "http://purl.org/spar/cito/obtainsSupportFrom" },
-            "http://purl.org/spar/cito/includesExcerptFrom": { toString: "includes Excerpt From", value: "http://purl.org/spar/cito/includesExcerptFrom" },
+            "http://purl.org/spar/cito/citesForInformation": { toString: "cites for information", value: "http://purl.org/spar/cito/citesForInformation" },
+            "http://purl.org/spar/cito/citesAsMetadataDocument": { toString: "cites as metadata document", value: "http://purl.org/spar/cito/citesAsMetadataDocument" },
+            "http://purl.org/spar/cito/citesAsDataSource": { toString: "cites as data source", value: "http://purl.org/spar/cito/citesAsDataSource" },
+            "http://purl.org/spar/cito/citesAsAuthority": { toString: "cites as authority", value: "http://purl.org/spar/cito/citesAsAuthority" },
+            "http://purl.org/spar/cito/obtainsSupportFrom": { toString: "obtains support from", value: "http://purl.org/spar/cito/obtainsSupportFrom" },
+            "http://purl.org/spar/cito/includesExcerptFrom": { toString: "includes excerpt from", value: "http://purl.org/spar/cito/includesExcerptFrom" },
             "http://purl.org/spar/cito/confirms": { toString: "confirms", value: "http://purl.org/spar/cito/confirms" },
-            "http://purl.org/spar/cito/containsAssertionFrom": { toString: "contains Assertion From", value: "http://purl.org/spar/cito/containsAssertionFrom" },
+            "http://purl.org/spar/cito/containsAssertionFrom": { toString: "contains assertion from", value: "http://purl.org/spar/cito/containsAssertionFrom" },
             "http://purl.org/spar/cito/derides": { toString: "derides", value: "http://purl.org/spar/cito/derides" },
-            "http://purl.org/spar/cito/includesQuotationFrom": { toString: "includes Quotation From", value: "http://purl.org/spar/cito/includesQuotationFrom" },
-            "http://purl.org/spar/cito/citesAsRelated": { toString: "cites As Related", value: "http://purl.org/spar/cito/citesAsRelated" },
-            "http://purl.org/spar/cito/usesMethodIn": { toString: "uses Method In", value: "http://purl.org/spar/cito/usesMethodIn" },
+            "http://purl.org/spar/cito/includesQuotationFrom": { toString: "includes quotation from", value: "http://purl.org/spar/cito/includesQuotationFrom" },
+            "http://purl.org/spar/cito/citesAsRelated": { toString: "cites as related", value: "http://purl.org/spar/cito/citesAsRelated" },
+            "http://purl.org/spar/cito/usesMethodIn": { toString: "uses method in", value: "http://purl.org/spar/cito/usesMethodIn" },
             "http://purl.org/spar/cito/documents": { toString: "documents", value: "http://purl.org/spar/cito/documents" },
             "http://purl.org/spar/cito/describes": { toString: "describes", value: "http://purl.org/spar/cito/describes" },
-            "http://purl.org/spar/cito/usesConclusionsFrom": { toString: "uses Conclusions From", value: "http://purl.org/spar/cito/usesConclusionsFrom" },
-            "http://purl.org/spar/cito/repliesTo": { toString: "replies To", value: "http://purl.org/spar/cito/repliesTo" },
+            "http://purl.org/spar/cito/usesConclusionsFrom": { toString: "uses conclusions from", value: "http://purl.org/spar/cito/usesConclusionsFrom" },
+            "http://purl.org/spar/cito/repliesTo": { toString: "replies to", value: "http://purl.org/spar/cito/repliesTo" },
             "http://purl.org/spar/cito/qualifies": { toString: "qualifies", value: "http://purl.org/spar/cito/qualifies" },
             "http://purl.org/spar/cito/corrects": { toString: "corrects", value: "http://purl.org/spar/cito/corrects" },
-            "http://purl.org/spar/cito/agreesWith": { toString: "agrees With", value: "http://purl.org/spar/cito/agreesWith" },
-            "http://purl.org/spar/cito/citesAsEvidence": { toString: "cites As Evidence", value: "http://purl.org/spar/cito/citesAsEvidence" },
-            "http://purl.org/spar/cito/usesDataFrom": { toString: "uses Data From", value: "http://purl.org/spar/cito/usesDataFrom" },
+            "http://purl.org/spar/cito/agreesWith": { toString: "agrees with", value: "http://purl.org/spar/cito/agreesWith" },
+            "http://purl.org/spar/cito/citesAsEvidence": { toString: "cites as evidence", value: "http://purl.org/spar/cito/citesAsEvidence" },
+            "http://purl.org/spar/cito/usesDataFrom": { toString: "uses data from", value: "http://purl.org/spar/cito/usesDataFrom" },
             "http://purl.org/spar/cito/parodies": { toString: "parodies", value: "http://purl.org/spar/cito/parodies" },
             "http://purl.org/spar/cito/critiques": { toString: "critiques", value: "http://purl.org/spar/cito/critiques" },
             "http://purl.org/spar/cito/compiles": { toString: "compiles", value: "http://purl.org/spar/cito/compiles" },
-            "http://purl.org/spar/cito/speculatesOn": { toString: "speculates On", value: "http://purl.org/spar/cito/speculatesOn" },
+            "http://purl.org/spar/cito/speculatesOn": { toString: "speculates on", value: "http://purl.org/spar/cito/speculatesOn" },
             "http://purl.org/spar/cito/extends": { toString: "extends", value: "http://purl.org/spar/cito/extends" },
-            "http://purl.org/spar/cito/citesAsSourceDocument": { toString: "cites As Source Document", value: "http://purl.org/spar/cito/citesAsSourceDocument" },
+            "http://purl.org/spar/cito/citesAsSourceDocument": { toString: "cites as source document", value: "http://purl.org/spar/cito/citesAsSourceDocument" },
             "http://purl.org/spar/cito/updates": { toString: "updates", value: "http://purl.org/spar/cito/updates" },
             "http://purl.org/spar/cito/discusses": { toString: "discusses", value: "http://purl.org/spar/cito/discusses" },
-            "http://purl.org/spar/cito/citesAsPotentialSolution": { toString: "cites As Potential Solution", value: "http://purl.org/spar/cito/citesAsPotentialSolution" },
-            "http://purl.org/spar/cito/obtainsBackgroundFrom": { toString: "obtains Background From", value: "http://purl.org/spar/cito/obtainsBackgroundFrom" },
+            "http://purl.org/spar/cito/citesAsPotentialSolution": { toString: "cites as potential solution", value: "http://purl.org/spar/cito/citesAsPotentialSolution" },
+            "http://purl.org/spar/cito/obtainsBackgroundFrom": { toString: "obtains background from", value: "http://purl.org/spar/cito/obtainsBackgroundFrom" },
             "http://purl.org/spar/cito/reviews": { toString: "reviews", value: "http://purl.org/spar/cito/reviews" },
             "http://purl.org/spar/cito/supports": { toString: "supports", value: "http://purl.org/spar/cito/supports" },
-            "http://purl.org/spar/cito/citesAsRecommendedReading": { toString: "cites As Recommended Reading", value: "http://purl.org/spar/cito/citesAsRecommendedReading" },
+            "http://purl.org/spar/cito/citesAsRecommendedReading": { toString: "cites as recommended reading", value: "http://purl.org/spar/cito/citesAsRecommendedReading" },
             "http://purl.org/spar/cito/credits": { toString: "credits", value: "http://purl.org/spar/cito/credits" },
-            "http://purl.org/spar/cito/disagreesWith": { toString: "disagrees With", value: "http://purl.org/spar/cito/disagreesWith" },
+            "http://purl.org/spar/cito/disagreesWith": { toString: "disagrees with", value: "http://purl.org/spar/cito/disagreesWith" },
             "http://purl.org/spar/cito/plagiarizes": { toString: "plagiarizes", value: "http://purl.org/spar/cito/plagiarizes" }
         };
         var isRetrievingArticlesInfo = false;               // indica se è in atto un'interrogazione a fuseki per avere le info sugli articoli (risultati di ricerca)
@@ -247,12 +247,31 @@ myApp
             );
         };
 
-        var setCitingArticleColors = function(citingArticle, citationsInfo) {
-            citingArticle.colors = [];
+        var getInTextRefPointers = function(color, citingExp, citationsInfo) {
+            var inTxtRefPointers = [];
+
+            for (var key in citationsInfo) {
+                if (citationsInfo[key].citingExp.value == citingExp && citationsInfo[key].color == color) {
+                    inTxtRefPointers.push({
+                        irpTxt: citationsInfo[key].irpTxt,
+                        sentenceTxt: citationsInfo[key].sentenceTxt
+                    });
+                }
+            }
+
+            return inTxtRefPointers;
+        }
+
+        var setCitingArticleMotivations = function(citingArticle, citationsInfo) {
+            //todo: questa funzione si può scrivere meglio, lo so....
+
+            citingArticle.motivations = [];
 
             var colorsDuplicate = [];
             var tmpColor;
             var prev = "";
+            var tmpC;
+            var colors = [];
 
             // prendo tutti i colori per citing article cita
             for (var key in citationsInfo) {
@@ -264,22 +283,27 @@ myApp
             }
             colorsDuplicate.sort();
 
+
+            // creo una lista di motivations con i colori unici
             for (var i=0; i<colorsDuplicate.length; i++) {
-                tmpColor = colorsDuplicate[i];
-                if ( tmpColor !== prev) {
-                    citingArticle.colors.push({colorStr: tmpColor, count: 1});
-                } else {
-                    citingArticle.colors[citingArticle.colors.length -1].count++;
+                tmpC = colorsDuplicate[i];
+                if ( tmpC !== prev) {
+                    citingArticle.motivations.push({
+                        colorStr: tmpC,
+                        inTextRefPointers : getInTextRefPointers(tmpC, citingArticle.citingExp.value, citationsInfo)
+                    });
                 }
 
-                prev = tmpColor;
+                prev = tmpC;
             }
+
+            console.log(citingArticle.motivations);
         }
 
         /* per ottenere le info sugli articoli citanti, presi singolarmente */
         // expression: expression del citedArticle
         // citedArticleAuthors: lista degli autori dell'articolo citato, mi serve per vedere se ce ne sono di condivisi
-        // citationsInfo: triple (expression,anno,colore) su tutte le citazioni verso l'articolo citato, quindi con expression potenzialmente duplicati
+        // citationsInfo: oggetto { citingExpression, annoPubCitingArticle, colore, irpTxt, sentenceTxt } per ogni citazione verso l'articolo citato, quindi con expression potenzialmente duplicati
         var getCitingArticles = function(citedArticle, expression, citedArticleAuthors, citationsInfo) {
             //todo controllare che articlesResults sia definito
 
@@ -294,7 +318,7 @@ myApp
                         citingArticle.publicationYear = parseInt(citingArticle.publicationYear.value);
 
                         getSubItemAuthors(citingArticle, citedArticleAuthors, false);  //prendo gli autori e controllo se ce ne sono di condivisi con l'articolo citato
-                        setCitingArticleColors(citingArticle, citationsInfo);           //per ogni articolo prendo i motivi per cui cita
+                        setCitingArticleMotivations(citingArticle, citationsInfo);           //per ogni articolo prendo i motivi per cui cita
                     }
                 },
 
@@ -389,8 +413,11 @@ myApp
                         for (var j in res) {
                             res[j].color = colorsMap[res[j].color.value].toString;
                             res[j].citingPubYear = parseInt(res[j].citingPubYear.value);
+                            res[j].irpTxt = res[j].irpTxt.value;
+                            res[j].sentenceTxt = res[j].sentenceTxt.value;
                         }
 
+                        //chiede i citing articles per un cited article
                         for (var key in articlesResults) {
                             var tmpArt = articlesResults[key];
                             if (tmpArt.expression.value == expression) {
@@ -470,7 +497,7 @@ myApp
                         var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
                         var results = "http://stanbol.apache.org/ontology/entityhub/query#queryResult";
                         var tmpRes = null; //conterrà gli uri dei work dei risultati (se ci sono risultati)
-//                        response = []; //todo: da eliminare, barbatrucco per passare il controllo
+                        response = []; //todo: da eliminare, barbatrucco per passare il controllo
 
                         //todo: righe da scommentare
                         if (noData(response)) {
@@ -482,8 +509,8 @@ myApp
                         } else {
                             articlesResultsState = resultsStates.RESULTS;              // ci sono risultati
                             console.log("RESULTS!");
-                            tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
-//                            tmpRes = mockResults;  //todo da eliminare
+    //                       tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
+                            tmpRes = mockResults;  //todo da eliminare
                             articlesNum = tmpRes.length;                        // numero totale di articoli di cui richiedere le info
                             completedArticles = articlesResults.length;         // numero di richieste completate = numero di articoli nella lista degli articoli (inizialmente zero)...semplice
 
