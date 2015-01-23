@@ -9,30 +9,30 @@ myApp
         var articlesResults = [];
         var mockResults = [
 
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000413" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S157082680500017X" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000144" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000132" //cit
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826807000169" //cit
-            //},
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000413" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S157082680500017X" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000144" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000132" //cit
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826807000169" //cit
+            },
             //{
             //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000041" //todo: questo è un caso di errore in bibliografia
             //},
@@ -46,33 +46,33 @@ myApp
             {
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
             },
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000088"
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
-            //} ,
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
-            //}
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000088"
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
+            } ,
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
+            }
         ];
         var colorsMap = {
             "http://purl.org/spar/cito/citesForInformation": { toString: "cites for information", value: "http://purl.org/spar/cito/citesForInformation" },
@@ -539,7 +539,7 @@ myApp
                         var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
                         var results = "http://stanbol.apache.org/ontology/entityhub/query#queryResult";
                         var tmpRes = null; //conterrà gli uri dei work dei risultati (se ci sono risultati)
-//                        response = []; //todo: da eliminare, barbatrucco per passare il controllo
+                        response = []; //todo: da eliminare, barbatrucco per passare il controllo
 
                         //todo: righe da scommentare
                         if (noData(response)) {
@@ -551,8 +551,8 @@ myApp
                         } else {
                             articlesResultsState = resultsStates.RESULTS;              // ci sono risultati
                             console.log("RESULTS!");
-                            tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
-//                            tmpRes = mockResults;  //todo da eliminare
+//                            tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
+                            tmpRes = mockResults;  //todo da eliminare
                             articlesNum = tmpRes.length;                        // numero totale di articoli di cui richiedere le info
                             completedArticles = articlesResults.length;         // numero di richieste completate = numero di articoli nella lista degli articoli (inizialmente zero)...semplice
 
