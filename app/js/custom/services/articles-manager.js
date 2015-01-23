@@ -539,7 +539,7 @@ myApp
                         var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
                         var results = "http://stanbol.apache.org/ontology/entityhub/query#queryResult";
                         var tmpRes = null; //conterrà gli uri dei work dei risultati (se ci sono risultati)
-                        response = []; //todo: da eliminare, barbatrucco per passare il controllo
+//                        response = []; //todo: da eliminare, barbatrucco per passare il controllo
 
                         //todo: righe da scommentare
                         if (noData(response)) {
@@ -551,8 +551,8 @@ myApp
                         } else {
                             articlesResultsState = resultsStates.RESULTS;              // ci sono risultati
                             console.log("RESULTS!");
-//                            tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
-                            tmpRes = mockResults;  //todo da eliminare
+                            tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
+//                            tmpRes = mockResults;  //todo da eliminare
                             articlesNum = tmpRes.length;                        // numero totale di articoli di cui richiedere le info
                             completedArticles = articlesResults.length;         // numero di richieste completate = numero di articoli nella lista degli articoli (inizialmente zero)...semplice
 
