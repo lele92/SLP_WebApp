@@ -439,3 +439,13 @@
     font-weight: bold;
     font-size: large;
 }
+
+.search-text-area {
+    font-size: 25px;
+}
+
+#panelSearch {
+    -webkit-box-shadow: 0px 0px 30px 0px rgba(50, 50, 50, 0.16);
+    -moz-box-shadow:    0px 0px 30px 0px rgba(50, 50, 50, 0.16);
+    box-shadow:         0px 0px 30px 0px rgba(50, 50, 50, 0.16);
+}

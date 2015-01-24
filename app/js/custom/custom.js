@@ -6,8 +6,6 @@
 
 var myApp = angular.module('SLP_WebApp', ['angle','ngDialog']); //todo: dipendenza dei filtri da mettere in app.init.js
 myApp.run(function($log,$rootScope, $state, $stateParams) {
-  //todo: aggiungere qui le inizializzazioni
-  $log.log('I\'m a line from custom.js'); //todo: da eliminare
 
   //guide: https://github.com/angular-ui/ui-router/wiki/Quick-Reference#note-about-using-state-within-a-template
   $rootScope.$state = $state;

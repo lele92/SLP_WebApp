@@ -8,8 +8,6 @@ myApp.controller('BiblioOrderbyController', function(FiltersManagerService) {
     self.sortV = self.sortF.value;          //sort di default stabilito nel service
 
     //@guide: valori del ng-value dei radio button: li metto qui (invece di usare value) così posso cambiarli semplicemente
-    //todo: si potrebbe fare in modo che le stringhe dei filtri qui sotto vengano prese dal FiltersManagerService
-    //todo: mettere in filtersManagerService metodi getter e setter per le stringhe delle opzioni di sorting, sarebbe una buona cosa: filtri dinamici!
     /* order option vars */
     self.publicationYear = "publicationYear";
     self.title = "title";

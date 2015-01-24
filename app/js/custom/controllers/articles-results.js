@@ -134,20 +134,10 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
         function() {
             self.isRetrievingArticlesInfo = ArticleManagerService.isRetrievingArticlesInfo();
             self.articlesNum.value = ArticleManagerService.getArticlesNum(); //aggiorno il numero degli articoli
-            //fixme: problema con la dialog di caricamento info
             if (self.isRetrievingArticlesInfo) {
                 console.log("2.1 - RETRIEVING ARTICLES INFO");
-                //loadingInfoDialog = ngDialog.open({
-                //    template: "app/templates/dialog-loading-info.html",
-                //    closeByEscape: false,
-                //    showClose: false,
-                //    closeByDocument: false
-                //});
             } else {
                 console.log("2.3 - ARTICLES INFO RETRIEVED");
-                //if (loadingInfoDialog) {
-                //    ngDialog.closeAll();
-                //}
             }
         });
 

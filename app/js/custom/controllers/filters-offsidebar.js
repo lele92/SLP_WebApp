@@ -7,10 +7,6 @@ myApp.controller('BiblioFiltersController', function(FiltersManagerService, $sco
     self.authorsF = FiltersManagerService.getAuthorsF();        //con questo prendo la lista di autori del filtro
 
     self.allAuthors = FiltersManagerService.getAllArticlesAuthors(); //con questo prendo tutti gli autori
-
-    //self.authorsF = { value: {}}; //non richiedo subuito gli autori per motivi di efficienza....sono più di 900
-
-    //todo: per test, da modificare
     self.selectedAuthor = ""; //
     self.authorAlreadyInList = false;
     self.inputNotValid = false;
@@ -54,7 +50,7 @@ myApp.controller('BiblioFiltersController', function(FiltersManagerService, $sco
             console.log('filtro anno attivato');
         } else {
             console.log('filtro anno disattivato');
-            self.publicationYearV = 0; //fixme: barbatrucco momentaneo, da eliminare (tutti gli articoli sono stati pubblicati dopo l'anno 0, credo...)
+            self.publicationYearV = 0;
             FiltersManagerService.setStartingPublicationYear(self.publicationYearV)
         }
         FiltersManagerService.setFilterActivated(self.checkCheckboxes());
