@@ -5,7 +5,7 @@
 'use strict';
 
 myApp
-    .factory('ArticleManagerService', function(RequestArticlesService, FiltersManagerService,  ArticlesInfoService, StatesManagerService, AuthorInfoService, $rootScope, $interval) {
+    .factory('ArticleManagerService', function(RequestArticlesService, FiltersManagerService,  ArticlesInfoService, StatesManagerService, AuthorInfoService, ngDialog, $rootScope, $interval) {
         var articlesResults = [];
         var mockResults = [
 
@@ -33,16 +33,16 @@ myApp
             {
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826807000169" //cit
             },
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000041" //todo: questo è un caso di errore in bibliografia
-            //},
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000041" //todo: questo è un caso di errore in bibliografia
+            },
 
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            //},
-            //{
-            //    "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000027"
-            //},
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
+            },
+            {
+                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000027"
+            },
             {
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
             },
@@ -410,6 +410,14 @@ myApp
 
         }
 
+        var openErrorDialog = function() {
+            ngDialog.open({
+                template: "app/templates/dialog-error.html",
+                controller: function($rootScope, $scope) {
+                }
+            });
+        }
+
 
         return {
             getArticles: function() {
@@ -615,7 +623,7 @@ myApp
                     //todo caso da gestire meglio
                     function(errResponse) {
                         RequestArticlesService.setCompletedRequest(); //la richiesta è conclusa, c'è stato un errore, ma è conclusa
-                        console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText)
+                        openErrorDialog();
                     }
                 );
             },

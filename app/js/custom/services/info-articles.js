@@ -10,11 +10,20 @@ myApp
         //endpoint = "http://localhost:8181/data/query"; //todo: endpoint locale
         var prefixes = $('#prefixes').text();
 
+        /* per costruire la query; query presa dallo script nell'html alla quale vengono sostituite le espressioni con ctx */
+        var buildQueryURL = function(queryId,ctx) {
+            var queryText = $(queryId).text();
+            var query = prefixes + $interpolate(queryText)(ctx);
+            var encodedquery = encodeURIComponent(query);
+
+            return endpoint+"?format=json&query="+encodedquery;
+        }
+
         return {
             //@guide per le info generali su un articolo
             getArticleGeneralInfo: function(workURI) {
                 var expr = {work: workURI};
-                var queryURL = this.buildQueryURL('#query_articleInfo',expr);
+                var queryURL = buildQueryURL('#query_articleInfo',expr);
 
                 return $http.get(queryURL);
             },
@@ -22,7 +31,7 @@ myApp
             //@guide per le info citazionali di un articolo (di quelli mostrati nei risultati di ricerca) con expression = expressionURI
             requestCitationsInfo: function(expressionURI) {
                 var expr = {citedExpression: expressionURI};
-                var queryURL = this.buildQueryURL('#query_citationsInfo',expr);
+                var queryURL = buildQueryURL('#query_citationsInfo',expr);
 
                 return $http.get(queryURL);
             },
@@ -30,7 +39,7 @@ myApp
             //@guide per le info generiche sugli articoli che citano un articolo con expression = expressionURI
             requestCitingArticles: function(expressionURI) {
                 var expr = {citedExpression: expressionURI};
-                var queryURL = this.buildQueryURL('#query_citingArticles',expr);
+                var queryURL = buildQueryURL('#query_citingArticles',expr);
 
                 return $http.get(queryURL);
             },
@@ -38,7 +47,7 @@ myApp
             //@guide per la lista di autori di un articolo
             getArticleAuthors: function(authorsListURI) {
                 var expr = {authorsList: authorsListURI};
-                var queryURL = this.buildQueryURL('#query_articleAuthors',expr);
+                var queryURL = buildQueryURL('#query_articleAuthors',expr);
 
                 return $http.get(queryURL);
             },
@@ -46,7 +55,7 @@ myApp
 
             getArticleCitationsInfo: function(expressionURI) {
                 var expr = {expression: expressionURI};
-                var queryURL = this.buildQueryURL('#query_incomingCitationsActs',expr);
+                var queryURL = buildQueryURL('#query_incomingCitationsActs',expr);
 
                 return $http.get(queryURL);
             },
@@ -56,7 +65,7 @@ myApp
             //@guide per le info generiche sugli articoli citati da un certo articolo
             requestBiblioInfo: function(expressionURI) {
                 var expr = {expression: expressionURI};
-                var queryURL = this.buildQueryURL('#query_citedArticles',expr);
+                var queryURL = buildQueryURL('#query_citedArticles',expr);
 
                 return $http.get(queryURL);
             },
@@ -65,7 +74,7 @@ myApp
             getCitationActsInfo: function(citingExp, citedExp) {
                 var expr = {artExpression: citingExp,
                             citedExpression: citedExp};
-                var queryURL = this.buildQueryURL('#query_citationActsInfo',expr);
+                var queryURL = buildQueryURL('#query_citationActsInfo',expr);
 
                 return $http.get(queryURL);
 
@@ -75,7 +84,7 @@ myApp
             getCitationActsInfoNotGrouped: function(citingExp, citedExp) {
                 var expr = {artExpression: citingExp,
                     citedExpression: citedExp};
-                var queryURL = this.buildQueryURL('#query_citationActsInfoNotGrouped',expr);
+                var queryURL = buildQueryURL('#query_citationActsInfoNotGrouped',expr);
 
                 return $http.get(queryURL);
 
@@ -93,19 +102,9 @@ myApp
             //@guide per ottenere un singolo articolo
             getArticle: function(expressionURI) {
                 var expr = {expression: expressionURI};
-                var queryURL = this.buildQueryURL('#query_singleArticle',expr);
+                var queryURL = buildQueryURL('#query_singleArticle',expr);
 
                 return $http.get(queryURL);
-            },
-
-            //fixme: da spostare fuori dalla api
-            /* per costruire la query; query presa dallo script nell'html alla quale vengono sostituite le espressioni con ctx */
-            buildQueryURL: function(queryId,ctx) {
-                var queryText = $(queryId).text();
-                var query = prefixes + $interpolate(queryText)(ctx);
-                var encodedquery = encodeURIComponent(query);
-
-                return endpoint+"?format=json&query="+encodedquery;
             }
         }
     });

@@ -50,12 +50,21 @@ myApp
                 for (var i in items) {    //per ogni item della bibliogrfia
                     item = items[i];
                     citActsInfo = item.citActsInfo;
-                    for (var j in citActsInfo) {        //per ogni info citazionale
-                        if (colorsList[citActsInfo[j].colorURI].checked == true) {     //se il colore dell'atto citazionale è "attivo" (true) in colorsList
-                            filtered.push(item); //vuol dire che nell'item bibliografico c'è almeno una citazione di un colore che mi interessa, quindi l'item bibliografico è da mostrare
-                            break; //fondamentale questo break, altrimenti nel filtered ci potrebbe finire più volte lo stesso elemento
+                    //@todo: soluzione tampone: per come è strutturato attualmente il dataset, potrebbero esserci cito:cites che non hanno nessun citationAct associato
+                    // quindi non si possono avere informazioni sui colori delle citazioni, quindi di default l'elemento bibliografico non verrebbe
+                    // mostrato perchè il filtro sui colori (questo) lo escluderebbe da filtered
+                    // con questo controllo, faccio in modo che l'elemento bibliografico senza info sui colori sia sempre incluso in filtered....soluzione temporanea
+                    if ( !angular.isUndefined(citActsInfo) && citActsInfo.length > 0) {
+                        for (var j in citActsInfo) {        //per ogni info citazionale
+                            if (colorsList[citActsInfo[j].colorURI].checked == true) {     //se il colore dell'atto citazionale è "attivo" (true) in colorsList
+                                filtered.push(item); //vuol dire che nell'item bibliografico c'è almeno una citazione di un colore che mi interessa, quindi l'item bibliografico è da mostrare
+                                break; //fondamentale questo break, altrimenti nel filtered ci potrebbe finire più volte lo stesso elemento
+                            }
                         }
+                    } else {
+                        filtered.push(item);
                     }
+
                 }
                 return filtered;
             }
