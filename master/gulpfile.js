@@ -318,15 +318,15 @@ gulp.task('watch', function() {
 //---------------
 
 gulp.task('default', [
-          'scripts:vendor:base',
-          'scripts:vendor:bower',
+          //'scripts:vendor:base',
+          //'scripts:vendor:bower',
           'scripts:app',
-          'styles:app',
-          'styles:app:rtl',
-          'styles:themes',
-          'templates:app',
-          'templates:pages',
-          'templates:views',
+          //'styles:app',
+          //'styles:app:rtl',
+          //'styles:themes',
+          //'templates:app',
+          //'templates:pages',
+          //'templates:views',
           'watch',
           'connect'
         ]);

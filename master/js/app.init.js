@@ -21,8 +21,8 @@ var App = angular.module('angle', ['ngRoute','ngAnimate', 'ngStorage', 'ngCookie
               // Scope Globals
               // ----------------------------------- 
               $rootScope.app = {
-                name: 'SLP',
-                description: 'a Web App for Semantic Lancet Project ',
+                name: 'BEX',
+                description: 'Web App to search and browse the contents of Semantic Lancet Triplestore',
                 year: ((new Date()).getFullYear()),
                 layout: {
                   isFixed: true,
