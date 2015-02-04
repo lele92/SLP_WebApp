@@ -1808,7 +1808,7 @@ App.directive('toggleState', ['toggleStateService', function(toggle) {
             else {
               $body.addClass(classname);
               if( ! attrs.noPersist)
-                toggle.saveCurrentStateArticles(classname);
+                toggle.addState(classname);
             }
             
           }
