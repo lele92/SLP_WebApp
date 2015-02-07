@@ -21,6 +21,10 @@ myApp
                 return pendingRequest;
             },
 
+            setPendingRequest: function() {
+                pendingRequest = true;
+            },
+
             searchArticles: function(searchStr) {
                 pendingRequest = true;
                 searchString = searchStr;

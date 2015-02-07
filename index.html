@@ -59,7 +59,6 @@
       PREFIX doco: <http://purl.org/spar/doco/>
    </script>
 
-   <!--@TODO: DA CONTROLLARE-->
    <!-- query: info generiche su un articolo -->
    <script id="query_articleInfo" type="text/template">
       select ?title ?doi ?expression ?volumeNumber ?issueNumber ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
@@ -98,7 +97,6 @@
       }
    </script>
 
-   <!--@TODO: DA CONTROLLARE-->
    <!-- query: autori di un articolo -->
    <script id="query_articleAuthors" type="text/template">
       select ?givenName ?familyName (concat(?givenName, " ",?familyName) as ?fullName)
@@ -128,7 +126,6 @@
       group by (?color)
    </script>
 
-   <!--@TODO: DA CONTROLLARE-->
    <!-- query: numero di citazioni uniche (cito:cites) in entrata (verso un determinato articolo)-->
    <script id="query_incomingCites" type="text/template">
        select (count(?expr) as ?numCites)
@@ -154,7 +151,6 @@
        }
    </script>
 
-   <!--@TODO: DA CONTROLLARE-->
    <!-- query: info sulla citazione (colore) e sugli articoli citati (cited entity) da un paper (citing entity) a partire dai citation acts-->
    <script id="query_biblioInfo" type="text/template">
        select ?color ?citedEntityExpr ?work ?authorsList ?title ?publicationYear ?htmlItem
@@ -211,7 +207,6 @@
        }
    </script>
 
-   <!--@TODO: DA CONTROLLARE-->
    <!-- query: quante volte un citing entity cita un cited entity per un certo motivo (colore)-->
    <script id="query_citationActsInfo" type="text/template">
        select ?color (count(?citationAct) as ?numCitActs)
@@ -362,6 +357,44 @@
                                                                                    c4o:hasGlobalCountDate ?globalCountDate]
                                        ]
             }
+       }
+   </script>
+
+   <!-- query: info generiche su un articolo -->
+   <script id="query_articleInfo_fromTitle" type="text/template">
+       select ?doi ?expression ?volumeNumber ?issueNumber ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
+       where {
+
+           ?expression a fabio:Expression;
+            dcterms:title "{{title}}";
+                core:part [ a sro:Abstract;
+                            c4o:hasContent ?abstractTxt];
+           core:realizationOf [ a fabio:Work;
+                                   core:creator ?authorsList;
+                                   core:realization ?expression];
+           core:embodiment ?man;
+           prism:doi ?doi;
+           fabio:hasPublicationYear ?publicationYear;
+           c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
+                                               c4o:hasGlobalCountSource ?globalCountSource;
+                                               c4o:hasGlobalCountValue ?globalCountValue;
+                                               c4o:hasGlobalCountDate ?globalCountDate].
+
+           ?authorsList a co:List.
+
+           ?man a fabio:Manifestation, fabio:WebPage;
+               dcterms:format <http://purl.org/NET/mediatypes/text/html>;
+               core:exemplar ?htmlItem.
+
+           OPTIONAL {
+               ?expression ^core:part ?issue.
+               ?issue a fabio:JournalIssue;
+               prism:issueIdentifier ?issueNumber;
+               core:partOf ?volume.
+
+               ?volume a fabio:JournalVolume;
+               prism:volume ?volumeNumber.
+           }
        }
    </script>
 </body>

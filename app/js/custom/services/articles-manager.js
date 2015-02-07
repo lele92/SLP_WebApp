@@ -654,6 +654,65 @@ myApp
 
             },
 
+            /* per richiedere un singolo articolo */
+            getSingleArticle: function(articleTitle) {
+                RequestArticlesService.setPendingRequest(); //todo: in futuro questo dovrà essere evitato
+
+                return ArticlesInfoService.requestSingleArticle(articleTitle).then(
+                    // success
+                    function(response) {
+                        StatesManagerService.removeAllStates(); //svuota la lista degli stati
+                        StatesManagerService.addEmptyState("Article: '"+articleTitle+"'");
+                        console.log(StatesManagerService.getStates());
+                        articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
+
+                        if (response.data.results.bindings.length == 0) {
+                            articlesResultsState = resultsStates.NO_RESULTS;           // non ci sono risultati
+                            console.log("NO RESULTS!");
+
+                            RequestArticlesService.setCompletedRequest();
+                        } else {
+                            articlesResultsState = resultsStates.RESULTS;              // ci sono risultati
+                            console.log("RESULTS!");
+                            articlesNum = 1;                        // numero totale di articoli di cui richiedere le info
+                            completedArticles = 1;         // numero di richieste completate = numero di articoli nella lista degli articoli
+
+                            RequestArticlesService.setCompletedRequest();
+
+                            var articleData = response.data.results.bindings[0];
+                            articleData.publicationYear = stringToInt(articleData.publicationYear.value);
+                            articleData.title = articleTitle;
+                            articleData.globalCountValue = stringToInt(articleData.globalCountValue.value);
+
+                            articlesResults.push(articleData);
+
+                            //@guide richiedo la lista degli autori
+                            getArticleAuthors(articleData);
+
+                            //@guide richiedo le info sulle citazioni (in entrata)
+                            ArticlesInfoService.getArticleCitationsInfo(articleData.expression.value).then(
+                                function (response) {
+                                    articleData.inCitActs = response.data.results.bindings[0].numCitActs.value; //numero di citation acts
+                                    articleData.inNumCites = response.data.results.bindings[0].numCites.value;  //numero di cites (<= numero di citation acts), citazioni uniche
+                                },
+                                //todo caso da gestire meglio
+                                function (errResponse) {
+                                    console.error("Error while fetching article. " + errResponse.status + ": " + errResponse.statusText);
+                                }
+                            );
+                        }
+
+                    },
+
+                    // error
+                    //todo caso da gestire meglio
+                    function(errResponse) {
+                        RequestArticlesService.setCompletedRequest(); //la richiesta è conclusa, c'è stato un errore, ma è conclusa
+                        openErrorDialog();
+                    }
+                );
+            },
+
             getAuthorArticles: function(givenName, familyName) {
                 AuthorInfoService.requestAuthorArticles(familyName, givenName).then(
                     // success

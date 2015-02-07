@@ -105,6 +105,14 @@ myApp
                 var queryURL = buildQueryURL('#query_singleArticle',expr);
 
                 return $http.get(queryURL);
+            },
+
+            //@guide per ottenere un singolo articolo a partire dal titolo
+            requestSingleArticle: function(articleTitle) {
+                var expr = {title: articleTitle};
+                var queryURL = buildQueryURL('#query_articleInfo_fromTitle',expr);
+
+                return $http.get(queryURL);
             }
         }
     });
