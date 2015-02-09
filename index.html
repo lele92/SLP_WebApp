@@ -362,11 +362,11 @@
 
    <!-- query: info generiche su un articolo -->
    <script id="query_articleInfo_fromTitle" type="text/template">
-       select ?doi ?expression ?volumeNumber ?issueNumber ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
+       select ?title ?doi ?expression ?volumeNumber ?issueNumber ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
        where {
 
            ?expression a fabio:Expression;
-            dcterms:title "{{title}}";
+            dcterms:title ?title;
                 core:part [ a sro:Abstract;
                             c4o:hasContent ?abstractTxt];
            core:realizationOf [ a fabio:Work;
@@ -395,6 +395,8 @@
                ?volume a fabio:JournalVolume;
                prism:volume ?volumeNumber.
            }
+
+            FILTER regex(?title, "{{title}}", "i")
        }
    </script>
 </body>

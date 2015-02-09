@@ -681,7 +681,7 @@ myApp
 
                             var articleData = response.data.results.bindings[0];
                             articleData.publicationYear = stringToInt(articleData.publicationYear.value);
-                            articleData.title = articleTitle;
+                            articleData.title = articleData.title.value;
                             articleData.globalCountValue = stringToInt(articleData.globalCountValue.value);
 
                             articlesResults.push(articleData);
