@@ -5,10 +5,11 @@
             <h1>Search</h1>
             <div class="p row-centered">
                 <div class="btn-group col col-centered">
-                    <label class="btn btn-green btn-lg" ng-model="HomeSearchCtrl.searchType"  btn-radio=0 ng-change="HomeSearchCtrl.changePlaceholder()"><span class="large-text ">Free text</span></label>
-                    <label class="btn btn-green btn-lg" ng-model="HomeSearchCtrl.searchType"  btn-radio=1 ng-change="HomeSearchCtrl.changePlaceholder()"><span class="large-text">Single article</span></label>
+                    <label class="btn btn-green btn-lg" ng-model="HomeSearchCtrl.searchType"  btn-radio=0 ng-change="HomeSearchCtrl.changePlaceholder()"><span class="large-text ">By abstract</span></label>
+                    <label class="btn btn-green btn-lg" ng-model="HomeSearchCtrl.searchType"  btn-radio=1 ng-change="HomeSearchCtrl.changePlaceholder()"><span class="large-text">By title</span></label>
                 </div>
             </div>
+
             <textarea class="form-control search-text-area" rows="2" ng-model="HomeSearchCtrl.searchText" placeholder="{{HomeSearchCtrl.searchPlaceholder}}"></textarea>
             <button id="search-btn" type="button" class="mb-sm btn btn-primary btn-lg" ng-click="HomeSearchCtrl.searchForArticles()"><i class="fa fa-search fa-1x"></i> Search</button>
         </div>
