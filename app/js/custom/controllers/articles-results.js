@@ -58,7 +58,7 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
     //@guide http://stsc3000.github.io/blog/2013/10/26/a-tale-of-frankenstein-and-binding-to-service-values-in-angular-dot-js/
     $scope.$watchCollection(function() { return self.articles},
         function() {
-            console.log('ARTICOLI AGGIORNATI');
+            //console.log('ARTICOLI AGGIORNATI');
             self.articlesNum.value = ArticleManagerService.getArticlesNum(); //aggiorno il numero degli articoli
             //todo: implementazione da raffinare
         }, true); //todo:valutare se lasciare questo true
@@ -69,7 +69,7 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
             self.isRequestPending = RequestArticlesService.isRequestPending();
             // se c'è una richiesta in sospeso visualizzo la dialog
             if (self.isRequestPending) {
-                console.log("1.1 - PENDING REQUEST");
+                //console.log("1.1 - PENDING REQUEST");
                 requestPendingDialog = ngDialog.open({
                     template: "app/templates/dialog-retrieving-results.html",
                     closeByEscape: false,
@@ -86,7 +86,7 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
                     //}
                 });
             } else {
-                console.log("1.2 - REQUEST NOT PENDING");
+                //console.log("1.2 - REQUEST NOT PENDING");
                 self.articlesNum.value = ArticleManagerService.getArticlesNum();
                 if (requestPendingDialog) {
                     $timeout(requestPendingDialog.close, 500) //uso timeout per risolvere un problema di ngDialog (e anche per non flashare l'utente)
@@ -135,9 +135,9 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
             self.isRetrievingArticlesInfo = ArticleManagerService.isRetrievingArticlesInfo();
             self.articlesNum.value = ArticleManagerService.getArticlesNum(); //aggiorno il numero degli articoli
             if (self.isRetrievingArticlesInfo) {
-                console.log("2.1 - RETRIEVING ARTICLES INFO");
+               // console.log("2.1 - RETRIEVING ARTICLES INFO");
             } else {
-                console.log("2.3 - ARTICLES INFO RETRIEVED");
+               // console.log("2.3 - ARTICLES INFO RETRIEVED");
             }
         });
 
@@ -146,12 +146,12 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
         function() {
             self.completedArticles.value = ArticleManagerService.getCompletedArticles();
             self.completedPercent.value = ( self.completedArticles.value / self.articlesNum.value) * 100;
-            console.log("2.2 - completed articles: "+ self.completedArticles.value);
+            //console.log("2.2 - completed articles: "+ self.completedArticles.value);
         });
 
     $scope.$watchCollection(StatesManagerService.getStates,
         function() {
-            console.log('STATES AGGIORNATI');
+            //console.log('STATES AGGIORNATI');
         }, true); //todo:valutare se lasciare questo true
 
     self.logResults = function() {

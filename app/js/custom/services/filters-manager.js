@@ -7,7 +7,7 @@
 'use strict';
 
 myApp
-    .factory('FiltersManagerService', function(ArticlesInfoService) {
+    .factory('FiltersManagerService', function(ArticlesInfoService, ngDialog) {
         var filterActivated = { value: false}               //true se c'è almeno un filtro attivo, false altrimenti
         var allAuthors
         /* default vars filtri */
@@ -264,12 +264,12 @@ myApp
             setAuthors: function(newAuthors) {
 
                 authors.value = newAuthors;
-                console.log(authors.value);
+                //console.log(authors.value);
             },
 
             setAuthorsEnabled: function(newAuthorsEnabled) {
                 authors.enabled = newAuthorsEnabled;
-                console.log(authors.value);
+                //console.log(authors.value);
             },
 
             //questo è per ottenre tutti gli autori (usato nel typeahead
@@ -282,11 +282,10 @@ myApp
                             for (var i in authorsFullName) {
                                 allAuthors.value.push(authorsFullName[i].fullName.value);
                             }
-
-                            console.log( allAuthors);
                         },
                         //todo caso da gestire meglio
                         function (errResponse) {
+                            ngDialog.open({template: "app/templates/dialog-error.html"});
                             console.error("Error while fetching authors. " + errResponse.status + ": " + errResponse.statusText)
                         }
                     );

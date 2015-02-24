@@ -16,13 +16,13 @@ myApp.controller('BiblioOrderbyController', function(FiltersManagerService) {
 
 
     self.applySort = function() {
-        console.log("ordinamento: "+self.sortV);
+        //console.log("ordinamento: "+self.sortV);
         FiltersManagerService.setSort(self.sortV);
     }
 
     /* applica l'ordinamento selezionato */
     self.applyOrderBy = function() {
-        console.log("ordinamento selezionato: " + self.orderByV);
+        //console.log("ordinamento selezionato: " + self.orderByV);
         FiltersManagerService.setOrderBy(self.orderByV);
     }
 })

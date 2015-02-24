@@ -108,7 +108,7 @@ myApp.controller('CitationDetailsDialogController', function($scope) {
             prevYear = tmpYear;
         }
 
-        console.log(years)
+        //console.log(years)
 
         // ho valori per l'asse x (years) e label (colors)
 
@@ -133,7 +133,7 @@ myApp.controller('CitationDetailsDialogController', function($scope) {
         // parsing dei dati da visualizzare
         var citData = parseDataForStackedColumnChart(citationsInfo);
         citData.push({}); //mia soluzione per risolvere un bug della libreria: aggiungendo un oggetto vuoto, i colori rispondono come dovrebbero nel caso di un solo tipo di citazione
-        console.log(citData);
+        //console.log(citData);
 
         //configura il column stacked chart
         var chart = new CanvasJS.Chart("stacked_chart",

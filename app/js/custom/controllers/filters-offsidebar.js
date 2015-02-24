@@ -36,9 +36,9 @@ myApp.controller('BiblioFiltersController', function(FiltersManagerService, $sco
 
     self.switchColorsFilter = function() {
         if (self.checkCharacterizations) {
-            console.log('filtro colori attivato');
+            //console.log('filtro colori attivato');
         } else {
-            console.log('filtro colori disattivato');
+            //console.log('filtro colori disattivato');
             self.setColorsAllChecked(true);
         }
         FiltersManagerService.setCharacterizations(self.characterizationsV);
@@ -47,9 +47,9 @@ myApp.controller('BiblioFiltersController', function(FiltersManagerService, $sco
 
     self.switchYearFilter = function() {
         if (self.checkYear) {
-            console.log('filtro anno attivato');
+            //console.log('filtro anno attivato');
         } else {
-            console.log('filtro anno disattivato');
+            //console.log('filtro anno disattivato');
             self.publicationYearV = 0;
             FiltersManagerService.setStartingPublicationYear(self.publicationYearV)
         }
@@ -58,10 +58,10 @@ myApp.controller('BiblioFiltersController', function(FiltersManagerService, $sco
 
     self.switchOnlySelfcitations = function() {
         if (self.checkOnlySelfcitations) {
-            console.log('filtro solo autocitazioni attivato');
+            //console.log('filtro solo autocitazioni attivato');
             self.onlySelfcitationsV = true;
         } else {
-            console.log('filtro solo autocitazioni disattivato');
+            //console.log('filtro solo autocitazioni disattivato');
             self.onlySelfcitationsV = false;
         }
         FiltersManagerService.setOnlySelfCitations(self.onlySelfcitationsV);
@@ -70,10 +70,10 @@ myApp.controller('BiblioFiltersController', function(FiltersManagerService, $sco
 
     self.switchAuthors = function() {
         if (self.checkAuthors) {
-            console.log('filtro autori attivato');
+            //console.log('filtro autori attivato');
             FiltersManagerService.setAuthorsEnabled(true);
         } else {
-            console.log('filtro autori disattivato');
+            //console.log('filtro autori disattivato');
             FiltersManagerService.setAuthorsEnabled(false);
         }
         FiltersManagerService.setFilterActivated(self.checkCheckboxes());
@@ -85,7 +85,7 @@ myApp.controller('BiblioFiltersController', function(FiltersManagerService, $sco
     //chiunque legga mi scusi, non ho resistito alla tentazione di chiamarla così
     self.checkCheckboxes = function() {
         if (self.checkYear || self.checkOnlySelfcitations || self.checkCharacterizations || self.checkAuthors) {
-            console.log("c'è almeno un filtro impostato");
+            //console.log("c'è almeno un filtro impostato");
             return true;
         }
         return false;

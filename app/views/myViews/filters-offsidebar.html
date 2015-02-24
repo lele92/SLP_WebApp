@@ -3,7 +3,7 @@
     <div class="p" >
         <div>
             <legend class="filter-legend">
-                <span tooltip="enabling this filter will show only articles with publication year greater than or equal to the one entered" tooltip-placement="right" tooltip-popup-delay="500" ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkYear}">Year</span>
+                <span ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkYear}"><em tooltip="Enabling this filter, you can visualize only the cited articles with the publication year greater than or equal to the one inserted" tooltip-placement="right" tooltip-popup-delay="500" class="fa fa-info-circle"></em> Year </span>
                 <label class="switch pull-right">
                     <input type="checkbox"  ng-model="biblioFilterCtrl.checkYear" ng-change="biblioFilterCtrl.switchYearFilter()" />
                     <span></span>
@@ -21,7 +21,7 @@
         </div>
         <div>
             <legend class="filter-legend">
-                <span ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkOnlySelfcitations}">Only self-citations</span>
+                <span ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkOnlySelfcitations}"><em tooltip="Enabling this filter, only the self-citations will be displayed" tooltip-placement="right" tooltip-popup-delay="500" class="fa fa-info-circle"></em> Only self-citations </span>
                 <label class="switch pull-right">
                     <input type="checkbox"  ng-model="biblioFilterCtrl.checkOnlySelfcitations" ng-change="biblioFilterCtrl.switchOnlySelfcitations()"/>
                     <span></span>
@@ -30,7 +30,7 @@
         </div>
         <div>
             <legend class="filter-legend">
-                <span ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkAuthors}">Authors</span>
+                <span ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkAuthors}"><em tooltip="enabling this filter, you can see only the cited articles written by the selected authors" tooltip-placement="right" tooltip-popup-delay="500" class="fa fa-info-circle"></em> Authors </span>
                 <label class="switch pull-right">
                     <input type="checkbox"  ng-model="biblioFilterCtrl.checkAuthors" ng-change="biblioFilterCtrl.switchAuthors()"/>
                     <span></span>
@@ -56,7 +56,7 @@
         </div>
         <div>
             <legend class="filter-legend">
-                <span ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkCharacterizations}">Functions</span>
+                <span ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkCharacterizations}"><em tooltip="Enabling this filter, you can see the cited articles according to the selected citation functions" tooltip-placement="right" tooltip-popup-delay="500" class="fa fa-info-circle"></em> Functions </span>
                 <label class="switch pull-right">
                     <input type="checkbox"  ng-model="biblioFilterCtrl.checkCharacterizations" ng-change="biblioFilterCtrl.switchColorsFilter()"/>
                     <span></span>

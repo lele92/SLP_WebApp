@@ -57,7 +57,7 @@ myApp.directive('biblioItem', function($modal, ArticleManagerService) {
             scope.renderChart = function(citActsInfo, totCitActs) {
                 // parsing dei dati da visualizzare
                 var citData = parseData(citActsInfo, totCitActs);
-                console.log(citData);
+                //console.log(citData);
                 // configura il donut
                 var chart = new CanvasJS.Chart(attributes.chartId,
                     {

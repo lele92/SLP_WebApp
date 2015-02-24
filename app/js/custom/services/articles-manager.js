@@ -201,9 +201,6 @@ myApp
             ArticlesInfoService.getCitationActsInfoNotGrouped(citingEntityExpression, biblioItem.citedExpression.value).then(
                 function (response) {
                     var citActsInfoNotGrouped = response.data.results.bindings;
-                    console.log("############");
-                    console.log(citActsInfoNotGrouped);
-                    console.log("############");
                     biblioItem.citActsInfo = groupCitActsInfo(citActsInfoNotGrouped);
                     biblioItem.totCitActs = countNumCitActs(biblioItem.citActsInfo);
                 },
@@ -339,7 +336,7 @@ myApp
                 prev = tmpC;
             }
 
-            console.log(citingArticle.motivations);
+            //console.log(citingArticle.motivations);
         }
 
         /* per ottenere le info sugli articoli citanti, presi singolarmente */
@@ -541,7 +538,7 @@ myApp
                     function(response) {
                         StatesManagerService.removeAllStates(); //svuota la lista degli stati
                         StatesManagerService.addEmptyState("Results for '"+searchString+"'");
-                        console.log(StatesManagerService.getStates());
+                        //console.log(StatesManagerService.getStates());
                         articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
 
                         var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
@@ -558,7 +555,7 @@ myApp
                             RequestArticlesService.setCompletedRequest();       // la richiesta all'abstract finder è conclusa e lo notifico
                         } else {
                             articlesResultsState = resultsStates.RESULTS;              // ci sono risultati
-                            console.log("RESULTS!");
+                            //console.log("RESULTS!");
                             tmpRes = response.data[resSet][results]; //contiene gli uri dei work todo: da scommentare
 //                            tmpRes = mockResults;  //todo da eliminare
                             articlesNum = tmpRes.length;                        // numero totale di articoli di cui richiedere le info
@@ -636,21 +633,21 @@ myApp
                 StatesManagerService.addEmptyState(stateVal);                  // creo un nuovo stato vuoto che andrà ad accogliere i risultati B (che sto per chiedere) nel momento in cui si passerà ad un' altro stato C
 
                 getSingleArticleInfo(artExpression);          // richiedo l'articolo da mostrare
-                console.log(">>> STATES:");
-                console.log(StatesManagerService.getStates());
+                //console.log(">>> STATES:");
+                //console.log(StatesManagerService.getStates());
 
             },
 
             setArticlesResults: function(stateIndex) {
                 var restoredState = StatesManagerService.restoreState(stateIndex);
-                console.log("------------");
-                console.log(restoredState);
-                console.log("------------");
+                //console.log("------------");
+                //console.log(restoredState);
+                //console.log("------------");
                 angular.copy(restoredState.articles, articlesResults);
                 articlesNum = articlesResults.length;
                 completedArticles = articlesResults.length;
-                console.log(">>> STATES:");
-                console.log(StatesManagerService.getStates());
+                //console.log(">>> STATES:");
+                //console.log(StatesManagerService.getStates());
 
             },
 
@@ -663,7 +660,7 @@ myApp
                     function(response) {
                         StatesManagerService.removeAllStates(); //svuota la lista degli stati
                         StatesManagerService.addEmptyState("Article: '"+articleTitle+"'");
-                        console.log(StatesManagerService.getStates());
+                        //console.log(StatesManagerService.getStates());
                         articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
 
                         if (response.data.results.bindings.length == 0) {
@@ -673,7 +670,7 @@ myApp
                             RequestArticlesService.setCompletedRequest();
                         } else {
                             articlesResultsState = resultsStates.RESULTS;              // ci sono risultati
-                            console.log("RESULTS!");
+                            //console.log("RESULTS!");
                             articlesNum = 1;                        // numero totale di articoli di cui richiedere le info
                             completedArticles = 1;         // numero di richieste completate = numero di articoli nella lista degli articoli
 
@@ -720,7 +717,7 @@ myApp
                         var resultsCopy = angular.copy(articlesResults);                // creo una deep copy dei risultati
                         StatesManagerService.saveCurrentStateArticles(resultsCopy);     // salvo i risultati correnti A ( prima di modificare articlesResults ) nello stato creato precedentemente (l'ultimo creato con addEmptyState)
                         StatesManagerService.addEmptyState(givenName+" "+familyName);
-                        console.log(StatesManagerService.getStates());
+                        //console.log(StatesManagerService.getStates());
                         articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
                         var tmpRes = response.data.results.bindings;
                         articlesNum = tmpRes.length;                        // numero totale di articoli di cui richiedere le info
