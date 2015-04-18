@@ -1,0 +1,2212 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Marius Stanciu - vox.SPACE</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="author" content="Marius Stanciu - Sergiu" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png" />
+        <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png" />
+        <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png" />
+        <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png" />
+        <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196" />
+        <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160" />
+        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
+        <meta name="msapplication-TileColor" content="#e2007a" />
+        <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@picozu_editor" />
+        <meta name="twitter:title" content="vox.SPACE" />
+        <meta name="twitter:description" content="My name is Marius Stanciu - Sergiu and I am a web developer from Bucharest, Romania. I'm that guy that built Picozu." />
+        <meta name="twitter:creator" content="@picozu_editor" />
+        <meta name="twitter:image:src" content="assets/images/4.jpg" />
+        <meta name="twitter:domain" content="vox.space" />
+        <meta property="og:title" content="vox.SPACE" />
+        <meta property="og:type" content="article" />
+        <meta property="og:description" content="My name is Marius Stanciu - Sergiu and I am a web developer from Bucharest, Romania. I'm that guy that built Picozu." />
+        <meta property="og:image" content="assets/images/4.jpg" />
+        <meta property="og:url" content="http://www.vox.space" />
+        <meta property="og:site_name" content="vox.SPACE" />
+        <link type="text/plain" rel="author" href="/humans.txt" />
+        <link rel="stylesheet" type="text/css" href="assets/css/external.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+        <noscript><style>@media screen and (max-width: 755px){.hs-content-scroller{overflow: visible}}</style></noscript>
+    </head>
+    <body>
+        <div id="hs-container" class="hs-container">
+            <div class="aside1">
+                <a class="tipsn contact-button" title="Contact Me">
+                    <i class="fa fa-paper-plane"></i>
+                </a>
+                <a class="tipsn" title="Download my vCard" href="/files/marius-stanciu-sergiu.vcf">
+                    <i class="fa fa-cloud-download"></i>
+                </a>
+                <a class="tipsn" title="Download my Resume" href="/files/marius-stanciu-sergiu-cv.pdf">
+                    <i class="fa fa-newspaper-o"></i>
+                </a>
+                <a class="tipsn popup" title="Test Picozu Image Editor" data-options='{"modal": true, "width":1100, "height":768, "iframe": true}' href="https://www.picozu.com/editor/?i=aHR0cDovL3ZveC5zcGFjZS9hc3NldHMvaW1hZ2VzL2dlbmVyaWMuanBn&key=Ci8Mh5lIdX1Me3kB">
+                    <i class="fa fa-picture-o"></i>
+                </a>
+                <a title="Visit Picozu's Facebook page" class="tipsn" href="https://www.facebook.com/picozu">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                <a title="Visit Picozu's Twitter page" class="tipsn" href="https://twitter.com/picozu_editor">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a class="tipsn popup" title="Play Zupolis" data-options='{"modal": true, "width":1300, "height":800, "iframe": true}' href="/files/zupolis/">
+                    <i class="fa fa-bank"></i>
+                </a>
+                <div class="aside-content">
+                    <span class="part1">vox</span><span class="part2">.SPACE</span>
+                </div>
+            </div>
+            <aside class="hs-menu" id="hs-menu">
+                <div class="hs-headline">
+                    <a id="my-link" href="#my-panel">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                    <a href="/files/marius-stanciu-sergiu.vcf" class="download">
+                        <i class="fa fa-cloud-download"></i>
+                    </a>
+                    <div class="img-wrap">
+                        <img class="my-image" alt="Marius Stanciu - Sergiu" src="assets/images/me/1.jpg" width="150" height="150" />
+                    </div>
+                    <div class="profile_info">
+                        <h1>Marius Stanciu</h1>
+                        <h4>WEB DEVELOPER</h4>
+                        <h6>
+                            <span class="fa fa-location-arrow"></span>&nbsp;&nbsp;&nbsp;Bucharest, RO
+                        </h6>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+                <div class="separator-aside"></div>
+                <nav>
+                    <a href="#section1">
+                        <span class="menu_name">BLOG</span><span class="fa fa-pencil"></span>
+                    </a>
+                    <a href="#section2">
+                        <span class="menu_name">ABOUT</span><span class="fa fa-user"></span>
+                    </a>
+                    <a href="#section3">
+                        <span class="menu_name">RESUME</span><span class="fa fa-newspaper-o"></span>
+                    </a>
+                    <a href="#section4">
+                        <span class="menu_name">SKILLS</span><span class="fa fa-diamond"></span>
+                    </a>
+                    <a href="#section5">
+                        <span class="menu_name">JQUERY</span><span class="fa fa-code"></span>
+                    </a>
+                    <a href="#section6">
+                        <span class="menu_name">NETBEANS</span><span class="fa fa-laptop"></span>
+                    </a>
+                    <a href="#section7">
+                        <span class="menu_name">GAMES</span><span class="fa fa-html5"></span>
+                    </a>
+                    <a href="#section8">
+                        <span class="menu_name">DELPHI</span><span class="fa fa-bank"></span>
+                    </a>
+                    <a href="#section9">
+                        <span class="menu_name">OTHERS</span><span class="fa fa-users"></span>
+                    </a>
+                    <a href="#section10">
+                        <span class="menu_name">CONTACT</span><span class="fa fa-paper-plane"></span>
+                    </a>
+                    <a href="#section11">
+                        <span class="menu_name">HOME COMPUTER</span><span class="fa fa-desktop"></span>
+                    </a>
+                </nav>
+                <div class="aside-footer">
+                    &copy; 2005 - 2015 vox.SPACE
+                </div>
+            </aside>
+            <a href="#hs-menu" class="hs-totop-link">
+                <i class="fa fa-chevron-up"></i>
+            </a>
+            <div class="hs-content-scroller">
+                <div id="header_container">
+                    <div id="header">
+                        <div>
+                            <a title="Go to Homepage" class="tipsn home">
+                                <i class="fa fa-home"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" title="Previous Page" class="tipsn previous-page arrow">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" title="Next Page" class="tipsn next-page arrow">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hs-content-wrapper">
+                    <article class="hs-content publication-section" id="section1">
+                        <span class="sec-icon fa fa-pencil"></span>
+                        <div class="hs-inner">
+                            <h2>BLOG</h2>
+                            <span class="content-title">LATEST ARTICLES</span>
+                            <div class="row publication-form">
+                                <div class="col-md-6 publication-filter">
+                                    <div class="card-drop">
+                                        <a class="toggle">
+                                            <i class="icon-suitcase"></i>
+                                            <span class="label-active">ALL</span>
+                                        </a>
+                                        <ul id="filter">
+                                            <li class="active">
+                                                <a data-label="ALL" data-group="all">ALL</a>
+                                            </li>
+                                            <li>
+                                                <a data-label="PERSONAL" data-group="PERSONAL">PERSONAL</a>
+                                            </li>
+                                            <li>
+                                                <a data-label="WEB DEV" data-group="WEB DEV">WEB DEV</a>
+                                            </li>
+                                            <li>
+                                                <a data-label="JAVASCRIPT" data-group="JAVASCRIPT">JAVASCRIPT</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 publication-sort">
+                                    <div class="sorting-button">
+                                        <span>SORT BY DATE</span>
+                                        <button title="Sort descending" class="tipss desc">
+                                            <i class="fa fa-sort-numeric-desc"></i>
+                                        </button>
+                                        <button title="Sort ascending" class="tipss asc">
+                                            <i class="fa fa-sort-numeric-asc"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="mygrid">
+                                <div class="publication_item" data-groups='["all","WEB DEV","JAVASCRIPT"]' data-date-publication="2015-04-07">
+                                    <div class="media">
+                                        <a href=".article2" class="tipsn ex-link open_popup" title="Expand this Article" data-effect="mfp-zoom-out">
+                                            <i class="fa fa-plus-square-o"></i>
+                                        </a>
+                                        <div class="date pull-left">
+                                            <span class="day">7</span>
+                                            <span class="month">APR</span>
+                                            <span class="year">2015</span>
+                                        </div>
+                                        <div class="media-body">
+                                            <h3>ClassyMorse jQuery plugin</h3>
+                                            <h4>Marius</h4>
+                                            <span class="publication_description">
+                                                I've been using the Web Audio API in a side-project and thought I could use it to write a generator of audio Morse Code in Javascript. It's quite easy to do, but unfortunately, it doesn't work in Internet Explorer.
+                                            </span>
+                                        </div>
+                                        <hr style="margin:8px auto">
+                                        <span class="label label-success">jquery</span><span class="label label-success">javascript</span><span class="label label-success">projects</span>
+                                    </div>
+                                    <div class="mfp-hide mfp-with-anim article2 publication-detail">
+                                        <div class="image_work">
+                                            <img class="img-responsive" src="/assets/content/morse.jpg" alt="img" width="480" />
+                                        </div>
+                                        <div class="project_content">
+                                            <h3 class="publication_title">ClassyMorse jQuery plugin</h3>
+                                            <span class="publication_authors"><i>April 7, 2015</i></span>
+                                            <p>I've been using the Web Audio API in a side-project and thought I could use it to write a generator of audio Morse Code in Javascript. It's quite easy to do, but unfortunately, it doesn't work in Internet Explorer.<br />
+                                            Once you have a translation table up and running, it's just a matter of converting the apropriate character to its Morse variant, then outputing the audio code.</p>
+                                            <pre>this.MORSE_CODES = {
+        "A": ".-",
+        "B": "-...",
+        "C": "-.-.",
+        "D": "-..",
+        "E": ".",
+        "F": "..-.",
+        "G": "--.",
+        ...</pre>
+                                            <p>The code is packed into a minimal jQuery plugin that you can download using the button below.</p>
+                                            <a class="button btn2 block" href="/files/jquery-classymorse.zip">Download ClassyMorse</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="publication_item" data-groups='["all","PERSONAL"]' data-date-publication="2015-04-04">
+                                    <div class="media">
+                                        <div class="date pull-left">
+                                            <span class="day">4</span>
+                                            <span class="month">APR</span>
+                                            <span class="year">2015</span>
+                                        </div>
+                                        <div class="media-body">
+                                            <h3>NEW WEBSITE</h3>
+                                            <h4>Marius</h4>
+                                            <span class="publication_description">
+                                                After several website changes lately, I've decided it's time to go for a complete redesign and revamp of the old website. And while at it, I got a new domain, <strong>vox.space</strong>, and I REALLY love it! If there are any bugs/questions, don't hesitate to <a href="#" class="contact-button">drop me a message</a>.
+                                            </span>
+                                        </div>
+                                        <hr style="margin:8px auto">
+                                        <span class="label label-primary">new</span><span class="label label-primary">vox.space</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="hs-content about-section" id="section2">
+                        <span class="sec-icon fa fa-user"></span>
+                        <div class="hs-inner">
+                            <h2>ABOUT</h2>
+                            <span class="content-title">PERSONAL DETAILS</span>
+                            <div class="aboutInfo-contanier">
+                                <div class="about-card">
+                                    <div class="face2 card-face">
+                                        <div id="cd-google-map">
+                                            <div id="google-container"></div>
+                                            <div id="cd-zoom-in"></div>
+                                            <div id="cd-zoom-out"></div>
+                                            <address>Bucharest, Romania</address>
+                                            <div class="back-cover" data-card-back="data-card-back">
+                                                <i class="fa fa-long-arrow-left"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="face1 card-face">
+                                        <div class="about-cover card-face">
+                                            <a class="map-location" data-card-front="data-card-front">
+                                                <img src="assets/images/map-icon.png" alt="">
+                                            </a>
+                                            <div class="about-details">
+                                                <div>
+                                                    <span class="fa fa-inbox"></span><span class="detail">marius@class.pm</span>
+                                                </div>
+                                                <div>
+                                                    <span class="fa fa-phone"></span><span class="detail">+40 734 154 931</span>
+                                                </div>
+                                            </div>
+                                            <div class="cover-content-wrapper">
+                                                <span class="about-description">Hello. I am a<span class="rw-words">
+                                                        <span><strong>Developer</strong></span>
+                                                        <span><strong>Researcher</strong></span>
+                                                        <span><strong>Dreamer</strong></span>
+                                                    </span>
+                                                    <br>I love programming, design and vintage computers.
+                                                    <br>Welcome to my Personal Website</span>
+                                                <span class="status">
+                                                    <span class="fa fa-circle"></span>
+                                                    <span class="text">Available for hiring as a <strong>front-end developer</strong> or <strong>consultant</strong></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="more-details">
+                                    <div class="tabbable tabs-vertical tabs-left">
+                                        <ul id="myTab" class="nav nav-tabs">
+                                            <li class="active">
+                                                <a href="#bio" data-toggle="tab">Info</a>
+                                            </li>
+                                            <li>
+                                                <a href="#hobbies" data-toggle="tab">Hobbies</a>
+                                            </li>
+                                            <li>
+                                                <a href="#games" data-toggle="tab">Games</a>
+                                            </li>
+                                            <li>
+                                                <a href="#poem" data-toggle="tab">Favorite Poem</a>
+                                            </li>
+                                        </ul>
+                                        <div id="myTabContent" class="tab-content">
+                                            <div class="tab-pane fade in active" id="bio">
+                                                <h3>INFO</h3>
+                                                <h4>ABOUT ME</h4>
+                                                <p><strong>Marius Stanciu - Sergiu</strong>. 35 years old web developer, from Bucharest, Romania. Lived in Sydney, Australia and Heraklion, Crete. <a href="http://www.tinastanciu.com">Married</a>. With <a href="http://www.tinastanciu.com/2013/pugs/">children</a>.</p>
+                                                <p>I started programming with Pascal, moved onto Basic, C, Assembler, C++, Objective Pascal (Delphi), PHP, Perl, Python and Ruby (on Rails). Currently focusing on Javascript and HTML5.</p>
+                                                <p>Born and raised in the era of the BBSs, ASCII art, 50Mb HDDs, 8086, The Mentor, 2400 baud modems, John Perry Barlow, Windows 3.11, Netscape. If those names ring a bell, you're from my generation. My first computer was a ICE Felix <a title="ICE Felix HC 85" class="popup" href="assets/images/content/hc85.jpg">HC 85</a> folowed by a <a title="ICE Felix HC 91" class="popup" href="assets/images/content/hc91.jpg">HC 91</a> and a <a title="ICE Felix HC 2000" class="popup" href="assets/images/content/hc2000.jpg">HC 2000</a> on which I learned Pascal (Turbo Pascal 1.0 under CP/M) and assembler. <a class="hc-button" href="#">I still have the HC 2000</a> that I'm playing on occasionaly.</p>
+                                                <p>I love Montrose FC, Lotus Elise, Claudia Black, Switchfoot, Belize, Paris Saint - Germain, The Pierces, Ducati 999, Porsche Spyder 550, Ermenegildo Zegna, Babylon 5, Orson Scott Card's books, Simply Red, James Dean and his movies, Jack &amp; Jones, Burberry, Farscape, Lucie Silvas.</p>
+                                                <p>I've worked on a lot of projects, I've written extensions/plugins for Mozilla Firefox, Google Chrome, Apple Safari, Joomla, Xaraya, PunBB, Mambo, jQuery, NetBeans, XennoBB, WordPress, Jaws CMS, CMS Made Simple, I've altered/designed from scratch themes for vBulletin, PunBB, InvisionPowerBoard, XennoBB, SMF, and many others, I've written frameworks, content management systems, shopping carts, blogging software, forums, time tracking and bug tracking software. I'm using <strike>Mootools</strike> jQuery for Javascript and <strike>CodeIgniter</strike> <strike>Yii</strike> Kohana for PHP. For version control, <strike>CVS</strike> <strike>Subversion</strike> git.</p>
+                                                <p>I develop mobile applications for Tizen and Firefox OS.</p>
+                                                <p>I prefer releasing my work into the <a href="/LICENSE">Public Domain</a>, unless I'm bound to GPL by its virality or the <a href="/LICENSE-MIT">MIT license</a>.</p>
+                                                <p>I extensively use Nokia E7, Microsoft Windows 8.1, Debian, Elementary OS, SublimeText and sometimes, <span style="text-decoration: line-through;">Sun</span> Oracle VirtualBox and <span style="text-decoration: line-through;">Sun</span> Oracle Netbeans.</p>
+                                            </div>
+                                            <div class="tab-pane fade" id="hobbies">
+                                                <h3>HOBBIES</h3>
+                                                <h4>INTERESTS</h4>
+                                                <div class="hobbie-wrapper row">
+                                                    <div class="hobbie-icon col-md-3">
+                                                        <i class="li_world"></i>
+                                                    </div>
+                                                    <div class="hobbie-description col-md-9">
+                                                        <p><strong>Arduino and Raspberry PI</strong></p>
+                                                    </div>
+                                                    <div style="clear:both;"></div>
+                                                </div>
+                                                <div class="hobbie-wrapper row">
+                                                    <div class="hobbie-icon col-md-3">
+                                                        <i class="li_study"></i>
+                                                    </div>
+                                                    <div class="hobbie-description col-md-9">
+                                                        <p><strong>Space and Satellittes</strong> - I believe mankind should put all efforts into the colonization of distant planets, I love reading literature about space, time travels, planets/stars/nebulas/comets, black holes, etc.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="hobbie-wrapper row">
+                                                    <div class="hobbie-icon col-md-3">
+                                                        <i class="li_tv"></i>
+                                                    </div>
+                                                    <div class="hobbie-description col-md-9">
+                                                        <p><strong>Vintage Computers</strong> - I love collecting old pieces of hardware, mainly vintage Romanian home computers built by the ICE Felix factory.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="hobbie-wrapper row">
+                                                    <div class="hobbie-icon col-md-3">
+                                                        <i class="li_tv"></i>
+                                                    </div>
+                                                    <div class="hobbie-description col-md-9">
+                                                        <p><strong>Video Games</strong> - I am an avid gamer, so I have a large collection of games I play when I get bored, lazy or just want t have some good fun.</p>
+                                                    </div>
+                                                </div>
+                                                <div style="clear:both;"></div>
+                                            </div>
+                                            <div class="tab-pane fade team-section" id="games">
+                                                <h3>GAMES</h3>
+                                                <h4>SOME OF MY FAVORITE GAMES</h4>
+                                                <div class="team_wrapper">
+                                                    <div class="team-card-container v2">
+                                                        <div class="card">
+                                                            <div class="front game1 v2"></div>
+                                                            <div class="back v2"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="team-card-container v2">
+                                                        <div class="card">
+                                                            <div class="front game2 v2"></div>
+                                                            <div class="back v2"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="team-card-container v2">
+                                                        <div class="card">
+                                                            <div class="front game3 v2"></div>
+                                                            <div class="back v2"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="team-card-container v2">
+                                                        <div class="card">
+                                                            <div class="front game4 v2"></div>
+                                                            <div class="back v2"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="team-card-container v2">
+                                                        <div class="card">
+                                                            <div class="front game5 v2"></div>
+                                                            <div class="back v2"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="team-card-container v2">
+                                                        <div class="card">
+                                                            <div class="front game6 v2"></div>
+                                                            <div class="back v2"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="poem">
+                                                <h3>FAVORITE POEM</h3>
+                                                <h4>T.S. ELIOT - LITTLE GIDDING</h4>
+                                                <p>...<br />
+                                                    We shall not cease from exploration<br />
+                                                    And the end of all our exploring<br />
+                                                    Will be to arrive where we started<br />
+                                                    And know the place for the first time.<br />
+                                                    Through the unknown, unremembered gate<br />
+                                                    When the last of earth left to discover<br />
+                                                    Is that which was the beginning;<br />
+                                                    At the source of the longest river<br />
+                                                    The voice of the hidden waterfall<br />
+                                                    And the children in the apple-tree<br /><br />
+                                                    Not known, because not looked for<br />
+                                                    But heard, half-heard, in the stillness<br />
+                                                    Between two waves of the sea.<br />
+                                                    Quick now, here, now, always--<br />
+                                                    A condition of complete simplicity<br />
+                                                    (Costing not less than everything)<br />
+                                                    And all shall be well and<br />
+                                                    All manner of thing shall be well<br />
+                                                    When the tongues of flames are in-folded<br />
+                                                    Into the crowned knot of fire<br />
+                                                    And the fire and the rose are one.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="hs-content resume-section" id="section3">
+                        <span class="sec-icon fa fa-newspaper-o"></span>
+                        <div class="hs-inner">
+                            <h2>RESUME</h2>
+                            <div class="resume-wrapper">
+                                <ul class="resume">
+                                    <li class="time-label">
+                                        <span class="content-title">JOBS AND EXPERIENCE</span>
+                                    </li>
+                                    <li>
+                                        <div class="resume-tag">
+                                            <span class="fa fa-briefcase"></span>
+                                            <div class="resume-date">
+                                                <span>2011</span>
+                                                <div class="separator"></div>
+                                                <span>Now</span>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item">
+                                            <span class="timeline-location"><i class="fa fa-map-marker"></i>Bucharest</span>
+                                            <h3 class="timeline-header">WEB DEVELOPER & CO-FOUNDER</h3>
+                                            <div class="timeline-body">
+                                                <h4>PICOZU</h4>
+                                                <span>Front-end and back-end developer for the Picozu Image Editor using the latest technologies such as HTML5, CSS3 and Javascript, with a pinch of PHP and MySQL.</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="resume-tag">
+                                            <span class="fa fa-briefcase"></span>
+                                            <div class="resume-date">
+                                                <span>2012</span>
+                                                <div class="separator"></div>
+                                                <span>2012</span>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item">
+                                            <span class="timeline-location"><i class="fa fa-map-marker"></i>Bucharest</span>
+                                            <h3 class="timeline-header">FRONT-END DEVELOPER</h3>
+                                            <div class="timeline-body">
+                                                <h4>OLOTELS</h4>
+                                                <span>Development of internal OLOTELS projects.</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="resume-tag">
+                                            <span class="fa fa-briefcase"></span>
+                                            <div class="resume-date">
+                                                <span>2010</span>
+                                                <div class="separator"></div>
+                                                <span>2011</span>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item">
+                                            <span class="timeline-location"><i class="fa fa-map-marker"></i>Bucharest</span>
+                                            <h3 class="timeline-header">WEB DEVELOPER</h3>
+                                            <div class="timeline-body">
+                                                <h4>AEROWEB</h4>
+                                                <span>Development of internal and external AeroWeb, ourHSA, SpikingFevers, Refilio, ProFixPix, PixelMachine, CrisTim projects.</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="resume-tag">
+                                            <span class="fa fa-briefcase"></span>
+                                            <div class="resume-date">
+                                                <span>2009</span>
+                                                <div class="separator"></div>
+                                                <span>2010</span>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item">
+                                            <span class="timeline-location"><i class="fa fa-map-marker"></i>Bucharest</span>
+                                            <h3 class="timeline-header">FRONT-END DEVELOPER</h3>
+                                            <div class="timeline-body">
+                                                <h4>ADVISER INTERACTIVE</h4>
+                                                <span>Development of internal applications for Adviser and Adviser clients (MOL Romania, Presage, MobileOutlet, Consiliul Judetean Ilfov, CrisTim, etc).</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="resume-tag">
+                                            <span class="fa fa-briefcase"></span>
+                                            <div class="resume-date">
+                                                <span>2008</span>
+                                                <div class="separator"></div>
+                                                <span>2009</span>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item">
+                                            <span class="timeline-location"><i class="fa fa-map-marker"></i>Sydney</span>
+                                            <h3 class="timeline-header">WEB DEVELOPER</h3>
+                                            <div class="timeline-body">
+                                                <h4>FREELANCER</h4>
+                                                <span>Various work for Asia and Oceania clients. </span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="resume-tag">
+                                            <span class="fa fa-briefcase"></span>
+                                            <div class="resume-date">
+                                                <span>2007</span>
+                                                <div class="separator"></div>
+                                                <span>2008</span>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item">
+                                            <span class="timeline-location"><i class="fa fa-map-marker"></i>Bucharest</span>
+                                            <h3 class="timeline-header">WEB DEVELOPER</h3>
+                                            <div class="timeline-body">
+                                                <h4>ZITEC</h4>
+                                                <span>Development of internal projects for Zitec and external projects for: Romania Libera Newspaper website, Elections, tv, Alegeri.tv, Soju.tv.</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="hs-content skills-section" id="section4">
+                        <span class="sec-icon fa fa-diamond"></span>
+                        <div class="hs-inner">
+                            <h2>SKILLS</h2>
+                            <span class="content-title">PROGRAMMING SKIILLS</span>
+                            <div class="skolls">
+                                <span class="skill-description">Web developer with over 8 years of back-end and front-end programming. Started with assembler, pascal and c, continued with c++, perl, ruby and php.</span>
+                                <div class="bar-main-container">
+                                    <div class="wrap">
+                                        <div class="bar-percentage" data-percentage="90"></div>
+                                        <span class="skill-detail"><i class="fa fa-bar-chart"></i>LEVEL : ADVANCED</span><span class="skill-detail"><i class="fa fa-binoculars"></i>EXPERIENCE : OVER 8 YEARS</span>
+                                        <div class="bar-container">
+                                            <div class="bar"></div>
+                                        </div>
+                                        <span class="label">Javascript</span>
+                                        <div style="clear:both;"></div>
+                                    </div>
+                                </div>
+                                <div class="bar-main-container">
+                                    <div class="wrap">
+                                        <div class="bar-percentage" data-percentage="90"></div>
+                                        <span class="skill-detail"><i class="fa fa-bar-chart"></i>LEVEL : ADVANCED</span><span class="skill-detail"><i class="fa fa-binoculars"></i>EXPERIENCE : OVER 8 YEARS</span>
+                                        <div class="bar-container">
+                                            <div class="bar"></div>
+                                        </div>
+                                        <span class="label">PHP</span>
+                                        <div style="clear:both;"></div>
+                                    </div>
+                                </div>
+                                <div class="bar-main-container">
+                                    <div class="wrap">
+                                        <div class="bar-percentage" data-percentage="80"></div>
+                                        <span class="skill-detail"><i class="fa fa-bar-chart"></i>LEVEL : ADVANCED</span><span class="skill-detail"><i class="fa fa-binoculars"></i>EXPERIENCE : OVER 7 YEARS</span>
+                                        <div class="bar-container">
+                                            <div class="bar"></div>
+                                        </div>
+                                        <span class="label">Wordpress</span>
+                                        <div style="clear:both;"></div>
+                                    </div>
+                                </div>
+                                <div class="bar-main-container">
+                                    <div class="wrap">
+                                        <div class="bar-percentage" data-percentage="40"></div>
+                                        <span class="skill-detail"><i class="fa fa-bar-chart"></i>LEVEL : INTERMEDIATE</span><span class="skill-detail"><i class="fa fa-binoculars"></i>EXPERIENCE : OVER 3 YEARS</span>
+                                        <div class="bar-container">
+                                            <div class="bar"></div>
+                                        </div>
+                                        <span class="label">Objective Pascal</span>
+                                        <div style="clear:both;"></div>
+                                    </div>
+                                </div>
+                                <div class="bar-main-container">
+                                    <div class="wrap">
+                                        <div class="bar-percentage" data-percentage="30"></div>
+                                        <span class="skill-detail"><i class="fa fa-bar-chart"></i>LEVEL : BEGINNER</span><span class="skill-detail"><i class="fa fa-binoculars"></i>EXPERIENCE : 2 YEARS</span>
+                                        <div class="bar-container">
+                                            <div class="bar"></div>
+                                        </div>
+                                        <span class="label">Perl</span>
+                                        <div style="clear:both;"></div>
+                                    </div>
+                                </div>
+                                <div class="bar-main-container">
+                                    <div class="wrap">
+                                        <div class="bar-percentage" data-percentage="20"></div>
+                                        <span class="skill-detail"><i class="fa fa-bar-chart"></i>LEVEL : BEGINNER</span><span class="skill-detail"><i class="fa fa-binoculars"></i>EXPERIENCE : 2 YEARS</span>
+                                        <div class="bar-container">
+                                            <div class="bar"></div>
+                                        </div>
+                                        <span class="label">Ruby on Rails</span>
+                                        <div style="clear:both;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="content-title">DATABASE MANAGEMENT</span>
+                            <div class="skolls">
+                                <span class="skill-description">SQL is a like a native language and I've writter various tools that interface the most-known database-systems, like MySQL, PostgreSQL and SQLite.</span>
+                                <div class="bar-main-container">
+                                    <div class="wrap">
+                                        <div class="bar-percentage" data-percentage="90"></div>
+                                        <span class="skill-detail"><i class="fa fa-bar-chart"></i>LEVEL : ADVANCED</span><span class="skill-detail"><i class="fa fa-binoculars"></i>EXPERIENCE : OVER 8 YEARS</span>
+                                        <div class="bar-container">
+                                            <div class="bar"></div>
+                                        </div>
+                                        <span class="label">MySQL</span><span class="label">PostgreSQL</span><span class="label">SQLite</span>
+                                        <div style="clear:both;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="content-title">DESIGN SKILLS</span>
+                            <div class="skolls">
+                                <span class="skill-description">I speak fluent HTML(5), XML, XSL(T), XHTML, CSS(3), SASS, SCSS and I can do intermediate-level Photoshop mockups.</span>
+                                <div class="bar-main-container">
+                                    <div class="wrap">
+                                        <div class="bar-percentage" data-percentage="100"></div>
+                                        <span class="skill-detail"><i class="fa fa-bar-chart"></i>LEVEL : EXPERT</span><span class="skill-detail"><i class="fa fa-binoculars"></i>EXPERIENCE : OVER 10 YEARS</span>
+                                        <div class="bar-container">
+                                            <div class="bar"></div>
+                                        </div>
+                                        <span class="label">HTML(5)</span><span class="label">CSS(3)</span>
+                                        <div style="clear:both;"></div>
+                                    </div>
+                                </div>
+                                <div class="bar-main-container">
+                                    <div class="wrap">
+                                        <div class="bar-percentage" data-percentage="40"></div>
+                                        <span class="skill-detail"><i class="fa fa-bar-chart"></i>LEVEL : INTERMEDIATE</span><span class="skill-detail"><i class="fa fa-binoculars"></i>EXPERIENCE : OVER 6 YEARS</span>
+                                        <div class="bar-container">
+                                            <div class="bar"></div>
+                                        </div>
+                                        <span class="label">Adobe Photoshop</span>
+                                        <div style="clear:both;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="content-title">OTHER SKILLS</span>
+                            <div class="skolls">
+                                <span class="skill-description">Windows user since the early ages (read 3.11), I can perform advanced Linux server administration jobs, most proficient in Debian and Ubuntu.</span>
+                                <div class="bar-main-container">
+                                    <div class="wrap">
+                                        <div class="bar-percentage" data-percentage="60"></div>
+                                        <span class="skill-detail"><i class="fa fa-bar-chart"></i>LEVEL : ADVANCED</span><span class="skill-detail"><i class="fa fa-binoculars"></i>EXPERIENCE : OVER 6 YEARS</span>
+                                        <div class="bar-container">
+                                            <div class="bar"></div>
+                                        </div>
+                                        <span class="label">Linux</span><span class="label">Amazon Web Services</span>
+                                        <div style="clear:both;"></div>
+                                    </div>
+                                </div>
+                                <div class="bar-main-container">
+                                    <div class="wrap">
+                                        <div class="bar-percentage" data-percentage="80"></div>
+                                        <span class="skill-detail"><i class="fa fa-bar-chart"></i>LEVEL : ADVANCED</span><span class="skill-detail"><i class="fa fa-binoculars"></i>EXPERIENCE : OVER 6 YEARS</span>
+                                        <div class="bar-container">
+                                            <div class="bar"></div>
+                                        </div>
+                                        <span class="label">git</span><span class="label">Subversion</span><span class="label">CVS</span>
+                                        <div style="clear:both;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="hs-content pricing-section" id="section5">
+                        <span class="sec-icon fa fa-code"></span>
+                        <div class="hs-inner">
+                            <h2>JQUERY PLUGINS</h2>
+                            <span class="content-title">VARIOUS JQUERY PLUGINS</span>
+                            <div class="pricing-table-wrapper">
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>Morse</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> April 6, 2015 <i class="fa fa-cloud"></i> 1.0.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>ClassyMorse is a Javascript library that allows you to generate (audio) <a class="popup" href="http://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/f2012/qs44_twc55/qs44_twc55/images/morsecode.PNG">Morse codes</a> from a given string of text. Uses the <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API">Web Audio API</a> and it's <a target="_blank" href="http://caniuse.com/#feat=audio-api">not available for Microsoft Internet Explorer</a> because ... well ... fuck knows.</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classymorse.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classymorse">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>Picozu</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> March 14, 2014 <i class="fa fa-cloud"></i> 1.0.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A jQuery plugin that allows you to use Picozu's advanced image editing functions on images from your own website. Basically you get an awesome online image editor your visitors can use to play with.</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classypicozu.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classypicozu">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>Loader</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> November 16, 2014 <i class="fa fa-cloud"></i> 1.2.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A jQuery plugin that lets your add beautiful and animated loaders to your website.</li>
+                                            <li>Beautifully animated</li>
+                                            <li>Cross-browser compatible</li>
+                                            <li>Lightweight & ultra customisable</li>
+                                            <li>Minimal coding required – simply include the Javascript file</li>
+                                            <li>Easy to customize</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classyloader.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classyloader">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>Paypal</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> November 19, 2014 <i class="fa fa-cloud"></i> 1.0.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A jQuery plugin that allows you to quickly add stylish PayPal payment buttons to your website for instant and secure payments.</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classypaypal.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classypaypal">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>Countdown</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> November 7, 2014 <i class="fa fa-cloud"></i> 1.0.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A jQuery plugin that allows you to easily create clean circular countdowns.</li>
+                                            <li>It is fully customizable and includes 12 themes, which can be modified and it uses HTML5 canvas for rendering the circles.</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classycountdown.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classycountdown">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>Social</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> February 16, 2014 <i class="fa fa-cloud"></i> 2.2.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A jQuery plugin that lets your site visitors easily see what networks you belong to and visit them in a click of a button.</li>
+                                            <li>Currently supports Facebook, Twitter, Dribbble, Socl, Youtube, Vimeo, Google Plus, Pinterest, LinkedIn, Instagram and e-mail.</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classysocial.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classysocial">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>Leaves</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> February 1, 2014 <i class="fa fa-cloud"></i> 1.1.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A plugin that will provide beautiful decorations on your website: falling and rotating interactive leaves. If you click on a leaf, it will fall; if you click on a falling leaf, magic will happen.</li>
+                                            <li>The plugin is crossbrowser, mobile-optimized and very easy to extend.</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classyleaves.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classyleaves">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>Box</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> August 6, 2014 <i class="fa fa-cloud"></i> 1.3.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A complex jQuery Lightbox alternative with support for the most popular video services, enabling you to embed a media gallery on your site.</li>
+                                            <li><i class="fa fa-check"></i> Embed Photo Galleries</li>
+                                            <li><i class="fa fa-check"></i> Support for video</li>
+                                            <li><i class="fa fa-check"></i> Responsive</li>
+                                            <li><i class="fa fa-check"></i> Social Media buttons - Facebook, Twitter and Google+ - redirect link to ClassyBox window</li>
+                                            <li><i class="fa fa-check"></i> Possibility to add preloader for photo galleries</li>
+                                            <li><i class="fa fa-check"></i> AJAX support</li>
+                                            <li><i class="fa fa-check"></i> Support for YouTube, VIMEO, DailyMotion, 5min, MetaCafe, Ustream, Hell TV, VEVO and MySpace</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classylightbox.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classylightbox">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>ContextMenu</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> October 18, 2013 <i class="fa fa-cloud"></i> 1.5.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A jQuery plugin that makes it easy to add right-click context menu functionality to any web application. A context menu can help make a web application feel even more like a native application.</li>
+                                            <li><i class="fa fa-check"></i> Supports keyboard control</li>
+                                            <li><i class="fa fa-check"></i> Always stays in viewport (menus never open outside of the visible area)</li>
+                                            <li><i class="fa fa-check"></i> Supports infinite amount of sub-menus</li>
+                                            <li><i class="fa fa-check"></i> Enable disable items or entire menus</li>
+                                            <li><i class="fa fa-check"></i> Supports right- or left-click control</li>
+                                            <li><i class="fa fa-check"></i> Build menus with HTML or pass in a JavaScript object</li>
+                                            <li><i class="fa fa-check"></i> Customizable callbacks for each menu (onLoad, onShow, onHide, and onSelect)</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classycontextmenu.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classycontextmenu">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>Notty</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> January 12, 2014 <i class="fa fa-cloud"></i> 1.2.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A jQuery plugin that enables your application to display unobtrusive, beautiful and elegant notifications in your web applications and/or web pages.</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classynotty.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classynotty">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>Loupe</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> February 1, 2014 <i class="fa fa-cloud"></i> 1.2.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A jQuery plugin that gives you the ability to add zoom on hover ability for your photos with single line of code. With ClassyLoupe you have the ability to control the zoom level and loupe size via mouse scroll which gives you the opportunity to enlarge areas that you might be interested in.</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classyloupe.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classyloupe">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>Gradient</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> March 6, 2014 <i class="fa fa-cloud"></i> 1.1.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A jQuery plugin that allows you to add a gradient generator to your web applications and websites. Smart and fully cutomizable, it is suitable for any type of use: CSS generators, HTML5 canvas applications, live usage.</li>
+                                            <li><i class="fa fa-check"></i> Unlimited gradient points.</li>
+                                            <li><i class="fa fa-check"></i> HTML5 Browsers compatible (IE9 +).</li>
+                                            <li><i class="fa fa-check"></i> Generate CSS code.</li>
+                                            <li><i class="fa fa-check"></i> Customizable by CSS.</li>
+                                            <li><i class="fa fa-check"></i> Can easily be combined with HTML5 canvas.</li>
+                                            <li><i class="fa fa-check"></i> No server files, only Javascript & CSS.</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classygradient.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classygradient">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>Compare</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> February 1, 2014 <i class="fa fa-cloud"></i> 1.2.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A before/after jQuery gallery plugin that gives you the ability to compare two images (before and after, etc) via a nice interface.</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classycompare.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classycompare">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>Wiggle</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> March 4, 2014 <i class="fa fa-cloud"></i> 1.2.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A jQuery plugin that allows you to emulate the wiggle effect icons on an iPhone have when you press and hold down on them.</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classywiggle.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classywiggle">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>LED</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> January 22, 2015 <i class="fa fa-cloud"></i> 1.3.1 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>jQuery ClassyLED can be used as a countdown, a clock or as a random numbers.</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classyled.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classyled">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>Popup</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> December 28, 2013 <i class="fa fa-cloud"></i> 1.3.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>The jQuery ClassyPopup plugin is a quick, simple, and easy jQuery plugin to use for all of your popup needs. It is highly customizable, and very intuitive to use.</li>
+                                            <li><i class="fa fa-check"></i> Highly versatile, you can override the normal javascript alert() with a single line of code, use for login forms, admin panel modifications, registration, detail panes, etc.</li>
+                                            <li><i class="fa fa-check"></i> Load data asynchronously with Ajax, or use a predefined message.</li>
+                                            <li><i class="fa fa-check"></i> Functions to check if popup is open/closed, as well as functions to destroy the object from the DOM.</li>
+                                            <li><i class="fa fa-check"></i> CSS3 & HTML5.</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classypopup.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classypopup">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>Slider</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> December 2, 2013 <i class="fa fa-cloud"></i> 1.3.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A jQuery plugin allows you to embed beautiful slideshows into your webpages.</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classyslider.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classyslider">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>QR</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> February 3, 2014 <i class="fa fa-cloud"></i> 1.2.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A jQuery plugin that enables you to embed QR codes into your applications or web pages.</li>
+                                            <li>QR codes are a popular type of two-dimensional barcode. They are also known as hardlinks or physical world hyperlinks. QR codes store up to 4,296 alphanumeric characters of arbitrary text.</li>
+                                        </ul>
+                                        <a class="button btn3" href="/files/jquery-classyqr.zip">Download</a>
+                                        <a class="button btn2" href="/files/jquery/classyqr">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy<strong>Twitter</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> August 6, 2012 <i class="fa fa-cloud"></i> 1.0.1 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>
+                                                <div class="alert alert-micro alert-border-left alert-danger pastel light">
+                                                    <strong>This project is severely outdated, it's still here for future reference.</strong>
+                                                </div>
+                                            </li>
+                                            <li>This is a jQuery plugin that gives you the ability to show your last tweets from Twitter in a nice interface.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="hs-content pricing-section" id="section6">
+                        <span class="sec-icon fa fa-html5"></span>
+                        <div class="hs-inner">
+                            <h2>NETBEANS PLUGINS</h2>
+                            <span class="content-title">VARIOUS NETBEANS PLUGINS WRITTEN IN JAVA + XML</span>
+                            <div class="pricing-table-wrapper">
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Netbeans <strong>Mootools</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> January 25, 2015 <i class="fa fa-cloud"></i> 1.5.0 <i class="fa fa-code"></i> GPLv3
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>This plugin installs the MooTools javascript library (version 1.5.1) into your NetBeans IDE and enables it for your projects.</li>
+                                        </ul>
+                                        <a class="button btn1" href="/files/netbeans-mootools.zip">Download</a>
+                                        <a class="button btn2" href="http://plugins.netbeans.org/plugin/15992">Project Page</a>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Netbeans <strong>SQLiteJDBC</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> January 25, 2015 <i class="fa fa-cloud"></i> 1.3.0 <i class="fa fa-code"></i> GPLv3
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>This plugin is a JDBC driver for the NetBeans IDE, using the excellent JDBC library from Zentus Xerial (version 3.8.7), that will enable you to use SQLite databases in your applications.</li>
+                                        </ul>
+                                        <a class="button btn1" href="/files/netbeans-sqlitejdbc.zip">Download</a>
+                                        <a class="button btn2" href="http://plugins.netbeans.org/plugin/16018">Project Page</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="hs-content service-section" id="section7">
+                        <span class="sec-icon fa fa-html5"></span>
+                        <div class="hs-inner">
+                            <h2>HTML5 GAMES</h2>
+                            <span class="content-title">HTML5 GAMES WRITTEN IN JAVASCRIPT</span>
+                            <div class="services-wrap">
+                                <div class="serv-wrap double">
+                                    <img src="assets/images/games/zupolis.jpg" alt="Zupolis HTML5 game" />
+                                    <div class="slide">
+                                        <h4>Zupolis</h4>
+                                        <ul>
+                                            <li>Zupolis is a city-builder HTML5 game written in Javascript.</li>
+                                            <li><br />The game uses the buildings graphics from the Anno 1404 game produced by Blue Byte. The track2 song is Dark River Tribe by Richard Lisah, the track1 song is Glandula Pinealis by Shantifax.</li>
+                                        </ul>
+                                        <a class="popup button btn2" href="/files/zupolis/" data-options='{"modal": true, "width":1300, "height":800, "iframe": true}'>Play</a>
+                                        <a class="button btn1" href="#">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="serv-wrap">
+                                    <img src="assets/images/games/froopsie.jpg" alt="Froopsie HTML5 game" />
+                                    <div class="slide">
+                                        <h4>Froopsie</h4>
+                                        <ul>
+                                            <li>Froopsie is a game that has the objective to create lines containing three or more fruits of the same type.</li>
+                                        </ul>
+                                        <a class="popup button btn2" href="/files/froopsie/" data-options='{"modal": true, "width":360, "height":627, "iframe": true}'>Play</a>
+                                    </div>
+                                </div>
+                                <div class="serv-wrap">
+                                    <img src="assets/images/games/bubbles.jpg" alt="Bubbles HTML5 game" />
+                                    <div class="slide">
+                                        <h4>Bubbles</h4>
+                                        <ul>
+                                            <li>Bubbles' objective is to pop the same color adjecent bubbles. The more bubbles you pop in a tap, the more points you get.</li>
+                                        </ul>
+                                        <a class="popup button btn2" href="/files/bubbles/" data-options='{"modal": true, "width":360, "height":627, "iframe": true}'>Play</a>
+                                    </div>
+                                </div>
+                                <div class="serv-wrap double">
+                                    <img src="assets/images/games/football.jpg" alt="Football Manager HTML5 game" />
+                                    <div class="slide">
+                                        <h4>Football Manager</h4>
+                                        <ul>
+                                            <li>Football Manger is a HTML soccer-management game built with Javascript; the game is mainly a proof-of-concept and is work in progress in very early stages, that early that nothing is visible; view the source code for an idea of the things to come.</li>
+                                        </ul>
+                                        <a class="popup button btn2" href="/files/football-manager/" data-options='{"modal": true, "width":1300, "height":800, "iframe": true}'>Play</a>
+                                        <a class="button btn1" href="#">Documentation</a>
+                                    </div>
+                                </div>
+                                <div class="serv-wrap">
+                                    <img src="assets/images/games/brickout.jpg" alt="Brickout HTML5 game" />
+                                    <div class="slide">
+                                        <h4>Brickout</h4>
+                                        <ul>
+                                            <li>Brickout is a Breakout-type of game where you need to break bricks and collect power-ups to compete for the high score.</li>
+                                        </ul>
+                                        <a class="popup button btn2" href="/files/brickout/" data-options='{"modal": true, "width":360, "height":627, "iframe": true}'>Play</a>
+                                    </div>
+                                </div>
+                                <div class="serv-wrap">
+                                    <img src="assets/images/games/mines.jpg" alt="Mines HTML5 game" />
+                                    <div class="slide">
+                                        <h4>Mines</h4>
+                                        <ul>
+                                            <li>Mines' game objective is to discover all the mines without clicking and triggering them.</li>
+                                        </ul>
+                                        <a class="popup button btn2" href="/files/mines/" data-options='{"modal": true, "width":360, "height":627, "iframe": true}'>Play</a>
+                                    </div>
+                                </div>
+                                <div class="serv-wrap">
+                                    <img src="assets/images/games/trisbie.jpg" alt="Trisbie HTML5 game" />
+                                    <div class="slide">
+                                        <h4>Trisbie</h4>
+                                        <ul>
+                                            <li>Trisbie is a Tetris-compliant game with 3 speed modes and a lot of fun to have.</li>
+                                        </ul>
+                                        <a class="popup button btn2" href="/files/trisbie/" data-options='{"modal": true, "width":360, "height":627, "iframe": true}'>Play</a>
+                                    </div>
+                                </div>
+                                <div class="serv-wrap">
+                                    <img src="assets/images/games/mouse.jpg" alt="Mouse HTML5 game" />
+                                    <div class="slide">
+                                        <h4>Mouse</h4>
+                                        <ul>
+                                            <li>Mouse is a HTML5 game that has the objective to maneuver your mouse pet to get the cheese and avoid the cats.</li>
+                                        </ul>
+                                        <a class="popup button btn2" href="/files/mouse/" data-options='{"modal": true, "width":360, "height":627, "iframe": true}'>Play</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="hs-content research-section pricing-section" id="section8">
+                        <span class="sec-icon fa fa-bank"></span>
+                        <div class="hs-inner">
+                            <h2>DELPHI APPS</h2>
+                            <span class="content-title">VARIOUS APPLICATIONS COMPILED IN DELPHI 2009</span>
+                            <div class="slide-wrapper slider1">
+                                <nav>
+                                    <a class="fa fa-angle-left" id="btn-prev"></a>
+                                    <a class="fa fa-angle-right" id="btn-next"></a>
+                                </nav>
+                                <div class="slider-details">
+                                    <span class="slide-counter"></span>
+                                    <span class="slide-date"></span>
+                                </div>
+                                <div class="slide active" data-title="Conquests Start Screen">
+                                    <div class="slide-content">
+                                        <a href="assets/images/conquests/1.jpg" rel="Conquests">
+                                            <img src="assets/images/conquests/1_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="Conquests Map Editor">
+                                    <div class="slide-content">
+                                        <a href="assets/images/conquests/2.jpg" rel="Conquests">
+                                            <img src="assets/images/conquests/2_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="Conquests Game Screenshot 1">
+                                    <div class="slide-content">
+                                        <a href="assets/images/conquests/3.jpg" rel="Conquests">
+                                            <img src="assets/images/conquests/3_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="Conquests City Screen">
+                                    <div class="slide-content">
+                                        <a href="assets/images/conquests/4.jpg" rel="Conquests">
+                                            <img src="assets/images/conquests/4_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="Conquests Wonders">
+                                    <div class="slide-content">
+                                        <a href="assets/images/conquests/5.jpg" rel="Conquests">
+                                            <img src="assets/images/conquests/5_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="Conquests World with Major Cities">
+                                    <div class="slide-content">
+                                        <a href="assets/images/conquests/6.jpg" rel="Conquests">
+                                            <img src="assets/images/conquests/6_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pricing-table-wrapper">
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Conquests</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> March 17, 2015 <i class="fa fa-cloud"></i> 3.4.0 <i class="fa fa-code"></i> MIT license
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li><strong>Conquests</strong> is an empire building game similar to Sid Meier's Civilization 2, based on the <a href="http://www.c-evo.org">C-evo</a> codebase.</li>
+                                            <li><i class="fa fa-check"></i> Nations, cities, units.</li>
+                                            <li><i class="fa fa-check"></i> Terrain improvements.</li>
+                                            <li><i class="fa fa-check"></i> Advanced diplomacy, offer and accept pacts and treaties, pay tribute, etc.</li>
+                                            <li><i class="fa fa-check"></i> A clever AI is essential for a strategy game, so Conquests has an open AI interface implemented; everyone who feels called to can code his personal AI engine and let it compete against others.</li>
+                                            <li><a class="button btn3 block" href="/files/conquests/conquests.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy <strong>Hex Editor</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> August 9, 2010 <i class="fa fa-cloud"></i> 2.4.0 <i class="fa fa-code"></i> Public Domain
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li><strong>ClassyHexEditor</strong> is a simple hex editor. Available for Microsoft Windows, works on any version from 95 and up including 8.1.</li>
+                                            <li><a class="button btn3 block" href="/files/classyhexeditor.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy <strong>Sniff</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> September 10, 2010 <i class="fa fa-cloud"></i> 2.6.0 <i class="fa fa-code"></i> Public Domain
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li><strong>ClassySniff</strong> is a small program that acts as a MITM (man-in-the-middle) and analyzes all the traffic between a client and a server. All traffic can be logged, shown, analyzed and sent.</li>
+                                            <li><i class="fa fa-check"></i> Analyze all socket-based connections</li>
+                                            <li><i class="fa fa-check"></i> Inspect and modify requests</li>
+                                            <li><a class="button btn3 block" href="/files/classysniff.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Classy <strong>Edit</strong></h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> December 21, 2010 <i class="fa fa-cloud"></i> 4.1.0 <i class="fa fa-code"></i> Public Domain
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li><strong>ClassyEdit</strong> is a small code editor with many features that can be used as a minimal text editor too.</li>
+                                            <li><i class="fa fa-check"></i> Color browser.</li>
+                                            <li><i class="fa fa-check"></i> Encrypting and decrypting.</li>
+                                            <li><i class="fa fa-check"></i> Base converter between decimal, binary and hex.</li>
+                                            <li><a class="button btn3 block" href="/files/classyedit.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="hs-content pricing-section" id="section9">
+                        <span class="sec-icon fa fa-users"></span>
+                        <div class="hs-inner">
+                            <h2>OTHERS</h2>
+                            <span class="content-title">OTHER APPLICATIONS AND STUFF</span>
+                            <div class="pricing-table-wrapper">
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Picozu Image Editor</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> January 12, 2015 <i class="fa fa-cloud"></i> milestone 1.3.0
+                                        </h3>
+                                    </div>
+                                    <img style="width:100%" src="https://www.picozu.com/r/images/logos/splash.png" alt="Picozu Image Editor" />
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>Picozu is a drawing and photo retouching application built on Javascript, HTML 5 and CSS3. Make sure you use a modern browser (Firefox 3.6, Safari 5, Chrome, Opera 10, Internet Explorer 9) if you want to play with it.</li>
+                                            <li>The aim of the application is to make it as much Adobe Photoshop-clone as possible, while keeping in mind that it is a web application, and your browser is not supposed to memory-hog your computer.</li>
+                                            <li>It should support brushes, filters, dynamic windows, HSL, CYMK, layers, actions history, batch processing, primitives, curves (quadratic and bezier), complex polygons, texture rendering, cropping and many more. Also, should not rely on any Flash code and can be used from any mobile device with a (multi?)touch interface.</li>
+                                            <li><a class="button btn2" href="https://www.picozu.com">Project Page</a> <a class="button btn3" href="https://www.picozu.com/editor/">Start Editing</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Picozu Shooter for Firefox</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> February 18, 2015 <i class="fa fa-cloud"></i> 1.3.6 <i class="fa fa-code"></i> GPLv3
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>Picozu Shooter is a Mozilla Firefox browser extension that allows you to take a screenshot of a given browser page, or a specific region of it. Basically, it can be used to take screenshots of websites or portions of it, very useful for a web developer or tester/QA.</li>
+                                            <li>Once you make a selection, you can copy it to your clipboard, download it on your computer as a new image or export it to Picozu for processing.</li>
+                                            <li><a class="button btn2" href="https://addons.mozilla.org/en-US/firefox/addon/shooter/">Project Page</a> <a class="button btn3" href="/files/picozu-shooter.xpi">Install</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Picozu Shooter for Safari</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> December 20, 2012 <i class="fa fa-cloud"></i> 1.1.0 <i class="fa fa-code"></i> GPLv3
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>Picozu Shooter is a Apple Safari browser extension, which allows you to take a screenshot of a browser page, or a specific region of it and save it to a file, clipboard or Picozu Image Editor.</li>
+                                            <li><a class="button btn3 block" href="/files/picozu-shooter.safariextz">Install</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Tinambo</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> April 30, 2014 <i class="fa fa-cloud"></i> 1.1.0 <i class="fa fa-code"></i> Public Domain
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li><strong>Tinambo</strong> is a one-file blogging system written in PHP that doesn't have any other requirements than PHP to run. It doesn't need a database, it stores the posts and pages into JSON files.</li>
+                                            <li><i class="fa fa-check"></i> Posts, pages, image attachments.</li>
+                                            <li><i class="fa fa-check"></i> Editor area for easy blog administration.</li>
+                                            <li><i class="fa fa-check"></i> Contact form.</li>
+                                            <li><i class="fa fa-check"></i> Custom styles and color schemes.</li>
+                                            <li><i class="fa fa-check"></i> Facebook integration.</li>
+                                            <li><i class="fa fa-check"></i> Google Analytics integration.</li>
+                                            <li><i class="fa fa-check"></i> Picozu integration for advanced image editing.</li>
+                                            <li><a class="button btn2" href="/files/tinambo/">Documentation</a> <a class="button btn3" href="/files/tinambo.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>jZU</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> August 10, 2013 <i class="fa fa-cloud"></i> 1.2.0 <i class="fa fa-code"></i> Public Domain
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li><strong>jZU</strong> is a Javascript framework similar to jQuery, Mootools or Prototype, designed to ease the development of dynamic web applications. This library is mainly a proof-of-concept, if you need a full-featured lightning-fast Javascript library, use jQuery.</li>
+                                            <li><i class="fa fa-check"></i> Selectors</li>
+                                            <li><i class="fa fa-check"></i> DOM manipulation</li>
+                                            <li><i class="fa fa-check"></i> AJAX</li>
+                                            <li><i class="fa fa-check"></i> Style manipulation</li>
+                                            <li><i class="fa fa-check"></i> Extensibility</li>
+                                            <li><a class="button btn2" href="/files/jzu/">Documentation</a> <a class="button btn3" href="/files/jzu.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Wordpress QR codes generator</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> January 30, 2013 <i class="fa fa-cloud"></i> 1.0.0 <i class="fa fa-code"></i> GPLv3
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A small WordPress plugin that allows you to dynamically insert QR codes in your wordpress pages and posts via easy to use shortcodes. Do not worry, you don’t have to memorize the shortcodes or the format, the design is done via a nice interface in the TinyMCE editor.</li>
+                                            <li><a class="button btn3 block" href="/files/wordpress-qrcodegen.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Wordpress ClassyBox</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> December 19, 2012 <i class="fa fa-cloud"></i> 1.0.0 <i class="fa fa-code"></i> GPLv3
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>The plugin allows you to display images and other media in your WordPress blog, using the ClassyBox jQuery lightbox clone.</li>
+                                            <li><i class="fa fa-check"></i> Embeds Photo Galleries.</li>
+                                            <li><i class="fa fa-check"></i> Social Media buttons – Facebook, Twitter and Google+ – redirect link to ClassyBox window.</li>
+                                            <li><i class="fa fa-check"></i> AJAX support.</li>
+                                            <li><i class="fa fa-check"></i> Support for YouTube, VIMEO, DailyMotion, 5min, MetaCafe, Ustream, Hell TV, VEVO and MySpace.</li>
+                                            <li><a class="button btn3 block" href="/files/wordpress-classybox.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Palette Shooter</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> October 5, 2011 <i class="fa fa-cloud"></i> 1.0.0 <i class="fa fa-code"></i> GPLv3
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>Palette Shooter is a Mozilla Firefox browser extension, that will allow you to export a color palette from your current page, a color palette that you can use in Adobe Photoshop, GIMP, Flash, Fireworks and many more.</li>
+                                            <li><a class="button btn3 block" href="/files/palette-shooter.xpi">Install</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Age of Empires maps</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> 1999 <i class="fa fa-code"></i> Public Domain
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>Various Age of Empires maps designed by me. They are quite balanced and might prove a tough nut to crack.</li>
+                                            <li><i class="fa fa-check"></i> Amerigo (8-Player maximum)</li>
+                                            <li><i class="fa fa-check"></i> Archipelago (8-Player maximum)</li>
+                                            <li><i class="fa fa-check"></i> Carribean Sea (8-Player maximum)</li>
+                                            <li><i class="fa fa-check"></i> Gattaca (8-Player maximum)</li>
+                                            <li><i class="fa fa-check"></i> Treasure Islands (8-Player maximum)</li>
+                                            <li><a class="button btn3 block" href="/files/ageofempires-maps.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Starcraft - Brood War map</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> 2006 <i class="fa fa-code"></i> Public Domain
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>A Starcraft - Brood War (expansion) map designed by me.</li>
+                                            <li><i class="fa fa-check"></i> (4) KrissKross</li>
+                                            <li><a class="button btn3 block" href="/files/starcraftbroodwar-maps.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Warcraft 2 maps</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> 1997 <i class="fa fa-code"></i> Public Domain
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>Various Warcraft 2 - Battle.net Edition maps designed by me.</li>
+                                            <li><i class="fa fa-check"></i> Animosa (4 Players)</li>
+                                            <li><i class="fa fa-check"></i> Astoria (4 Players)</li>
+                                            <li><i class="fa fa-check"></i> Continental Crush (8 Players)</li>
+                                            <li><i class="fa fa-check"></i> England (4 Players)</li>
+                                            <li><i class="fa fa-check"></i> Groenland (4 Players)</li>
+                                            <li><i class="fa fa-check"></i> Stardom (8 Players)</li>
+                                            <li><i class="fa fa-check"></i> Steel Blade (4 Players)</li>
+                                            <li><i class="fa fa-check"></i> Terrible Ordeal (8 Players)</li>
+                                            <li><a class="button btn3 block" href="/files/warcraft2-maps.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Starcraft maps</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> 2006 <i class="fa fa-code"></i> Public Domain
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>Various Starcraft maps designed by me.</li>
+                                            <li><i class="fa fa-check"></i> (8) Azteca</li>
+                                            <li><i class="fa fa-check"></i> (8) l'Inverno</li>
+                                            <li><i class="fa fa-check"></i> (8) Neighborhood Wars</li>
+                                            <li><a class="button btn3 block" href="/files/starcraft-maps.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>HelixBlog</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> January 20, 2010 <i class="fa fa-cloud"></i> 0.1.0 <i class="fa fa-code"></i> GPLv3
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>
+                                                <div class="alert alert-micro alert-border-left alert-danger pastel light">
+                                                    <strong>This project is severely outdated, it's still here for future reference.</strong>
+                                                </div>
+                                            </li>
+                                            <li><strong>HelixBlog</strong> is a simple Ruby on Rails weblog application that helps you focus on writing above all else; it has all the features you want in a weblogging applicaton wrapped in an efficiently designed interface that eliminates clutter.</li>
+                                            <li>By focusing on simplicity and usability, HelixBlog allows you to spend your time writing, rather than managing a convoluted CMS.</li>
+                                            <li><a class="button btn3 block" href="/files/helixblog.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>HelixBoard</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> January 20, 2010 <i class="fa fa-cloud"></i> 1.4.0 <i class="fa fa-code"></i> GPLv3
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>
+                                                <div class="alert alert-micro alert-border-left alert-danger pastel light">
+                                                    <strong>This project is severely outdated, it's still here for future reference.</strong>
+                                                </div>
+                                            </li>
+                                            <li><strong>HelixBoard</strong> is a bulletin board software written in PHP 5 and powered by a database backend provided by either MySQL, PostgreSQL or SQLite.</li>
+                                            <li><a class="button btn3 block" href="/files/helixboard.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>phpSQLiteAdmin</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> March 12, 2010 <i class="fa fa-cloud"></i> 2.1.0 <i class="fa fa-code"></i> GPLv3
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>
+                                                <div class="alert alert-micro alert-border-left alert-danger pastel light">
+                                                    <strong>This project is severely outdated, it's still here for future reference.</strong>
+                                                </div>
+                                            </li>
+                                            <li><strong>phpSQLiteAdmin</strong> is an application which provides web based management and administration for SQLite databases. Much in the same vain as phpMyAdmin of course. Provides functionality to view data, add/drop tables, views and indexes, export data, add/delete rows, query the database.</li>
+                                            <li><a class="button btn3 block" href="/files/phpsqliteadmin.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Sprout</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> September 22, 2010 <i class="fa fa-cloud"></i> 1.0.0 <i class="fa fa-code"></i> GPLv3
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>
+                                                <div class="alert alert-micro alert-border-left alert-danger pastel light">
+                                                    <strong>This project is severely outdated, it's still here for future reference.</strong>
+                                                </div>
+                                            </li>
+                                            <li><strong>Sprout</strong> is a PHP 5 framework build on a MVC (model-view-controller) architecture written for rapid RIA development.</li>
+                                            <li><a class="button btn3 block" href="/files/sprout.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>XennoBB</h1>
+                                        <h3>
+                                            <i class="fa fa-clock-o"></i> June 1, 2009 <i class="fa fa-cloud"></i> 1.2.1 <i class="fa fa-code"></i> GPLv3
+                                        </h3>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li>
+                                                <div class="alert alert-micro alert-border-left alert-danger pastel light">
+                                                    <strong>This project is severely outdated, it's still here for future reference.</strong>
+                                                </div>
+                                            </li>
+                                            <li><strong>XennoBB</strong> is a bulletin board (forum community) software written in PHP 4 using a database backend provided by either MySQL, PostgreSQL or SQLite.</li>
+                                            <li><a class="button btn3 block" href="/files/xennobb.zip">Download</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="hs-content contact-section" id="section10">
+                        <span class="sec-icon fa fa-paper-plane"></span>
+                        <div class="hs-inner">
+                            <h2>CONTACT</h2>
+                            <div class="contact_info">
+                                <h3>How can I help you?</h3>
+                                <hr>
+                                <h6>Remember I like spam as much as you like red ants down your pants.</h6>
+                                <hr>
+                            </div>
+                            <fieldset id="contact_form">
+                                <div id="result"></div>
+                                <input type="text" name="name" id="name" placeholder="NAME" />
+                                <input type="email" name="email" id="email" placeholder="EMAIL" />
+                                <select name="subject" id="subject">
+                                    <option value="Just wanted to say hi">Just wanted to say hi</option>
+                                    <option value="I want to hire you">I want to hire you</option>
+                                    <option value="I have a bug to report">I have a bug to report</option>
+                                    <option value="You are awesome, I love your work and I want to make a donation">You are awesome, I love your work and I want to make a donation</option>
+                                    <option value="Some other thing">Some other thing</option>
+                                </select>
+                                <div class="donation success" style="display: none">
+                                    If you really want to make a donation, send any amount you see fit to my Paypal address marius@class.pm or use the button below.<br />
+                                    <form class="paypal-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                                        <input type="hidden" name="cmd" value="_s-xclick">
+                                        <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHiAYJKoZIhvcNAQcEoIIHeTCCB3UCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYCEPE1z4RFlZWCO+tavlH0YHVedP/VhN7f/cm4DSfANG4oJ2rEzd5X3vLc6bXnjrCC1rnFPDTLqWM6Tmnag3TOyLh33Ind41q8nNFSDWV7xVAElTSLJvvzA8DMxgkbdTUjrRASvRycfkbDdo8Dt6DU0jFquKOacRX1AQH9eDyrSRTELMAkGBSsOAwIaBQAwggEEBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECNpor8750WHXgIHgUYuSfL1ZYYYbHb5Hfsk2lYUrl1KEWNwEWWagxYt46Fgs4SYbMulR3en3337pPXb4pIJUGlPtsdy6c3WnhuXehM8A4j08sDI+ormNypyF6HNoxIIZrjXmTApvWBJf+qkB2rKmlJSaVGz/SVZvbcGVRB98vUkJ96pn90tqvg4Zrqy+x5tgKY6QVum0LdWgj4BPbj5Im6Dw7Zcm3iVRvxzYzm2pDqPbqhPSHBjVDSb4kkciqCRy72reM/3aCyPIk6TArCA+fPFn+WlmLCA3CvHuT6xA8joBLkiSnZizQbjkReSgggOHMIIDgzCCAuygAwIBAgIBADANBgkqhkiG9w0BAQUFADCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wHhcNMDQwMjEzMTAxMzE1WhcNMzUwMjEzMTAxMzE1WjCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMFHTt38RMxLXJyO2SmS+Ndl72T7oKJ4u4uw+6awntALWh03PewmIJuzbALScsTS4sZoS1fKciBGoh11gIfHzylvkdNe/hJl66/RGqrj5rFb08sAABNTzDTiqqNpJeBsYs/c2aiGozptX2RlnBktH+SUNpAajW724Nv2Wvhif6sFAgMBAAGjge4wgeswHQYDVR0OBBYEFJaffLvGbxe9WT9S1wob7BDWZJRrMIG7BgNVHSMEgbMwgbCAFJaffLvGbxe9WT9S1wob7BDWZJRroYGUpIGRMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbYIBADAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4GBAIFfOlaagFrl71+jq6OKidbWFSE+Q4FqROvdgIONth+8kSK//Y/4ihuE4Ymvzn5ceE3S/iBSQQMjyvb+s2TWbQYDwcp129OPIbD9epdr4tJOUNiSojw7BHwYRiPh58S1xGlFgHFXwrEBb3dgNbMUa+u4qectsMAXpVHnD9wIyfmHMYIBmjCCAZYCAQEwgZQwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tAgEAMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xNTA0MDYxNDQwMDVaMCMGCSqGSIb3DQEJBDEWBBThTqH6HrOJiVUzysM1+Yp6inhvIjANBgkqhkiG9w0BAQEFAASBgLnsmTt9i0+5JiGx0y+cJacRRtDTcDIAQms5CIcnl8U2cdMq5eUcDi1J1QeA7X4mMVXrN+raBAZT0vV9OwKbrLAkXvvV96egv9yaguY7O2qCUXo0dr8Ks0yBpC3FEF1DlF9IFajm9mb9YSWJrGN33X6QUzaEWoNoG2j1dRiXdOxa-----END PKCS7-----">
+                                        <a href="#" class="button btn3 donate">
+                                            <i class="fa fa-paypal"></i> Donate
+                                        </a>
+                                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                                    </form>
+                                </div>
+                                <textarea name="message" id="message" placeholder="MESSAGE"></textarea>
+                                <span class="submit_btn" id="submit_btn">SEND MESSAGE</span>
+                            </fieldset>
+                        </div>
+                    </article>
+                    <article class="hs-content research-section pricing-section" id="section11">
+                        <span class="sec-icon fa fa-desktop"></span>
+                        <div class="hs-inner">
+                            <h2>HOME COMPUTER</h2>
+                            <span class="content-title">VARIOUS INFO ON MY ICE FELIX HC 2000 AND ACCESSORIES</span>
+                            <div class="slide-wrapper slider2">
+                                <nav>
+                                    <a class="fa fa-angle-left" id="btn-prev"></a>
+                                    <a class="fa fa-angle-right" id="btn-next"></a>
+                                </nav>
+                                <div class="slider-details">
+                                    <span class="slide-counter"></span>
+                                    <span class="slide-date"></span>
+                                </div>
+                                <div class="slide active" data-title="HC 2000 repainted black">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/1.jpg" rel="HC">
+                                            <img src="assets/images/hc/1_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="HC 2000 repainted black 2">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/2.jpg" rel="HC">
+                                            <img src="assets/images/hc/2_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="HC 2000 with an original diskette">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/3.jpg" rel="HC">
+                                            <img src="assets/images/hc/3_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="HC 2000 original color">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/4.jpg" rel="HC">
+                                            <img src="assets/images/hc/4_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="HC 2000 keyboard">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/5.jpg" rel="HC">
+                                            <img src="assets/images/hc/5_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="HC 2000 keys">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/6.jpg" rel="HC">
+                                            <img src="assets/images/hc/6_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="HC 2000 floppy drive unit">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/7.jpg" rel="HC">
+                                            <img src="assets/images/hc/7_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/17.jpg" rel="HC">
+                                            <img src="assets/images/hc/17_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/18.jpg" rel="HC">
+                                            <img src="assets/images/hc/18_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="Speaker and the Zilog 80 CPU">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/19.jpg" rel="HC">
+                                            <img src="assets/images/hc/19_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/20.jpg" rel="HC">
+                                            <img src="assets/images/hc/20_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/21.jpg" rel="HC">
+                                            <img src="assets/images/hc/21_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/22.jpg" rel="HC">
+                                            <img src="assets/images/hc/22_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="NEC floppy disk controller chip">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/23.jpg" rel="HC">
+                                            <img src="assets/images/hc/23_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/24.jpg" rel="HC">
+                                            <img src="assets/images/hc/24_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/25.jpg" rel="HC">
+                                            <img src="assets/images/hc/25_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/26.jpg" rel="HC">
+                                            <img src="assets/images/hc/26_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/27.jpg" rel="HC">
+                                            <img src="assets/images/hc/27_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/28.jpg" rel="HC">
+                                            <img src="assets/images/hc/28_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="Floppy internal and external connectors">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/29.jpg" rel="HC">
+                                            <img src="assets/images/hc/29_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/30.jpg" rel="HC">
+                                            <img src="assets/images/hc/30_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="PAL decoder + serial interface">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/31.jpg" rel="HC">
+                                            <img src="assets/images/hc/31_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="Back side of keyboard PCB">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/32.jpg" rel="HC">
+                                            <img src="assets/images/hc/32_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/33.jpg" rel="HC">
+                                            <img src="assets/images/hc/33_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="Zilog 80 CPU + 64Kb EPROM">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/34.jpg" rel="HC">
+                                            <img src="assets/images/hc/34_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/35.jpg" rel="HC">
+                                            <img src="assets/images/hc/35_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="Audio I/O connector">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/36.jpg" rel="HC">
+                                            <img src="assets/images/hc/36_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/37.jpg" rel="HC">
+                                            <img src="assets/images/hc/37_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/38.jpg" rel="HC">
+                                            <img src="assets/images/hc/38_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="Zilog 80 CPU">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/39.jpg" rel="HC">
+                                            <img src="assets/images/hc/39_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/40.jpg" rel="HC">
+                                            <img src="assets/images/hc/40_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <table class="table table-striped table-hover table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td style="width:20%"><b>Name</b></td>
+                                        <td style="width:80%">HC 2000</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Manufacturer</b></td>
+                                        <td>I.C.E. Felix S.A.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Type</b></td>
+                                        <td>Home Computer</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Year</b></td>
+                                        <td>1992 to 1994</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Built in</b></td>
+                                        <td>Sinclair Spectrum BASIC</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Keyboard</b></td>
+                                        <td>Full stroke 51 keys</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>CPU</b></td>
+                                        <td>Zilog Z80A</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Speed</b></td>
+                                        <td>3.5469 MHz from 17.7345 MHz osc, asymetrical duty cycle.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Memory</b></td>
+                                        <td>RAM: 64 KB, ROM: 32Kb (BASIC interpreter (16K), CP/M BIOS (8K) and IF1 disk interFace (8K).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Video</b></td>
+                                        <td>PAL encoder drived from 17.7345 MHz system clock, video memory address: 4000h/C000h, comutable.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Text modes</b></td>
+                                        <td>32 chars x 24 lines (Spectrum mode) - 80 chars x 25 lines (CP/M mode).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Graphic modes</b></td>
+                                        <td>256 x 192 pixels</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Colors</b></td>
+                                        <td>16 (8 colours in normal or bright modes).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Sound</b></td>
+                                        <td>Beeper (10 octaves)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Size</b></td>
+                                        <td>50cm(W) x 20cm(D) x 6cm(H)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>I/O ports</b></td>
+                                        <td>TV/RF, RGB, Joystick, ZX-Expansion Bus, Tape recorder, Power supply, RS-232, 2nd. External disk drive.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Floppy drive</b></td>
+                                        <td>3.5</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Operating System</b></td>
+                                        <td>Spectrum Basic and CP/M 2.2</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Power supply</b></td>
+                                        <td>External power supply unit, +5V (for TTL chips), +12V, -12V (for the serial interface).</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="slide-wrapper slider3">
+                                <nav>
+                                    <a class="fa fa-angle-left" id="btn-prev"></a>
+                                    <a class="fa fa-angle-right" id="btn-next"></a>
+                                </nav>
+                                <div class="slider-details">
+                                    <span class="slide-counter"></span>
+                                    <span class="slide-date"></span>
+                                </div>
+                                <div class="slide active" data-title="ICE Felix tape recorder">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/13.jpg" rel="HC">
+                                            <img src="assets/images/hc/13_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="ICE Felix tape recorder back side">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/14.jpg" rel="HC">
+                                            <img src="assets/images/hc/14_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="ICE Felix tape recorder label zoom">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/15.jpg" rel="HC">
+                                            <img src="assets/images/hc/15_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="ICE Felix tape recorder PCB back side">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/16.jpg" rel="HC">
+                                            <img src="assets/images/hc/16_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pricing-table-wrapper">
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Documentation</h1>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li><i class="fa fa-check"></i> <a href="/files/hc/manuals/cpmmanual.pdf">CP/M manual for HC 2000</a>.</li>
+                                            <li><i class="fa fa-check"></i> <a href="/files/hc/manuals/hc2kmanual.pdf">HC 2000 manual</a>.</li>
+                                            <li><i class="fa fa-check"></i> <a href="/files/hc/manuals/hc2kschematics.pdf">HC 2000 schematics</a>.</li>
+                                            <li><i class="fa fa-check"></i> CPU - Zilog 80A (Z0840004PSC) - <a href="/files/hc/manuals/datasheet-z80.pdf">datasheet</a>.</li>
+                                            <li><i class="fa fa-check"></i> ROM - 32Kb (I27C512) - <a href="/files/hc/manuals/datasheet-I27C512.pdf">datasheet</a>.</li>
+                                            <li><i class="fa fa-check"></i> RAM - 64Kb (2x4464 DRAM chips) - <a href="">datasheet</a>.</li>
+                                            <li><i class="fa fa-check"></i> Extension - (I8272) - <a href="/files/hc/manuals/datasheet-d765ac.pdf">datasheet</a>.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slide-wrapper slider5">
+                                <nav>
+                                    <a class="fa fa-angle-left" id="btn-prev"></a>
+                                    <a class="fa fa-angle-right" id="btn-next"></a>
+                                </nav>
+                                <div class="slider-details">
+                                    <span class="slide-counter"></span>
+                                    <span class="slide-date"></span>
+                                </div>
+                                <div class="slide active" data-title="External 3.5 floppy enclosure front">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/41.jpg" rel="HC">
+                                            <img src="assets/images/hc/41_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="External 3.5 floppy enclosure inside">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/42.jpg" rel="HC">
+                                            <img src="assets/images/hc/42_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="External 3.5 floppy enclosure pcb">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/43.jpg" rel="HC">
+                                            <img src="assets/images/hc/43_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="External 3.5 floppy enclosure pcb and drive">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/44.jpg" rel="HC">
+                                            <img src="assets/images/hc/44_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="External 3.5 floppy enclosure inside 2">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/45.jpg" rel="HC">
+                                            <img src="assets/images/hc/45_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="External 3.5 floppy enclosure back">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/46.jpg" rel="HC">
+                                            <img src="assets/images/hc/46_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="External 3.5 floppy enclosure back 2">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/47.jpg" rel="HC">
+                                            <img src="assets/images/hc/47_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pricing-table-wrapper">
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Development</h1>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <div class="pricing-details">
+                                            <p>If you want to do CP/M development on a Windows machine before deploying the code to the actual hardware, you will need several applications. First of all, you should be running a 32bit Windows, so <a href="https://www.virtualbox.org/wiki/Downloads">install VirtualBox</a>, install, setup and fire up a Windows XP 32bit edition virtual machine.</p>
+                                            <h3><a title="Download ZEMU" class="tipss" href="/files/hc/software/zemu.zip">ZEMU - Z80 Emulator</a> <small>by Joe Moore, version 1.0.38</small></h3>
+                                            <ul>
+                                                <li>Z80 instruction sets, disassembler for Zilog and/or Intel/TDL mnemonics.</li>
+                                                <li>instruction and data breakpoinits, single step, trace, IO intercept, debug console.</li>
+                                                <li>can access COM ports, Windows SPL for RAW printer files.</li>
+                                                <li>disk controller capable of accessing disk images availible for this and other emulators. (runs CPM 1.4, CPM 2.2, CPM 3, MPM 2, read and writes IMD files).</li>
+                                                <li>supports a subset of the simulated features of Z80SIM.(runs USCD pascal, CPM 2, CPM 3 and MPM 2).</li>
+                                            </ul>
+                                            <h3><a title="Download Disk Image Builder" class="tipss" href="/files/hc/software/imagebuild.zip">Disk Image Builder</a> <small>version 2.0.4</small></h3>
+                                            <ul>
+                                                <li>Image Builder supports raw access to the system tracks and data tracks of various Z80 Emulator disk images.</li>
+                                                <li>Formats supported are IBM3740, PC1440, PC4104, PC8190 and 6 Jade DD image formats. These are the basic images that the Z80 emulator was designed to use.</li>
+                                                <li>While the Z80 emulator also supports many other disk image formats, disk image builder is restricted to these.</li>
+                                            </ul>
+                                            <h3><a title="Download z88dk" class="tipss" href="http://nightly.z88dk.org/z88dk-win32-latest.zip">z88dk</a></h3>
+                                            <ul>
+                                                <li>z88dk is a z80 C cross compiler supplied with an assembler/linker and a set of libraries implementing the C standard library for a number of different z80 based machines. The name z88dk originates from the time when the project was founded and targetted only the Cambridge z88 portable.</li>
+                                                <li>The compiler featured in z88dk is a much enhanced Small C compiler; the compiler accepts many features of ANSI C and is only deficient in a few areas where implementation on a z80 processor might prove inefficient. The compiler performs simple optimisations, but the bulk of the optimisation is achieved by a set of peep-hole rules, which will typically reduce the size of a large project by up to a third.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slide-wrapper slider4">
+                                <nav>
+                                    <a class="fa fa-angle-left" id="btn-prev"></a>
+                                    <a class="fa fa-angle-right" id="btn-next"></a>
+                                </nav>
+                                <div class="slider-details">
+                                    <span class="slide-counter"></span>
+                                    <span class="slide-date"></span>
+                                </div>
+                                <div class="slide active" data-title="Commodore mouse">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/8.jpg" rel="HC">
+                                            <img src="assets/images/hc/8_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="Commodore mouse 2">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/9.jpg" rel="HC">
+                                            <img src="assets/images/hc/9_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="Commodore mouse PCB, front side">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/10.jpg" rel="HC">
+                                            <img src="assets/images/hc/10_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="Commodore mouse PCB, back side">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/11.jpg" rel="HC">
+                                            <img src="assets/images/hc/11_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="slide" data-title="Commodore mouse internals">
+                                    <div class="slide-content">
+                                        <a href="assets/images/hc/12.jpg" rel="HC">
+                                            <img src="assets/images/hc/12_tb.jpg" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pricing-table-wrapper">
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>ROMs and disk images</h1>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li><i class="fa fa-check"></i> <a href="/files/hc/roms/bas.zip">Basic interpreter ROM</a></li>
+                                            <li><i class="fa fa-check"></i> <a href="/files/hc/roms/cpm.zip">CP/M ROM</a></li>
+                                            <li><i class="fa fa-check"></i> <a href="/files/hc/roms/if1.zip">Interface 1 ROM</a></li>
+                                            <li><i class="fa fa-check"></i> <a href="/files/hc/images/hc2kbasic.zip">Basic floppy disk image</a></li>
+                                            <li><i class="fa fa-check"></i> <a href="/files/hc/images/hc2kcpm22.zip">CP/M 2.2 floppy disk image</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pricing-table">
+                                    <div class="pricing-table-header">
+                                        <h1>Useful Links</h1>
+                                    </div>
+                                    <div class="pricing-table-content">
+                                        <ul class="pricing-details">
+                                            <li><i class="fa fa-check"></i> <a href="http://cpm.z80.de/" target="_blank">The Unofficial CP/M Web site</a></li>
+                                            <li><i class="fa fa-check"></i> <a href="http://z80.info/" target="_blank">Home of the z80 CPU</a></li>
+                                            <li><i class="fa fa-check"></i> <a href="http://www.retroarchive.org/" target="_blank">The Retrocomputing Archive</a></li>
+                                            <li><i class="fa fa-check"></i> <a href="http://autometer.de/unix4fun/z80pack/index.html" target="_blank">z80pack</a></li>
+                                            <li><i class="fa fa-check"></i> <a href="https://groups.yahoo.com/neo/groups/romanianhomecomputer/info" target="_blank">Romanian Home Computer Group</a></li>
+                                            <li><i class="fa fa-check"></i> <a href="http://zimmers.net/anonftp/pub/cpm/" target="_blank">Lots of CP/M programs</a></li>
+                                            <li><i class="fa fa-check"></i> <a href="http://seasip.info/Cpm/index.html" target="_blank">John Elliott's CP/M site</a></li>
+                                            <li><i class="fa fa-check"></i> <a href="http://maben.homeip.net/static/S100/index.html" target="_blank">Lots of useful info and sofware about old computers</a></li>
+                                            <li><i class="fa fa-check"></i> <a href="http://www.cpm8680.com/" target="_blank">The CP/M 86 and CP/M 80 Museum</a></li>
+                                            <li><i class="fa fa-check"></i> <a href="http://www.retrotechnology.com/herbs_stuff/s100.html" target="_blank">Herb Johnson's Retrotechnology site</a></li>
+                                            <li><i class="fa fa-check"></i> <a href="https://groups.google.com/forum/#!forum/comp.os.cpm" target="_blank">The main CP/M news group</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+        <div id="my-panel"></div>
+        <script type="text/javascript" src="assets/js/external.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASm3CwaK9qtcZEWYa-iQwHaGi3gcosAJc&amp;sensor=false"></script>
+        <script type="text/javascript" src="assets/js/app.js"></script>
+        <script>
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function() {
+                    (i[r].q = i[r].q || []).push(arguments);
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m);
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-30825160-2', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </body>
+</html>
