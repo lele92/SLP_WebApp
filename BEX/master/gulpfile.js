@@ -353,11 +353,7 @@ gulp.task('default', gulpsync.sync([
 
 gulp.task('start',[
           'styles:app',
-          'styles:app:rtl',
-          'styles:themes',
           'templates:app',
-          'templates:pages',
-          'templates:views',
           'watch'
         ]);
 

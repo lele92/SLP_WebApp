@@ -26,6 +26,13 @@ myApp
                 var queryURL = buildQueryURL('#query_authorArticles',expr);
 
                 return $http.get(queryURL);
+            },
+
+            requestFullNameAuthorArticles: function(fullName) {
+                var expr = {authorFullName: fullName};
+                var queryURL = buildQueryURL('#query_FullNameAuthorArticles',expr);
+
+                return $http.get(queryURL);
             }
         }
     });

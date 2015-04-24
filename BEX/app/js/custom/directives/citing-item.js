@@ -29,7 +29,7 @@ myApp.directive('citingItem', function( ngDialog, ArticleManagerService) {
             /* per visualizzare tutti gli articoli di un autore */
             scope.exploreAuthor = function(givenName, familyName) {
                 ngDialog.closeAll();
-                ArticleManagerService.getAuthorArticles(givenName, familyName);
+                ArticleManagerService.getArticlesByAuthor(givenName, familyName);
             }
 
             /* se un autore di un citing-item é anche autore dell'articolo citato, allora ritorna true, altrimenti false */

@@ -5,7 +5,7 @@
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
    <meta name="description" content="{{app.description}}">
-   <meta name="keywords" content="app, responsive, angular, bootstrap, dashboard, admin">
+   <meta name="keywords" content="">
    <title data-ng-bind="pageTitle()">BEX</title>
    <link rel="stylesheet" href="app/css/app.css">
     <link rel="stylesheet" href="app/css/theme-f.css" >
@@ -20,7 +20,7 @@
 
    <script src="app/js/base.js"></script>
    <script src="app/js/app.js"></script>
-   <script src="app/vendor/canvasjs-1.6.2/source/canvasjs.js"></script>
+   <script src="app/vendor/canvasjs-1.6.2/canvasjs.min.js"></script>
    <script src="app/vendor/ngDialog/js/ngDialog.min.js"></script>
    <script src="app/js/custom/custom.js"></script>
    <script src="app/js/custom/filters/biblioFilters.js"></script>
@@ -68,8 +68,6 @@
                   core:realization ?expression.
 
          ?expression a fabio:Expression;
-                  core:part [ a sro:Abstract;
-                                 c4o:hasContent ?abstractTxt];
                   dcterms:title ?title;
                   core:embodiment ?man;
                   prism:doi ?doi;
@@ -93,6 +91,11 @@
 
               ?volume a fabio:JournalVolume;
                     prism:volume ?volumeNumber.
+          }
+
+          OPTIONAL {
+              ?expression core:part [ a sro:Abstract;
+              c4o:hasContent ?abstractTxt].
           }
       }
    </script>
@@ -360,8 +363,37 @@
        }
    </script>
 
-   <!-- query: info generiche su un articolo -->
-   <script id="query_articleInfo_fromTitle" type="text/template">
+   <!-- query: tutti gli articoli (work) di un autore -->
+   <script id="query_FullNameAuthorArticles" type="text/template">
+       select ?work
+       where {
+       ?author a foaf:Person;
+       rdfs:label ?label;
+       pro:holdsRoleInTime [ a pro:RoleInTime;
+       pro:relatesToDocument ?work ]
+
+       FILTER NOT EXISTS { ?work core:realization [ a fabio:JournalEditorial ] }
+       FILTER EXISTS {
+       ?work core:realization [ a fabio:Expression;
+       core:part [ a sro:Abstract;
+       c4o:hasContent ?abstractTxt];
+       dcterms:title ?title;
+       core:embodiment ?man;
+       prism:doi ?doi;
+       fabio:hasPublicationYear ?publicationYear;
+       c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
+       c4o:hasGlobalCountSource ?globalCountSource;
+       c4o:hasGlobalCountValue ?globalCountValue;
+       c4o:hasGlobalCountDate ?globalCountDate]
+       ]
+       }
+
+       FILTER regex(?label, "{{authorFullName}}", "i")
+       }
+   </script>
+
+   <!-- query: info generiche su articoli con una certa stringa nel titolo -->
+   <script id="query_articlesInfo_fromTitle" type="text/template">
        select ?title ?doi ?expression ?volumeNumber ?issueNumber ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
        where {
 
@@ -399,5 +431,22 @@
             FILTER regex(?title, "{{title}}", "i")
        }
    </script>
+
+   <!-- query: info generiche su articoli con una certa stringa nel titolo -->
+   <script id="query_articlesWork_fromTitle" type="text/template">
+       select ?work
+       where {
+            ?exp a fabio:Expression;
+                dcterms:title ?title.
+
+            ?work a fabio:Work;
+                core:realization ?exp.
+
+            FILTER regex(?title, "{{title}}", "i")
+       } LIMIT 50
+   </script>
 </body>
 </html>
+
+
+

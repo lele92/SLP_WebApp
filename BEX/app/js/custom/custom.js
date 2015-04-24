@@ -45,5 +45,5 @@ myApp.config(function($stateProvider /* ... */) {
 // Set here the base of the relative path
 // for all app views
 function getMyBasepath(uri) {
-  return 'app/views/myViews/' + uri;
+  return 'app/views/appViews/' + uri;
 }

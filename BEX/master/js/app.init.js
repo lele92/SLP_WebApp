@@ -19,7 +19,7 @@ var App = angular.module('angle', [
     'ui.utils'
   ]);
 
-App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', function ($rootScope, $state, $stateParams, $window, $templateCache) {
+App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', 'ArticlesInfoService', function ($rootScope, $state, $stateParams, $window, $templateCache, ArticlesInfoService) {
   // Set reference to access them from any scope
   $rootScope.$state = $state;
   $rootScope.$stateParams = $stateParams;
@@ -52,5 +52,24 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', f
     hiddenFooter: false,
     viewAnimation: 'ng-fadeInUp'
   };
+
+    $rootScope.authors = [];
+    /*richiedo tutti gli autori*/
+    ArticlesInfoService.getAllAuthors().then(
+        function (response) {
+            $rootScope.authors = [];
+            var authorsFullName = response.data.results.bindings;
+
+            for (var i in authorsFullName) {
+                $rootScope.authors.push(authorsFullName[i].fullName.value);
+            }
+        },
+        //todo caso da gestire meglio
+        function (errResponse) {
+            $rootScope.authors = [];
+            ngDialog.open({template: "app/templates/dialog-error.html"});
+            console.error("Error while fetching authors. " + errResponse.status + ": " + errResponse.statusText)
+        }
+    );
 
 }]);

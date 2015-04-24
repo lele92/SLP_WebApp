@@ -407,6 +407,44 @@ myApp
 
         }
 
+        var addArticle = function(workValue) {
+            //@guide richiedo le info generali sull'articolo interrogando fuseki
+            ArticlesInfoService.getArticleGeneralInfo(workValue).then(
+
+                // http://stackoverflow.com/questions/939032/jquery-pass-more-parameters-into-callback
+                function (response) {
+                    var articleData = response.data.results.bindings[0];
+                    articleData.publicationYear = stringToInt(articleData.publicationYear.value);
+                    articleData.title = articleData.title.value;
+                    articleData.globalCountValue = stringToInt(articleData.globalCountValue.value);
+
+
+                    //@guide richiedo la lista degli autori
+                    getArticleAuthors(articleData);
+
+                    //@guide richiedo le info sulle citazioni (in entrata)
+                    ArticlesInfoService.getArticleCitationsInfo(articleData.expression.value).then(
+                        function (response) {
+                            articleData.inCitActs = response.data.results.bindings[0].numCitActs.value; //numero di citation acts
+                            articleData.inNumCites = response.data.results.bindings[0].numCites.value;  //numero di cites (<= numero di citation acts), citazioni uniche
+                        },
+                        //todo caso da gestire meglio
+                        function (errResponse) {
+                            console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+                        }
+                    );
+
+                    articlesResults.push(articleData); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia (si aggiorna comunque perchè articlese è passato per riferimento, ma con il watch aggiungo del comportamento )
+                },
+
+                //todo caso da gestire meglio
+                function (errResponse) {
+                    console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+                }
+            );
+
+        }
+
         var openErrorDialog = function() {
             ngDialog.open({
                 template: "app/templates/dialog-error.html",
@@ -530,8 +568,7 @@ myApp
             },
 
             /* per richiedere i risultati della ricerca */
-            //todo: cambiare nome in qualcosa tipo "getArticlesResult": per motivi di astrazione per i controller
-            requestArticles: function(searchString) {
+            getArticlesByAbstract: function(searchString) {
 
                 return RequestArticlesService.searchArticles(searchString).then(
                     // success
@@ -563,53 +600,20 @@ myApp
 
                             RequestArticlesService.setCompletedRequest();       //la richiesta all'abstract finder è conclusa e lo notifico
 
+                            isRetrievingArticlesInfo = true; //si notifica che stanno per iniziare le interrogazioni per ottenere le info sugli articoli
                             //@guide per ogni articolo, partendo dal work, richiedo tutte le informazioni generali + info bibliografiche
                             /* @guide: perchè faccio tante chiamate ajax e non una sola?
                              * perchè una query monolitica potrebbe richiedere molto tempo di caricamento, usando un for invece, appena arriva
                              * un articolo, lo aggiungo subito e vedo i risultati aggiornati nella view (grazie al watchCollection)
                              */
-                            isRetrievingArticlesInfo = true; //si notifica che stanno per iniziare le interrogazioni per ottenere le info sugli articoli
+
                             for (var key in tmpRes) {
+                                addArticle(tmpRes[key].value);
 
-                                //@guide richiedo le info generali sull'articolo interrogando fuseki
-                                ArticlesInfoService.getArticleGeneralInfo(tmpRes[key].value).then(
-
-                                    // http://stackoverflow.com/questions/939032/jquery-pass-more-parameters-into-callback
-                                    function (response) {
-                                        var articleData = response.data.results.bindings[0];
-                                        articleData.publicationYear = stringToInt(articleData.publicationYear.value);
-                                        articleData.title = articleData.title.value;
-                                        articleData.globalCountValue = stringToInt(articleData.globalCountValue.value);
-                                        articlesResults.push(articleData); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia (si aggiorna comunque perchè articlese è passato per riferimento, ma con il watch aggiungo del comportamento )
-
-                                        // se sono state richieste le info per tutti gli articoli
-                                        if (articlesResults.length == tmpRes.length) {
-                                            isRetrievingArticlesInfo = false;
-                                        }
-                                        //@guide richiedo la lista degli autori
-                                        getArticleAuthors(articleData);
-
-                                        //@guide richiedo le info sulle citazioni (in entrata)
-                                        ArticlesInfoService.getArticleCitationsInfo(articleData.expression.value).then(
-                                            function (response) {
-                                                articleData.inCitActs = response.data.results.bindings[0].numCitActs.value; //numero di citation acts
-                                                articleData.inNumCites = response.data.results.bindings[0].numCites.value;  //numero di cites (<= numero di citation acts), citazioni uniche
-                                            },
-                                            //todo caso da gestire meglio
-                                            function (errResponse) {
-                                                console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
-                                            }
-                                        );
-
-
-                                    },
-
-                                    //todo caso da gestire meglio
-                                    function (errResponse) {
-                                        console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
-                                    }
-                                );
-
+                                // se sono state richieste le info per tutti gli articoli
+                                if (articlesResults.length == tmpRes.length) {
+                                    isRetrievingArticlesInfo = false;
+                                }
                             }
 
                         }
@@ -651,11 +655,11 @@ myApp
 
             },
 
-            /* per richiedere un singolo articolo */
-            getSingleArticle: function(articleTitle) {
+            /* per richiedere articoli a partire dal titolo */
+            getArticlesByTitle: function(articleTitle) {
                 RequestArticlesService.setPendingRequest(); //todo: in futuro questo dovrà essere evitato
 
-                return ArticlesInfoService.requestSingleArticle(articleTitle).then(
+                return ArticlesInfoService.requestArticlesByTitle(articleTitle).then(
                     // success
                     function(response) {
                         StatesManagerService.removeAllStates(); //svuota la lista degli stati
@@ -663,40 +667,39 @@ myApp
                         //console.log(StatesManagerService.getStates());
                         articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
 
+                        var tmpRes = null; //conterrà gli uri dei work dei risultati (se ci sono risultati)
                         if (response.data.results.bindings.length == 0) {
                             articlesResultsState = resultsStates.NO_RESULTS;           // non ci sono risultati
                             console.log("NO RESULTS!");
+                            tmpRes = [];
 
                             RequestArticlesService.setCompletedRequest();
                         } else {
+
                             articlesResultsState = resultsStates.RESULTS;              // ci sono risultati
                             //console.log("RESULTS!");
-                            articlesNum = 1;                        // numero totale di articoli di cui richiedere le info
-                            completedArticles = 1;         // numero di richieste completate = numero di articoli nella lista degli articoli
+                            var articleData = response.data.results.bindings;
+                            tmpRes = response.data.results.bindings; //contiene gli uri dei work
+                            articlesNum = articleData.length;                        // numero totale di articoli di cui richiedere le info
+                            completedArticles = articlesResults.length;         // numero di richieste completate = numero di articoli nella lista degli articoli
 
                             RequestArticlesService.setCompletedRequest();
 
-                            var articleData = response.data.results.bindings[0];
-                            articleData.publicationYear = stringToInt(articleData.publicationYear.value);
-                            articleData.title = articleData.title.value;
-                            articleData.globalCountValue = stringToInt(articleData.globalCountValue.value);
 
-                            articlesResults.push(articleData);
+                            //@guide per ogni articolo, partendo dal work, richiedo tutte le informazioni generali + info bibliografiche
+                            /* @guide: perchè faccio tante chiamate ajax e non una sola?
+                             * perchè una query monolitica potrebbe richiedere molto tempo di caricamento, usando un for invece, appena arriva
+                             * un articolo, lo aggiungo subito e vedo i risultati aggiornati nella view (grazie al watchCollection)
+                             */
+                            for (var key in tmpRes) {
 
-                            //@guide richiedo la lista degli autori
-                            getArticleAuthors(articleData);
+                                addArticle(tmpRes[key].work.value);
 
-                            //@guide richiedo le info sulle citazioni (in entrata)
-                            ArticlesInfoService.getArticleCitationsInfo(articleData.expression.value).then(
-                                function (response) {
-                                    articleData.inCitActs = response.data.results.bindings[0].numCitActs.value; //numero di citation acts
-                                    articleData.inNumCites = response.data.results.bindings[0].numCites.value;  //numero di cites (<= numero di citation acts), citazioni uniche
-                                },
-                                //todo caso da gestire meglio
-                                function (errResponse) {
-                                    console.error("Error while fetching article. " + errResponse.status + ": " + errResponse.statusText);
+                                // se sono state richieste le info per tutti gli articoli
+                                if (articlesResults.length == tmpRes.length) {
+                                    isRetrievingArticlesInfo = false;
                                 }
-                            );
+                            }
                         }
 
                     },
@@ -710,7 +713,7 @@ myApp
                 );
             },
 
-            getAuthorArticles: function(givenName, familyName) {
+            getArticlesByAuthor: function(givenName, familyName) {
                 AuthorInfoService.requestAuthorArticles(familyName, givenName).then(
                     // success
                     function(response) {
@@ -730,44 +733,63 @@ myApp
                          */
                         isRetrievingArticlesInfo = true; //si notifica che stanno per iniziare le interrogazioni per ottenere le info sugli articoli
                         for (var key in tmpRes) {
-                            //@guide richiedo le info generali sull'articolo interrogando fuseki
-                            ArticlesInfoService.getArticleGeneralInfo(tmpRes[key].work.value).then(
+                            addArticle(tmpRes[key].work.value);
 
-                                // http://stackoverflow.com/questions/939032/jquery-pass-more-parameters-into-callback
-                                function (response) {
-                                    var articleData = response.data.results.bindings[0];
-                                    articleData.publicationYear = stringToInt(articleData.publicationYear.value);
-                                    articleData.title = articleData.title.value;
-                                    articleData.globalCountValue = stringToInt(articleData.globalCountValue.value);
-                                    articlesResults.push(articleData); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia (si aggiorna comunque perchè articles è passato per riferimento, ma con il watch aggiungo del comportamento )
+                            // se sono state richieste le info per tutti gli articoli
+                            if (articlesResults.length == tmpRes.length) {
+                                isRetrievingArticlesInfo = false;
+                            }
+                        }
+                    },
 
-                                    // se sono state richieste le info per tutti gli articoli
-                                    if (articlesResults.length == tmpRes.length) {
-                                        isRetrievingArticlesInfo = false;
-                                    }
-                                    //@guide richiedo la lista degli autori
-                                    getArticleAuthors(articleData);
+                    // error
+                    //todo caso da gestire meglio
+                    function(errResponse) {
+                        console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText)
+                    }
+                );
+            },
 
-                                    //@guide richiedo le info sulle citazioni (in entrata)
-                                    ArticlesInfoService.getArticleCitationsInfo(articleData.expression.value).then(
-                                        function (response) {
-                                            articleData.inCitActs = response.data.results.bindings[0].numCitActs.value; //numero di citation acts
-                                            articleData.inNumCites = response.data.results.bindings[0].numCites.value;  //numero di cites (<= numero di citation acts), citazioni uniche
-                                        },
-                                        //todo caso da gestire meglio
-                                        function (errResponse) {
-                                            console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
-                                        }
-                                    );
+            //todo: da cambiare: funzione quasi uguale a getArticlesByAuthor ma prende come parametro il fullName, RIFATTORIZZARE!
+            getArticlesByFullNameAuthor: function(fullName) {
+                RequestArticlesService.setPendingRequest(); //todo: in futuro questo dovrà essere evitato
 
+                return AuthorInfoService.requestFullNameAuthorArticles(fullName).then(
+                    // success
+                    function(response) {
+                        StatesManagerService.removeAllStates(); //svuota la lista degli stati
+                        StatesManagerService.addEmptyState("Author: '"+fullName+"'");
+                        //console.log(StatesManagerService.getStates());
+                        articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
 
-                                },
+                        var tmpRes = null; //conterrà gli uri dei work dei risultati (se ci sono risultati)
+                        if (response.data.results.bindings.length == 0) {
+                            articlesResultsState = resultsStates.NO_RESULTS;           // non ci sono risultati
+                            console.log("NO RESULTS!");
+                            tmpRes = [];
 
-                                //todo caso da gestire meglio
-                                function (errResponse) {
-                                    console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+                            RequestArticlesService.setCompletedRequest();
+                        } else {
+                            articlesResultsState = resultsStates.RESULTS;
+                            tmpRes = response.data.results.bindings;
+                            articlesNum = tmpRes.length;    // numero totale di articoli di cui richiedere le info
+                            completedArticles = articlesResults.length;         // numero di richieste completate = numero di articoli nella lista degli articoli (inizialmente zero)...semplice
+                            RequestArticlesService.setCompletedRequest();       //la richiesta all'abstract finder è conclusa e lo notifico
+
+                            //@guide per ogni articolo, partendo dal work, richiedo tutte le informazioni generali + info bibliografiche
+                            /* @guide: perchè faccio tante chiamate ajax e non una sola?
+                             * perchè una query monolitica potrebbe richiedere molto tempo di caricamento, usando un for invece, appena arriva
+                             * un articolo, lo aggiungo subito e vedo i risultati aggiornati nella view (grazie al watchCollection)
+                             */
+                            isRetrievingArticlesInfo = true; //si notifica che stanno per iniziare le interrogazioni per ottenere le info sugli articoli
+                            for (var key in tmpRes) {
+                                addArticle(tmpRes[key].work.value);
+
+                                // se sono state richieste le info per tutti gli articoli
+                                if (articlesResults.length == tmpRes.length) {
+                                    isRetrievingArticlesInfo = false;
                                 }
-                            );
+                            }
                         }
                     },
 

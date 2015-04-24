@@ -1,12 +1,11 @@
-myApp.controller('BiblioFiltersController', function(FiltersManagerService, $scope) {
+myApp.controller('BiblioFiltersController', function(FiltersManagerService, $scope, $rootScope) {
     var self = this;
     /* filters and order objs: oggetti {value: ...} di filterManagerService */ //'F' -> convenzione per Filter
     self.publicationYearF = FiltersManagerService.getStartingPublicationYearF();
     self.onlySelfcitationsF = FiltersManagerService.getOnlySelfCitationsF();
     self.characterizationsF = FiltersManagerService.getCharacterizationsF();
     self.authorsF = FiltersManagerService.getAuthorsF();        //con questo prendo la lista di autori del filtro
-
-    self.allAuthors = FiltersManagerService.getAllArticlesAuthors(); //con questo prendo tutti gli autori
+    self.allAuthors = $rootScope.authors;
     self.selectedAuthor = ""; //
     self.authorAlreadyInList = false;
     self.inputNotValid = false;

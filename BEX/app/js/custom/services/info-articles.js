@@ -107,10 +107,10 @@ myApp
                 return $http.get(queryURL);
             },
 
-            //@guide per ottenere un singolo articolo a partire dal titolo
-            requestSingleArticle: function(articleTitle) {
+            //@guide per ottenere work degli articoli a partire da un certo titolo
+            requestArticlesByTitle: function(articleTitle) {
                 var expr = {title: articleTitle};
-                var queryURL = buildQueryURL('#query_articleInfo_fromTitle',expr);
+                var queryURL = buildQueryURL('#query_articlesWork_fromTitle',expr);
 
                 return $http.get(queryURL);
             }

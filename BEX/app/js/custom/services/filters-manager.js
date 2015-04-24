@@ -273,6 +273,7 @@ myApp
             },
 
             //questo è per ottenre tutti gli autori (usato nel typeahead
+            //todo: probabilmente da eliminare, ora tutti gli autori sono aggiunti nel rootscope in HomeSearchController
             getAllArticlesAuthors: function() {
                 if (isEmpty(allAuthors.value)) {
                     ArticlesInfoService.getAllAuthors().then(

@@ -25,6 +25,7 @@
                         <i class="pull-right collapse-btn" ng-click="isCollapsed = !isCollapsed" ng-class="{'fa fa-plus-square fa-2x': isCollapsed, 'fa fa-minus-square fa-2x': !isCollapsed}"></i>
                     </div>
                     <div class="panel-body" collapse="isCollapsed">
+                        <div ng-show="!articleData.abstractTxt.value" class="alert alert-info col-lg-2 col-md-4 col-sm-4"><em class="icon-info"></em> Abstract not available</div>
                         <p>{{articleData.abstractTxt.value}}</p>
                     </div>
                 </div>

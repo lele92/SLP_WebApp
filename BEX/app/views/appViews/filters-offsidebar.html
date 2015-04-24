@@ -38,7 +38,7 @@
             </legend>
             <div collapse="!biblioFilterCtrl.checkAuthors">
                 <div class="input-group">
-                    <input ng-class="{'input-error': biblioFilterCtrl.inputNotValid, 'input-warning': biblioFilterCtrl.authorAlreadyInList}" placeholder="Type author name" type="text" ng-model="biblioFilterCtrl.selectedAuthor" typeahead-editable="false" typeahead-on-select="biblioFilterCtrl.onSelect($item, $model, $label)" typeahead="author for author in biblioFilterCtrl.allAuthors.value | filter:$viewValue | limitTo:8" class="form-control" />
+                    <input ng-class="{'input-error': biblioFilterCtrl.inputNotValid, 'input-warning': biblioFilterCtrl.authorAlreadyInList}" placeholder="Type author name" type="text" ng-model="biblioFilterCtrl.selectedAuthor" typeahead-editable="false" typeahead-on-select="biblioFilterCtrl.onSelect($item, $model, $label)" typeahead="author for author in biblioFilterCtrl.allAuthors | filter:$viewValue | limitTo:8" class="form-control" />
                     <span class="input-group-btn">
                         <button type="button"  class="btn btn-default" ng-click="biblioFilterCtrl.updateAuthorFilter()">Add</button>
                     </span>
