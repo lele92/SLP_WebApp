@@ -74,45 +74,9 @@ myApp
                 "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
             }
         ];
-        var colorsMap = {
-            "http://purl.org/spar/cito/citesForInformation": { toString: "cites for information", value: "http://purl.org/spar/cito/citesForInformation" },
-            "http://purl.org/spar/cito/citesAsMetadataDocument": { toString: "cites as metadata document", value: "http://purl.org/spar/cito/citesAsMetadataDocument" },
-            "http://purl.org/spar/cito/citesAsDataSource": { toString: "cites as data source", value: "http://purl.org/spar/cito/citesAsDataSource" },
-            "http://purl.org/spar/cito/citesAsAuthority": { toString: "cites as authority", value: "http://purl.org/spar/cito/citesAsAuthority" },
-            "http://purl.org/spar/cito/obtainsSupportFrom": { toString: "obtains support from", value: "http://purl.org/spar/cito/obtainsSupportFrom" },
-            "http://purl.org/spar/cito/includesExcerptFrom": { toString: "includes excerpt from", value: "http://purl.org/spar/cito/includesExcerptFrom" },
-            "http://purl.org/spar/cito/confirms": { toString: "confirms", value: "http://purl.org/spar/cito/confirms" },
-            "http://purl.org/spar/cito/containsAssertionFrom": { toString: "contains assertion from", value: "http://purl.org/spar/cito/containsAssertionFrom" },
-            "http://purl.org/spar/cito/derides": { toString: "derides", value: "http://purl.org/spar/cito/derides" },
-            "http://purl.org/spar/cito/includesQuotationFrom": { toString: "includes quotation from", value: "http://purl.org/spar/cito/includesQuotationFrom" },
-            "http://purl.org/spar/cito/citesAsRelated": { toString: "cites as related", value: "http://purl.org/spar/cito/citesAsRelated" },
-            "http://purl.org/spar/cito/usesMethodIn": { toString: "uses method in", value: "http://purl.org/spar/cito/usesMethodIn" },
-            "http://purl.org/spar/cito/documents": { toString: "documents", value: "http://purl.org/spar/cito/documents" },
-            "http://purl.org/spar/cito/describes": { toString: "describes", value: "http://purl.org/spar/cito/describes" },
-            "http://purl.org/spar/cito/usesConclusionsFrom": { toString: "uses conclusions from", value: "http://purl.org/spar/cito/usesConclusionsFrom" },
-            "http://purl.org/spar/cito/repliesTo": { toString: "replies to", value: "http://purl.org/spar/cito/repliesTo" },
-            "http://purl.org/spar/cito/qualifies": { toString: "qualifies", value: "http://purl.org/spar/cito/qualifies" },
-            "http://purl.org/spar/cito/corrects": { toString: "corrects", value: "http://purl.org/spar/cito/corrects" },
-            "http://purl.org/spar/cito/agreesWith": { toString: "agrees with", value: "http://purl.org/spar/cito/agreesWith" },
-            "http://purl.org/spar/cito/citesAsEvidence": { toString: "cites as evidence", value: "http://purl.org/spar/cito/citesAsEvidence" },
-            "http://purl.org/spar/cito/usesDataFrom": { toString: "uses data from", value: "http://purl.org/spar/cito/usesDataFrom" },
-            "http://purl.org/spar/cito/parodies": { toString: "parodies", value: "http://purl.org/spar/cito/parodies" },
-            "http://purl.org/spar/cito/critiques": { toString: "critiques", value: "http://purl.org/spar/cito/critiques" },
-            "http://purl.org/spar/cito/compiles": { toString: "compiles", value: "http://purl.org/spar/cito/compiles" },
-            "http://purl.org/spar/cito/speculatesOn": { toString: "speculates on", value: "http://purl.org/spar/cito/speculatesOn" },
-            "http://purl.org/spar/cito/extends": { toString: "extends", value: "http://purl.org/spar/cito/extends" },
-            "http://purl.org/spar/cito/citesAsSourceDocument": { toString: "cites as source document", value: "http://purl.org/spar/cito/citesAsSourceDocument" },
-            "http://purl.org/spar/cito/updates": { toString: "updates", value: "http://purl.org/spar/cito/updates" },
-            "http://purl.org/spar/cito/discusses": { toString: "discusses", value: "http://purl.org/spar/cito/discusses" },
-            "http://purl.org/spar/cito/citesAsPotentialSolution": { toString: "cites as potential solution", value: "http://purl.org/spar/cito/citesAsPotentialSolution" },
-            "http://purl.org/spar/cito/obtainsBackgroundFrom": { toString: "obtains background from", value: "http://purl.org/spar/cito/obtainsBackgroundFrom" },
-            "http://purl.org/spar/cito/reviews": { toString: "reviews", value: "http://purl.org/spar/cito/reviews" },
-            "http://purl.org/spar/cito/supports": { toString: "supports", value: "http://purl.org/spar/cito/supports" },
-            "http://purl.org/spar/cito/citesAsRecommendedReading": { toString: "cites as recommended reading", value: "http://purl.org/spar/cito/citesAsRecommendedReading" },
-            "http://purl.org/spar/cito/credits": { toString: "credits", value: "http://purl.org/spar/cito/credits" },
-            "http://purl.org/spar/cito/disagreesWith": { toString: "disagrees with", value: "http://purl.org/spar/cito/disagreesWith" },
-            "http://purl.org/spar/cito/plagiarizes": { toString: "plagiarizes", value: "http://purl.org/spar/cito/plagiarizes" }
-        };
+
+        //todo: da spostare
+        var colorsMap = $rootScope.colorsMap;
         var isRetrievingArticlesInfo = false;               // indica se è in atto un'interrogazione a fuseki per avere le info sugli articoli (risultati di ricerca)
         var articlesNum = 0;                                // numero totale di articoli di cui richiedere le info
         var completedArticles = articlesResults.length;     // numero di richieste completate = numero di articoli nella lista degli articoli...semplice
@@ -211,8 +175,9 @@ myApp
             );
         }
 
-        var noData = function(res) {
-            return res.data == "";
+        //todo: da migliorare
+        var noData = function(res,resSetP,resultsP) {
+            return  res.data == "" || !res.data[resSetP][resultsP] ;
         }
 
         /* cerca autori in comune tra l'articolo dei risultati di ricerca e il citato/citante:
@@ -584,7 +549,7 @@ myApp
 //                        response = []; //todo: da eliminare, barbatrucco per passare il controllo
 
                         //todo: righe da scommentare
-                        if (noData(response)) {
+                        if (noData(response,resSet,results)) {
                             articlesResultsState = resultsStates.NO_RESULTS;           // non ci sono risultati
                             console.log("NO RESULTS!");
                             tmpRes = [];

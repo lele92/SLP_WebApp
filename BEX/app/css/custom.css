@@ -462,3 +462,12 @@
 .no-margin {
     margin: 0px;
 }
+
+.article-title {
+    font-size: 20px;
+    margin-top: 0px;
+}
+
+.authors-icon {
+    font-size: 1.5em;
+}

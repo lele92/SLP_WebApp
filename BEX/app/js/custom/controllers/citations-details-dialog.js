@@ -1,4 +1,6 @@
-myApp.controller('CitationDetailsDialogController', function($scope) {
+myApp.controller('CitationDetailsDialogController', function($scope, $rootScope) {
+    var colorsMap = $rootScope.colorsMap;
+
     /* quante cit di tipo color ci sono state nell'anno year */
     var calcNumCites = function(year, color, citInfo) {
         var tmpObj;
@@ -53,7 +55,8 @@ myApp.controller('CitationDetailsDialogController', function($scope) {
                 data.push({
                     indexLabel: tmpLbl,
                     y: 1,
-                    toolTipContent: "{indexLabel}: {y}"
+                    toolTipContent: "{indexLabel}: {y}",
+                    color: getColor(tmpLbl)
                 });
             } else {
                 data[data.length-1].y++;
@@ -64,6 +67,17 @@ myApp.controller('CitationDetailsDialogController', function($scope) {
 
         return data;
     }
+
+    // todo: da cambiare: funzione provvisoria per trovare colore hex associato a label
+    var getColor = function(colorLbl) {
+        for (key in colorsMap) {
+            if (colorsMap[key]["toString"] === colorLbl) {
+                return colorsMap[key].color;
+            }
+        }
+
+    }
+
     /* per ottenere i dati sulle citazioni nel formato richiesto per lo stacked column chart */
     var parseDataForStackedColumnChart = function(citInfo) {
 
@@ -120,7 +134,8 @@ myApp.controller('CitationDetailsDialogController', function($scope) {
                 type: "stackedColumn",
                 name: colors[key],
                 showInLegend: true,
-                dataPoints: calcDataPoints(years, colors[key], citInfo)
+                dataPoints: calcDataPoints(years, colors[key], citInfo),
+                color: getColor(colors[key])
             }
 
             data.push(dataItem);
@@ -147,6 +162,8 @@ myApp.controller('CitationDetailsDialogController', function($scope) {
                 //height: 170,
                 //width: 350,
                 //backgroundColor: "#EBECED",
+                animationEnabled: true,
+                animationDuration: 2000,
                 data: citData
             });
 
@@ -164,6 +181,8 @@ myApp.controller('CitationDetailsDialogController', function($scope) {
                 //height: 170,
                 //width: 350,
                 //backgroundColor: "#EBECED",
+                animationEnabled: true,
+                animationDuration: 2000,
                 data: [
                     {
                         type: "doughnut",
