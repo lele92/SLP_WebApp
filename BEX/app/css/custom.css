@@ -116,7 +116,6 @@
 #search-btn {
     margin: 10px;
     font-size: large;
-
 }
 
 .articles-alert {
@@ -453,6 +452,7 @@
     -webkit-box-shadow: 0px 0px 30px 0px rgba(50, 50, 50, 0.16);
     -moz-box-shadow:    0px 0px 30px 0px rgba(50, 50, 50, 0.16);
     box-shadow:         0px 0px 30px 0px rgba(50, 50, 50, 0.16);
+    padding-bottom: 20px;
 }
 
 #guide-icon {
@@ -471,3 +471,44 @@
 .authors-icon {
     font-size: 1.5em;
 }
+
+.authors-loading-spinner {
+    margin-left: 20px;
+}
+
+.example-animate-container {
+    background:white;
+    border:1px solid black;
+    list-style:none;
+    margin:0;
+    padding:0 10px;
+}
+
+.animate-repeat {
+    line-height:40px;
+    list-style:none;
+    box-sizing:border-box;
+}
+
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter,
+.animate-repeat.ng-leave {
+    -webkit-transition:all linear 0.5s;
+    transition:all linear 0.5s;
+}
+
+.animate-repeat.ng-leave.ng-leave-active,
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter {
+    opacity:0;
+    max-height:0;
+}
+
+.animate-repeat.ng-leave,
+.animate-repeat.ng-move.ng-move-active,
+.animate-repeat.ng-enter.ng-enter-active {
+    opacity:1;
+    max-height:40px;
+}
+
+

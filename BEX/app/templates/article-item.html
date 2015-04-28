@@ -1,4 +1,4 @@
-<div id="article_{{articleIndex}}" class="panel panel-default panel-article-item">
+<div id="article_{{articleIndex}}" class="panel panel-default panel-article-item " ng-class="{'whirl traditional': !articleData.authors}">
     <div class="panel-heading article-header panel-min-padding">
         <div class="article-header-info">
             <a tooltip="External link" tooltip-placement="bottom"  tooltip-popup-delay="500"class="btn btn-oval btn-primary pull-right" ng-href="{{articleData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i></a>
@@ -6,7 +6,7 @@
 
             <div>
                 <em tooltip="Authors"  tooltip-popup-delay="500" class="fa fa-users authors-icon biblio-round-icon"></em>
-                <span tooltip="show author articles" class="label label-author pointer" ng-repeat="author in articleData.authors" ng-click="exploreAuthor(author.givenName.value, author.familyName.value)">  {{author.givenName.value}} {{author.familyName.value}} </span>
+                <span tooltip="show author articles" class="label label-author pointer animated bounceIn" ng-repeat="author in articleData.authors" ng-click="exploreAuthor(author.givenName.value, author.familyName.value)">  {{author.givenName.value}} {{author.familyName.value}} </span>
             </div>
         </div>
 
@@ -83,7 +83,7 @@
                 </button>
             </div>
 
-            <biblio-item ng-show="showBiblio"  ng-repeat="biblioItem in filteredBiblioItems = (articleData.biblioInfo |
+            <biblio-item ng-show="showBiblio" ng-animate="'animate'" ng-repeat="biblioItem in filteredBiblioItems = (articleData.biblioInfo |
                                     afterYear:yearFilter.value |
                                     onlySelfcitation:onlySelfcitationFilter.value |
                                     characterizations:characterizationsFilter.value |
