@@ -1,1 +1,87 @@
-!function(t,e){"function"==typeof define&&define.amd?define(["angular","chartist"],e):"object"==typeof exports?module.exports=e(require("angular"),require("chartist")):t.angularChartist=e(t.angular,t.Chartist)}(this,function(t,e){"use strict";function n(t){this.data=t.data(),this.chartType=t.chartType,this.events=t.events()||{},this.options=t.chartOptions()||null,this.responsiveOptions=t.responsiveOptions()||null}var r=t.module("angular-chartist",[]);return n.$inject=["$scope"],n.prototype.bindEvents=function(t){Object.keys(this.events).forEach(function(e){t.on(e,this.events[e])},this)},n.prototype.renderChart=function(t){return e[this.chartType](t,this.data,this.options,this.responsiveOptions)},r.directive("chartist",[function(){return{restrict:"EA",scope:{data:"&chartistData",chartType:"@chartistChartType",events:"&chartistEvents",chartOptions:"&chartistChartOptions",responsiveOptions:"&chartistResponsiveOptions"},controller:n,link:function(t,e,n,r){var i=e[0],a=r.renderChart(i);r.bindEvents(a),t.$watch(function(){return{data:t.data(),chartType:t.chartType,chartOptions:t.chartOptions()}},function(t,e){r.chartType=t.chartType,r.data=t.data,r.options=t.chartOptions,t.chartType!==e.chartType?a=r.renderChart(i):a.update(r.data,r.options)},!0),t.$on("$destroy",function(){a.detach()})}}}]),r});
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(["angular", "chartist"], factory);
+    } else if (typeof exports === 'object') {
+        module.exports = factory(require('angular'), require('chartist'));
+    } else {
+        root.angularChartist = factory(root.angular, root.Chartist);
+    }
+}(this, function (angular, Chartist) {
+
+    /* global angular, Chartist */
+    'use strict';
+
+    var angularChartist = angular.module('angular-chartist', []);
+
+    function AngularChartistCtrl($scope) {
+        this.data = $scope.data();
+        this.chartType = $scope.chartType;
+
+        this.events = $scope.events() || {};
+        this.options = $scope.chartOptions() || null;
+        this.responsiveOptions = $scope.responsiveOptions() || null;
+    }
+
+    AngularChartistCtrl.$inject = ['$scope'];
+
+    AngularChartistCtrl.prototype.bindEvents = function (chart) {
+        Object.keys(this.events).forEach(function (eventName) {
+            chart.on(eventName, this.events[eventName]);
+        }, this);
+    };
+
+    AngularChartistCtrl.prototype.renderChart = function (element) {
+        return Chartist[this.chartType](element, this.data, this.options, this.responsiveOptions);
+    };
+
+    angularChartist.directive('chartist', [
+
+    function () {
+        return {
+            restrict: 'EA',
+            scope: {
+                // mandatory
+                data: '&chartistData',
+                chartType: '@chartistChartType',
+                // optional
+                events: '&chartistEvents',
+                chartOptions: '&chartistChartOptions',
+                responsiveOptions: '&chartistResponsiveOptions'
+            },
+            controller: AngularChartistCtrl,
+            link: function (scope, element, attrs, Ctrl) {
+                var elm = element[0];
+                var chart = Ctrl.renderChart(elm);
+
+                Ctrl.bindEvents(chart);
+
+                scope.$watch(function () {
+                    return {
+                        data: scope.data(),
+                        chartType: scope.chartType,
+                        chartOptions: scope.chartOptions()
+                    };
+                }, function (newConfig, oldConfig) {
+                    // Update controller with new configuration
+                    Ctrl.chartType = newConfig.chartType;
+                    Ctrl.data = newConfig.data;
+                    Ctrl.options = newConfig.chartOptions;
+
+                    // If chart type changed we need to recreate whole chart, otherwise we can update
+                    if (newConfig.chartType !== oldConfig.chartType) {
+                        chart = Ctrl.renderChart(elm);
+                    } else {
+                        chart.update(Ctrl.data, Ctrl.options);
+                    }
+                }, true);
+
+                scope.$on('$destroy', function () {
+                    chart.detach();
+                });
+            }
+        };
+    }]);
+
+    return angularChartist;
+
+}));
