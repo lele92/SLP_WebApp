@@ -74,8 +74,10 @@
     color: #0055aa;
 }
 
-.filter-navbar {
-    background-color: #277D68
+@media only screen and (min-width: 768px) {
+    .filter-navbar {
+        background-color: #277D68
+    }
 }
 
 .shared-author {

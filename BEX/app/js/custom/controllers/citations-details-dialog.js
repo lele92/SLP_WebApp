@@ -1,4 +1,4 @@
-myApp.controller('CitationDetailsDialogController', function($scope, $rootScope) {
+myApp.controller('CitationDetailsDialogController', ["$scope", "$rootScope", function($scope, $rootScope) {
     var colorsMap = $rootScope.colorsMap;
 
     /* quante cit di tipo color ci sono state nell'anno year */
@@ -202,4 +202,4 @@ myApp.controller('CitationDetailsDialogController', function($scope, $rootScope)
         renderCitDonutChart($scope.ngDialogData.articleData.citationsInfo);
         renderCitStackedChart($scope.ngDialogData.articleData.citationsInfo);
     });
-});
+}]);

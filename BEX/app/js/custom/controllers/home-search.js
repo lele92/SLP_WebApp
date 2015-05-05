@@ -1,5 +1,5 @@
 
-myApp.controller('HomeSearchController', function($rootScope,RequestArticlesService, ArticleManagerService, ArticlesInfoService) {
+myApp.controller('HomeSearchController', ["$rootScope", "RequestArticlesService", "ArticleManagerService", function($rootScope,RequestArticlesService, ArticleManagerService) {
     var self = this;
     var ABSTRACT_SEARCH = 0;
     var TITLE_SEARCH = 1;
@@ -103,4 +103,4 @@ myApp.controller('HomeSearchController', function($rootScope,RequestArticlesServ
     };
 
 
-})
+}]);

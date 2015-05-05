@@ -5,7 +5,7 @@
  * Saves panel state in browser storage
  =========================================================*/
 
-App.directive('paneltool', function($compile, $timeout){
+App.directive('paneltool', ["$compile", "$timeout", function($compile, $timeout){
   var templates = {
     /* jshint multistr: true */
     collapse:"<a href='#' panel-collapse='' tooltip='Collapse Panel' ng-click='{{panelId}} = !{{panelId}}'> \
@@ -48,15 +48,15 @@ App.directive('paneltool', function($compile, $timeout){
 
     }
   };
-})
+}])
 /**=========================================================
  * Dismiss panels * [panel-dismiss]
  =========================================================*/
-.directive('panelDismiss', function($q, Utils){
+.directive('panelDismiss', ["$q", "Utils", function($q, Utils){
   'use strict';
   return {
     restrict: 'A',
-    controller: function ($scope, $element) {
+    controller: ["$scope", "$element", function ($scope, $element) {
       var removeEvent   = 'panel-remove',
           removedEvent  = 'panel-removed';
 
@@ -100,9 +100,9 @@ App.directive('paneltool', function($compile, $timeout){
 
         }
       });
-    }
+    }]
   };
-})
+}])
 /**=========================================================
  * Collapse panels * [panel-collapse]
  =========================================================*/
@@ -115,7 +115,7 @@ App.directive('paneltool', function($compile, $timeout){
   return {
     restrict: 'A',
     scope: false,
-    controller: function ($scope, $element) {
+    controller: ["$scope", "$element", function ($scope, $element) {
 
       // Prepare the panel to be collapsible
       var $elem   = $($element),
@@ -138,7 +138,7 @@ App.directive('paneltool', function($compile, $timeout){
         savePanelState( panelId, !$scope[panelId] );
 
       });
-    }
+    }]
   };
 
   function savePanelState(id, state) {
@@ -162,13 +162,13 @@ App.directive('paneltool', function($compile, $timeout){
  * Refresh panels
  * [panel-refresh] * [data-spinner="standard"]
  =========================================================*/
-.directive('panelRefresh', function($q){
+.directive('panelRefresh', ["$q", function($q){
   'use strict';
   
   return {
     restrict: 'A',
     scope: false,
-    controller: function ($scope, $element) {
+    controller: ["$scope", "$element", function ($scope, $element) {
       
       var refreshEvent   = 'panel-refresh',
           whirlClass     = 'whirl',
@@ -201,6 +201,6 @@ App.directive('paneltool', function($compile, $timeout){
           .element(newid)
           .removeClass(whirlClass);
       }
-    }
+    }]
   };
-});
+}]);

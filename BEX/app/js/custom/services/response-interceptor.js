@@ -6,7 +6,7 @@
 'use strict';
 
 myApp
-    .factory('ResponseInterceptorService', function($q, $injector) {
+    .factory('ResponseInterceptorService', ["$q", function($q) {
 
 
         return {
@@ -20,8 +20,8 @@ myApp
 
         }
 
-    })
-    .config(function($httpProvider) {
+    }])
+    .config(["$httpProvider", function($httpProvider) {
         $httpProvider.interceptors.push('ResponseInterceptorService');
 
-    })
+    }])

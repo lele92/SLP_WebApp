@@ -34,5 +34,6 @@ App.controller('ModalController', ['$scope', '$modal', function ($scope, $modal)
       $modalInstance.dismiss('cancel');
     };
   };
+  ModalInstanceCtrl.$inject = ["$scope", "$modalInstance"];
 
 }]);

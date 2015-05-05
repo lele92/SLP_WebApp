@@ -5,7 +5,7 @@
 'use strict';
 
 myApp
-    .factory('ArticleManagerService', function(RequestArticlesService, FiltersManagerService,  ArticlesInfoService, StatesManagerService, AuthorInfoService, ngDialog, $rootScope, $interval) {
+    .factory('ArticleManagerService', ["RequestArticlesService", "FiltersManagerService", "ArticlesInfoService", "StatesManagerService", "AuthorInfoService", "ngDialog", "$rootScope", function(RequestArticlesService, FiltersManagerService,  ArticlesInfoService, StatesManagerService, AuthorInfoService, ngDialog, $rootScope) {
         var articlesResults = [];
         var mockResults = [
 
@@ -413,8 +413,8 @@ myApp
         var openErrorDialog = function() {
             ngDialog.open({
                 template: "app/templates/dialog-error.html",
-                controller: function($rootScope, $scope) {
-                }
+                controller: ["$rootScope", "$scope", function($rootScope, $scope) {
+                }]
             });
         }
 
@@ -781,4 +781,4 @@ myApp
             //    articlesResults.push(newArticle);
             //}
         }
-    });
+    }]);

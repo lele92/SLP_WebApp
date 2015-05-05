@@ -7,7 +7,7 @@
 'use strict';
 
 myApp
-    .factory('FiltersManagerService', function(ArticlesInfoService, ngDialog) {
+    .factory('FiltersManagerService', ["ArticlesInfoService", "ngDialog", function(ArticlesInfoService, ngDialog) {
         var filterActivated = { value: false}               //true se c'è almeno un filtro attivo, false altrimenti
         var allAuthors
         /* default vars filtri */
@@ -355,4 +355,4 @@ myApp
 
         }
     }
-);
+]);

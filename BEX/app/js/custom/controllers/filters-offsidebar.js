@@ -1,4 +1,4 @@
-myApp.controller('BiblioFiltersController', function(FiltersManagerService, $scope, $rootScope) {
+myApp.controller('BiblioFiltersController', ["FiltersManagerService", "$scope", "$rootScope", function(FiltersManagerService, $scope, $rootScope) {
     var self = this;
     /* filters and order objs: oggetti {value: ...} di filterManagerService */ //'F' -> convenzione per Filter
     self.publicationYearF = FiltersManagerService.getStartingPublicationYearF();
@@ -134,4 +134,4 @@ myApp.controller('BiblioFiltersController', function(FiltersManagerService, $sco
         //essendoci typeahead-editable="false", se non si seleziona un autore dalla lista, text (selected) == undefined
         return angular.isDefined(text) && text != "";
     }
-})
+}]);

@@ -8,11 +8,11 @@ App.directive('searchOpen', ['navSearch', function(navSearch) {
 
   return {
     restrict: 'A',
-    controller: function($scope, $element) {
+    controller: ["$scope", "$element", function($scope, $element) {
       $element
         .on('click', function (e) { e.stopPropagation(); })
         .on('click', navSearch.toggle);
-    }
+    }]
   };
 
 }]).directive('searchDismiss', ['navSearch', function(navSearch) {
@@ -22,7 +22,7 @@ App.directive('searchOpen', ['navSearch', function(navSearch) {
 
   return {
     restrict: 'A',
-    controller: function($scope, $element) {
+    controller: ["$scope", "$element", function($scope, $element) {
 
       $(inputSelector)
         .on('click', function (e) { e.stopPropagation(); })
@@ -37,7 +37,7 @@ App.directive('searchOpen', ['navSearch', function(navSearch) {
       $element
         .on('click', function (e) { e.stopPropagation(); })
         .on('click', navSearch.dismiss);
-    }
+    }]
   };
 
 }]);

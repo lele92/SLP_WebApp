@@ -3,17 +3,17 @@
  * Initializes the nestable plugin
  =========================================================*/
 
-App.directive('nestable', function($timeout) {
+App.directive('nestable', ["$timeout", function($timeout) {
   return {
     restrict: 'A',
     scope: {
       'nestableControl': '='
     },
-    controller: function($scope, $element) {
+    controller: ["$scope", "$element", function($scope, $element) {
       var options = $element.data();
       
       $timeout(function(){
-        $element.nestable();
+        $element.nestable(options);
       });
 
       if ( $scope.nestableControl ) {
@@ -35,7 +35,7 @@ App.directive('nestable', function($timeout) {
           $element.nestable(name);
         };
       }
-    }
+    }]
   };
 
-});
+}]);

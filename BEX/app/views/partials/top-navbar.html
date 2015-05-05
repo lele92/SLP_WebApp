@@ -15,7 +15,7 @@
    <!-- START Nav wrapper-->
    <div class="nav-wrapper">
       <!-- START Left navbar-->
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav" ng-controller="LeftNavbarController as LeftNavbarCtrl">
          <li>
             <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
             <a href="#" ng-click="app.layout.isCollapsed = !app.layout.isCollapsed" class="hidden-xs">
@@ -26,8 +26,8 @@
                <em class="fa fa-navicon"></em>
             </a>
          </li>
-         <!--<li>-->
-            <!--<a tooltip-placement="left" tooltip="Contacts" tooltip-popup-delay="500" href="https://docs.google.com/document/d/11wfASpdAQy-ByGKh16Jg10grnZUqXhICJAoTPMYiLuQ/pub" target="_blank" no-persist="no-persist">-->
+         <!--<li ng-click="LeftNavbarCtrl.openInfoDialog()">-->
+            <!--<a tooltip-placement="left" tooltip="Contacts" tooltip-popup-delay="500" no-persist="no-persist">-->
                <!--<em id="contact-icon" class="fa fa-group"></em>-->
             <!--</a>-->
          <!--</li>-->

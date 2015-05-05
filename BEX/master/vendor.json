@@ -107,5 +107,7 @@
   "bower_components/angular-chartist.js/dist/angular-chartist.js",
   "bower_components/chartist/dist/chartist.min.css",
   "bower_components/chartist/dist/chartist.js",
-  "bower_components/angular-ui-map/ui-map.js"
+  "bower_components/angular-ui-map/ui-map.js",
+  "bower_components/loaders.css/loaders.css",
+  "bower_components/spinkit/css/spinkit.css"
 ]

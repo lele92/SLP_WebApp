@@ -3,7 +3,7 @@
  * Enable use of classyloader directly from data attributes
  =========================================================*/
 
-App.directive('classyloader', function($timeout, Utils) {
+App.directive('classyloader', ["$timeout", "Utils", function($timeout, Utils) {
   'use strict';
 
   var $scroller       = $(window),
@@ -46,4 +46,4 @@ App.directive('classyloader', function($timeout, Utils) {
       }
     }
   };
-});
+}]);

@@ -16,7 +16,7 @@ App.directive('resetKey',  ['$state','$rootScope', function($state, $rootScope) 
       scope.resetKey = attrs.resetKey;
 
     },
-    controller: function($scope, $element) {
+    controller: ["$scope", "$element", function($scope, $element) {
     
       $element.on('click', function (e) {
           e.preventDefault();
@@ -30,7 +30,7 @@ App.directive('resetKey',  ['$state','$rootScope', function($state, $rootScope) 
           }
       });
 
-    }
+    }]
 
   };
 

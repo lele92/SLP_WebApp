@@ -1,14 +1,13 @@
 {
   "name": "jquery-classyloader",
   "_cacheHeaders": {
-    "ETag": "\"2a0e3-5131d26c9a7f4\"",
-    "Last-Modified": "Tue, 07 Apr 2015 07:13:29 GMT",
-    "Content-Length": "172259",
-    "Content-Type": "text/html"
+    "ETag": "\"11cb1-5130cf202fc74\"",
+    "Last-Modified": "Mon, 06 Apr 2015 11:53:24 GMT",
+    "Content-Length": "72881",
+    "Content-Type": "application/zip"
   },
-  "_release": "e-tag:2a0e3-513",
-  "main": "index.zip",
-  "_source": "http://www.class.pm/files/jquery-classyloader.zip",
+  "_release": "e-tag:11cb1-513",
+  "_source": "http://vox.space/files/jquery-classyloader.zip",
   "_target": "*",
-  "_originalSource": "http://www.class.pm/files/jquery-classyloader.zip"
+  "_originalSource": "http://vox.space/files/jquery-classyloader.zip"
 }

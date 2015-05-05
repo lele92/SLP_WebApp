@@ -3,7 +3,7 @@
  * Handles form wizard plugin and validation
  =========================================================*/
 
-App.directive('formWizard', function($parse){
+App.directive('formWizard', ["$parse", function($parse){
   'use strict';
 
   return {
@@ -65,4 +65,4 @@ App.directive('formWizard', function($parse){
 
   }
 
-});
+}]);

@@ -8,7 +8,7 @@ App.directive('checkAll', function() {
   
   return {
     restrict: 'A',
-    controller: function($scope, $element){
+    controller: ["$scope", "$element", function($scope, $element){
       
       $element.on('change', function() {
         var $this = $(this),
@@ -20,7 +20,7 @@ App.directive('checkAll', function() {
           .prop('checked', checkbox[0].checked);
 
       });
-    }
+    }]
   };
 
 });

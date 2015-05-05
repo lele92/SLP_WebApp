@@ -9,13 +9,13 @@ App.directive('sparkline', ['$timeout', '$window', function($timeout, $window){
 
   return {
     restrict: 'EA',
-    controller: function ($scope, $element) {
+    controller: ["$scope", "$element", function ($scope, $element) {
       var runSL = function(){
         initSparLine($element);
       };
 
       $timeout(runSL);
-    }
+    }]
   };
 
   function initSparLine($element) {

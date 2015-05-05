@@ -1,4 +1,4 @@
-myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, ArticleManagerService, FiltersManagerService, RequestArticlesService, StatesManagerService, $scope, $timeout) {
+myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "ArticleManagerService", "FiltersManagerService","RequestArticlesService", "StatesManagerService", "$scope", "$timeout", function($rootScope, ngDialog, ArticleManagerService, FiltersManagerService, RequestArticlesService, StatesManagerService, $scope, $timeout) {
     var self = this;
     self.articles = ArticleManagerService.getArticles(); //prende gli articoli da mostrare nella view
     self.resultsStates = ArticleManagerService.getResultsStates();
@@ -33,12 +33,12 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
     if (!self.isRequestPending && ArticleManagerService.getArticlesResultsState() == self.resultsStates.NOT_AVAILABLE) {
          ngDialog.open({
             template: "app/templates/dialog-empty-results.html",
-            controller: function($rootScope, $scope) {
+            controller: ["$rootScope", "$scope", function($rootScope, $scope) {
                 $scope.goToHomeSearch = function() {
                     $rootScope.$state.go('app.home-search');
                     ngDialog.close();
                 }
-            }
+            }]
         });
     }
 
@@ -100,12 +100,12 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
                         closeByEscape: true,
                         showClose: true,
                         closeByDocument: true,
-                        controller: function($rootScope, $scope) {
+                        controller: ["$rootScope", "$scope", function($rootScope, $scope) {
                             $scope.goToHomeSearch = function() {
                                 $rootScope.$state.go('app.home-search');
                                 ngDialog.close();
                             }
-                        }
+                        }]
                     });
                 }
 
@@ -157,4 +157,4 @@ myApp.controller('ArticlesResultsController', function($rootScope, ngDialog, Art
     self.logResults = function() {
         console.log(self.articles);
     }
-})
+}]);

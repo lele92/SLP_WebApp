@@ -3,7 +3,7 @@
  * Initializes the tag inputs plugin
  =========================================================*/
 
-App.directive('tagsinput', function($timeout) {
+App.directive('tagsinput', ["$timeout", function($timeout) {
   return {
     restrict: 'A',
     require: 'ngModel',
@@ -24,4 +24,4 @@ App.directive('tagsinput', function($timeout) {
 
     }
   };
-});
+}]);

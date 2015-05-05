@@ -1,4 +1,4 @@
-myApp.controller('BiblioOrderbyController', function(FiltersManagerService) {
+myApp.controller('BiblioOrderbyController', ["FiltersManagerService", function(FiltersManagerService) {
     var self = this;
 
     self.orderByF = FiltersManagerService.getOrderBy();
@@ -25,4 +25,4 @@ myApp.controller('BiblioOrderbyController', function(FiltersManagerService) {
         //console.log("ordinamento selezionato: " + self.orderByV);
         FiltersManagerService.setOrderBy(self.orderByV);
     }
-})
+}]);

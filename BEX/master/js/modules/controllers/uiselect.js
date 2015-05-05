@@ -3,7 +3,7 @@
  * uiSelect controller
  =========================================================*/
 
-App.controller('uiSelectController', function($scope, $http) {
+App.controller('uiSelectController', ["$scope", "$http", function($scope, $http) {
   $scope.disabled = undefined;
 
   $scope.enable = function() {
@@ -316,7 +316,7 @@ App.controller('uiSelectController', function($scope, $http) {
   $scope.multipleDemo.selectedPeopleWithGroupBy = [$scope.people[8], $scope.people[6]];
   $scope.multipleDemo.selectedPeopleSimple = ['samantha@email.com','wladimir@email.com'];
 
-});
+}]);
 
 
 /**

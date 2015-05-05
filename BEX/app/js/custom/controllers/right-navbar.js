@@ -1,4 +1,4 @@
-myApp.controller('RightNavbarController', function(FiltersManagerService) {
+myApp.controller('RightNavbarController', ["FiltersManagerService", function(FiltersManagerService) {
     var self = this;
     self.filterActivatedF = FiltersManagerService.getFilterActivated();
-});
+}]);

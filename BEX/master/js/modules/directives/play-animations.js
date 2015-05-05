@@ -4,7 +4,7 @@
  * Requires animo.js
  =========================================================*/
  
-App.directive('animate', function($window, Utils){
+App.directive('animate', ["$window", "Utils", function($window, Utils){
 
   'use strict';
 
@@ -55,7 +55,7 @@ App.directive('animate', function($window, Utils){
             animation = $elem.data('play') || 'bounce',
             target    = $(targetSel);
 
-        if(target && target) {
+        if(target && target.length) {
           target.animo( { animation: animation } );
         }
         
@@ -63,4 +63,4 @@ App.directive('animate', function($window, Utils){
     }
   };
 
-});
+}]);

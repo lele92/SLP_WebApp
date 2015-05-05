@@ -6,7 +6,7 @@
 'use strict';
 
 myApp
-    .factory('RequestArticlesService', function($http) {
+    .factory('RequestArticlesService', ["$http", function($http) {
         var searchString = "";    // testo per la ricerca
         var acceptHead = 'application/rdf+json';
         var endpoint = "http://www.semanticlancet.eu/abstractfinder/";
@@ -46,4 +46,4 @@ myApp
                 return searchString;
             }
         }
-    });
+    }]);

@@ -4,17 +4,16 @@
 // angle to myAppName
 // ----------------------------------- 
 
-var myApp = angular.module('SLP_WebApp', ['angle','ngDialog']); //todo: dipendenza dei filtri da mettere in app.init.js
-myApp.run(function($log,$rootScope, $state, $stateParams) {
+var myApp = angular.module('SLP_WebApp', ['angle']);
+myApp.run([ "$log","$rootScope", "$state", "$stateParams", function($log,$rootScope, $state, $stateParams) {
 
   //guide: https://github.com/angular-ui/ui-router/wiki/Quick-Reference#note-about-using-state-within-a-template
   $rootScope.$state = $state;
   $rootScope.$stateParams = $stateParams;
 
-});
+}]);
 
-//todo: valutare se spostare config, potrebbe aver senso creare una directory
-myApp.config(function($stateProvider /* ... */) {
+myApp.config(["$stateProvider", function($stateProvider /* ... */) {
   /* specific routes here (see file config.js) */
   $stateProvider
       .state('app.home-search', {
@@ -40,7 +39,7 @@ myApp.config(function($stateProvider /* ... */) {
         controller: 'ArticlesResultsController',
         controllerAs: 'ArticlesResultsCtrl'
       })
-});
+}]);
 
 // Set here the base of the relative path
 // for all app views

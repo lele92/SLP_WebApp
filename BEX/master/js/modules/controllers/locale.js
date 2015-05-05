@@ -3,7 +3,7 @@
  * Demo for locale settings
  =========================================================*/
 
-App.controller('LocalizationController', function($rootScope, tmhDynamicLocale, $locale) {
+App.controller('LocalizationController', ["$rootScope", "tmhDynamicLocale", "$locale", function($rootScope, tmhDynamicLocale, $locale) {
   
   $rootScope.availableLocales = {
     'en': 'English',
@@ -21,4 +21,4 @@ App.controller('LocalizationController', function($rootScope, tmhDynamicLocale, 
   
   $rootScope.changeLocale = tmhDynamicLocale.set;
 
-});
+}]);

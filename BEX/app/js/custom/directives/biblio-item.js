@@ -3,7 +3,7 @@
  * elemento per le informazioni su un singolo elemento di una bibliografia
  =========================================================*/
 
-myApp.directive('biblioItem', function($modal, ArticleManagerService, $rootScope) {
+myApp.directive('biblioItem', ["$modal", "ArticleManagerService", "$rootScope", function($modal, ArticleManagerService, $rootScope) {
     'use strict';
 
     return {
@@ -134,4 +134,4 @@ myApp.directive('biblioItem', function($modal, ArticleManagerService, $rootScope
         }
     };
 
-});
+}]);

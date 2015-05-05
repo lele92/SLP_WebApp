@@ -4,7 +4,7 @@
  * events and events creations
  =========================================================*/
 
-App.controller('InfiniteScrollController', function($scope, $timeout) {
+App.controller('InfiniteScrollController', ["$scope", "$timeout", function($scope, $timeout) {
 
   $scope.images = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -15,7 +15,7 @@ App.controller('InfiniteScrollController', function($scope, $timeout) {
     }
   };
 
-}).factory('datasource', [
+}]).factory('datasource', [
     '$log', '$timeout', function(console, $timeout) {
         'use strict';
 

@@ -3,7 +3,7 @@
  * elemento per le informazioni su un singolo articolo citante
  =========================================================*/
 
-myApp.directive('citingItem', function( ngDialog, ArticleManagerService) {
+myApp.directive('citingItem', ["ngDialog", "ArticleManagerService", function( ngDialog, ArticleManagerService) {
     'use strict';
 
     return {
@@ -45,5 +45,5 @@ myApp.directive('citingItem', function( ngDialog, ArticleManagerService) {
         }
     };
 
-});
+}]);
 

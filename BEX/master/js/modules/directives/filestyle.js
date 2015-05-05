@@ -6,13 +6,13 @@
 App.directive('filestyle', function() {
   return {
     restrict: 'A',
-    controller: function($scope, $element) {
+    controller: ["$scope", "$element", function($scope, $element) {
       var options = $element.data();
       
       // old usage support
         options.classInput = $element.data('classinput') || options.classInput;
       
       $element.filestyle(options);
-    }
+    }]
   };
 });

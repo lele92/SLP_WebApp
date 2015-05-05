@@ -3,7 +3,7 @@
  * elemento per le informazioni su un singolo articolo
  =========================================================*/
 
-myApp.directive('articleItem', function(ngDialog, ArticleManagerService) {
+myApp.directive('articleItem', ["ngDialog", "ArticleManagerService", function(ngDialog, ArticleManagerService) {
     'use strict';
 
     return {
@@ -79,4 +79,4 @@ myApp.directive('articleItem', function(ngDialog, ArticleManagerService) {
         }
     };
 
-});
+}]);
