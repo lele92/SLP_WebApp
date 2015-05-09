@@ -14,9 +14,22 @@ myApp.directive('citingItem', ["ngDialog", "ArticleManagerService", function( ng
             citedArticleAuthors: "="
         },
         link: function(scope, element, attributes) {
+            scope.$storage = {}; //todo: da rivedere: definisco storage per aggirare un possibile bug della direttiva panel-tools, vedere anche generateId()
+
             scope.emphasizeInTxtRefPointer = function(sentenceTxt, irpTxt) {
-                //todo da implementare
-                return sentenceTxt;
+                var empSentence = sentenceTxt.replace(irpTxt, "<span class='irp'><b>"+irpTxt+"</b></span>")
+                return empSentence;
+            }
+
+            scope.generateId = function($index){
+                var elemId = "motivation_"+$index+Math.floor((Math.random() * 100000) + 1);
+                var data = angular.fromJson(scope.$storage["panelState"]);
+                if(!data) {
+                    data = {};
+                }
+                data[elemId] = true;
+                scope.$storage["panelState"] = angular.toJson(data);
+                return elemId;
             }
 
             /* per avere maggiori info sul corrente elemento citante */

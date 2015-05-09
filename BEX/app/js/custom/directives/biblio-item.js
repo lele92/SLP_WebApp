@@ -3,7 +3,7 @@
  * elemento per le informazioni su un singolo elemento di una bibliografia
  =========================================================*/
 
-myApp.directive('biblioItem', ["$modal", "ArticleManagerService", "$rootScope", function($modal, ArticleManagerService, $rootScope) {
+myApp.directive('biblioItem', ["ngDialog","$modal", "ArticleManagerService", "$rootScope", function(ngDialog, $modal, ArticleManagerService, $rootScope) {
     'use strict';
 
     return {
@@ -93,18 +93,25 @@ myApp.directive('biblioItem', ["$modal", "ArticleManagerService", "$rootScope", 
             }
 
             scope.openAbstractDialog = function() {
-                var modalInstanceA = $modal.open({
-                    templateUrl: '/app/templates/dialog-abstract.html',
-                    controller: ModalBiblioCtrl,
-                    size: 'lg'
+                ngDialog.open({
+                    template: "/app/templates/dialog-abstract.html",
+                    className: "ngdialog-theme-default-custom",
+                    data: {
+                        absText: scope.itemData.abstractTxt.value,
+                        title: scope.itemData.title
+                    }
                 });
             }
 
             scope.openMotivationsDialog = function() {
-                var modalInstanceB = $modal.open({
-                    templateUrl: '/app/templates/dialog-motivations.html',
+                ngDialog.open({
+                    template: "/app/templates/dialog-motivations.html",
                     controller: ModalMotivationsCtrl,
-                    size: 'lg'
+                    className: "ngdialog-theme-default-custom",
+                    data: {
+                        citActsInfo: scope.itemData.citActsInfo,
+                        title: scope.itemData.title
+                    }
                 });
             }
 
@@ -118,14 +125,24 @@ myApp.directive('biblioItem', ["$modal", "ArticleManagerService", "$rootScope", 
                 $scope.title = scope.itemData.title;
             }
 
-            var ModalMotivationsCtrl = function ($scope, $modalInstance) {
+            var ModalMotivationsCtrl = function ($scope) {
+                $scope.$storage = {}; //todo: da rivedere: definisco storage per aggirare un possibile bug della direttiva panel-tools, vedere anche generateId()
 
-                $scope.close = function () {
-                    $modalInstance.close('closed');
+                $scope.empInTxtRefPointer = function(sentenceTxt, irpTxt) {
+                    var empSentence = sentenceTxt.replace(irpTxt, "<span class='irp'><b>"+irpTxt+"</b></span>")
+                    return empSentence;
                 };
 
-                $scope.citActsInfo = scope.itemData.citActsInfo;
-                $scope.title = scope.itemData.title;
+                $scope.generateId = function($index){
+                    var elemId = "motivation_"+$index+Math.floor((Math.random() * 100000) + 1);
+                    var data = angular.fromJson($scope.$storage["panelState"]);
+                    if(!data) {
+                        data = {};
+                    }
+                    data[elemId] = true;
+                    $scope.$storage["panelState"] = angular.toJson(data);
+                    return elemId;
+                }
             }
 
 

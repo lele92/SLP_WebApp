@@ -1,10 +1,6 @@
 <div class="modal-header">
-    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
-    <h4 id="myModalLabel" class="modal-title">{{title}}</h4>
+    <h4 class="modal-title">{{ngDialogData.title}}</h4>
 </div>
 <div class="modal-body">
-    <p>{{absText}}</p>
-</div>
-<div class="modal-footer">
-    <button ng-click="close()" class="btn btn-primary">Close</button>
+    <p>{{ngDialogData.absText}}</p>
 </div>

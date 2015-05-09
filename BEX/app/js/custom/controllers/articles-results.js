@@ -96,16 +96,7 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
                 if (ArticleManagerService.getArticlesResultsState() == self.resultsStates.NO_RESULTS) {
                     self.articlesNum.value = 0;
                     ngDialog.open({
-                        template: "app/templates/dialog-no-results.html",
-                        closeByEscape: true,
-                        showClose: true,
-                        closeByDocument: true,
-                        controller: ["$rootScope", "$scope", function($rootScope, $scope) {
-                            $scope.goToHomeSearch = function() {
-                                $rootScope.$state.go('app.home-search');
-                                ngDialog.close();
-                            }
-                        }]
+                        template: "app/templates/dialog-no-results.html"
                     });
                 }
 
