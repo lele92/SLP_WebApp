@@ -1,10 +1,7 @@
 
-myApp.controller('HomeSearchController', ["$rootScope", "RequestArticlesService", "ArticleManagerService", function($rootScope,RequestArticlesService, ArticleManagerService) {
+myApp.controller('HomeSearchController', ["$rootScope", "RequestArticlesService", "ArticleManagerService","SEARCH_TYPE", "$sessionStorage", function($rootScope,RequestArticlesService, ArticleManagerService, SEARCH_TYPE, $sessionStorage) {
     var self = this;
-    var ABSTRACT_SEARCH = 0;
-    var TITLE_SEARCH = 1;
-    var AUTHOR_SEARCH = 2;
-    var searchType = ABSTRACT_SEARCH;
+    var searchType = SEARCH_TYPE.abstractSearch;
 
     self.authors = [];
     self.searchText = "";
@@ -54,43 +51,57 @@ myApp.controller('HomeSearchController', ["$rootScope", "RequestArticlesService"
     //    );
     //}
 
+    //todo: da rifattorizzare
     self.searchForArticles = function() {
-        RequestArticlesService.setSearchString(self.searchText);
+        RequestArticlesService.setSearchString(self.searchText); //todo: rivedere a cosa serve
+
         switch (searchType) {
-            case ABSTRACT_SEARCH:     // abstract
+            case SEARCH_TYPE.abstractSearch:     // abstract
                 if (self.searchText) {
+                    $sessionStorage.searchQuery = self.searchText;
                     ArticleManagerService.getArticlesByAbstract(self.searchText);
+                    $rootScope.$state.go('app.articles-results', {
+                        newSearch: true,
+                        search: {
+                            searchType: searchType
+                        }
+                    });
                 }
                 break;
-            case TITLE_SEARCH:     // title
+            case SEARCH_TYPE.titleSearch:     // title
                 if (self.searchTitle) {
+                    $sessionStorage.searchQuery = self.searchTitle;
+
                     ArticleManagerService.getArticlesByTitle(self.searchTitle);
+                    $rootScope.$state.go('app.articles-results', {
+                        newSearch: true,
+                        search: {
+                            searchType: searchType
+                        }
+                    });
                 }
 
                 break;
-            case AUTHOR_SEARCH:     // author
+            case SEARCH_TYPE.authorSearch:     // author
                 if (self.searchAuthor) {
-                    ArticleManagerService.getArticlesByFullNameAuthor(self.searchAuthor);
+                    $sessionStorage.searchQuery = self.searchAuthor;
+                    ArticleManagerService.getArticlesByFullNameAuthor(self.searchAuthor, true);
+                    $rootScope.$state.go('app.articles-results', {
+                        newSearch: true,
+                        search: {
+                            searchType: searchType
+                        }
+                    });
                 }
                 break;
         }
 
         //todo: per doc: http://angular-ui.github.io/ui-router/site/#/api/ui.router.state.$state
-        $rootScope.$state.go('app.articles-results');
+
     }
 
     self.switchSearch = function(searchT) {
-        switch (searchT) {
-            case 0:
-                searchType = ABSTRACT_SEARCH;
-                break;
-            case 1:
-                searchType = TITLE_SEARCH;
-                break;
-            case 2:
-                searchType = AUTHOR_SEARCH;
-                break;
-        }
+        searchType = searchT;
     }
 
     self.refreshAuthors = function(str) {
@@ -101,6 +112,5 @@ myApp.controller('HomeSearchController', ["$rootScope", "RequestArticlesService"
             }
         }
     };
-
 
 }]);

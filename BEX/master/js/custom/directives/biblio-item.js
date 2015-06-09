@@ -20,14 +20,21 @@ myApp.directive('biblioItem', ["ngDialog","$modal", "ArticleManagerService", "$r
 
             /* per avere maggiori info sul corrente elemento bibliografico */
             scope.exploreBiblioItem = function() {
-                var strBreadCrumb = "["+scope.itemData.publicationYear+"] "+scope.itemData.title.substr(0,40)+"...";
-                ArticleManagerService.singleArticleInfo(scope.itemData.articleExpression.value, strBreadCrumb);
+                //var strBreadCrumb = "["+scope.itemData.publicationYear+"] "+scope.itemData.title.substr(0,40)+"...";
+                $rootScope.$state.go('app.articles-article', {
+                        title: scope.itemData.title
+                    }
+                );
 
             }
 
             /* per visualizzare tutti gli articoli di un autore */
             scope.exploreAuthor = function(givenName, familyName) {
-                ArticleManagerService.getArticlesByAuthor(givenName, familyName);
+                $rootScope.$state.go('app.articles-author', {
+                        givenName: givenName,
+                        familyName: familyName
+                    }
+                );
             }
 
 

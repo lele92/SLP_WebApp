@@ -3,8 +3,8 @@
  * Handle sidebar collapsible elements
  =========================================================*/
 
-App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', '$timeout', 'Utils',
-  function($rootScope, $scope, $state, $http, $timeout, Utils){
+App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', '$timeout', 'Utils','StatesManagerService',
+  function($rootScope, $scope, $state, $http, $timeout, Utils, StatesManagerService){
 
     var collapseList = [];
 
@@ -32,11 +32,11 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
     };
 
     // Load menu from json file
-    // ----------------------------------- 
-    
+    // -----------------------------------
+
     $scope.getMenuItemPropClasses = function(item) {
       return (item.heading ? 'nav-heading' : '') +
-             (isActive(item) ? ' active' : '') ;
+          (isActive(item) ? ' active' : '') ;
     };
 
     $scope.loadSidebarMenu = function() {
@@ -44,18 +44,18 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       var menuJson = 'server/sidebar-menu.json',
           menuURL  = menuJson + '?v=' + (new Date().getTime()); // jumps cache
       $http.get(menuURL)
-        .success(function(items) {
-           $scope.menuItems = items;
-        })
-        .error(function(data, status, headers, config) {
-          alert('Failure loading menu');
-        });
-     };
+          .success(function(items) {
+            $scope.menuItems = items;
+          })
+          .error(function(data, status, headers, config) {
+            alert('Failure loading menu');
+          });
+    };
 
-     $scope.loadSidebarMenu();
+    $scope.loadSidebarMenu();
 
     // Handle sidebar collapse items
-    // ----------------------------------- 
+    // -----------------------------------
 
     $scope.addCollapse = function($index, item) {
       collapseList[$index] = $rootScope.app.layout.asideHover ? true : !isActive(item);
@@ -81,12 +81,30 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       else if ( isParentItem ) {
         closeAllBut(-1);
       }
-      
+
       $scope.lastEventFromChild = isChild($index);
 
       return true;
-    
+
     };
+
+    $scope.goTo = function(sref) {
+      switch(sref) {
+        case "app.home-search":
+          $state.go("app.home-search")
+          break;
+        case "app.articles-results": //todo:barbatrucco da rivedere: in realtà non vado ad app.articles, ma all'ultimo state visitato dall'utente
+          var lastState = StatesManagerService.getLastState();
+
+          if(!lastState.state) {
+            $state.go("app.articles-results");
+          } else {
+            $state.go(lastState.state.name,lastState.params);
+          }
+
+          break;
+      }
+    }
 
     function closeAllBut(index) {
       index += '';
@@ -100,4 +118,4 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
       return (typeof $index === 'string') && !($index.indexOf('-') < 0);
     }
 
-}]);
+  }]);

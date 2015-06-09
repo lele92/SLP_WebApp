@@ -5,8 +5,13 @@
 'use strict';
 
 myApp
-    .factory('ArticleManagerService', ["RequestArticlesService", "FiltersManagerService", "ArticlesInfoService", "StatesManagerService", "AuthorInfoService", "ngDialog", "$rootScope", function(RequestArticlesService, FiltersManagerService,  ArticlesInfoService, StatesManagerService, AuthorInfoService, ngDialog, $rootScope) {
+    .factory('ArticleManagerService', ["RequestArticlesService", "FiltersManagerService", "ArticlesInfoService", "StatesManagerService", "AuthorInfoService", "ngDialog", "$rootScope", "$sessionStorage", "ARTICLES_RESULTS", function(RequestArticlesService, FiltersManagerService,  ArticlesInfoService, StatesManagerService, AuthorInfoService, ngDialog, $rootScope, $sessionStorage, ARTICLES_RESULTS) {
         var articlesResults = [];
+
+        if (!$sessionStorage.searchResults) {
+            $sessionStorage.searchResults = [];
+        }
+
         var mockResults = [
 
             {
@@ -79,7 +84,7 @@ myApp
         var colorsMap = $rootScope.colorsMap;
         var isRetrievingArticlesInfo = false;               // indica se è in atto un'interrogazione a fuseki per avere le info sugli articoli (risultati di ricerca)
         var articlesNum = 0;                                // numero totale di articoli di cui richiedere le info
-        var completedArticles = articlesResults.length;     // numero di richieste completate = numero di articoli nella lista degli articoli...semplice
+        var completedArticles = 0;     // numero di richieste completate = numero di articoli nella lista degli articoli...semplice
         //todo: non è la migliore delle soluzioni, valutare alternative
         var resultsStates = {                                      // stati dei risultati
             "NOT_AVAILABLE" : 0,    // non disponibili, non ancora richiesti: non è ancora partita una richiesta o arrivata una risposta dall'abstract finder
@@ -334,45 +339,8 @@ myApp
             );
         }
 
-        var getSingleArticleInfo = function(artExpression) {
-            return ArticlesInfoService.getArticle(artExpression).then(
-                function(response) {
-                    var art = response.data.results.bindings[0];
-                    articlesResults.length = 0;
 
-                    art.publicationYear = stringToInt(art.publicationYear.value);
-                    art.title = art.title.value;
-                    art.globalCountValue = stringToInt(art.globalCountValue.value);
-                    articlesResults.push(art); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia (si aggiorna comunque perchè articles è passato per riferimento, ma con il watch aggiungo del comportamento )
-                    articlesNum = 1;
-                    completedArticles = 1;
-
-                    //@guide richiedo la lista degli autori
-                    getArticleAuthors(art);
-
-                    //@guide richiedo le info sulle citazioni (in entrata)
-                    ArticlesInfoService.getArticleCitationsInfo(art.expression.value).then(
-                        function (response) {
-                            art.inCitActs = response.data.results.bindings[0].numCitActs.value; //numero di citation acts
-                            art.inNumCites = response.data.results.bindings[0].numCites.value;  //numero di cites (<= numero di citation acts), citazioni uniche
-                        },
-                        //todo caso da gestire meglio
-                        function (errResponse) {
-                            console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
-                        }
-                    );
-                },
-
-                //todo caso da gestire meglio
-                function (errResponse) {
-                    console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
-                }
-            );
-
-
-        }
-
-        var addArticle = function(workValue) {
+        var addArticle = function(workValue, sessionSearchResults) {
             //@guide richiedo le info generali sull'articolo interrogando fuseki
             ArticlesInfoService.getArticleGeneralInfo(workValue).then(
 
@@ -383,6 +351,9 @@ myApp
                     articleData.title = articleData.title.value;
                     articleData.globalCountValue = stringToInt(articleData.globalCountValue.value);
 
+                    /* properties per check presenza dettagli su citazioni e bibliografia, inizialmente non presenti, quindi = false*/
+                    articleData.citationsDetails = false;
+                    articleData.biblioDetails = false;
 
                     //@guide richiedo la lista degli autori
                     getArticleAuthors(articleData);
@@ -400,6 +371,10 @@ myApp
                     );
 
                     articlesResults.push(articleData); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia (si aggiorna comunque perchè articlese è passato per riferimento, ma con il watch aggiungo del comportamento )
+                    if (sessionSearchResults) {
+                        $sessionStorage.searchResults.push(articleData);
+                    }
+
                 },
 
                 //todo caso da gestire meglio
@@ -472,6 +447,7 @@ myApp
                             var tmpArt = articlesResults[key];
                             if (tmpArt.expression.value == expression) {
                                 tmpArt.citationsInfo = res;                                           // qui aggiungo le info citazioniali (anni, colori, etc...)
+                                tmpArt.citationsDetails = true;
                                 getCitingArticles(tmpArt, expression, citedArticleAuthors, res);      // qui aggiungo le info sugli articoli citanti
                                 break; //almeno non me lo scorro tutto
                             }
@@ -520,6 +496,7 @@ myApp
                             var tmpArt = articlesResults[key];
                             if (tmpArt.expression.value == citingArticleExpression) {
                                 tmpArt.biblioInfo = res;
+                                tmpArt.biblioDetails = true;
                                 break; //almeno non me lo scorro tutto
                             }
                         }
@@ -532,17 +509,17 @@ myApp
                 );
             },
 
-            /* per richiedere i risultati della ricerca */
+            /* per richiedere i risultati della ricerca per abstract*/
             getArticlesByAbstract: function(searchString) {
 
                 return RequestArticlesService.searchArticles(searchString).then(
                     // success
                     function(response) {
                         StatesManagerService.removeAllStates(); //svuota la lista degli stati
-                        StatesManagerService.addEmptyState("Abstract :'"+searchString+"'");
+                        StatesManagerService.saveState(ARTICLES_RESULTS.searchResults, searchString);
                         //console.log(StatesManagerService.getStates());
                         articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
-
+                        $sessionStorage.searchResults.length = 0;
                         var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
                         var results = "http://stanbol.apache.org/ontology/entityhub/query#queryResult";
                         var tmpRes = null; //conterrà gli uri dei work dei risultati (se ci sono risultati)
@@ -573,7 +550,7 @@ myApp
                              */
 
                             for (var key in tmpRes) {
-                                addArticle(tmpRes[key].value);
+                                addArticle(tmpRes[key].value, true);
 
                                 // se sono state richieste le info per tutti gli articoli
                                 if (articlesResults.length == tmpRes.length) {
@@ -588,20 +565,70 @@ myApp
                     // error
                     //todo caso da gestire meglio
                     function(errResponse) {
+                        $sessionStorage.searchResults.length = 0;
                         RequestArticlesService.setCompletedRequest(); //la richiesta è conclusa, c'è stato un errore, ma è conclusa
                         openErrorDialog();
                     }
                 );
             },
 
-            //questa è invocata in biblioItem per visualizzare le info su un solo articolo
-            singleArticleInfo: function(artExpression, stateVal) {
-                //todo da rivedere
-                var resultsCopy = angular.copy(articlesResults);                // creo una deep copy dei risultati
-                StatesManagerService.saveCurrentStateArticles(resultsCopy);     // salvo i risultati correnti A ( prima di modificare articlesResults ) nello stato creato precedentemente
-                StatesManagerService.addEmptyState(stateVal);                  // creo un nuovo stato vuoto che andrà ad accogliere i risultati B (che sto per chiedere) nel momento in cui si passerà ad un' altro stato C
+            //questa è invocata in biblioItem e citingItem per visualizzare le info su un solo articolo
+            singleArticleInfo: function(artTitle/*, stateVal*/) {
+                RequestArticlesService.setPendingRequest(); //todo: in futuro questo dovrà essere evitato
+                var stateIndex = StatesManagerService.getStateIndex(ARTICLES_RESULTS.singleArticleResults, artTitle) // indice dello state, -1 se non presente
 
-                getSingleArticleInfo(artExpression);          // richiedo l'articolo da mostrare
+                if (stateIndex == -1) {
+                    StatesManagerService.saveState(ARTICLES_RESULTS.singleArticleResults, artTitle);
+                } else {
+                    StatesManagerService.restoreState(stateIndex); //se lo state è già presente, lo recupero ed elimino tutti gli states successivi
+                }
+
+                ArticlesInfoService.getArticle(artTitle).then(
+                    function(response) {
+
+                        articlesResults.length = 0;
+
+
+                        if (response.data.results.bindings.length == 0) {
+                            articlesResultsState = resultsStates.NO_RESULTS;           // non ci sono risultati
+                            console.log("NO RESULTS!");
+
+                            RequestArticlesService.setCompletedRequest();
+                        } else {
+                            articlesResultsState = resultsStates.RESULTS;
+                            var art = response.data.results.bindings[0];
+                            art.publicationYear = stringToInt(art.publicationYear.value);
+                            art.title = artTitle;
+                            art.globalCountValue = stringToInt(art.globalCountValue.value);
+                            articlesResults.push(art); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia (si aggiorna comunque perchè articles è passato per riferimento, ma con il watch aggiungo del comportamento )
+                            articlesNum = 1;
+                            completedArticles = 1;
+                            RequestArticlesService.setCompletedRequest();
+
+                            //@guide richiedo la lista degli autori
+                            getArticleAuthors(art);
+
+                            //@guide richiedo le info sulle citazioni (in entrata)
+                            ArticlesInfoService.getArticleCitationsInfo(art.expression.value).then(
+                                function (response) {
+                                    art.inCitActs = response.data.results.bindings[0].numCitActs.value; //numero di citation acts
+                                    art.inNumCites = response.data.results.bindings[0].numCites.value;  //numero di cites (<= numero di citation acts), citazioni uniche
+                                },
+                                //todo caso da gestire meglio
+                                function (errResponse) {
+                                    console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+                                }
+                            );
+                        }
+
+
+                    },
+
+                    //todo caso da gestire meglio
+                    function (errResponse) {
+                        console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+                    }
+                );
                 //console.log(">>> STATES:");
                 //console.log(StatesManagerService.getStates());
 
@@ -609,18 +636,21 @@ myApp
 
             setArticlesResults: function(stateIndex) {
                 var restoredState = StatesManagerService.restoreState(stateIndex);
-                //console.log("------------");
-                //console.log(restoredState);
-                //console.log("------------");
                 angular.copy(restoredState.articles, articlesResults);
                 articlesNum = articlesResults.length;
                 completedArticles = articlesResults.length;
-                //console.log(">>> STATES:");
-                //console.log(StatesManagerService.getStates());
 
             },
 
-            /* per richiedere articoli a partire dal titolo */
+            setFirstSearchResults: function() {
+                angular.copy($sessionStorage.searchResults, articlesResults);
+                articlesNum = articlesResults.length;
+                completedArticles = articlesResults.length;
+                StatesManagerService.removeAllStates(); //svuota la lista degli stati
+                StatesManagerService.saveState(ARTICLES_RESULTS.searchResults, $sessionStorage.searchQuery);
+            },
+
+            /* per risultati di ricerca a partire dal titolo */
             getArticlesByTitle: function(articleTitle) {
                 RequestArticlesService.setPendingRequest(); //todo: in futuro questo dovrà essere evitato
 
@@ -628,10 +658,10 @@ myApp
                     // success
                     function(response) {
                         StatesManagerService.removeAllStates(); //svuota la lista degli stati
-                        StatesManagerService.addEmptyState("Title: '"+articleTitle+"'");
-                        //console.log(StatesManagerService.getStates());
-                        articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
+                        StatesManagerService.saveState(ARTICLES_RESULTS.searchResults, articleTitle);
 
+                        articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
+                        $sessionStorage.searchResults.length = 0;
                         var tmpRes = null; //conterrà gli uri dei work dei risultati (se ci sono risultati)
                         if (response.data.results.bindings.length == 0) {
                             articlesResultsState = resultsStates.NO_RESULTS;           // non ci sono risultati
@@ -640,7 +670,6 @@ myApp
 
                             RequestArticlesService.setCompletedRequest();
                         } else {
-
                             articlesResultsState = resultsStates.RESULTS;              // ci sono risultati
                             //console.log("RESULTS!");
                             var articleData = response.data.results.bindings;
@@ -658,7 +687,7 @@ myApp
                              */
                             for (var key in tmpRes) {
 
-                                addArticle(tmpRes[key].work.value);
+                                addArticle(tmpRes[key].work.value, true);
 
                                 // se sono state richieste le info per tutti gli articoli
                                 if (articlesResults.length == tmpRes.length) {
@@ -672,66 +701,45 @@ myApp
                     // error
                     //todo caso da gestire meglio
                     function(errResponse) {
+                        $sessionStorage.searchResults.length = 0;
                         RequestArticlesService.setCompletedRequest(); //la richiesta è conclusa, c'è stato un errore, ma è conclusa
                         openErrorDialog();
                     }
                 );
             },
 
+            /* per richiedere gli articoli di un autore senza effettuare una ricerca dalla homepage */
             getArticlesByAuthor: function(givenName, familyName) {
-                AuthorInfoService.requestAuthorArticles(familyName, givenName).then(
-                    // success
-                    function(response) {
-                        var resultsCopy = angular.copy(articlesResults);                // creo una deep copy dei risultati
-                        StatesManagerService.saveCurrentStateArticles(resultsCopy);     // salvo i risultati correnti A ( prima di modificare articlesResults ) nello stato creato precedentemente (l'ultimo creato con addEmptyState)
-                        StatesManagerService.addEmptyState("Author: "+givenName+" "+familyName);
-                        //console.log(StatesManagerService.getStates());
-                        articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
-                        var tmpRes = response.data.results.bindings;
-                        articlesNum = tmpRes.length;                        // numero totale di articoli di cui richiedere le info
-                        completedArticles = articlesResults.length;         // numero di richieste completate = numero di articoli nella lista degli articoli (inizialmente zero)...semplice
-
-                        //@guide per ogni articolo, partendo dal work, richiedo tutte le informazioni generali + info bibliografiche
-                        /* @guide: perchè faccio tante chiamate ajax e non una sola?
-                         * perchè una query monolitica potrebbe richiedere molto tempo di caricamento, usando un for invece, appena arriva
-                         * un articolo, lo aggiungo subito e vedo i risultati aggiornati nella view (grazie al watchCollection)
-                         */
-                        isRetrievingArticlesInfo = true; //si notifica che stanno per iniziare le interrogazioni per ottenere le info sugli articoli
-                        for (var key in tmpRes) {
-                            addArticle(tmpRes[key].work.value);
-
-                            // se sono state richieste le info per tutti gli articoli
-                            if (articlesResults.length == tmpRes.length) {
-                                isRetrievingArticlesInfo = false;
-                            }
-                        }
-                    },
-
-                    // error
-                    //todo caso da gestire meglio
-                    function(errResponse) {
-                        console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText)
-                    }
-                );
+                this.getArticlesByFullNameAuthor(givenName+" "+familyName, false);
             },
 
-            //todo: da cambiare: funzione quasi uguale a getArticlesByAuthor ma prende come parametro il fullName, RIFATTORIZZARE!
-            getArticlesByFullNameAuthor: function(fullName) {
+            /* per mostrare gli articoli di un autore */
+            getArticlesByFullNameAuthor: function(fullName, newSearch) {
                 RequestArticlesService.setPendingRequest(); //todo: in futuro questo dovrà essere evitato
 
                 return AuthorInfoService.requestFullNameAuthorArticles(fullName).then(
                     // success
                     function(response) {
-                        StatesManagerService.removeAllStates(); //svuota la lista degli stati
-                        StatesManagerService.addEmptyState("Author: '"+fullName+"'");
-                        //console.log(StatesManagerService.getStates());
+                        var stateIndex = StatesManagerService.getStateIndex(ARTICLES_RESULTS.authorResults, fullName) // indice dello state, -1 se non presente
+
+                        if (newSearch) {
+                            StatesManagerService.removeAllStates(); //svuota la lista degli stati
+                            $sessionStorage.searchResults.length = 0;
+                            StatesManagerService.saveState(ARTICLES_RESULTS.searchResults, fullName);
+                        } else if ( stateIndex == -1) {
+                            StatesManagerService.saveState(ARTICLES_RESULTS.authorResults, fullName);
+                        } else {
+                            StatesManagerService.restoreState(stateIndex); //se lo state è già presente, lo recupero ed elimino tutti gli states successivi
+                        }
+
+
                         articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
+
 
                         var tmpRes = null; //conterrà gli uri dei work dei risultati (se ci sono risultati)
                         if (response.data.results.bindings.length == 0) {
                             articlesResultsState = resultsStates.NO_RESULTS;           // non ci sono risultati
                             console.log("NO RESULTS!");
-                            tmpRes = [];
 
                             RequestArticlesService.setCompletedRequest();
                         } else {
@@ -748,7 +756,9 @@ myApp
                              */
                             isRetrievingArticlesInfo = true; //si notifica che stanno per iniziare le interrogazioni per ottenere le info sugli articoli
                             for (var key in tmpRes) {
-                                addArticle(tmpRes[key].work.value);
+                                // newSearch = true : è una nuova ricerca dalla homepage, si devono aggiornare i risultati di ricerca e quindi anche sessionStorage.searchArticles
+                                // newSearch = false : non è una nuova ricerca dalla homepage, si aggiornano i risultati visualizzati ma non i risultati della prima ricerca (presenti in sessionStorage.searchArticles)
+                                addArticle(tmpRes[key].work.value, newSearch);
 
                                 // se sono state richieste le info per tutti gli articoli
                                 if (articlesResults.length == tmpRes.length) {
@@ -761,6 +771,7 @@ myApp
                     // error
                     //todo caso da gestire meglio
                     function(errResponse) {
+                        $sessionStorage.searchResults.length = 0;
                         console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText)
                     }
                 );

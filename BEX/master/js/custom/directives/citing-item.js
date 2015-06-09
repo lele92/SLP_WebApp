@@ -3,7 +3,7 @@
  * elemento per le informazioni su un singolo articolo citante
  =========================================================*/
 
-myApp.directive('citingItem', ["ngDialog", "ArticleManagerService", function( ngDialog, ArticleManagerService) {
+myApp.directive('citingItem', ["ngDialog", "ArticleManagerService","$rootScope", function( ngDialog, ArticleManagerService, $rootScope) {
     'use strict';
 
     return {
@@ -35,14 +35,21 @@ myApp.directive('citingItem', ["ngDialog", "ArticleManagerService", function( ng
             /* per avere maggiori info sul corrente elemento citante */
             scope.exploreCitingItem = function() {
                 ngDialog.closeAll();
-                var strBreadCrumb = "["+scope.itemData.publicationYear+"] "+scope.itemData.title.value.substr(0,40)+"...";
-                ArticleManagerService.singleArticleInfo(scope.itemData.articleExpression.value, strBreadCrumb);
+                //var strBreadCrumb = "["+scope.itemData.publicationYear+"] "+scope.itemData.title.value.substr(0,40)+"...";
+                $rootScope.$state.go('app.articles-article', {
+                        title: scope.itemData.title.value
+                    }
+                );
             }
 
             /* per visualizzare tutti gli articoli di un autore */
             scope.exploreAuthor = function(givenName, familyName) {
                 ngDialog.closeAll();
-                ArticleManagerService.getArticlesByAuthor(givenName, familyName);
+                $rootScope.$state.go('app.articles-author', {
+                        givenName: givenName,
+                        familyName: familyName
+                    }
+                );
             }
 
             /* se un autore di un citing-item é anche autore dell'articolo citato, allora ritorna true, altrimenti false */

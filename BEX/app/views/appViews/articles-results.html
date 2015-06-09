@@ -1,7 +1,5 @@
 <div class="header-div">
-    <ol class="breadcrumb breadcrumb-header">
-        <li class="breadcrumb-item" ng-click="ArticlesResultsCtrl.restoreArticles($index, $last)" ng-repeat="state in ArticlesResultsCtrl.states" ng-class="{'active':$last, 'selectable-breadcrumb':!$last}">{{state.stateValue}}</li>
-    </ol>
+    <breadcrumb></breadcrumb>
 </div>
 
 <div>

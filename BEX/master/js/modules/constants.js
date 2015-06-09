@@ -97,7 +97,8 @@ App
                 'vendor/morris.js/morris.js',
                 'vendor/morris.js/morris.css'],
             'loaders.css':          ['vendor/loaders.css/loaders.css'],
-            'spinkit':              ['vendor/spinkit/css/spinkit.css']
+            'spinkit':              ['vendor/spinkit/css/spinkit.css'],
+
         },
         // Angular based script (use the right module name)
         modules: [
@@ -146,7 +147,8 @@ App
             {name: 'angular-chartist',          files: ['vendor/chartist/dist/chartist.min.css',
                 'vendor/chartist/dist/chartist.js',
                 'vendor/angular-chartist.js/dist/angular-chartist.js'], serie: true},
-            {name: 'ui.map',                    files: ['vendor/angular-ui-map/ui-map.js']}
+            {name: 'ui.map',                    files: ['vendor/angular-ui-map/ui-map.js']},
+            {name:'ui-router-extras',    files: ['vendor/ui-router-extras/release/ct-ui-router-extras.min.js']}
         ]
     })
 ;

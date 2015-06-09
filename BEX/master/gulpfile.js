@@ -60,7 +60,7 @@ var source = {
         paths.scripts + 'modules/directives/*.js',
         paths.scripts + 'modules/services/*.js',
         paths.scripts + 'modules/filters/*.js',
-        paths.scripts + 'custom/**/*.js'
+//        paths.scripts + 'custom/**/*.js' //todo: da commentare per escludere custom js
     ],
     templates: {
         index: [paths.markup + 'index.*'],

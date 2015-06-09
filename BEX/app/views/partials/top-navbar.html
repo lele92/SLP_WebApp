@@ -2,7 +2,7 @@
 <nav role="navigation" class="navbar topnavbar">
    <!-- START navbar header-->
    <div class="navbar-header">
-      <a href="#/" class="navbar-brand">
+      <a ui-sref="app.home-search" class="navbar-brand">
          <div class="brand-logo animated fadeIn">
             <img src="app/img/Bex_full.png" alt="App Logo" class="img-responsive" />
          </div>
@@ -26,11 +26,11 @@
                <em class="fa fa-navicon"></em>
             </a>
          </li>
-         <!--<li ng-click="LeftNavbarCtrl.openInfoDialog()">-->
+         <li ng-click="LeftNavbarCtrl.openInfoDialog()">
             <!--<a tooltip-placement="left" tooltip="Contacts" tooltip-popup-delay="500" no-persist="no-persist">-->
-               <!--<em id="contact-icon" class="fa fa-group"></em>-->
+               <!--<em id="contact-icon" class="icon-users"></em>-->
             <!--</a>-->
-         <!--</li>-->
+         </li>
       </ul>
       <!-- END Left navbar-->
       <div ng-controller="RightNavbarController as RightNavbarCtrl">

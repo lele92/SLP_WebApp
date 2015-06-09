@@ -100,8 +100,8 @@ myApp
             },
 
             //@guide per ottenere un singolo articolo
-            getArticle: function(expressionURI) {
-                var expr = {expression: expressionURI};
+            getArticle: function(articleTitle) {
+                var expr = {title: articleTitle};
                 var queryURL = buildQueryURL('#query_singleArticle',expr);
 
                 return $http.get(queryURL);

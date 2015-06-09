@@ -368,10 +368,6 @@
     border-radius: 10%;
 }
 
-.breadcrumb-item {
-
-}
-
 .selectable-breadcrumb {
     color: #5d9cec;
 }
@@ -381,10 +377,6 @@
     cursor: pointer;
     font-weight: bolder;
 
-}
-
-.breadcrumb-header {
-    margin: 0px;
 }
 
 .explore-biblio:hover{
@@ -521,4 +513,104 @@
     color: #ffffff !important;
 }
 
+.breadcrumb-div {
+    margin: 0;
+    padding: 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+}
+
+.breadcrumb-custom {
+    list-style: none;
+    display: inline-block;
+    padding-left: 15px;
+}
+.breadcrumb-custom .icon {
+    font-size: 14px;
+}
+.breadcrumb-custom li {
+    float: left;
+    margin-bottom: 5px;
+}
+.breadcrumb-custom li a {
+    color: #FFF;
+    display: block;
+    background: #3498db;
+    text-decoration: none;
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px 0 0px;
+    text-align: center;
+    margin-right: 23px;
+}
+.breadcrumb-custom  li:nth-child(even) a {
+    background-color: #2980b9;
+}
+.breadcrumb-custom  li:nth-child(even) a:before {
+    border-color: #2980b9;
+    border-left-color: transparent;
+}
+.breadcrumb-custom  li:nth-child(even) a:after {
+    border-left-color: #2980b9;
+}
+.breadcrumb-custom  li:first-child a {
+    padding-left: 15px;
+    -moz-border-radius: 4px 0 0 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px 0 0 4px;
+}
+.breadcrumb-custom  li:first-child a:before {
+    border: none;
+}
+.breadcrumb-custom  li:last-child a {
+    padding-right: 15px;
+    -moz-border-radius: 0 4px 4px 0;
+    -webkit-border-radius: 0;
+    border-radius: 0 4px 4px 0;
+}
+.breadcrumb-custom  li:last-child a:after {
+    border: none;
+}
+.breadcrumb-custom  li a:before, .breadcrumb-custom  li a:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    border: 0 solid #3498db;
+    border-width: 20px 10px;
+    width: 0;
+    height: 0;
+}
+.breadcrumb-custom  li a:before {
+    left: -20px;
+    border-left-color: transparent;
+}
+.breadcrumb-custom  li a:after {
+    left: 100%;
+    border-color: transparent;
+    border-left-color: #3498db;
+}
+.breadcrumb-custom  li a:hover {
+    background-color: #1abc9c;
+}
+.breadcrumb-custom  li a:hover:before {
+    border-color: #1abc9c;
+    border-left-color: transparent;
+}
+.breadcrumb-custom  li a:hover:after {
+    border-left-color: #1abc9c;
+}
+.breadcrumb-custom  li a:active, .last-li{
+    background-color: #16a085;
+}
+.breadcrumb-custom  li a:active:before {
+    border-color: #16a085;
+    border-left-color: transparent;
+}
+.breadcrumb-custom  li a:active:after {
+    border-left-color: #16a085;
+}
 

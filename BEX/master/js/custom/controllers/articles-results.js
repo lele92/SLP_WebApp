@@ -1,6 +1,24 @@
-myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "ArticleManagerService", "FiltersManagerService","RequestArticlesService", "StatesManagerService", "$scope", "$timeout", function($rootScope, ngDialog, ArticleManagerService, FiltersManagerService, RequestArticlesService, StatesManagerService, $scope, $timeout) {
+myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "ArticleManagerService", "FiltersManagerService","RequestArticlesService", "$scope", "$timeout", "$stateParams",'ARTICLES_RESULTS', "SEARCH_TYPE","$sessionStorage", function($rootScope, ngDialog, ArticleManagerService, FiltersManagerService, RequestArticlesService, $scope, $timeout, $stateParams, ARTICLES_RESULTS, SEARCH_TYPE, $sessionStorage) {
     var self = this;
-    self.articles = ArticleManagerService.getArticles(); //prende gli articoli da mostrare nella view
+    self.$storage = $sessionStorage;
+
+    //todo: da rivedere meglio questa logica: variabilità comportamentale con uno switch...si può fare di meglio
+    switch ($stateParams.type) {
+        case ARTICLES_RESULTS.searchResults:
+            if (!$stateParams.newSearch) {
+                ArticleManagerService.setFirstSearchResults();
+            }
+            break;
+        case ARTICLES_RESULTS.authorResults:
+            ArticleManagerService.getArticlesByAuthor($stateParams.givenName, $stateParams.familyName);
+            break;
+        case ARTICLES_RESULTS.singleArticleResults:
+            ArticleManagerService.singleArticleInfo($stateParams.title);
+            break;
+    }
+
+
+    self.articles = ArticleManagerService.getArticles();
     self.resultsStates = ArticleManagerService.getResultsStates();
 
     self.publicationYearFil =  FiltersManagerService.getStartingPublicationYearF();     // prende il filtro dell'anno da applicare agli articoli mostrati nella view
@@ -13,9 +31,8 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
     self.isRequestPending = RequestArticlesService.isRequestPending();                  // I -> è in corso la richiesta all'abstractFinder?
     self.isRetrievingArticlesInfo = ArticleManagerService.isRetrievingArticlesInfo();   // II -> è in corso la richiesta delle info sugli articoli? (questa richiesta parte solo all'arrivo della risposta della richiesta I)
     self.articlesNum = {value: self.articles.length};           // numero di articoli (risultati di ricerca)
-    self.completedArticles = {value: 0};                        // numero di articoli completati ( = le cui info generiche sono disponibili)
+    self.completedArticles = {value: 0};                        // numero di articoli completati ( = le cui info generiche sono disponibili
     self.completedPercent = {value: 0};
-    self.states = StatesManagerService.getStates();
     self.currentState = "Results";
 
     var requestPendingDialog;
@@ -30,7 +47,7 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
     self.sortByV = true;                      // true-> decrescente, false->crescente
 
     // se non si stanno richiedendo info e non ci sono articoli da mostrare (di una precedente ricerca) allora mostra un dialog di avviso
-    if (!self.isRequestPending && ArticleManagerService.getArticlesResultsState() == self.resultsStates.NOT_AVAILABLE) {
+    if (!self.isRequestPending && self.articles.length == 0) {
          ngDialog.open({
             template: "app/templates/dialog-empty-results.html",
             controller: ["$rootScope", "$scope", function($rootScope, $scope) {
@@ -89,7 +106,7 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
                 //console.log("1.2 - REQUEST NOT PENDING");
                 self.articlesNum.value = ArticleManagerService.getArticlesNum();
                 if (requestPendingDialog) {
-                    $timeout(requestPendingDialog.close, 500) //uso timeout per risolvere un problema di ngDialog (e anche per non flashare l'utente)
+                    $timeout(requestPendingDialog.close, 1000) //uso timeout per risolvere un problema di ngDialog (e anche per non flashare l'utente)
                 }
 
                 //se dall'abs finder non ci sono risultati mostro una notifica
@@ -140,12 +157,8 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
             //console.log("2.2 - completed articles: "+ self.completedArticles.value);
         });
 
-    $scope.$watchCollection(StatesManagerService.getStates,
-        function() {
-            //console.log('STATES AGGIORNATI');
-        }, true); //todo:valutare se lasciare questo true
-
     self.logResults = function() {
+        //console.log($stateParams);
         console.log(self.articles);
     }
 }]);

@@ -1,0 +1,12 @@
+<div class="breadcrumb-div">
+    <ul class="breadcrumb-custom" ng-show="states.length > 0">
+        <li ng-click="restoreArticles($index, $last)" ng-repeat="state in states" >
+            <a href="#" ng-click="changeState($index)">
+                <span class="icon-magnifier" ng-if="state.type === types.searchResults"></span>
+                <span class="fa fa-file-text" ng-if="state.type === types.singleArticleResults"></span>
+                <span class="icon icon-user" ng-if="state.type === types.authorResults"></span>
+                 {{state.details.length>30?state.details.substring(0,30)+" ..." : state.details}}
+            </a>
+        </li>
+    </ul>
+</div>

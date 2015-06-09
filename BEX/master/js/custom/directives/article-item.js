@@ -3,7 +3,7 @@
  * elemento per le informazioni su un singolo articolo
  =========================================================*/
 
-myApp.directive('articleItem', ["ngDialog", "ArticleManagerService", function(ngDialog, ArticleManagerService) {
+myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope", function(ngDialog, ArticleManagerService, $rootScope) {
     'use strict';
 
     return {
@@ -24,14 +24,20 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService", function(ng
             var detailsAlreadyRequested = false; //todo: da cambiare: questa info deve stare in ArticleManagerService
 
             //todo: cambiare nome a questa funzione, fa pena
-            $scope.toggleArticleDetails = function(expression, articleAuthors) {
+            $scope.toggleArticleDetails = function(articleData) {
                 $scope.articleIsCollapsed = !$scope.articleIsCollapsed;
                 //@guide è qui che chiedo le ulteriori info sull'articolo: nel momento in cui lui si dichiara interessato e vuole approfondire
                 // se il panel non è collassato (vuol dire che pochi attimi fa era collassato, lo stato cambia qui sopra) e se le info non sono già state richieste
-                if (!$scope.articleIsCollapsed && !detailsAlreadyRequested) {
-                    detailsAlreadyRequested = !detailsAlreadyRequested
-                    ArticleManagerService.getCitationsInfo(expression, articleAuthors);
-                    ArticleManagerService.getBiblioInfo(expression, articleAuthors);
+                if (!$scope.articleIsCollapsed) {
+                    detailsAlreadyRequested = !detailsAlreadyRequested;
+                    if (!articleData.citationsDetails) {
+                        ArticleManagerService.getCitationsInfo(articleData.expression.value, articleData.authors);
+                    }
+                    if (!articleData.biblioDetails) {
+                        ArticleManagerService.getBiblioInfo(articleData.expression.value, articleData.authors);
+                    }
+
+
                 }
             }
 
@@ -54,7 +60,11 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService", function(ng
 
             /* per visualizzare tutti gli articoli di un autore */
             $scope.exploreAuthor = function(givenName, familyName) {
-                ArticleManagerService.getArticlesByAuthor(givenName, familyName);
+                $rootScope.$state.go('app.articles-author', {
+                        givenName: givenName,
+                        familyName: familyName
+                    }
+                );
             }
 
             //$scope.getUniqueCitingItems = function(citingItems) {
