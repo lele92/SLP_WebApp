@@ -36,7 +36,8 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 
     $scope.getMenuItemPropClasses = function(item) {
       return (item.heading ? 'nav-heading' : '') +
-          (isActive(item) ? ' active' : '') ;
+          (isActive(item) ? ' active' : '') +
+          (item.bottom == true ? 'bottom-item' : '');
     };
 
     $scope.loadSidebarMenu = function() {
@@ -91,7 +92,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
     $scope.goTo = function(sref) {
       switch(sref) {
         case "app.home-search":
-          $state.go("app.home-search")
+          $state.go("app.home-search");
           break;
         case "app.articles-results": //todo:barbatrucco da rivedere: in realtà non vado ad app.articles, ma all'ultimo state visitato dall'utente
           var lastState = StatesManagerService.getLastState();
@@ -101,7 +102,9 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
           } else {
             $state.go(lastState.state.name,lastState.params);
           }
-
+          break;
+        default :
+          $state.go(sref);
           break;
       }
     }

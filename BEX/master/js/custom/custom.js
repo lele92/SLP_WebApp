@@ -68,6 +68,21 @@ myApp.config(["$stateProvider","ARTICLES_RESULTS","SEARCH_TYPE", function($state
           controller: 'ArticlesResultsController',
           controllerAs: 'ArticlesResultsCtrl'
       })
+      .state('app.bookmarks', {
+          url: '/bookmarks',
+          title: 'Bookmarks',
+          templateUrl: getMyBasepath('bookmarks.html'),
+          controller: 'BookmarksController',
+          controllerAs: 'BookmarksCtrl'
+      })
+      .state('app.settings', {
+          url: '/settings',
+          title: 'Settings',
+          templateUrl: getMyBasepath('settings.html'),
+          controller: 'SettingsController',
+          controllerAs: 'SettingsCtrl'
+      })
+
 }]);
 
 // Set here the base of the relative path

@@ -287,8 +287,7 @@ gulp.task('usesources', function(){ useSourceMaps = true; });
 // default (no minify)
 gulp.task('default', gulpsync.sync([
     'vendor',
-    'assets',
-    'watch'
+    'assets'
 ]), function(){
 
     log('************');

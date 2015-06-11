@@ -614,3 +614,12 @@
     border-left-color: #16a085;
 }
 
+.bottom-item {
+    position: absolute !important;
+    bottom: 0px;
+    width: 100%;
+}
+
+.sidebar > ul {
+    height: 100%;
+}
