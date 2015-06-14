@@ -752,8 +752,8 @@ App.controller('NotificationController', ['$scope', function($scope){
  * Handle sidebar collapsible elements
  =========================================================*/
 
-App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', '$timeout', 'Utils','StatesManagerService',
-  function($rootScope, $scope, $state, $http, $timeout, Utils, StatesManagerService){
+App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', '$timeout', 'Utils','StatesManagerService','ArticleManagerService', 'BookmarksManagerService',
+  function($rootScope, $scope, $state, $http, $timeout, Utils, StatesManagerService, ArticleManagerService, BookmarksManagerService){
 
     var collapseList = [];
 
@@ -785,8 +785,22 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
 
     $scope.getMenuItemPropClasses = function(item) {
       return (item.heading ? 'nav-heading' : '') +
-          (isActive(item) ? ' active' : '') +
-          (item.bottom == true ? 'bottom-item' : '');
+          (isActive(item) ? ' active' : '');
+          //+ (item.bottom == true ? 'bottom-item' : '');
+    };
+
+
+
+    $scope.getNum = function(id) {
+      switch (id) {
+        case "ArticlesLength":
+          return ArticleManagerService.getArticles().length;
+          break;
+        case "BookmarksLength":
+          return Object.keys(BookmarksManagerService.getBookmarks()).length;
+          break;
+      }
+
     };
 
     $scope.loadSidebarMenu = function() {

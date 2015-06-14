@@ -1,4 +1,4 @@
-myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "ArticleManagerService", "FiltersManagerService","RequestArticlesService", "$scope", "$timeout", "$stateParams",'ARTICLES_RESULTS', "SEARCH_TYPE","$sessionStorage", function($rootScope, ngDialog, ArticleManagerService, FiltersManagerService, RequestArticlesService, $scope, $timeout, $stateParams, ARTICLES_RESULTS, SEARCH_TYPE, $sessionStorage) {
+myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "ArticleManagerService", "FiltersManagerService","RequestArticlesService", "$scope", "$timeout", "$stateParams",'ARTICLES_RESULTS', "SEARCH_TYPE","$sessionStorage","BookmarksManagerService", function($rootScope, ngDialog, ArticleManagerService, FiltersManagerService, RequestArticlesService, $scope, $timeout, $stateParams, ARTICLES_RESULTS, SEARCH_TYPE, $sessionStorage, BookmarksManagerService) {
     var self = this;
     self.$storage = $sessionStorage;
 
@@ -159,6 +159,6 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
 
     self.logResults = function() {
         //console.log($stateParams);
-        console.log(self.articles);
+        console.log(ArticleManagerService.getArticles());
     }
 }]);

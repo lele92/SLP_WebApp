@@ -4,9 +4,9 @@
 
 <div>
     <div class="row" ng-show="ArticlesResultsCtrl.articlesNum.value > 1" align="center">
-        <div class="well well-sm col-lg-10 col-md-12 col-centered" >
-            <div align="center" class="col-lg-3 col-md-3 no-padding sort-by">
-                <span class="x-large-text text-center">Sort <span class="text-bold" id="num-articles">{{ArticlesResultsCtrl.articlesNum.value}}</span> articles by</span>
+        <div class="well well-sm col-lg-8 col-md-10 col-centered" >
+            <div align="center" class="col-lg-2 col-md-2 no-padding sort-by">
+                <span class="x-large-text text-center">Sort by</span>
             </div>
 
             <div class="col-lg-6 col-md-6 sort-by" align="center">
@@ -16,7 +16,7 @@
                     <label ng-model="ArticlesResultsCtrl.orderByV" btn-radio="ArticlesResultsCtrl.globalCitations" class="btn btn-primary"><span class="large-text">Global citations</span></label>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-3 sort-by" align="center">
+            <div class="col-lg-4 col-md-3 sort-by" align="center">
                 <div class="row btn-group">
                     <label ng-model="ArticlesResultsCtrl.sortByV" btn-radio="false" class="btn btn-success"><span class="large-text"><em class="fa fa-sort-amount-asc fa-lg"></em> asc</span></label>
                     <label ng-model="ArticlesResultsCtrl.sortByV" btn-radio="true" class="btn btn-success"><span class="large-text"><em class="fa fa-sort-amount-desc fa-lg"></em> desc</span></label>
@@ -41,7 +41,8 @@
                         sort-filter=ArticlesResultsCtrl.sortFil
                         only-selfcitation-filter=ArticlesResultsCtrl.onlySelfcitationsFil
                         characterizations-filter=ArticlesResultsCtrl.characterizationsFil
-                        authors-filter="ArticlesResultsCtrl.authorsFil">
+                        authors-filter="ArticlesResultsCtrl.authorsFil"
+                        check-bookmark = "{value: true}">
         </article-item>
     </div>
 </div>

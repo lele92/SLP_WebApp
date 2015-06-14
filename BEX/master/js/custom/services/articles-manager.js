@@ -355,6 +355,9 @@ myApp
                     articleData.citationsDetails = false;
                     articleData.biblioDetails = false;
 
+                    /* x il sistema di bookmarking */
+                    articleData.bookmark = false;
+
                     //@guide richiedo la lista degli autori
                     getArticleAuthors(articleData);
 
@@ -775,8 +778,21 @@ myApp
                         console.error("Error while fetching articles. "+errResponse.status+": "+errResponse.statusText)
                     }
                 );
-            }
+            },
 
+            //todo: soluzione provvisoria, da rivedere e rivalutare
+            /* per aggiornare un singolo articolo nella collezione dei risultati di ricerca salvati nel sessionStorage */
+            refreshStoredSearchResult: function(newArticleData) {
+
+                console.log("prima", $sessionStorage.searchResults);
+                for (var key in $sessionStorage.searchResults) {
+                    if ($sessionStorage.searchResults[key].doi.value == newArticleData.doi.value) {
+                        $sessionStorage.searchResults[key] = newArticleData;
+                    }
+                }
+                console.log("dopo", $sessionStorage.searchResults);
+
+            }
 
 
             //importante! se si modifica articlesResults, non riassegnare altrimenti tutti i $watch non vanno più! modificare usando angular.copy

@@ -3,7 +3,7 @@
  * elemento per le informazioni su un singolo articolo
  =========================================================*/
 
-myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope", function(ngDialog, ArticleManagerService, $rootScope) {
+myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope", "BookmarksManagerService", function(ngDialog, ArticleManagerService, $rootScope, BookmarksManagerService) {
     'use strict';
 
     return {
@@ -17,11 +17,23 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
             sortFilter: '=',                //@guide attributo per passare il sort da usare
             onlySelfcitationFilter: '=',    //@guide attributo per passare il filtro per le autocitazioni
             characterizationsFilter: '=',   //@guide attributo per passare il filtro per i colori delle citazioni
-            authorsFilter: '='              //@guide attributo per passare il filtro per gli autori
+            authorsFilter: '=',              //@guide attributo per passare il filtro per gli autori
+            checkBookmark: "="
         },
         link: function($scope, $element, $attributes) {
             $scope.articleIsCollapsed = true;
             var detailsAlreadyRequested = false; //todo: da cambiare: questa info deve stare in ArticleManagerService
+
+            var checkBookmarked = function() {
+                if (BookmarksManagerService.isBookmarked($scope.articleData.doi.value)) {
+                    BookmarksManagerService.replaceBookmark($scope.articleData);
+                }
+            }
+
+            if ($scope.checkBookmark.value) {
+                checkBookmarked();
+            }
+
 
             //todo: cambiare nome a questa funzione, fa pena
             $scope.toggleArticleDetails = function(articleData) {
@@ -38,6 +50,15 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
                     }
 
 
+                }
+            }
+
+            $scope.toggleBookmark = function(articleData) {
+                if (!articleData.bookmark || articleData.bookmark == false) {
+                    BookmarksManagerService.saveBookmark(articleData);
+                } else {
+                    BookmarksManagerService.deleteBookmark(articleData.doi.value);
+                    ArticleManagerService.refreshStoredSearchResult(articleData); //todo: da rivedere
                 }
             }
 

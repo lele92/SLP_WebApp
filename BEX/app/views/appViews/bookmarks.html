@@ -1,3 +1,9 @@
-<div>
-    <h3>Bookmarks</h3>
+<h3 class="animated fadeInDownBig">Bookmarks</h3>
+<div class="row">
+
+    <article-item class="article-item" ng-repeat="bookmark in BookmarksCtrl.bookmarks"
+                  article-data="bookmark"
+                  article-index="{{$index + 1}}"
+                  check-bookmark = "{value: false}">
+    </article-item>
 </div>

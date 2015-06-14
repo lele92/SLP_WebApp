@@ -623,3 +623,17 @@
 .sidebar > ul {
     height: 100%;
 }
+
+.bookmark-btn {
+    margin-right: 15px;
+
+}
+
+.bookmark-btn:hover {
+    cursor: pointer;
+    color: #3498DB;
+}
+
+.bookmark-selected {
+    color: #3498DB;
+}

@@ -82,6 +82,14 @@ myApp.config(["$stateProvider","ARTICLES_RESULTS","SEARCH_TYPE", function($state
           controller: 'SettingsController',
           controllerAs: 'SettingsCtrl'
       })
+      .state('app.about', {
+          url: '/about',
+          title: 'About',
+          templateUrl: getMyBasepath('about.html'),
+          controller: 'AboutController',
+          controllerAs: 'AboutCtrl'
+      })
+
 
 }]);
 
