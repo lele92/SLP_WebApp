@@ -783,15 +783,11 @@ myApp
             //todo: soluzione provvisoria, da rivedere e rivalutare
             /* per aggiornare un singolo articolo nella collezione dei risultati di ricerca salvati nel sessionStorage */
             refreshStoredSearchResult: function(newArticleData) {
-
-                console.log("prima", $sessionStorage.searchResults);
                 for (var key in $sessionStorage.searchResults) {
                     if ($sessionStorage.searchResults[key].doi.value == newArticleData.doi.value) {
                         $sessionStorage.searchResults[key] = newArticleData;
                     }
                 }
-                console.log("dopo", $sessionStorage.searchResults);
-
             }
 
 

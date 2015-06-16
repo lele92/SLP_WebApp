@@ -5,4 +5,8 @@ myApp.controller('BookmarksController',['BookmarksManagerService', function(Book
 
 	self.bookmarks = BookmarksManagerService.getBookmarks();
 
+	self.removeAllBookmarks = function() {
+		BookmarksManagerService.deleteAllBookmarks();
+	}
+
 }]);

@@ -1,6 +1,13 @@
 <h3 class="animated fadeInDownBig">Bookmarks</h3>
-<div class="row">
 
+<div class="row"  align="center">
+    <div  class="well well-sm col-lg-8 col-md-10 col-centered" >
+        <button type="button" class="btn btn-labeled btn-warning" ng-click="BookmarksCtrl.removeAllBookmarks()">
+            <span class="btn-label"><i class="fa fa-warning"></i></span>Remove all bookmarks
+        </button>
+    </div>
+</div>
+<div class="row">
     <article-item class="article-item" ng-repeat="bookmark in BookmarksCtrl.bookmarks"
                   article-data="bookmark"
                   article-index="{{$index + 1}}"

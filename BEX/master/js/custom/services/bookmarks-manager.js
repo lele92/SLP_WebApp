@@ -35,7 +35,10 @@ myApp
 			},
 
 			deleteAllBookmarks: function() {
-				bookmarks.length = 0;
+				for (var key in bookmarks) {
+					bookmarks[key].bookmark = false;
+					delete bookmarks[key];
+				}
 			},
 
 			isBookmarked: function(doi) {
