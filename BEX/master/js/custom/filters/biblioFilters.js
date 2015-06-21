@@ -18,21 +18,41 @@ myApp
             return items; //se le condizioni dell'if non sono verificate, ritorno l'input (potrebbe essere undefined) originale
         };
     })
-    .filter('onlySelfcitation', function () {
-        return function (items, onlySelfcitation) {
-            if (onlySelfcitation == false) {
+    .filter('selfcitation', function () {
+        return function (items, selfcitations, exclude) {
+            if (selfcitations == false) {
                 return items;
             } else {
-                if (!angular.isUndefined(items) && !angular.isUndefined(onlySelfcitation)) {
+                if (!angular.isUndefined(items) && !angular.isUndefined(selfcitations)) {
                     var filtered = [];
                     var item;
-                    for (var i=0; i<items.length; i++) {
-                        item = items[i]
-                        if (item.isSelfcitation == true) {
-                            filtered.push(item);
-                        }
+
+                    //todo: da rifattorizzare
+                    switch(exclude) {
+                        case true:  //escludere le autocitazioni
+                            for (var i=0; i<items.length; i++) {
+                                item = items[i];
+
+
+                                if (item.isSelfcitation == false) {
+                                    filtered.push(item);
+                                }
+                            }
+                            return filtered;
+                            break;
+                        case false: //mostrare solo le autocitazioni
+                            for (var i=0; i<items.length; i++) {
+                                item = items[i];
+
+
+                                if (item.isSelfcitation == true) {
+                                    filtered.push(item);
+                                }
+                            }
+                            return filtered;
+                            break;
                     }
-                    return filtered;
+
                 }
 
                 return items; //se le condizioni dell'if non sono verificate, ritorno l'input (potrebbe essere undefined) originale

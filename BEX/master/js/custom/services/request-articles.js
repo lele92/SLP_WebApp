@@ -6,10 +6,10 @@
 'use strict';
 
 myApp
-    .factory('RequestArticlesService', ["$http", function($http) {
+    .factory('RequestArticlesService', ["$http",'$rootScope', function($http,$rootScope) {
         var searchString = "";    // testo per la ricerca
         var acceptHead = 'application/rdf+json';
-        var endpoint = "http://www.semanticlancet.eu/abstractfinder/";
+        var endpoint = 'http://www.semanticlancet.eu/abstractfinder/';
         var pendingRequest = false;
 
         return {

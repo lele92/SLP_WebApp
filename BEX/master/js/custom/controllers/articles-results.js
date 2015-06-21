@@ -24,7 +24,7 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
     self.publicationYearFil =  FiltersManagerService.getStartingPublicationYearF();     // prende il filtro dell'anno da applicare agli articoli mostrati nella view
     self.orderByFil = FiltersManagerService.getOrderBy();                               // prende l'ordinamento da applicare alla bibliografia
     self.sortFil = FiltersManagerService.getSort();                                     // prende il sort da applicare alla bibliografia
-    self.onlySelfcitationsFil = FiltersManagerService.getOnlySelfCitationsF();          // prende il filtro per le autocitazioni
+    self.selfcitationsFil = FiltersManagerService.getSelfCitationsF();          // prende il filtro per le autocitazioni
     self.characterizationsFil = FiltersManagerService.getCharacterizationsF();          // prende il filtro per i colori
     self.authorsFil = FiltersManagerService.getAuthorsF();                              // prende il filtro per gli autori
 

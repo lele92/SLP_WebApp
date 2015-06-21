@@ -1,5 +1,5 @@
 
-myApp.controller('HomeSearchController', ["$rootScope", "RequestArticlesService", "ArticleManagerService","SEARCH_TYPE", "$sessionStorage", function($rootScope,RequestArticlesService, ArticleManagerService, SEARCH_TYPE, $sessionStorage) {
+myApp.controller('HomeSearchController', ["$rootScope", "RequestArticlesService", "ArticleManagerService","SEARCH_TYPE", "$sessionStorage","Ping", function($rootScope,RequestArticlesService, ArticleManagerService, SEARCH_TYPE, $sessionStorage, Ping) {
     var self = this;
     var searchType = SEARCH_TYPE.abstractSearch;
 
@@ -7,6 +7,8 @@ myApp.controller('HomeSearchController', ["$rootScope", "RequestArticlesService"
     self.searchText = "";
     self.searchTitle = "";
     self.searchAuthor = "";
+
+    Ping.pingEndpoint();
 
     //todo: da testare
     //todo: duplicato: vedi filters-manager
@@ -112,5 +114,10 @@ myApp.controller('HomeSearchController', ["$rootScope", "RequestArticlesService"
             }
         }
     };
+
+    self.keyPressCallBack =function($event) {
+        self.searchForArticles()
+        $event.preventDefault();
+    }
 
 }]);

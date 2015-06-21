@@ -67,7 +67,7 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '
         //todo caso da gestire meglio
         function (errResponse) {
             $rootScope.authors = [];
-            ngDialog.open({template: "app/templates/dialog-error.html"});
+            //ngDialog.open({template: "app/templates/dialog-error.html"});
             console.error("Error while fetching authors. " + errResponse.status + ": " + errResponse.statusText)
         }
     );

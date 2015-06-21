@@ -2,7 +2,7 @@
     <breadcrumb></breadcrumb>
 </div>
 
-<div>
+<div tabindex="0" ui-keypress="{76:'ArticlesResultsCtrl.logResults()'}">
     <div class="row" ng-show="ArticlesResultsCtrl.articlesNum.value > 1" align="center">
         <div class="well well-sm col-lg-8 col-md-10 col-centered" >
             <div align="center" class="col-lg-2 col-md-2 no-padding sort-by">
@@ -39,7 +39,7 @@
                         year-filter=ArticlesResultsCtrl.publicationYearFil
                         order-filter=ArticlesResultsCtrl.orderByFil
                         sort-filter=ArticlesResultsCtrl.sortFil
-                        only-selfcitation-filter=ArticlesResultsCtrl.onlySelfcitationsFil
+                        selfcitation-filter=ArticlesResultsCtrl.selfcitationsFil
                         characterizations-filter=ArticlesResultsCtrl.characterizationsFil
                         authors-filter="ArticlesResultsCtrl.authorsFil"
                         check-bookmark = "{value: true}">

@@ -21,12 +21,26 @@
         </div>
         <div>
             <legend class="filter-legend">
-                <span ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkOnlySelfcitations}"><em tooltip="Enabling this filter, only the self-citations will be displayed" tooltip-placement="right" tooltip-popup-delay="500" class="fa fa-info-circle"></em> Only self-citations </span>
+                <span ng-class="{'filter-enabled-heading': biblioFilterCtrl.checkSelfcitations}"><em tooltip="Enabling this filter, only the self-citations will be displayed" tooltip-placement="right" tooltip-popup-delay="500" class="fa fa-info-circle"></em> Self-citations </span>
                 <label class="switch pull-right">
-                    <input type="checkbox"  ng-model="biblioFilterCtrl.checkOnlySelfcitations" ng-change="biblioFilterCtrl.switchOnlySelfcitations()"/>
+                    <input type="checkbox"  ng-model="biblioFilterCtrl.checkSelfcitations" ng-change="biblioFilterCtrl.switchSelfcitations()"/>
                     <span></span>
                 </label>
             </legend>
+            <div collapse="!biblioFilterCtrl.checkSelfcitations">
+                <div class="radio c-radio c-radio-nofont">
+                <label>
+                    <input ng-click="biblioFilterCtrl.switchExcludeSelfcitations(true)" type="radio" name="selfCitRadio" ng-checked="biblioFilterCtrl.checkExcludeSelfCitations(true)"/>
+                    <span></span>Exclude Self-citations
+                </label>
+            </div>
+            <div class="radio c-radio c-radio-nofont">
+                <label>
+                    <input ng-click="biblioFilterCtrl.switchExcludeSelfcitations(false)" type="radio" name="selfCitRadio"  ng-checked="biblioFilterCtrl.checkExcludeSelfCitations(false)"/>
+                    <span></span>Show only Self-citations
+                </label>
+            </div>
+        </div>
         </div>
         <div>
             <legend class="filter-legend">

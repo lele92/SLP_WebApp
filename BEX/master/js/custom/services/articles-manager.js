@@ -104,6 +104,44 @@ myApp
             return str;
         };
 
+        /* ottiene il tipo di articolo dal suo URI */
+        var getType = function(articleData) {
+            ArticlesInfoService.getArticleType(articleData.expression.value).then(
+                function (response) {
+                    if (response.data.results.bindings[0]) {
+                        var type = response.data.results.bindings[0].type.value;
+                        switch (type) {
+                            case "http://purl.org/spar/fabio/JournalArticle":
+                                articleData.type = "Journal Article";
+                                break;
+                            case "http://purl.org/spar/fabio/ConferencePaper":
+                                articleData.type =  "Conference Paper";
+                                break;
+                            case "http://purl.org/spar/fabio/JournalReviewArticle":
+                                articleData.type =  "Journal Review Article";
+                                break;
+                            case "http://purl.org/spar/fabio/JournalEditorial":
+                                articleData.type =  "Journal Editorial";
+                                break;
+                            case "http://purl.org/spar/fabio/Letter":
+                                articleData.type =  "Letter";
+                                break;
+                            default:
+                                articleData.type = "Article";
+                        }
+                    } else {
+                        articleData.type = "Article";
+                    }
+
+                },
+                //todo caso da gestire meglio
+                function (errResponse) {
+                    console.error("Error. " + errResponse.status + ": " + errResponse.statusText)
+                }
+            );
+
+        };
+
         /* calcola il numero di atti citazionali da un articolo ad un altro */
         var countNumCitActs = function(citActsInfo) {
             var count = 0;
@@ -349,6 +387,7 @@ myApp
                     var articleData = response.data.results.bindings[0];
                     articleData.publicationYear = stringToInt(articleData.publicationYear.value);
                     articleData.title = articleData.title.value;
+
                     articleData.globalCountValue = stringToInt(articleData.globalCountValue.value);
 
                     /* properties per check presenza dettagli su citazioni e bibliografia, inizialmente non presenti, quindi = false*/
@@ -360,6 +399,9 @@ myApp
 
                     //@guide richiedo la lista degli autori
                     getArticleAuthors(articleData);
+
+                    //@guide richiedo la tipologia di articolo
+                    getType(articleData);
 
                     //@guide richiedo le info sulle citazioni (in entrata)
                     ArticlesInfoService.getArticleCitationsInfo(articleData.expression.value).then(
@@ -610,6 +652,7 @@ myApp
 
                             //@guide richiedo la lista degli autori
                             getArticleAuthors(art);
+                            getType(art);
 
                             //@guide richiedo le info sulle citazioni (in entrata)
                             ArticlesInfoService.getArticleCitationsInfo(art.expression.value).then(

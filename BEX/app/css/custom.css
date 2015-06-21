@@ -41,6 +41,21 @@
     font-size: x-large;
 }
 
+.article-year-top-header {
+    color: #1e983b;
+    font-size: x-large;
+    text-align: center;
+    display: inline-block;
+    border-left: 2px solid #C7CAD4;
+    border-bottom: 2px solid #C7CAD4;
+    border-right: 2px solid #C7CAD4;
+    border-radius: 0px 0px 5px 5px;
+    margin-top: -1px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #E0DFF0;
+}
+
 .row-centered {
     text-align:center;
 }
@@ -624,16 +639,88 @@
     height: 100%;
 }
 
-.bookmark-btn {
-    margin-right: 15px;
-
-}
-
-.bookmark-btn:hover {
-    cursor: pointer;
-    color: #3498DB;
-}
-
 .bookmark-selected {
     color: #3498DB;
 }
+
+.top-header-info {
+    margin-bottom: 6px;
+    text-align: center;
+    padding: 0px;
+}
+
+.article-type {
+    margin-left: -1px;
+    margin-top: -1px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 0px;
+    font-size: 18px;
+    border-right: 2px solid #C7CAD4;
+    border-bottom: 2px solid #C7CAD4;
+    background-color: #E0DFF0;
+    color: #6C7180;
+    font-weight: bold;
+}
+
+.article-vol {
+    margin-left: -1px;
+    margin-top: -1px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 0px;
+    font-size: 18px;
+    border-right: 2px solid #C7CAD4;
+    border-bottom: 2px solid #C7CAD4;
+    border-radius: 0px 0px 5px;
+    background-color: #E0DFF0;
+    color: #6C7180;
+    font-weight: bold;
+}
+
+.top-header-buttons-group {
+    display: inline-block;
+    border-left: 2px solid #C7CAD4;
+    border-bottom: 2px solid #C7CAD4;
+    border-radius: 0px 0px 0px 5px;
+    margin-top: -1px;
+    margin-right: -1px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #E0DFF0;
+    float: right;
+    padding-top: 5px;
+}
+
+.article-header-button {
+     color: #444444;
+ }
+
+.article-header-button:hover {
+    color: #3498DB;
+    cursor: pointer;
+}
+
+.external-link {
+    color: #444444;
+}
+
+.external-link:hover {
+    color: #3498DB;
+    cursor: pointer;
+}
+
+.article-url {
+    font-size: large;
+}
+
+.top-header-btn {
+    display: inline;
+    padding-right: 10px;
+}
+
+.icon-link-header-btn {
+    font-size: 1.7em;
+}
+
+

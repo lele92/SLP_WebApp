@@ -6,8 +6,8 @@
 
 
 myApp
-    .factory('AuthorInfoService', ["$http", "$interpolate", function($http,$interpolate) {
-        var endpoint = "http://two.eelst.cs.unibo.it:8181/data/query"
+    .factory('AuthorInfoService', ["$http", "$interpolate","$rootScope","EndpointsManager", function($http,$interpolate,$rootScope,EndpointsManager) {
+        var endpoint = EndpointsManager.getSelectedEndpoint();
         //endpoint = "http://localhost:8181/data/query"; //todo: endpoint locale
         var prefixes = $('#prefixes').text();
 

@@ -5,8 +5,8 @@
 'use strict';
 
 myApp
-    .factory('ArticlesInfoService', ["$http", "$interpolate", function($http,$interpolate) {
-        var endpoint = "http://two.eelst.cs.unibo.it:8181/data/query"
+    .factory('ArticlesInfoService', ["$http", "$interpolate","$rootScope","EndpointsManager", function($http,$interpolate,$rootScope,EndpointsManager) {
+        var endpoint = EndpointsManager.getSelectedEndpoint();
         //endpoint = "http://localhost:8181/data/query"; //todo: endpoint locale
         var prefixes = $('#prefixes').text();
 
@@ -111,6 +111,14 @@ myApp
             requestArticlesByTitle: function(articleTitle) {
                 var expr = {title: articleTitle};
                 var queryURL = buildQueryURL('#query_articlesWork_fromTitle',expr);
+
+                return $http.get(queryURL);
+            },
+
+            //
+            getArticleType: function(exp) {
+                var expr = {expression: exp};
+                var queryURL = buildQueryURL('#query_articleType',expr);
 
                 return $http.get(queryURL);
             }

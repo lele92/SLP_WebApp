@@ -8,16 +8,30 @@
         <div class="panel-body">
             <tabset justified="true">
                 <tab heading="By Abstract" select="HomeSearchCtrl.switchSearch(0)">
-                    <textarea class="form-control search-text-area" rows="2" ng-model="HomeSearchCtrl.searchText" placeholder="Type some search text and then click on 'Search'"></textarea>
+                    <textarea
+                            class="form-control search-text-area"
+                            rows="2"
+                            ng-model="HomeSearchCtrl.searchText"
+                            placeholder="Type some search text and then click on 'Search' or hit Enter"
+                            ui-keypress="{13:'HomeSearchCtrl.keyPressCallBack($event)'}"></textarea>
                 </tab>
                 <tab heading="By Title" select="HomeSearchCtrl.switchSearch(1)">
-                    <input type="text" ng-model="HomeSearchCtrl.searchTitle" placeholder="Type the title and then click on 'Search'" class="form-control input-lg" />
+                    <input
+                            type="text"
+                            ng-model="HomeSearchCtrl.searchTitle"
+                            placeholder="Type the title and then click on 'Search' or hit Enter"
+                            class="form-control input-lg"
+                            ui-keypress="{13:'HomeSearchCtrl.keyPressCallBack($event)'}" />
                 </tab>
                 <tab heading="By Author" select="HomeSearchCtrl.switchSearch(2)">
                     <div class="row text-center">
                         <div class="form-group col-centered col-lg-6 col-md-6 col-sm-10">
-                            <ui-select class="input-lg" ng-model="HomeSearchCtrl.searchAuthor" theme="bootstrap" reset-search-input="false" ng-init="$select.search = ' '">
-                                <ui-select-match placeholder="Type author name">{{$select.selected}}</ui-select-match>
+                            <ui-select
+
+                                    class="input-lg" ng-model="HomeSearchCtrl.searchAuthor" theme="bootstrap" reset-search-input="false" ng-init="$select.search = ' '">
+                                <ui-select-match
+                                        placeholder="Type author name"
+                                       >{{$select.selected}}</ui-select-match>
                                 <ui-select-choices repeat="author in HomeSearchCtrl.authors | filter: $select.search" refresh="HomeSearchCtrl.refreshAuthors($select.search)"  refresh-delay="0">
                                     <div ng-bind-html="author | highlight: $select.search"></div>
                                 </ui-select-choices>

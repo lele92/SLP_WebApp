@@ -15,7 +15,7 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
             yearFilter: '=',                //@guide attributo per passare il filtro per anno di pubblicazione
             orderFilter: '=',               //@guide attributo per passare l'ordinamento da usare
             sortFilter: '=',                //@guide attributo per passare il sort da usare
-            onlySelfcitationFilter: '=',    //@guide attributo per passare il filtro per le autocitazioni
+            selfcitationFilter: '=',    //@guide attributo per passare il filtro per le autocitazioni
             characterizationsFilter: '=',   //@guide attributo per passare il filtro per i colori delle citazioni
             authorsFilter: '=',              //@guide attributo per passare il filtro per gli autori
             checkBookmark: "="
@@ -86,6 +86,18 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
                         familyName: familyName
                     }
                 );
+            }
+
+            /* per ottenere l'URL dell'articolo */
+            $scope.getArticleLink = function() {
+                var generatedURL = $rootScope.$state.href("app.articles-article", {title: $scope.articleData.title}, {absolute: true});
+                ngDialog.open({
+                    template: "app/templates/dialog-article-url",
+                    className: "ngdialog-theme-default-custom",
+                    data: {
+                        url: generatedURL
+                    }
+                });
             }
 
             //$scope.getUniqueCitingItems = function(citingItems) {

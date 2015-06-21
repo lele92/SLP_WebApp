@@ -1,11 +1,29 @@
 <div id="article_{{articleIndex}}" class="panel panel-default panel-article-item " ng-class="{'whirl double-up': !articleData.authors}">
-    <div></div>
     <div class="panel-heading article-header panel-min-padding">
-        <div class="article-header-info">
-            <a tooltip="External link" tooltip-placement="bottom"  tooltip-popup-delay="500"class="pull-right" ng-href="{{articleData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link fa-2x"></i></a>
-            <span tooltip="bookmark" tooltip-placement="bottom"  tooltip-popup-delay="500" ng-click="toggleBookmark(articleData)"   class="bookmark-btn pull-right" ><i ng-class="{'fa-bookmark-o': !articleData.bookmark, 'fa-bookmark bookmark-selected': articleData.bookmark}" class="fa fa-2x"></i></span>
-            <span class="article-title">{{articleIndex}}. {{articleData.title}} <span ng-show="availableIssue(articleData)" class="vol-info"> - vol. {{articleData.volumeNumber.value}} ({{articleData.issueNumber.value}})</span> - <span class="article-year">{{articleData.publicationYear}} </span></span>
+        <div class="article-header-info top-header-info">
+            <div class="pull-left article-type">
+                <span ng-if="articleData.type" >{{articleData.type}}</span>
+            </div>
+            <div class="pull-left article-vol">
+                <span ng-if="availableIssue(articleData)" class="vol-info">vol. {{articleData.volumeNumber.value}} ({{articleData.issueNumber.value}})</span>
+            </div>
 
+            <span class="article-year-top-header">{{articleData.publicationYear}}</span>
+            <div class="top-header-buttons-group">
+                <div class="top-header-btn">
+                    <span class="article-header-button" ng-click="getArticleLink()" tooltip="get article link" tooltip-placement="bottom" tooltip-popup-delay="500"><i class="icon-link icon-link-header-btn"></i></span>
+                </div>
+                <div class="top-header-btn">
+                    <span tooltip="bookmark" tooltip-placement="bottom"  tooltip-popup-delay="500" ng-click="toggleBookmark(articleData)"   class="article-header-button" ><i ng-class="{'fa-bookmark-o': !articleData.bookmark, 'fa-bookmark bookmark-selected': articleData.bookmark}" class="fa fa-2x"></i></span>
+                </div>
+                <div class="top-header-btn">
+                    <span class="article-header-button" tooltip="External link" tooltip-placement="bottom" tooltip-popup-delay="500"><a ng-href="{{articleData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link fa-2x external-link"></i></a></span>
+                </div>
+            </div>
+
+        </div>
+        <div class="article-header-info">
+            <span class="article-title">{{articleIndex}}. {{articleData.title}} </span>
             <div>
                 <em tooltip="Authors"  tooltip-popup-delay="500" class="fa fa-users authors-icon biblio-round-icon"></em>
                 <span tooltip="show author articles" class="label label-author pointer animated bounceIn" ng-repeat="author in articleData.authors" ng-click="exploreAuthor(author.givenName.value, author.familyName.value)">  {{author.givenName.value}} {{author.familyName.value}} </span>
@@ -87,7 +105,7 @@
 
             <biblio-item ng-show="showBiblio" ng-animate="'animate'" ng-repeat="biblioItem in filteredBiblioItems = (articleData.biblioInfo |
                                     afterYear:yearFilter.value |
-                                    onlySelfcitation:onlySelfcitationFilter.value |
+                                    selfcitation:selfcitationFilter.value:selfcitationFilter.exclude |
                                     characterizations:characterizationsFilter.value |
                                     authors:authorsFilter.value:authorsFilter.enabled |
                                     orderBy:orderFilter.value:sortFilter.value )"

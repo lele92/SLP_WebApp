@@ -53,13 +53,15 @@
    <script src="master/js/custom/services/states-manager.js"></script>
    <script src="master/js/custom/services/response-interceptor.js"></script>
    <script src="master/js/custom/services/bookmarks-manager.js"></script>
+   <script src="master/js/custom/services/endpoints-manager.js"></script>
+   <script src="master/js/custom/services/ping.js"></script>
 
 
    <!--query: tutti i prefissi-->
    <script id="prefixes" type="text/template">
       PREFIX fabio: <http://purl.org/spar/fabio/>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX core: <http://purl.org/vocab/frbr/core#>
+      PREFIX frbr: <http://purl.org/vocab/frbr/core#>
       PREFIX co: <http://purl.org/co/>
       PREFIX foaf: <http://xmlns.com/foaf/0.1/>
       PREFIX pro: <http://purl.org/spar/pro/>
@@ -68,7 +70,7 @@
       PREFIX cito: <http://purl.org/spar/cito/>
       PREFIX prism: <http://prismstandard.org/namespaces/basic/2.0/>
       PREFIX sro: <http://salt.semanticauthoring.org/ontologies/sro#>
-      PREFIX biro: <http://purl.org/spar/biro>
+      PREFIX biro: <http://purl.org/spar/biro/>
       PREFIX oa: <http://www.w3.org/ns/oa#>
       PREFIX doco: <http://purl.org/spar/doco/>
    </script>
@@ -78,12 +80,12 @@
       select ?title ?doi ?expression ?volumeNumber ?issueNumber ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
       where {
          <{{work}}> a fabio:Work;
-                  core:creator ?authorsList;
-                  core:realization ?expression.
+                  frbr:creator ?authorsList;
+                  frbr:realization ?expression.
 
          ?expression a fabio:Expression;
                   dcterms:title ?title;
-                  core:embodiment ?man;
+                  frbr:embodiment ?man;
                   prism:doi ?doi;
                   fabio:hasPublicationYear ?publicationYear;
                   c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
@@ -95,20 +97,20 @@
 
          ?man a fabio:Manifestation, fabio:WebPage;
                dcterms:format <http://purl.org/NET/mediatypes/text/html>;
-               core:exemplar ?htmlItem.
+               frbr:exemplar ?htmlItem.
 
           OPTIONAL {
-              ?expression ^core:part ?issue.
+              ?expression ^frbr:part ?issue.
               ?issue a fabio:JournalIssue;
                     prism:issueIdentifier ?issueNumber;
-                    core:partOf ?volume.
+                    frbr:partOf ?volume.
 
               ?volume a fabio:JournalVolume;
                     prism:volume ?volumeNumber.
           }
 
           OPTIONAL {
-              ?expression core:part [ a sro:Abstract;
+              ?expression frbr:part [ a sro:Abstract;
               c4o:hasContent ?abstractTxt].
           }
       }
@@ -152,7 +154,7 @@
        }
    </script>
 
-   <!-- query: numero di citation acts e di cites in entrata -->
+   <!-- query: numero di InTextReferencePointer "in entrata" e di cites in entrata -->
    <script id="query_incomingCitationsActs" type="text/template">
        select (count(?citAct) as ?numCitActs) (count(?expr) as ?numCites)
        where {
@@ -179,19 +181,19 @@
 
             ?citedEntityExpr a fabio:Expression;
                     dcterms:title ?title;
-                    core:embodiment ?man;
+                    frbr:embodiment ?man;
                     fabio:hasPublicationYear ?publicationYear;
-                    core:realizationOf ?work.
+                    frbr:realizationOf ?work.
 
             ?work a fabio:Work;
-                core:creator ?authorsList.
+                frbr:creator ?authorsList.
 
 
            ?authorsList a co:List.
 
            ?man a fabio:Manifestation, fabio:WebPage;
                     dcterms:format <http://purl.org/NET/mediatypes/text/html>;
-                    core:exemplar ?htmlItem.
+                    frbr:exemplar ?htmlItem.
        }
    </script>
 
@@ -203,24 +205,24 @@
 
             ?citedExpression a fabio:Expression;
                             dcterms:title ?title;
-                            core:embodiment ?man;
+                            frbr:embodiment ?man;
                             fabio:hasPublicationYear ?publicationYear;
-                            core:realizationOf ?articleWork;
-                            core:part [ a sro:Abstract;
+                            frbr:realizationOf ?articleWork;
+                            frbr:part [ a sro:Abstract;
                                             c4o:hasContent ?abstractTxt];
                             c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
                                                                 c4o:hasGlobalCountValue ?globalCountValue;
                                                                 c4o:hasGlobalCountDate ?globalCountDate].
 
             ?articleWork a fabio:Work;
-                core:realization ?articleExpression;
-                core:creator ?authorsList.
+                frbr:realization ?articleExpression;
+                frbr:creator ?authorsList.
 
             ?authorsList a co:List.
 
             ?man a fabio:Manifestation, fabio:WebPage;
                 dcterms:format <http://purl.org/NET/mediatypes/text/html>;
-                core:exemplar ?htmlItem.
+                frbr:exemplar ?htmlItem.
        }
    </script>
 
@@ -297,24 +299,24 @@
             ?citingExp a fabio:Expression;
                     cito:cites <{{citedExpression}}>;
                    dcterms:title ?title;
-                   core:part [ a sro:Abstract;
+                   frbr:part [ a sro:Abstract;
                                 c4o:hasContent ?abstractTxt];
-                   core:embodiment ?man;
+                   frbr:embodiment ?man;
                    fabio:hasPublicationYear ?publicationYear;
-                   core:realizationOf ?articleWork;
+                   frbr:realizationOf ?articleWork;
                    c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
                                                        c4o:hasGlobalCountValue ?globalCountValue;
                                                        c4o:hasGlobalCountDate ?globalCountDate].
 
        ?articleWork a fabio:Work;
-                core:realization ?articleExpression;
-                core:creator ?authorsList.
+                frbr:realization ?articleExpression;
+                frbr:creator ?authorsList.
 
        ?authorsList a co:List.
 
        ?man a fabio:Manifestation, fabio:WebPage;
                 dcterms:format <http://purl.org/NET/mediatypes/text/html>;
-                core:exemplar ?htmlItem.
+                frbr:exemplar ?htmlItem.
        }
    </script>
 
@@ -325,11 +327,11 @@
        where {
 
                 ?expression a fabio:Expression;
-               core:part [ a sro:Abstract;
+               frbr:part [ a sro:Abstract;
                                 c4o:hasContent ?abstractTxt];
                dcterms:title "{{title}}";
-               core:embodiment ?man;
-               core:realizationOf ?articleWork;
+               frbr:embodiment ?man;
+               frbr:realizationOf ?articleWork;
                prism:doi ?doi;
                fabio:hasPublicationYear ?publicationYear;
                c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
@@ -338,13 +340,13 @@
                                                    c4o:hasGlobalCountDate ?globalCountDate].
 
            ?articleWork a fabio:Work;
-               core:creator ?authorsList.
+               frbr:creator ?authorsList.
 
            ?authorsList a co:List.
 
            ?man a fabio:Manifestation, fabio:WebPage;
                dcterms:format <http://purl.org/NET/mediatypes/text/html>;
-               core:exemplar ?htmlItem.
+               frbr:exemplar ?htmlItem.
        }
    </script>
 
@@ -358,13 +360,13 @@
                     pro:holdsRoleInTime [ a pro:RoleInTime;
                                             pro:relatesToDocument ?work ]
 
-            FILTER NOT EXISTS { ?work core:realization [ a fabio:JournalEditorial ] }
+            FILTER NOT EXISTS { ?work frbr:realization [ a fabio:JournalEditorial ] }
             FILTER EXISTS {
-                ?work core:realization [ a fabio:Expression;
-                                               core:part [ a sro:Abstract;
+                ?work frbr:realization [ a fabio:Expression;
+                                               frbr:part [ a sro:Abstract;
                                                                 c4o:hasContent ?abstractTxt];
                                                dcterms:title ?title;
-                                               core:embodiment ?man;
+                                               frbr:embodiment ?man;
                                                prism:doi ?doi;
                                                fabio:hasPublicationYear ?publicationYear;
                                                c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
@@ -385,13 +387,13 @@
        pro:holdsRoleInTime [ a pro:RoleInTime;
        pro:relatesToDocument ?work ]
 
-       FILTER NOT EXISTS { ?work core:realization [ a fabio:JournalEditorial ] }
+       FILTER NOT EXISTS { ?work frbr:realization [ a fabio:JournalEditorial ] }
        FILTER EXISTS {
-       ?work core:realization [ a fabio:Expression;
-       core:part [ a sro:Abstract;
+       ?work frbr:realization [ a fabio:Expression;
+       frbr:part [ a sro:Abstract;
        c4o:hasContent ?abstractTxt];
        dcterms:title ?title;
-       core:embodiment ?man;
+       frbr:embodiment ?man;
        prism:doi ?doi;
        fabio:hasPublicationYear ?publicationYear;
        c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
@@ -412,12 +414,12 @@
 
            ?expression a fabio:Expression;
             dcterms:title ?title;
-                core:part [ a sro:Abstract;
+                frbr:part [ a sro:Abstract;
                             c4o:hasContent ?abstractTxt];
-           core:realizationOf [ a fabio:Work;
-                                   core:creator ?authorsList;
-                                   core:realization ?expression];
-           core:embodiment ?man;
+           frbr:realizationOf [ a fabio:Work;
+                                   frbr:creator ?authorsList;
+                                   frbr:realization ?expression];
+           frbr:embodiment ?man;
            prism:doi ?doi;
            fabio:hasPublicationYear ?publicationYear;
            c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
@@ -429,13 +431,13 @@
 
            ?man a fabio:Manifestation, fabio:WebPage;
                dcterms:format <http://purl.org/NET/mediatypes/text/html>;
-               core:exemplar ?htmlItem.
+               frbr:exemplar ?htmlItem.
 
            OPTIONAL {
-               ?expression ^core:part ?issue.
+               ?expression ^frbr:part ?issue.
                ?issue a fabio:JournalIssue;
                prism:issueIdentifier ?issueNumber;
-               core:partOf ?volume.
+               frbr:partOf ?volume.
 
                ?volume a fabio:JournalVolume;
                prism:volume ?volumeNumber.
@@ -453,10 +455,43 @@
                 dcterms:title ?title.
 
             ?work a fabio:Work;
-                core:realization ?exp.
+                frbr:realization ?exp.
 
             FILTER regex(?title, "{{title}}", "i")
        } LIMIT 50
+   </script>
+
+    <script id="" type="text/template">
+        select ?citingExp
+        where {
+            ?irp a c4o:InTextReferencePointer;
+                c4o:hasContent ?irpTxt;
+                c4o:hasContext [ a doco:Sentence;
+                                    frbr:partOf <{{citingEntity}}>;
+                                    c4o:hasContent ?sentenceTxt];
+                c4o:denotes [ biro:references ?citedEntity].
+
+                ?citedEntity a fabio:Expression.
+
+            OPTIONAL {
+                ?irp ^oa:hasTarget ?ann.
+                ?ann oa:hasBody ?citAct.
+                ?citAct a cito:CitationAct;
+                    cito:hasCitedEntity ?citedEntity;
+                    cito:hasCitingEntity ?citingExp;
+                    cito:hasCitationCharacterization ?color.
+            }
+        }
+    </script>
+
+
+   <script id="query_articleType" type="text/template">
+        select ?type
+        where {
+            <{{expression}}> a ?type.
+
+            FILTER (?type != fabio:Expression)
+        }
    </script>
 </body>
 </html>

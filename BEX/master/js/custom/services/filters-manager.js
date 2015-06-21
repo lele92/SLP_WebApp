@@ -9,10 +9,10 @@
 myApp
     .factory('FiltersManagerService', ["ArticlesInfoService", "ngDialog", function(ArticlesInfoService, ngDialog) {
         var filterActivated = { value: false}               //true se c'è almeno un filtro attivo, false altrimenti
-        var allAuthors
+        var allAuthors;
         /* default vars filtri */
         var startingPublicationYear =  { value: 0};         // anno di partenza per filtri. è un oggetto perchè sto valutando di aggiungere altre property e perchè lo trovo più conveniente
-        var onlySelfcitations = { value: false};            // inizialmente mostro tutte le citazioni
+        var selfcitations = { value: false, exclude:true};            // inizialmente mostro tutte le citazioni e quando il filtro viene attivato, di default vengono escluse le autocitazioni
         var characterizations = { value:
             {
                 "http://purl.org/spar/cito/citesForInformation": {
@@ -286,7 +286,7 @@ myApp
                         },
                         //todo caso da gestire meglio
                         function (errResponse) {
-                            ngDialog.open({template: "app/templates/dialog-error.html"});
+                            //ngDialog.open({template: "app/templates/dialog-error.html"});
                             console.error("Error while fetching authors. " + errResponse.status + ": " + errResponse.statusText)
                         }
                     );
@@ -314,12 +314,13 @@ myApp
 
 
 
-            getOnlySelfCitationsF: function() {
-                return onlySelfcitations;
+            getSelfCitationsF: function() {
+                return selfcitations;
             },
 
-            setOnlySelfCitations: function(newOnlySelfcitations) {
-                onlySelfcitations.value = newOnlySelfcitations;
+            setSelfCitations: function(newSelfcitations, newExclude) {
+                selfcitations.value = newSelfcitations;
+                selfcitations.exclude = newExclude;
             },
 
             getCharacterizationsF: function() {

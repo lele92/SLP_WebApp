@@ -32,7 +32,6 @@ myApp
 
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
             if (toState.name == "app.articles-results" || toState.name == "app.articles-author" || toState.name == "app.articles-article") {
-                console.log("aggiorno last state!", toState, toParams);
                 lastState.state = toState;
                 lastState.params = toParams;
             }

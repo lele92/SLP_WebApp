@@ -2,7 +2,7 @@ myApp.controller('BiblioFiltersController', ["FiltersManagerService", "$scope", 
     var self = this;
     /* filters and order objs: oggetti {value: ...} di filterManagerService */ //'F' -> convenzione per Filter
     self.publicationYearF = FiltersManagerService.getStartingPublicationYearF();
-    self.onlySelfcitationsF = FiltersManagerService.getOnlySelfCitationsF();
+    self.selfcitationsF = FiltersManagerService.getSelfCitationsF();
     self.characterizationsF = FiltersManagerService.getCharacterizationsF();
     self.authorsF = FiltersManagerService.getAuthorsF();        //con questo prendo la lista di autori del filtro
     self.allAuthors = $rootScope.authors;
@@ -15,13 +15,14 @@ myApp.controller('BiblioFiltersController', ["FiltersManagerService", "$scope", 
 
     /* values: valori dei filtri in html */ //'V' -> convenzione per Value
     self.publicationYearV = self.publicationYearF.value;
-    self.onlySelfcitationsV =  self.onlySelfcitationsF.value;
+    self.selfcitationsV =  self.selfcitationsF.value;
+    self.excludeSelfcitationsV = self.selfcitationsF.exclude;
     self.characterizationsV = self.characterizationsF.value;
     self.authorsV = self.authorsF.value;
 
     /* checkboxes*/
     self.checkYear = false;
-    self.checkOnlySelfcitations = false;
+    self.checkSelfcitations = false;
     self.checkCharacterizations = false;
     self.checkAuthors = false;
 
@@ -55,15 +56,15 @@ myApp.controller('BiblioFiltersController', ["FiltersManagerService", "$scope", 
         FiltersManagerService.setFilterActivated(self.checkCheckboxes());
     }
 
-    self.switchOnlySelfcitations = function() {
-        if (self.checkOnlySelfcitations) {
+    self.switchSelfcitations = function() {
+        if (self.checkSelfcitations) {
             //console.log('filtro solo autocitazioni attivato');
-            self.onlySelfcitationsV = true;
+            self.selfcitationsV = true;
         } else {
             //console.log('filtro solo autocitazioni disattivato');
-            self.onlySelfcitationsV = false;
+            self.selfcitationsV = false;
         }
-        FiltersManagerService.setOnlySelfCitations(self.onlySelfcitationsV);
+        FiltersManagerService.setSelfCitations(self.selfcitationsV,self.excludeSelfcitationsV);
         FiltersManagerService.setFilterActivated(self.checkCheckboxes());
     }
 
@@ -83,7 +84,7 @@ myApp.controller('BiblioFiltersController', ["FiltersManagerService", "$scope", 
     /* controlla lo stato delle checkboxes: s'è c'è almeno un filtro attivo ritorna true, false altrimenti */
     //chiunque legga mi scusi, non ho resistito alla tentazione di chiamarla così
     self.checkCheckboxes = function() {
-        if (self.checkYear || self.checkOnlySelfcitations || self.checkCharacterizations || self.checkAuthors) {
+        if (self.checkYear || self.checkSelfcitations || self.checkCharacterizations || self.checkAuthors) {
             //console.log("c'è almeno un filtro impostato");
             return true;
         }
@@ -119,6 +120,26 @@ myApp.controller('BiblioFiltersController', ["FiltersManagerService", "$scope", 
             }
         }
         FiltersManagerService.setAuthors(self.authorsV);
+    }
+
+    //todo: da rifattorizzare, non è il massimo dell'eleganza
+    //excludeRadio = true se invocato da radioButton exclude
+    self.checkExcludeSelfCitations = function(excludeRadio) {
+        if (excludeRadio && self.excludeSelfcitationsV) {
+            return true;
+        } else if (excludeRadio && !self.excludeSelfcitationsV) {
+            return false;
+        } else if (!excludeRadio && self.excludeSelfcitationsV) {
+            return false;
+        } else if (!excludeRadio && !self.excludeSelfcitationsV) {
+            return true;
+        }
+    }
+
+    /* applica il filtro autocitazioni */
+    self.switchExcludeSelfcitations = function(exclude) {
+        self.excludeSelfcitationsV = exclude;
+        FiltersManagerService.setSelfCitations(true,self.excludeSelfcitationsV);
     }
 
     var alreadyInList = function(author) {

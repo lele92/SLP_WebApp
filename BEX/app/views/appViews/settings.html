@@ -1,6 +1,24 @@
 <h3 class="animated fadeInDownBig">Settings</h3>
 <div class="row">
-    <h4 class="page-header">Endopoint</h4>
+    <h3 class="page-header">Endpoint</h3>
+    <div>
+        <h4>Switch endpoint <small class="muted-text"> (*please,  refresh the page after changing the endpoint)</small></h4>
+
+        <div ng-repeat="endpoint in SettingsCtrl.endpoints" class="radio c-radio c-radio-nofont">
+            <label>
+                <input ng-change="SettingsCtrl.setSelectedEndpoint($index)" type="radio" name="endpointRadio" value="{{endpoint}}" ng-model="SettingsCtrl.selectedEndpoint"/>
+                <span></span>{{endpoint}}</label>
+            <button ng-if="$index > 0" type="button" class="mb-sm btn btn-default" ng-click="SettingsCtrl.removeEndpoint($index)"><em class="fa fa-remove" ></em></button>
+        </div>
+        <h4>Add new endpoint</h4>
+        <div class="input-group">
+            <input type="text" ng-model="SettingsCtrl.newEndpoint" required="" class="form-control" placeholder="Insert endpoint URL"/>
+             <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="SettingsCtrl.addEndpoint()">Add</button>
+             </span>
+        </div>
+    </div>
+
 </div>
 <div class="row">
     <h4 class="page-header">Storage</h4>
