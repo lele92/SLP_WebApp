@@ -11,7 +11,7 @@ myApp
 		return{
 			saveBookmark: function(articleData) {
 				articleData.bookmark = true;
-				bookmarks[articleData.doi.value] = articleData;
+				bookmarks[articleData.doi] = articleData;
 				console.log(bookmarks);
 			},
 
@@ -51,7 +51,7 @@ myApp
 
 			replaceBookmark: function(articleData) {
 				articleData.bookmark = true;
-				bookmarks[articleData.doi.value] = articleData;
+				bookmarks[articleData.doi] = articleData;
 			}
 		}
 	}])

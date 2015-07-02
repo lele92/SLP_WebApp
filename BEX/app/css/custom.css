@@ -43,12 +43,13 @@
 
 .article-year-top-header {
     color: #1e983b;
-    font-size: x-large;
+    font-weight: bold;
+    font-size: 1.65em;
     text-align: center;
     display: inline-block;
-    border-left: 2px solid #C7CAD4;
-    border-bottom: 2px solid #C7CAD4;
-    border-right: 2px solid #C7CAD4;
+    border-left: 2px solid #CFDBE2;
+    border-bottom: 2px solid #CFDBE2;
+    border-right: 2px solid #CFDBE2;
     border-radius: 0px 0px 5px 5px;
     margin-top: -1px;
     padding-left: 10px;
@@ -113,7 +114,7 @@
 }
 
 .article-header-info {
-    padding: 10px 15px;
+    padding: 0px 15px 10px 15px;
 }
 
 .show-article-info {
@@ -454,7 +455,7 @@
 }
 
 .search-text-area {
-    font-size: 25px;
+    font-size: 21px;
 }
 
 #panelSearch {
@@ -656,8 +657,8 @@
     padding-right: 10px;
     padding-bottom: 0px;
     font-size: 18px;
-    border-right: 2px solid #C7CAD4;
-    border-bottom: 2px solid #C7CAD4;
+    border-right: 2px solid #CFDBE2;
+    border-bottom: 2px solid #CFDBE2;
     background-color: #E0DFF0;
     color: #6C7180;
     font-weight: bold;
@@ -670,8 +671,8 @@
     padding-right: 10px;
     padding-bottom: 0px;
     font-size: 18px;
-    border-right: 2px solid #C7CAD4;
-    border-bottom: 2px solid #C7CAD4;
+    border-right: 2px solid #CFDBE2;
+    border-bottom: 2px solid #CFDBE2;
     border-radius: 0px 0px 5px;
     background-color: #E0DFF0;
     color: #6C7180;
@@ -680,8 +681,8 @@
 
 .top-header-buttons-group {
     display: inline-block;
-    border-left: 2px solid #C7CAD4;
-    border-bottom: 2px solid #C7CAD4;
+    border-left: 2px solid #CFDBE2;
+    border-bottom: 2px solid #CFDBE2;
     border-radius: 0px 0px 0px 5px;
     margin-top: -1px;
     margin-right: -1px;
@@ -723,4 +724,33 @@
     font-size: 1.7em;
 }
 
+.title-icon {
+    font-family: Roman;
+    font-weight: bold;
+    font-size: large;
+}
+
+.breadcrumb-icon {
+    background: white;
+    font-weight: bold;
+    color: darkslategray;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.btn-settings {
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.no-left-margin {
+    margin-left: 0px;
+}
+.no-right-margin {
+    margin-right: 0px;
+}
+
+.order-results {
+    border-top: 1px solid #DDE6E9;
+}
 

@@ -1,19 +1,24 @@
-myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "ArticleManagerService", "FiltersManagerService","RequestArticlesService", "$scope", "$timeout", "$stateParams",'ARTICLES_RESULTS', "SEARCH_TYPE","$sessionStorage","BookmarksManagerService", function($rootScope, ngDialog, ArticleManagerService, FiltersManagerService, RequestArticlesService, $scope, $timeout, $stateParams, ARTICLES_RESULTS, SEARCH_TYPE, $sessionStorage, BookmarksManagerService) {
+myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "ArticleManagerService", "FiltersManagerService","RequestArticlesService", "$scope", "$timeout", "$stateParams", "SEARCH_TYPE","$sessionStorage","BookmarksManagerService","ORDER_BY","ResultsFiltersManager", function($rootScope, ngDialog, ArticleManagerService, FiltersManagerService, RequestArticlesService, $scope, $timeout, $stateParams, SEARCH_TYPE, $sessionStorage, BookmarksManagerService, ORDER_BY, ResultsFiltersManager) {
     var self = this;
     self.$storage = $sessionStorage;
+	var date = new Date();
+	self.year = date.getFullYear();
 
-    //todo: da rivedere meglio questa logica: variabilità comportamentale con uno switch...si può fare di meglio
-    switch ($stateParams.type) {
-        case ARTICLES_RESULTS.searchResults:
-            if (!$stateParams.newSearch) {
-                ArticleManagerService.setFirstSearchResults();
-            }
+    switch ($stateParams.searchType) {
+        case SEARCH_TYPE.abstractSearch:
+            ArticleManagerService.getArticlesByAbstract($stateParams.searchQuery, $stateParams.newSearch);
             break;
-        case ARTICLES_RESULTS.authorResults:
-            ArticleManagerService.getArticlesByAuthor($stateParams.givenName, $stateParams.familyName);
+        case SEARCH_TYPE.titleSearch:
+            ArticleManagerService.getArticlesByTitle($stateParams.searchQuery, $stateParams.newSearch);
             break;
-        case ARTICLES_RESULTS.singleArticleResults:
-            ArticleManagerService.singleArticleInfo($stateParams.title);
+        case SEARCH_TYPE.authorSearch:
+            ArticleManagerService.getArticlesByFullNameAuthor($stateParams.searchQuery, $stateParams.newSearch);
+            break;
+        case SEARCH_TYPE.singleArticle:
+            ArticleManagerService.getSingleArticle($stateParams.title);
+            break;
+        case SEARCH_TYPE.singleArticleDoi:
+            ArticleManagerService.getSingleArticleByDoi($stateParams.doi);
             break;
     }
 
@@ -21,12 +26,31 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
     self.articles = ArticleManagerService.getArticles();
     self.resultsStates = ArticleManagerService.getResultsStates();
 
+	/* order option vars */
+	self.publicationYear = ORDER_BY.publicationYear;
+	self.title = ORDER_BY.title;
+	self.globalCitations = ORDER_BY.globalCitations;
+	self.totCitActs = ORDER_BY.totCitActs;
+
+
+
+	/* citations filters */
     self.publicationYearFil =  FiltersManagerService.getStartingPublicationYearF();     // prende il filtro dell'anno da applicare agli articoli mostrati nella view
-    self.orderByFil = FiltersManagerService.getOrderBy();                               // prende l'ordinamento da applicare alla bibliografia
-    self.sortFil = FiltersManagerService.getSort();                                     // prende il sort da applicare alla bibliografia
     self.selfcitationsFil = FiltersManagerService.getSelfCitationsF();          // prende il filtro per le autocitazioni
     self.characterizationsFil = FiltersManagerService.getCharacterizationsF();          // prende il filtro per i colori
     self.authorsFil = FiltersManagerService.getAuthorsF();                              // prende il filtro per gli autori
+	self.orderByFil = FiltersManagerService.getOrderBy();                               // prende l'ordinamento da applicare alla bibliografia
+	self.sortFil = FiltersManagerService.getSort();                                     // prende il sort da applicare alla bibliografia
+	/*===========================*/
+
+	/* search results filters */
+	self.orderByV = ResultsFiltersManager.getOrderBy().value;
+	self.sortByV = ResultsFiltersManager.getSort().value;
+	self.publicationYearV =  ResultsFiltersManager.getStartingPublicationYearF().value;
+
+	//todo: variabile temporanea, da eliminare!
+	self.pubYear = self.publicationYearV;
+	/*===========================*/
 
     self.isRequestPending = RequestArticlesService.isRequestPending();                  // I -> è in corso la richiesta all'abstractFinder?
     self.isRetrievingArticlesInfo = ArticleManagerService.isRetrievingArticlesInfo();   // II -> è in corso la richiesta delle info sugli articoli? (questa richiesta parte solo all'arrivo della risposta della richiesta I)
@@ -35,17 +59,11 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
     self.completedPercent = {value: 0};
     self.currentState = "Results";
 
-    var requestPendingDialog;
+	self.articleTypes = ResultsFiltersManager.getArticleTypes();
+	self.selectedArticleTypes = ResultsFiltersManager.getSelectedArticleTypes();
 
-    /* order option vars */
-    self.publicationYear = "publicationYear";
-    self.title = "title";
-    self.globalCitations = "globalCountValue";
-    self.totCitActs = "totCitActs";
 
-    self.orderByV = self.publicationYear;
-    self.sortByV = true;                      // true-> decrescente, false->crescente
-
+	var requestPendingDialog;
     // se non si stanno richiedendo info e non ci sono articoli da mostrare (di una precedente ricerca) allora mostra un dialog di avviso
     if (!self.isRequestPending && self.articles.length == 0) {
          ngDialog.open({
@@ -63,12 +81,9 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
         return RequestArticlesService.getSearchString();
     }
 
-    self.restoreArticles = function(stateIndex, lastBreadcrumb) {
-        if (!lastBreadcrumb) {
-            ArticleManagerService.setArticlesResults(stateIndex);
-        }
-
-    }
+	self.applyYearFilter = function() {
+		self.publicationYearV = self.pubYear;
+	}
 
 
     //@guide http://stackoverflow.com/questions/15380140/service-variable-not-updating-in-controller

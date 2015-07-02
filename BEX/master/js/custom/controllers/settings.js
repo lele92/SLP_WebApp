@@ -1,4 +1,4 @@
-myApp.controller('SettingsController',['$rootScope','$localStorage','EndpointsManager', function($rootScope, $localStorage, EndpointsManager){
+myApp.controller('SettingsController',['$rootScope','$localStorage','$sessionStorage','EndpointsManager', function($rootScope, $localStorage, $sessionStorage,EndpointsManager){
 	"use strict";
 
 	var self = this;
@@ -22,6 +22,14 @@ myApp.controller('SettingsController',['$rootScope','$localStorage','EndpointsMa
 
 	self.setSelectedEndpoint = function(index) {
 		EndpointsManager.setSelectedEndpoint(index);
+	}
+
+	self.clearLocalStorage = function() {
+		$localStorage.$reset();
+	}
+
+	self.clearSessionStorage = function() {
+		$sessionStorage.$reset();
 	}
 
 }]);

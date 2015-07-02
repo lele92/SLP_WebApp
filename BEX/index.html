@@ -29,7 +29,7 @@
    <script src="app/js/app.js"></script>
    <script src="app/vendor/canvasjs-1.6.2/canvasjs.min.js"></script>
    <script src="master/js/custom/custom.js"></script>
-   <script src="master/js/custom/filters/biblioFilters.js"></script>
+   <script src="master/js/custom/filters/articlesFilters.js"></script>
    <script src="master/js/custom/controllers/articles-results.js"></script>
    <script src="master/js/custom/controllers/home-search.js"></script>
    <script src="master/js/custom/controllers/filters-offsidebar.js"></script>
@@ -55,6 +55,7 @@
    <script src="master/js/custom/services/bookmarks-manager.js"></script>
    <script src="master/js/custom/services/endpoints-manager.js"></script>
    <script src="master/js/custom/services/ping.js"></script>
+   <script src="master/js/custom/services/results-filters-manager.js"></script>
 
 
    <!--query: tutti i prefissi-->
@@ -321,7 +322,7 @@
    </script>
 
 
-   <!-- query: info generiche su un articolo (partendo dall'expression) -->
+   <!-- query: info generiche su un articolo (partendo dall'expression) (id:title) -->
    <script id="query_singleArticle" type="text/template">
        select ?title ?doi ?expression ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
        where {
@@ -347,6 +348,35 @@
            ?man a fabio:Manifestation, fabio:WebPage;
                dcterms:format <http://purl.org/NET/mediatypes/text/html>;
                frbr:exemplar ?htmlItem.
+       }
+   </script>
+
+   <!-- query: info generiche su un articolo (partendo dall'expression) (id: doi)-->
+   <script id="query_singleArticleByDoi" type="text/template">
+       select ?title ?expression ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
+       where {
+
+       ?expression a fabio:Expression;
+       frbr:part [ a sro:Abstract;
+       c4o:hasContent ?abstractTxt];
+       dcterms:title ?title;
+       frbr:embodiment ?man;
+       frbr:realizationOf ?articleWork;
+       prism:doi "{{doi}}";
+       fabio:hasPublicationYear ?publicationYear;
+       c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
+       c4o:hasGlobalCountSource ?globalCountSource;
+       c4o:hasGlobalCountValue ?globalCountValue;
+       c4o:hasGlobalCountDate ?globalCountDate].
+
+       ?articleWork a fabio:Work;
+       frbr:creator ?authorsList.
+
+       ?authorsList a co:List.
+
+       ?man a fabio:Manifestation, fabio:WebPage;
+       dcterms:format <http://purl.org/NET/mediatypes/text/html>;
+       frbr:exemplar ?htmlItem.
        }
    </script>
 

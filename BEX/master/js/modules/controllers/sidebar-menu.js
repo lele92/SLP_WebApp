@@ -111,10 +111,10 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
         case "app.articles-results": //todo:barbatrucco da rivedere: in realtà non vado ad app.articles, ma all'ultimo state visitato dall'utente
           var lastState = StatesManagerService.getLastState();
 
-          if(!lastState.state) {
+          if(!lastState.name) {
             $state.go("app.articles-results");
           } else {
-            $state.go(lastState.state.name,lastState.params);
+            $state.go(lastState.name,lastState.params);
           }
           break;
         default :

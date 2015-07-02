@@ -1,15 +1,14 @@
 /**=========================================================
  * module: filters-manager.js
- * servizio per gestire i valori dei filtri impostati nella offsidebar.
+ * servizio per gestire i valori dei filtri impostati per le citazioni.
  * una collezione di variabili accedibili con getters e setters,
  * per permettere ad article-results (legge i filtri) e filter-offsidebar (imposta i filtri) di comunicare.
  =========================================================*/
 'use strict';
 
 myApp
-    .factory('FiltersManagerService', ["ArticlesInfoService", "ngDialog", function(ArticlesInfoService, ngDialog) {
+    .factory('FiltersManagerService', ["ArticlesInfoService", "$stateParams", "ORDER_BY", function(ArticlesInfoService, ORDER_BY) {
         var filterActivated = { value: false}               //true se c'è almeno un filtro attivo, false altrimenti
-        var allAuthors;
         /* default vars filtri */
         var startingPublicationYear =  { value: 0};         // anno di partenza per filtri. è un oggetto perchè sto valutando di aggiungere altre property e perchè lo trovo più conveniente
         var selfcitations = { value: false, exclude:true};            // inizialmente mostro tutte le citazioni e quando il filtro viene attivato, di default vengono escluse le autocitazioni
@@ -203,14 +202,12 @@ myApp
             }
         };                      //todo: richiederlo in modo dinamico come con gli autori
         var authors = {value: [], enabled:false}            // lista degli autori per il filtro autori, di default non ce n'è nessuno (non ci posso mettere 930 autori!)...con enabled si decide se (in biblioFilters) gli items devono essere filtrati
-
         var allAuthors = { value: [] };                //tutti gli autori
 
 
 
-
         /* vars order by */
-        var defaultOrderByValue = "publicationYear";    // l'ordinamento di default è per anno di pubblicazione
+        var defaultOrderByValue = ORDER_BY.publicationYear;    // l'ordinamento di default è per anno di pubblicazione
         var defaultSort = true;                      // true-> decrescente, false->crescente
         var orderBy = { value: defaultOrderByValue};    // angular.copy(defaultOrderBy, orderBy); orderBy inzializzato al default; deep copy, non assegnazione per riferimento
         var sort = { value: defaultSort};

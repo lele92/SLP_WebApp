@@ -61,12 +61,10 @@ myApp.controller('HomeSearchController', ["$rootScope", "RequestArticlesService"
             case SEARCH_TYPE.abstractSearch:     // abstract
                 if (self.searchText) {
                     $sessionStorage.searchQuery = self.searchText;
-                    ArticleManagerService.getArticlesByAbstract(self.searchText);
                     $rootScope.$state.go('app.articles-results', {
-                        newSearch: true,
-                        search: {
-                            searchType: searchType
-                        }
+                        newSearch: true,                            // è una nuova ricerca, quindi cancella tutti gli states e salva in sessionStorage i risultati
+                        searchType: SEARCH_TYPE.abstractSearch,     // è una ricerca per abstract
+                        searchQuery: $sessionStorage.searchQuery    // testo dell'abstract search
                     });
                 }
                 break;
@@ -74,12 +72,10 @@ myApp.controller('HomeSearchController', ["$rootScope", "RequestArticlesService"
                 if (self.searchTitle) {
                     $sessionStorage.searchQuery = self.searchTitle;
 
-                    ArticleManagerService.getArticlesByTitle(self.searchTitle);
                     $rootScope.$state.go('app.articles-results', {
-                        newSearch: true,
-                        search: {
-                            searchType: searchType
-                        }
+                        newSearch: true,                            // è una nuova ricerca, quindi cancella tutti gli states e salva in sessionStorage i risultati
+                        searchType: SEARCH_TYPE.titleSearch,        // è una ricerca per titolo
+                        searchQuery: $sessionStorage.searchQuery    // titolo
                     });
                 }
 
@@ -87,23 +83,29 @@ myApp.controller('HomeSearchController', ["$rootScope", "RequestArticlesService"
             case SEARCH_TYPE.authorSearch:     // author
                 if (self.searchAuthor) {
                     $sessionStorage.searchQuery = self.searchAuthor;
-                    ArticleManagerService.getArticlesByFullNameAuthor(self.searchAuthor, true);
                     $rootScope.$state.go('app.articles-results', {
-                        newSearch: true,
-                        search: {
-                            searchType: searchType
-                        }
+                        newSearch: true,                                // è una nuova ricerca, quindi cancella tutti gli states e salva in sessionStorage i risultati
+                        searchType: SEARCH_TYPE.authorSearch,           // è una ricerca per autore
+                        searchQuery: $sessionStorage.searchQuery        // nome dell'autore
                     });
                 }
                 break;
         }
-
-        //todo: per doc: http://angular-ui.github.io/ui-router/site/#/api/ui.router.state.$state
-
     }
 
+    //todo: da rivedere
     self.switchSearch = function(searchT) {
-        searchType = searchT;
+        switch (searchT) {
+            case 0:     // abstract
+                searchType = SEARCH_TYPE.abstractSearch;
+                break;
+            case 1:     // title
+                searchType = SEARCH_TYPE.titleSearch;
+                break;
+            case 2:     // author
+                searchType = SEARCH_TYPE.authorSearch;
+                break;
+        }
     }
 
     self.refreshAuthors = function(str) {

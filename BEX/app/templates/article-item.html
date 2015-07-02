@@ -1,11 +1,11 @@
 <div id="article_{{articleIndex}}" class="panel panel-default panel-article-item " ng-class="{'whirl double-up': !articleData.authors}">
     <div class="panel-heading article-header panel-min-padding">
         <div class="article-header-info top-header-info">
-            <div class="pull-left article-type">
-                <span ng-if="articleData.type" >{{articleData.type}}</span>
+            <div ng-if="articleData.type"class="pull-left article-type">
+                <span  >{{articleData.type}}</span>
             </div>
-            <div class="pull-left article-vol">
-                <span ng-if="availableIssue(articleData)" class="vol-info">vol. {{articleData.volumeNumber.value}} ({{articleData.issueNumber.value}})</span>
+            <div ng-if="availableIssue(articleData)" class="pull-left article-vol">
+                <span  class="vol-info">vol. {{articleData.volumeNumber.value}} ({{articleData.issueNumber.value}})</span>
             </div>
 
             <span class="article-year-top-header">{{articleData.publicationYear}}</span>
@@ -110,10 +110,10 @@
                                     authors:authorsFilter.value:authorsFilter.enabled |
                                     orderBy:orderFilter.value:sortFilter.value )"
                          item-data="biblioItem"
-                         chart-id="{{articleData.doi.value}}_chart{{$index}}"
+                         chart-id="{{articleData.doi}}_chart{{$index}}"
                          citing-article-authors="articleData.authors"></biblio-item>
         </div>
     </div>
 
-    <div class="panel-footer" collapse="articleIsCollapsed"><strong>doi:</strong>{{articleData.doi.value}}</div>
+    <div class="panel-footer" collapse="articleIsCollapsed"><strong>DOI:</strong> {{articleData.doi}}</div>
 </div>

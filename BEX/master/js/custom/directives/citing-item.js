@@ -3,7 +3,7 @@
  * elemento per le informazioni su un singolo articolo citante
  =========================================================*/
 
-myApp.directive('citingItem', ["ngDialog", "ArticleManagerService","$rootScope", function( ngDialog, ArticleManagerService, $rootScope) {
+myApp.directive('citingItem', ["ngDialog", "ArticleManagerService","$rootScope","SEARCH_TYPE", function( ngDialog, ArticleManagerService, $rootScope, SEARCH_TYPE) {
     'use strict';
 
     return {
@@ -45,11 +45,11 @@ myApp.directive('citingItem', ["ngDialog", "ArticleManagerService","$rootScope",
             /* per visualizzare tutti gli articoli di un autore */
             scope.exploreAuthor = function(givenName, familyName) {
                 ngDialog.closeAll();
-                $rootScope.$state.go('app.articles-author', {
-                        givenName: givenName,
-                        familyName: familyName
-                    }
-                );
+                $rootScope.$state.go('app.articles-results', {
+                    newSearch: false,                                // è una nuova ricerca, quindi cancella tutti gli states e salva in sessionStorage i risultati
+                    searchType: SEARCH_TYPE.authorSearch,           // è una ricerca per autore
+                    searchQuery: givenName+" "+familyName        // nome dell'autore
+                });
             }
 
             /* se un autore di un citing-item é anche autore dell'articolo citato, allora ritorna true, altrimenti false */

@@ -107,6 +107,14 @@ myApp
                 return $http.get(queryURL);
             },
 
+            //@guide per ottenere un singolo articolo (partendo dal DOI)
+            getArticleByDoi: function(articleDoi) {
+                var expr = {doi: articleDoi};
+                var queryURL = buildQueryURL('#query_singleArticleByDoi',expr);
+
+                return $http.get(queryURL);
+            },
+
             //@guide per ottenere work degli articoli a partire da un certo titolo
             requestArticlesByTitle: function(articleTitle) {
                 var expr = {title: articleTitle};

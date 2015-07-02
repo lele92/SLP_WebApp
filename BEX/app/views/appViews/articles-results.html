@@ -4,23 +4,49 @@
 
 <div tabindex="0" ui-keypress="{76:'ArticlesResultsCtrl.logResults()'}">
     <div class="row" ng-show="ArticlesResultsCtrl.articlesNum.value > 1" align="center">
-        <div class="well well-sm col-lg-8 col-md-10 col-centered" >
-            <div align="center" class="col-lg-2 col-md-2 no-padding sort-by">
-                <span class="x-large-text text-center">Sort by</span>
-            </div>
+        <div class="well well-sm col-lg-12 col-md-12 col-centered" >
+            <div class="row no-left-margin no-right-margin">
+                <div align="center" class="col-lg-2 col-md-2 no-padding sort-by">
+                    <span class="x-large-text text-center">Sort by</span>
+                </div>
 
-            <div class="col-lg-6 col-md-6 sort-by" align="center">
-                <div class="row btn-group">
-                    <label ng-model="ArticlesResultsCtrl.orderByV" btn-radio="ArticlesResultsCtrl.publicationYear" class="btn btn-primary"><span class="large-text">Year</span></label>
-                    <label ng-model="ArticlesResultsCtrl.orderByV" btn-radio="ArticlesResultsCtrl.title" class="btn btn-primary"><span class="large-text">Title</span></label>
-                    <label ng-model="ArticlesResultsCtrl.orderByV" btn-radio="ArticlesResultsCtrl.globalCitations" class="btn btn-primary"><span class="large-text">Global citations</span></label>
+                <div class="col-lg-6 col-md-6 sort-by" align="center">
+                    <div class="row btn-group">
+                        <label ng-model="ArticlesResultsCtrl.orderByV" btn-radio="ArticlesResultsCtrl.publicationYear" class="btn btn-primary"><span class="large-text">Year</span></label>
+                        <label ng-model="ArticlesResultsCtrl.orderByV" btn-radio="ArticlesResultsCtrl.title" class="btn btn-primary"><span class="large-text">Title</span></label>
+                        <label ng-model="ArticlesResultsCtrl.orderByV" btn-radio="ArticlesResultsCtrl.globalCitations" class="btn btn-primary"><span class="large-text">Global citations</span></label>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-3 sort-by" align="center">
+                    <div class="row btn-group">
+                        <label ng-model="ArticlesResultsCtrl.sortByV" btn-radio="false" class="btn btn-success"><span class="large-text"><em class="fa fa-sort-amount-asc fa-lg"></em> asc</span></label>
+                        <label ng-model="ArticlesResultsCtrl.sortByV" btn-radio="true" class="btn btn-success"><span class="large-text"><em class="fa fa-sort-amount-desc fa-lg"></em> desc</span></label>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-3 sort-by" align="center">
-                <div class="row btn-group">
-                    <label ng-model="ArticlesResultsCtrl.sortByV" btn-radio="false" class="btn btn-success"><span class="large-text"><em class="fa fa-sort-amount-asc fa-lg"></em> asc</span></label>
-                    <label ng-model="ArticlesResultsCtrl.sortByV" btn-radio="true" class="btn btn-success"><span class="large-text"><em class="fa fa-sort-amount-desc fa-lg"></em> desc</span></label>
+            <div class="row no-left-margin no-right-margin order-results">
+                <div class="col-lg-1">
+                    show
                 </div>
+                <div class="col-lg-8">
+                    <ui-select multiple="" ng-model="ArticlesResultsCtrl.selectedArticleTypes" theme="bootstrap" ng-disabled="disabled">
+                        <ui-select-match placeholder="Select types...">{{$item}}s</ui-select-match>
+                        <ui-select-choices repeat="articleType in ArticlesResultsCtrl.articleTypes | filter:$select.search">{{articleType}}s</ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-lg-1">
+                    after year
+                </div>
+                <div class="col-lg-2">
+                    <div class="input-group" >
+                        <input placeholder="Year to start from" class="form-control" ng-disabled="false" type="number" ng-model="ArticlesResultsCtrl.pubYear" min="1970" max="{{ArticlesResultsCtrl.year}}">
+                         <span class="input-group-btn">
+                            <button ng-disabled="false" type="button" class="btn btn-default" ng-click="ArticlesResultsCtrl.applyYearFilter()">Set</button>
+                         </span>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>
@@ -33,7 +59,10 @@
    <div class="row">
         <!--<button ng-click="ArticlesResultsCtrl.logResults()">log</button>-->
 
-        <article-item class="article-item" ng-repeat="article in ArticlesResultsCtrl.articles | orderBy:ArticlesResultsCtrl.orderByV:ArticlesResultsCtrl.sortByV"
+        <article-item class="article-item" ng-repeat="article in ArticlesResultsCtrl.articles |
+                            articleType:ArticlesResultsCtrl.selectedArticleTypes |
+                            afterYear:ArticlesResultsCtrl.publicationYearV |
+                            orderBy:ArticlesResultsCtrl.orderByV:ArticlesResultsCtrl.sortByV"
                         article-data="article"
                         article-index="{{$index + 1}}"
                         year-filter=ArticlesResultsCtrl.publicationYearFil

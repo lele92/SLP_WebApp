@@ -3,7 +3,7 @@
  * elemento per le informazioni su un singolo articolo
  =========================================================*/
 
-myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope", "BookmarksManagerService", function(ngDialog, ArticleManagerService, $rootScope, BookmarksManagerService) {
+myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope", "BookmarksManagerService", "SEARCH_TYPE", function(ngDialog, ArticleManagerService, $rootScope, BookmarksManagerService, SEARCH_TYPE) {
     'use strict';
 
     return {
@@ -25,7 +25,7 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
             var detailsAlreadyRequested = false; //todo: da cambiare: questa info deve stare in ArticleManagerService
 
             var checkBookmarked = function() {
-                if (BookmarksManagerService.isBookmarked($scope.articleData.doi.value)) {
+                if (BookmarksManagerService.isBookmarked($scope.articleData.doi)) {
                     BookmarksManagerService.replaceBookmark($scope.articleData);
                 }
             }
@@ -57,7 +57,7 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
                 if (!articleData.bookmark || articleData.bookmark == false) {
                     BookmarksManagerService.saveBookmark(articleData);
                 } else {
-                    BookmarksManagerService.deleteBookmark(articleData.doi.value);
+                    BookmarksManagerService.deleteBookmark(articleData.doi);
                     ArticleManagerService.refreshStoredSearchResult(articleData); //todo: da rivedere
                 }
             }
@@ -81,11 +81,11 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
 
             /* per visualizzare tutti gli articoli di un autore */
             $scope.exploreAuthor = function(givenName, familyName) {
-                $rootScope.$state.go('app.articles-author', {
-                        givenName: givenName,
-                        familyName: familyName
-                    }
-                );
+                $rootScope.$state.go('app.articles-results', {
+                    newSearch: false,                                // è una nuova ricerca, quindi cancella tutti gli states e salva in sessionStorage i risultati
+                    searchType: SEARCH_TYPE.authorSearch,           // è una ricerca per autore
+                    searchQuery: givenName+" "+familyName        // nome dell'autore
+                });
             }
 
             /* per ottenere l'URL dell'articolo */

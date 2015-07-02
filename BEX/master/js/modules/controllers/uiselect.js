@@ -308,7 +308,7 @@ App.controller('uiSelectController', ["$scope", "$http", function($scope, $http)
     $scope.eventResult = {item: item, model: model};
   };
 
-  $scope.availableColors = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
+  $scope.artilcesTypes = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
 
   $scope.multipleDemo = {};
   $scope.multipleDemo.colors = ['Blue','Red'];

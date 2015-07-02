@@ -5,7 +5,7 @@
 'use strict';
 
 myApp
-    .factory('ArticleManagerService', ["RequestArticlesService", "FiltersManagerService", "ArticlesInfoService", "StatesManagerService", "AuthorInfoService", "ngDialog", "$rootScope", "$sessionStorage", "ARTICLES_RESULTS", function(RequestArticlesService, FiltersManagerService,  ArticlesInfoService, StatesManagerService, AuthorInfoService, ngDialog, $rootScope, $sessionStorage, ARTICLES_RESULTS) {
+    .factory('ArticleManagerService', ["RequestArticlesService", "FiltersManagerService", "ArticlesInfoService", "StatesManagerService", "AuthorInfoService", "ngDialog", "$rootScope", "$sessionStorage", "SEARCH_TYPE","ARTICLE_TYPES", function(RequestArticlesService, FiltersManagerService,  ArticlesInfoService, StatesManagerService, AuthorInfoService, ngDialog, $rootScope, $sessionStorage, SEARCH_TYPE, ARTICLE_TYPES) {
         var articlesResults = [];
 
         if (!$sessionStorage.searchResults) {
@@ -112,25 +112,25 @@ myApp
                         var type = response.data.results.bindings[0].type.value;
                         switch (type) {
                             case "http://purl.org/spar/fabio/JournalArticle":
-                                articleData.type = "Journal Article";
+                                articleData.type = ARTICLE_TYPES.JournalArticle;
                                 break;
                             case "http://purl.org/spar/fabio/ConferencePaper":
-                                articleData.type =  "Conference Paper";
+                                articleData.type =  ARTICLE_TYPES.ConferencePaper;
                                 break;
                             case "http://purl.org/spar/fabio/JournalReviewArticle":
-                                articleData.type =  "Journal Review Article";
+                                articleData.type =  ARTICLE_TYPES.JournalReviewArticle;
                                 break;
                             case "http://purl.org/spar/fabio/JournalEditorial":
-                                articleData.type =  "Journal Editorial";
+                                articleData.type =  ARTICLE_TYPES.JournalEditorial;
                                 break;
                             case "http://purl.org/spar/fabio/Letter":
-                                articleData.type =  "Letter";
+                                articleData.type =  ARTICLE_TYPES.Letter;
                                 break;
                             default:
-                                articleData.type = "Article";
+                                articleData.type = ARTICLE_TYPES.Article;
                         }
                     } else {
-                        articleData.type = "Article";
+                        articleData.type = ARTICLE_TYPES.Article;
                     }
 
                 },
@@ -387,6 +387,7 @@ myApp
                     var articleData = response.data.results.bindings[0];
                     articleData.publicationYear = stringToInt(articleData.publicationYear.value);
                     articleData.title = articleData.title.value;
+	                articleData.doi = articleData.doi.value;
 
                     articleData.globalCountValue = stringToInt(articleData.globalCountValue.value);
 
@@ -437,6 +438,16 @@ myApp
                 }]
             });
         }
+
+		var checkState = function(searchType, details) {
+			var stateIndex = StatesManagerService.getStateIndex(searchType, details) // indice dello state, -1 se non presente
+
+			if (stateIndex == -1) {
+				StatesManagerService.saveState(searchType, details);
+			} else {
+				StatesManagerService.restoreState(stateIndex); //se lo state è già presente, lo recupero ed elimino tutti gli states successivi
+			}
+		}
 
 
         return {
@@ -555,15 +566,27 @@ myApp
             },
 
             /* per richiedere i risultati della ricerca per abstract*/
-            getArticlesByAbstract: function(searchString) {
+            getArticlesByAbstract: function(searchText, newSearch) {
 
-                return RequestArticlesService.searchArticles(searchString).then(
+	            //todo: da rifattorizzare...creare una funzione unica
+
+	            if (newSearch) {
+		            StatesManagerService.removeAllStates(); //svuota la lista degli stati
+		            //$sessionStorage.searchResults.length = 0;
+		            StatesManagerService.saveState(SEARCH_TYPE.abstractSearch, searchText);
+	            } else {
+		            checkState(SEARCH_TYPE.abstractSearch, searchText);
+	            }
+
+                return RequestArticlesService.searchArticles(searchText).then(
                     // success
                     function(response) {
-                        StatesManagerService.removeAllStates(); //svuota la lista degli stati
-                        StatesManagerService.saveState(ARTICLES_RESULTS.searchResults, searchString);
+
+
+
+
                         //console.log(StatesManagerService.getStates());
-                        articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
+                        articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè cambia il riferimento
                         $sessionStorage.searchResults.length = 0;
                         var resSet = "http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet";
                         var results = "http://stanbol.apache.org/ontology/entityhub/query#queryResult";
@@ -617,16 +640,12 @@ myApp
                 );
             },
 
-            //questa è invocata in biblioItem e citingItem per visualizzare le info su un solo articolo
-            singleArticleInfo: function(artTitle/*, stateVal*/) {
+            //per visualizzare le info su un solo articolo
+            getSingleArticle: function(artTitle/*, stateVal*/) {
                 RequestArticlesService.setPendingRequest(); //todo: in futuro questo dovrà essere evitato
-                var stateIndex = StatesManagerService.getStateIndex(ARTICLES_RESULTS.singleArticleResults, artTitle) // indice dello state, -1 se non presente
+                checkState(SEARCH_TYPE.singleArticle, artTitle);
 
-                if (stateIndex == -1) {
-                    StatesManagerService.saveState(ARTICLES_RESULTS.singleArticleResults, artTitle);
-                } else {
-                    StatesManagerService.restoreState(stateIndex); //se lo state è già presente, lo recupero ed elimino tutti gli states successivi
-                }
+
 
                 ArticlesInfoService.getArticle(artTitle).then(
                     function(response) {
@@ -644,6 +663,7 @@ myApp
                             var art = response.data.results.bindings[0];
                             art.publicationYear = stringToInt(art.publicationYear.value);
                             art.title = artTitle;
+	                        art.doi = art.doi.value;
                             art.globalCountValue = stringToInt(art.globalCountValue.value);
                             articlesResults.push(art); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia (si aggiorna comunque perchè articles è passato per riferimento, ma con il watch aggiungo del comportamento )
                             articlesNum = 1;
@@ -688,23 +708,33 @@ myApp
 
             },
 
-            setFirstSearchResults: function() {
+            ResetSearchResults: function() {
                 angular.copy($sessionStorage.searchResults, articlesResults);
                 articlesNum = articlesResults.length;
                 completedArticles = articlesResults.length;
                 StatesManagerService.removeAllStates(); //svuota la lista degli stati
-                StatesManagerService.saveState(ARTICLES_RESULTS.searchResults, $sessionStorage.searchQuery);
+               // StatesManagerService.saveState(ARTICLES_RESULTS.searchResults, $sessionStorage.searchQuery);
             },
 
             /* per risultati di ricerca a partire dal titolo */
-            getArticlesByTitle: function(articleTitle) {
+            getArticlesByTitle: function(articleTitle, newSearch) {
                 RequestArticlesService.setPendingRequest(); //todo: in futuro questo dovrà essere evitato
+
+	            //todo: da rifattorizzare...creare una funzione unica
+
+
+	            if (newSearch) {
+		            StatesManagerService.removeAllStates(); //svuota la lista degli stati
+		            StatesManagerService.saveState(SEARCH_TYPE.titleSearch, articleTitle);
+	            } else {
+		           checkState(SEARCH_TYPE.titleSearch, articleTitle);
+	            }
 
                 return ArticlesInfoService.requestArticlesByTitle(articleTitle).then(
                     // success
                     function(response) {
-                        StatesManagerService.removeAllStates(); //svuota la lista degli stati
-                        StatesManagerService.saveState(ARTICLES_RESULTS.searchResults, articleTitle);
+
+
 
                         articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
                         $sessionStorage.searchResults.length = 0;
@@ -754,6 +784,62 @@ myApp
                 );
             },
 
+	        /* per risultati di ricerca a partire dal DOI*/
+	        getSingleArticleByDoi: function(articleDoi){
+		        RequestArticlesService.setPendingRequest(); //todo: in futuro questo dovrà essere evitato
+		        checkState(SEARCH_TYPE.singleArticleByDoi, articleDoi);
+
+
+		        ArticlesInfoService.getArticleByDoi(articleDoi).then(
+			        function(response) {
+
+				        articlesResults.length = 0;
+
+
+				        if (response.data.results.bindings.length == 0) {
+					        articlesResultsState = resultsStates.NO_RESULTS;           // non ci sono risultati
+					        console.log("NO RESULTS!");
+
+					        RequestArticlesService.setCompletedRequest();
+				        } else {
+					        articlesResultsState = resultsStates.RESULTS;
+					        var art = response.data.results.bindings[0];
+					        art.publicationYear = stringToInt(art.publicationYear.value);
+					        art.title = art.title.value;
+					        art.doi = articleDoi;
+					        art.globalCountValue = stringToInt(art.globalCountValue.value);
+					        articlesResults.push(art); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia (si aggiorna comunque perchè articles è passato per riferimento, ma con il watch aggiungo del comportamento )
+					        articlesNum = 1;
+					        completedArticles = 1;
+					        RequestArticlesService.setCompletedRequest();
+
+					        //@guide richiedo la lista degli autori
+					        getArticleAuthors(art);
+					        getType(art);
+
+					        //@guide richiedo le info sulle citazioni (in entrata)
+					        ArticlesInfoService.getArticleCitationsInfo(art.expression.value).then(
+						        function (response) {
+							        art.inCitActs = response.data.results.bindings[0].numCitActs.value; //numero di citation acts
+							        art.inNumCites = response.data.results.bindings[0].numCites.value;  //numero di cites (<= numero di citation acts), citazioni uniche
+						        },
+						        //todo caso da gestire meglio
+						        function (errResponse) {
+							        console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+						        }
+					        );
+				        }
+
+
+			        },
+
+			        //todo caso da gestire meglio
+			        function (errResponse) {
+				        console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+			        }
+		        );
+			},
+
             /* per richiedere gli articoli di un autore senza effettuare una ricerca dalla homepage */
             getArticlesByAuthor: function(givenName, familyName) {
                 this.getArticlesByFullNameAuthor(givenName+" "+familyName, false);
@@ -763,21 +849,18 @@ myApp
             getArticlesByFullNameAuthor: function(fullName, newSearch) {
                 RequestArticlesService.setPendingRequest(); //todo: in futuro questo dovrà essere evitato
 
+
+	            if (newSearch) {
+		            StatesManagerService.removeAllStates(); //svuota la lista degli stati
+		            //$sessionStorage.searchResults.length = 0;
+		            StatesManagerService.saveState(SEARCH_TYPE.authorSearch, fullName);
+	            } else {
+		            checkState(SEARCH_TYPE.authorSearch, fullName);
+	            }
+
                 return AuthorInfoService.requestFullNameAuthorArticles(fullName).then(
                     // success
                     function(response) {
-                        var stateIndex = StatesManagerService.getStateIndex(ARTICLES_RESULTS.authorResults, fullName) // indice dello state, -1 se non presente
-
-                        if (newSearch) {
-                            StatesManagerService.removeAllStates(); //svuota la lista degli stati
-                            $sessionStorage.searchResults.length = 0;
-                            StatesManagerService.saveState(ARTICLES_RESULTS.searchResults, fullName);
-                        } else if ( stateIndex == -1) {
-                            StatesManagerService.saveState(ARTICLES_RESULTS.authorResults, fullName);
-                        } else {
-                            StatesManagerService.restoreState(stateIndex); //se lo state è già presente, lo recupero ed elimino tutti gli states successivi
-                        }
-
 
                         articlesResults.length = 0; //svuota l'array degli articoli, attenzione! non usare articlesResults = [] perchè crea un altro array
 
@@ -827,7 +910,7 @@ myApp
             /* per aggiornare un singolo articolo nella collezione dei risultati di ricerca salvati nel sessionStorage */
             refreshStoredSearchResult: function(newArticleData) {
                 for (var key in $sessionStorage.searchResults) {
-                    if ($sessionStorage.searchResults[key].doi.value == newArticleData.doi.value) {
+                    if ($sessionStorage.searchResults[key].doi == newArticleData.doi) {
                         $sessionStorage.searchResults[key] = newArticleData;
                     }
                 }

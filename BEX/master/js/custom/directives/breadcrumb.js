@@ -3,7 +3,7 @@
  * elemento per il breadcrumb
  =========================================================*/
 
-myApp.directive('breadcrumb', ["StatesManagerService", "$rootScope", "ARTICLES_RESULTS", function(StatesManagerService, $rootScope, ARTICLES_RESULTS) {
+myApp.directive('breadcrumb', ["StatesManagerService", "$rootScope", "SEARCH_TYPE", function(StatesManagerService, $rootScope, SEARCH_TYPE) {
 	"use strict";
 
 	return {
@@ -12,11 +12,14 @@ myApp.directive('breadcrumb', ["StatesManagerService", "$rootScope", "ARTICLES_R
 		scope:{},
 		link: function($scope){
 			$scope.states = StatesManagerService.getStates();
-			$scope.types = ARTICLES_RESULTS;
+			$scope.types = SEARCH_TYPE;
 
-			$scope.changeState = function(index) {
-				var newState = StatesManagerService.restoreState(index);
-				$rootScope.$state.go(newState.state.name, newState.params);
+			$scope.changeState = function(stateIndex, lastBreadcrumb) {
+				if (!lastBreadcrumb) {
+					var newState = StatesManagerService.getState(stateIndex);
+					$rootScope.$state.go(newState.name, newState.params);
+				}
+
 			}
 		}
 	}

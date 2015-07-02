@@ -9,7 +9,7 @@
 
 ### Nuovo filtro bibliografia ###
 
-- in biblioFilters.js aggiungere nuovo filtro in biblioFilters.js (optional)
+- in articlesFilters.js aggiungere nuovo filtro in articlesFilters.js (optional)
 - in filters-manager.js aggiungere un oggetto e assegnare alla property "value" il valore di default del nuovo filtro
 - in filters-manager.js aggiungere un getter e un setter (il getter ritorna l'oggetto, il setter imposta il valore di value)
 - in articles-results.js aggiungere una nuova variabile per il valore del filtro: esso verrà preso dalla factory filters-manager.js

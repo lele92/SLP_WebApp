@@ -1,4 +1,4 @@
-myApp.controller('BiblioOrderbyController', ["FiltersManagerService", function(FiltersManagerService) {
+myApp.controller('BiblioOrderbyController', ["FiltersManagerService","ORDER_BY", function(FiltersManagerService,ORDER_BY) {
     var self = this;
 
     self.orderByF = FiltersManagerService.getOrderBy();
@@ -9,10 +9,10 @@ myApp.controller('BiblioOrderbyController', ["FiltersManagerService", function(F
 
     //@guide: valori del ng-value dei radio button: li metto qui (invece di usare value) così posso cambiarli semplicemente
     /* order option vars */
-    self.publicationYear = "publicationYear";
-    self.title = "title";
-    self.globalCitations = "globalCountValue";
-    self.totCitActs = "totCitActs";
+    self.publicationYear = ORDER_BY.publicationYear;
+    self.title = ORDER_BY.title;
+    self.globalCitations = ORDER_BY.globalCitations;
+    self.totCitActs = ORDER_BY.totCitActs;
 
 
     self.applySort = function() {

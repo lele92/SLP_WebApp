@@ -115,3 +115,24 @@ myApp
             return items; //se le condizioni dell'if non sono verificate, ritorno l'input (potrebbe essere undefined) originale
         }
     })
+    .filter('articleType', function () {
+        return function (items, articleTypes) {
+            if (!angular.isUndefined(items) && !angular.isUndefined(articleTypes)) {
+                var filtered = [];
+                var item;
+                var type;
+                for (var i in items) {    //per ogni item della bibliogrfia
+                    item = items[i];
+                    type = item.type;
+                    //todo: type potrebbe essere temporaneamente non definito, quindi di default l'articolo senza type viene aggiunto a filtered
+                    if ( !type || articleTypes.indexOf(type) != -1) {
+	                    filtered.push(item);
+                    }
+
+                }
+                return filtered;
+            }
+
+            return items; //se le condizioni dell'if non sono verificate, ritorno l'input (potrebbe essere undefined) originale
+        }
+    })

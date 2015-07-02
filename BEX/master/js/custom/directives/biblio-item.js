@@ -3,7 +3,7 @@
  * elemento per le informazioni su un singolo elemento di una bibliografia
  =========================================================*/
 
-myApp.directive('biblioItem', ["ngDialog","$modal", "ArticleManagerService", "$rootScope", function(ngDialog, $modal, ArticleManagerService, $rootScope) {
+myApp.directive('biblioItem', ["ngDialog","$modal", "ArticleManagerService", "$rootScope","SEARCH_TYPE", function(ngDialog, $modal, ArticleManagerService, $rootScope, SEARCH_TYPE) {
     'use strict';
 
     return {
@@ -20,7 +20,7 @@ myApp.directive('biblioItem', ["ngDialog","$modal", "ArticleManagerService", "$r
 
             /* per avere maggiori info sul corrente elemento bibliografico */
             scope.exploreBiblioItem = function() {
-                //var strBreadCrumb = "["+scope.itemData.publicationYear+"] "+scope.itemData.title.substr(0,40)+"...";
+
                 $rootScope.$state.go('app.articles-article', {
                         title: scope.itemData.title
                     }
@@ -30,11 +30,11 @@ myApp.directive('biblioItem', ["ngDialog","$modal", "ArticleManagerService", "$r
 
             /* per visualizzare tutti gli articoli di un autore */
             scope.exploreAuthor = function(givenName, familyName) {
-                $rootScope.$state.go('app.articles-author', {
-                        givenName: givenName,
-                        familyName: familyName
-                    }
-                );
+                $rootScope.$state.go('app.articles-results', {
+                    newSearch: false,                                // è una nuova ricerca, quindi cancella tutti gli states e salva in sessionStorage i risultati
+                    searchType: SEARCH_TYPE.authorSearch,           // è una ricerca per autore
+                    searchQuery: givenName+" "+familyName        // nome dell'autore
+                });
             }
 
 

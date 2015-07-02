@@ -67,7 +67,7 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '
         //todo caso da gestire meglio
         function (errResponse) {
             $rootScope.authors = [];
-            ngDialog.open({template: "app/templates/dialog-error.html"});
+            //ngDialog.open({template: "app/templates/dialog-error.html"});
             console.error("Error while fetching authors. " + errResponse.status + ": " + errResponse.statusText)
         }
     );
@@ -860,10 +860,10 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
         case "app.articles-results": //todo:barbatrucco da rivedere: in realtà non vado ad app.articles, ma all'ultimo state visitato dall'utente
           var lastState = StatesManagerService.getLastState();
 
-          if(!lastState.state) {
+          if(!lastState.name) {
             $state.go("app.articles-results");
           } else {
-            $state.go(lastState.state.name,lastState.params);
+            $state.go(lastState.name,lastState.params);
           }
           break;
         default :
@@ -1195,7 +1195,7 @@ App.controller('uiSelectController', ["$scope", "$http", function($scope, $http)
     $scope.eventResult = {item: item, model: model};
   };
 
-  $scope.availableColors = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
+  $scope.artilcesTypes = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
 
   $scope.multipleDemo = {};
   $scope.multipleDemo.colors = ['Blue','Red'];

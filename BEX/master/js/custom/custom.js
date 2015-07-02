@@ -15,20 +15,30 @@ myApp.run([ "$log","$rootScope", "$state", "$stateParams", function($log,$rootSc
 
 /* costanti per le tipologie di risultati */
 myApp
-    .constant("ARTICLES_RESULTS", {
-        searchResults:0,
-        authorResults:1,
-        singleArticleResults:2
-    })
     .constant("SEARCH_TYPE", {
-        abstractSearch: 0,
-        titleSearch: 1,
-        authorSearch: 2
+        abstractSearch: "abstractSearch",
+        titleSearch: "titleSearch",
+        authorSearch: "authorSearch",
+        singleArticle: "singleArticle",
+		singleArticleDoi: "singleArticleDoi"
     })
+	.constant("ORDER_BY", {
+		publicationYear : "publicationYear",
+		title : "title",
+		globalCitations : "globalCountValue",
+		totCitActs : "totCitActs"
+	})
+	.constant("ARTICLE_TYPES", {
+		JournalArticle:"Journal Article",
+		ConferencePaper:"Conference Paper",
+		JournalReviewArticle:"Journal Review Article",
+		JournalEditorial:"Journal Editorial",
+		Letter:"Letter",
+		Article:"Article"
+	})
 ;
 
-myApp.config(["$stateProvider","ARTICLES_RESULTS","SEARCH_TYPE", function($stateProvider, ARTICLES_RESULTS, SEARCH_TYPE) {
-  /* specific routes here (see file config.js) */
+myApp.config(["$stateProvider","SEARCH_TYPE", function($stateProvider, SEARCH_TYPE) {
   $stateProvider
       .state('app.home-search', {
         url: '/homeSearch',
@@ -38,36 +48,54 @@ myApp.config(["$stateProvider","ARTICLES_RESULTS","SEARCH_TYPE", function($state
         controllerAs: 'HomeSearchCtrl'
       })
       .state('app.articles-results', {
-        url: '/searchResults',
+        url: '/searchResults?searchType&searchQuery',
         title: 'Search results',
         params: {
-            type: ARTICLES_RESULTS.searchResults,
-            newSearch: false
+            searchType: undefined,          // tipologia di ricerca (abstract, titolo, autore)
+            newSearch: false,               // se newSearch=true vengono rimpiazzati i risultati di ricerca in LocalStorage e vengono rimossi tutti gli states
+            searchQuery: undefined          // query di ricerca (abstract, titolo, nome autore)
+
         },
         templateUrl: getMyBasepath('articles-results.html'),
         controller: 'ArticlesResultsController',
-        controllerAs: 'ArticlesResultsCtrl'
+        controllerAs: 'ArticlesResultsCtrl',
+        onEnter: ["StatesManagerService","$stateParams", function(StatesManagerService,$stateParams){
+            StatesManagerService.setState("app.articles-results",$stateParams);
+        }]
       })
-      .state('app.articles-author', {
-          url: '/articles/author?givenName&familyName',
-          title: 'Author\'s articles',
-          params: {
-              type: ARTICLES_RESULTS.authorResults
-          },
-          templateUrl: getMyBasepath('articles-results.html'),
-          controller: 'ArticlesResultsController',
-          controllerAs: 'ArticlesResultsCtrl'
-      })
+      //.state('app.articles-author', {
+      //    url: '/articles/author?givenName&familyName',
+      //    title: 'Author\'s articles',
+      //    templateUrl: getMyBasepath('articles-results.html'),
+      //    controller: 'ArticlesResultsController',
+      //    controllerAs: 'ArticlesResultsCtrl'
+      //})
       .state('app.articles-article', {
-          url: '/articles/article?title',
+          url: '/articles/articleByTitle?title',
           title: 'Article',
           params: {
-              type: ARTICLES_RESULTS.singleArticleResults
+              searchType: SEARCH_TYPE.singleArticle            // tipologia di ricerca (abstract, titolo, autore)
           },
           templateUrl: getMyBasepath('articles-results.html'),
           controller: 'ArticlesResultsController',
-          controllerAs: 'ArticlesResultsCtrl'
+          controllerAs: 'ArticlesResultsCtrl',
+          onEnter: ["StatesManagerService","$stateParams", function(StatesManagerService,$stateParams){
+              StatesManagerService.setState("app.articles-article",$stateParams);
+          }]
       })
+	  .state('app.articles-article-doi', {
+		  url: '/articles/articleByDoi?doi',
+		  title: 'Article',
+		  params: {
+			  searchType: SEARCH_TYPE.singleArticleDoi            // tipologia di ricerca (abstract, titolo, autore)
+		  },
+		  templateUrl: getMyBasepath('articles-results.html'),
+		  controller: 'ArticlesResultsController',
+		  controllerAs: 'ArticlesResultsCtrl',
+		  onEnter: ["StatesManagerService","$stateParams", function(StatesManagerService,$stateParams){
+			  StatesManagerService.setState("app.articles-article-doi",$stateParams);
+		  }]
+	  })
       .state('app.bookmarks', {
           url: '/bookmarks',
           title: 'Bookmarks',
