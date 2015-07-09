@@ -5,7 +5,7 @@
 'use strict';
 
 myApp
-    .factory('ArticleManagerService', ["RequestArticlesService", "FiltersManagerService", "ArticlesInfoService", "StatesManagerService", "AuthorInfoService", "ngDialog", "$rootScope", "$sessionStorage", "SEARCH_TYPE","ARTICLE_TYPES", function(RequestArticlesService, FiltersManagerService,  ArticlesInfoService, StatesManagerService, AuthorInfoService, ngDialog, $rootScope, $sessionStorage, SEARCH_TYPE, ARTICLE_TYPES) {
+    .factory('ArticleManagerService', ["RequestArticlesService", "CitationsFiltersManagerService", "ArticlesInfoService", "StatesManagerService", "AuthorInfoService", "ngDialog", "$rootScope", "$sessionStorage", "SEARCH_TYPE","ARTICLE_TYPES", function(RequestArticlesService, CitationsFiltersManagerService,  ArticlesInfoService, StatesManagerService, AuthorInfoService, ngDialog, $rootScope, $sessionStorage, SEARCH_TYPE, ARTICLE_TYPES) {
         var articlesResults = [];
 
         if (!$sessionStorage.searchResults) {
@@ -281,7 +281,7 @@ myApp
 
                         //per aggiungere l'autore alla lista degli autori per il filtro
                         //if (addToFilterAuthors) {
-                        //    FiltersManagerService.addAuthor( subItem.authors[i].fullName);
+                        //    CitationsFiltersManagerService.addAuthor( subItem.authors[i].fullName);
                         //}
                     }
 

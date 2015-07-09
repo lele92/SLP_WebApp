@@ -10,6 +10,7 @@ myApp.run([ "$log","$rootScope", "$state", "$stateParams", function($log,$rootSc
   //guide: https://github.com/angular-ui/ui-router/wiki/Quick-Reference#note-about-using-state-within-a-template
   $rootScope.$state = $state;
   $rootScope.$stateParams = $stateParams;
+  $rootScope.offsidebarOverlap = false;
 
 }]);
 
@@ -116,6 +117,13 @@ myApp.config(["$stateProvider","SEARCH_TYPE", function($stateProvider, SEARCH_TY
           templateUrl: getMyBasepath('about.html'),
           controller: 'AboutController',
           controllerAs: 'AboutCtrl'
+      })
+      .state('app.stateTest', {
+          url: '/test?param0',
+          title: 'test',
+          templateUrl: getMyBasepath('testView.html'),
+          controller: 'testController',
+          controllerAs: 'testCtrl'
       })
 
 

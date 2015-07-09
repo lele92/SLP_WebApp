@@ -1,8 +1,9 @@
-myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "ArticleManagerService", "FiltersManagerService","RequestArticlesService", "$scope", "$timeout", "$stateParams", "SEARCH_TYPE","$sessionStorage","BookmarksManagerService","ORDER_BY","ResultsFiltersManager", function($rootScope, ngDialog, ArticleManagerService, FiltersManagerService, RequestArticlesService, $scope, $timeout, $stateParams, SEARCH_TYPE, $sessionStorage, BookmarksManagerService, ORDER_BY, ResultsFiltersManager) {
+myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "ArticleManagerService", "CitationsFiltersManagerService","RequestArticlesService", "$scope", "$timeout", "$stateParams", "SEARCH_TYPE","$sessionStorage","BookmarksManagerService","ORDER_BY","ArticlesFiltersManager", function($rootScope, ngDialog, ArticleManagerService, CitationsFiltersManagerService, RequestArticlesService, $scope, $timeout, $stateParams, SEARCH_TYPE, $sessionStorage, BookmarksManagerService, ORDER_BY, ArticlesFiltersManager) {
     var self = this;
     self.$storage = $sessionStorage;
 	var date = new Date();
 	self.year = date.getFullYear();
+	self.selectedArticleTypes = ArticlesFiltersManager.getSelectedArticleTypes();
 
     switch ($stateParams.searchType) {
         case SEARCH_TYPE.abstractSearch:
@@ -35,22 +36,20 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
 
 
 	/* citations filters */
-    self.publicationYearFil =  FiltersManagerService.getStartingPublicationYearF();     // prende il filtro dell'anno da applicare agli articoli mostrati nella view
-    self.selfcitationsFil = FiltersManagerService.getSelfCitationsF();          // prende il filtro per le autocitazioni
-    self.characterizationsFil = FiltersManagerService.getCharacterizationsF();          // prende il filtro per i colori
-    self.authorsFil = FiltersManagerService.getAuthorsF();                              // prende il filtro per gli autori
-	self.orderByFil = FiltersManagerService.getOrderBy();                               // prende l'ordinamento da applicare alla bibliografia
-	self.sortFil = FiltersManagerService.getSort();                                     // prende il sort da applicare alla bibliografia
+    //todo: aggiungere prefisso "citations"
+    self.publicationYearFil =  CitationsFiltersManagerService.getStartingPublicationYearF();     // prende il filtro dell'anno da applicare agli articoli mostrati nella view
+    self.selfcitationsFil = CitationsFiltersManagerService.getSelfCitationsF();          // prende il filtro per le autocitazioni
+    self.characterizationsFil = CitationsFiltersManagerService.getCharacterizationsF();          // prende il filtro per i colori
+    self.authorsFil = CitationsFiltersManagerService.getAuthorsF();                              // prende il filtro per gli autori
+	self.orderByFil = CitationsFiltersManagerService.getOrderBy();                               // prende l'ordinamento da applicare alla bibliografia
+	self.sortFil = CitationsFiltersManagerService.getSort();                                     // prende il sort da applicare alla bibliografia
 	/*===========================*/
 
-	/* search results filters */
-	self.orderByV = ResultsFiltersManager.getOrderBy().value;
-	self.sortByV = ResultsFiltersManager.getSort().value;
-	self.publicationYearV =  ResultsFiltersManager.getStartingPublicationYearF().value;
+	/* articles results filters */
+	self.articlesOrderByFil = ArticlesFiltersManager.getOrderBy();
+	self.articlesSortByFil = ArticlesFiltersManager.getSort();
+	self.articlesPublicationYearFil =  ArticlesFiltersManager.getStartingPublicationYearF();
 
-	//todo: variabile temporanea, da eliminare!
-	self.pubYear = self.publicationYearV;
-	/*===========================*/
 
     self.isRequestPending = RequestArticlesService.isRequestPending();                  // I -> è in corso la richiesta all'abstractFinder?
     self.isRetrievingArticlesInfo = ArticleManagerService.isRetrievingArticlesInfo();   // II -> è in corso la richiesta delle info sugli articoli? (questa richiesta parte solo all'arrivo della risposta della richiesta I)
@@ -59,8 +58,13 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
     self.completedPercent = {value: 0};
     self.currentState = "Results";
 
-	self.articleTypes = ResultsFiltersManager.getArticleTypes();
-	self.selectedArticleTypes = ResultsFiltersManager.getSelectedArticleTypes();
+
+
+
+    /* checkboxes filters*/
+    self.checkType = false;
+    self.checkYear = false;
+    /*===========================*/
 
 
 	var requestPendingDialog;
@@ -81,9 +85,7 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
         return RequestArticlesService.getSearchString();
     }
 
-	self.applyYearFilter = function() {
-		self.publicationYearV = self.pubYear;
-	}
+
 
 
     //@guide http://stackoverflow.com/questions/15380140/service-variable-not-updating-in-controller

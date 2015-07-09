@@ -1,5 +1,20 @@
+<div ng-controller="CitationsOrderbyController as CitationsOrderbyCtrl">
+    <h3 class="text-center text-thin"><em class="fa fa-sort-alpha-asc"></em> Order by </h3>
+    <div class="p" >
+        <select name="articlesOrderBy" ng-change="CitationsOrderbyCtrl.applyOrderBy()" ng-model="CitationsOrderbyCtrl.orderByV" class="form-control">
+            <option ng-selected="option == CitationsOrderbyCtrl.orderByV" value="{{option}}" ng-repeat="option in CitationsOrderbyCtrl.orderOptions">{{CitationsOrderbyCtrl.toOptionName(option)}}</option>
+        </select>
+    </div>
+    <div class="p row-centered">
+        <div class="btn-group col col-centered">
+            <label class="btn btn-primary" ng-model="CitationsOrderbyCtrl.sortV"  btn-radio="false"  ng-change="CitationsOrderbyCtrl.applySort()" ><em class="fa fa-sort-amount-asc fa-lg"></em> asc</label>
+            <label class="btn btn-primary" ng-model="CitationsOrderbyCtrl.sortV"  btn-radio="true" ng-change="CitationsOrderbyCtrl.applySort()" ><em class="fa fa-sort-amount-desc fa-lg"></em> desc</label>
+        </div>
+    </div>
+</div>
+
 <div ng-controller="CitationsFiltersController as citationsFiltersCtrl">
-    <h3 class="text-center text-thin filters-header">Bibliography Filters</h3>
+    <h3 class="text-center text-thin filters-header"><em class="fa fa-filter"></em> Filters</h3>
     <div class="p" >
         <div>
             <legend class="filter-legend">
@@ -11,7 +26,7 @@
             </legend>
             <div collapse="!citationsFiltersCtrl.checkYear">
                 <div class="input-group" >
-                    <input placeholder="Year to start from" class="form-control" ng-disabled="!citationsFiltersCtrl.checkYear" type="number" ng-model="citationsFiltersCtrl.publicationYearV" min="1970" max="{{citationsFiltersCtrl.year}}">
+                    <input placeholder="Year to start from" class="form-control" ng-disabled="!citationsFiltersCtrl.checkYear" type="number" ng-model="citationsFiltersCtrl.publicationYearV" min="1950" max="{{citationsFiltersCtrl.year}}">
                  <span class="input-group-btn">
                     <button ng-disabled="!citationsFiltersCtrl.checkYear" type="button" class="btn btn-default" ng-click="citationsFiltersCtrl.applyYearFilter()">Set</button>
                  </span>
@@ -29,18 +44,18 @@
             </legend>
             <div collapse="!citationsFiltersCtrl.checkSelfcitations">
                 <div class="radio c-radio c-radio-nofont">
-                <label>
-                    <input ng-click="citationsFiltersCtrl.switchExcludeSelfcitations(true)" type="radio" name="selfCitRadio" ng-checked="citationsFiltersCtrl.checkExcludeSelfCitations(true)"/>
-                    <span></span>Exclude Self-citations
-                </label>
+                    <label>
+                        <input ng-click="citationsFiltersCtrl.switchExcludeSelfcitations(true)" type="radio" name="selfCitRadio" ng-checked="citationsFiltersCtrl.checkExcludeSelfCitations(true)"/>
+                        <span></span>Exclude Self-citations
+                    </label>
+                </div>
+                <div class="radio c-radio c-radio-nofont">
+                    <label>
+                        <input ng-click="citationsFiltersCtrl.switchExcludeSelfcitations(false)" type="radio" name="selfCitRadio"  ng-checked="citationsFiltersCtrl.checkExcludeSelfCitations(false)"/>
+                        <span></span>Show only Self-citations
+                    </label>
+                </div>
             </div>
-            <div class="radio c-radio c-radio-nofont">
-                <label>
-                    <input ng-click="citationsFiltersCtrl.switchExcludeSelfcitations(false)" type="radio" name="selfCitRadio"  ng-checked="citationsFiltersCtrl.checkExcludeSelfCitations(false)"/>
-                    <span></span>Show only Self-citations
-                </label>
-            </div>
-        </div>
         </div>
         <div>
             <legend class="filter-legend">
@@ -94,3 +109,4 @@
         </div>
     </div>
 </div>
+

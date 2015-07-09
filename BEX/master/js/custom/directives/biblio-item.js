@@ -18,6 +18,9 @@ myApp.directive('biblioItem', ["ngDialog","$modal", "ArticleManagerService", "$r
 
             var colorsMap = $rootScope.colorsMap;
 
+            scope.biblioInfoHeight = $(".panel-biblio-item").height();
+            console.log(scope.biblioInfoHeight);
+
             /* per avere maggiori info sul corrente elemento bibliografico */
             scope.exploreBiblioItem = function() {
 
@@ -65,14 +68,14 @@ myApp.directive('biblioItem', ["ngDialog","$modal", "ArticleManagerService", "$r
 
             /* invocata all'hover del mouse */
             scope.renderChart = function(citActsInfo, totCitActs) {
+
                 // parsing dei dati da visualizzare
                 var citData = parseData(citActsInfo, totCitActs);
                 //console.log(citData);
                 // configura il donut
                 var chart = new CanvasJS.Chart(attributes.chartId,
                     {
-                        //height: 170,
-                        //width: 350,
+                        //height: $(".panel-biblio-item").height(),
                         //backgroundColor: "#EBECED",
                         animationEnabled: true,
                         animationDuration: 1000,

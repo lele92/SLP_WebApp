@@ -5,10 +5,10 @@
         <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 bg-info text-center icon-biblio-item" ng-class="{'biblio-item-selfcitation': itemData.isSelfcitation }">
             <div tooltip="Self-citation" tooltip-placement="bottom" ng-show="itemData.isSelfcitation" class="self-cit row"> S </div>
             <div class="row">
-                <h4 ng-show="itemData.totCitActs > 0">Cited</h4>
-                <h2 ng-show="itemData.totCitActs > 0" class="no-margin">{{itemData.totCitActs}}</h2>
-                <h4 ng-show="itemData.totCitActs > 0">time<span ng-show="itemData.totCitActs > 1">s</span></h4>
-                <h4 ng-show="itemData.totCitActs == 0">No citations info</h4>
+                <h4 ng-if="itemData.totCitActs > 0">Cited</h4>
+                <h2 ng-if="itemData.totCitActs > 0" class="no-margin">{{itemData.totCitActs}}</h2>
+                <h4 ng-if="itemData.totCitActs > 0">time<span ng-show="itemData.totCitActs > 1">s</span></h4>
+                <h4 ng-if="itemData.totCitActs == 0">No info</h4>
             </div>
         </div>
 
@@ -36,7 +36,7 @@
 
                 </div>
                 <div ng-show="itemData.totCitActs > 0" id={{chartId}} align="center" class="chart-panel-md col-lg-4 col-md-12 col-sm-12">
-                    <div class="col-lg-12 no-padding panel-hover" ng-mouseover="renderChart(itemData.citActsInfo, itemData.totCitActs)">
+                    <div  class="col-lg-12 no-padding panel-hover" ng-mouseover="renderChart(itemData.citActsInfo, itemData.totCitActs)">
                         <h4>Hover with mouse or tap to load</h4>
                         <h2>Citation functions Chart</h2>
                         <em class="fa fa-pie-chart fa-5x"></em>

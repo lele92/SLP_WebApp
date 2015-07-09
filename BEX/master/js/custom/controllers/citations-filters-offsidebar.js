@@ -1,10 +1,10 @@
-myApp.controller('BiblioFiltersController', ["FiltersManagerService", "$scope", "$rootScope", function(FiltersManagerService, $scope, $rootScope) {
+myApp.controller('CitationsFiltersController', ["CitationsFiltersManagerService", "$scope", "$rootScope", function(CitationsFiltersManagerService, $scope, $rootScope) {
     var self = this;
     /* filters and order objs: oggetti {value: ...} di filterManagerService */ //'F' -> convenzione per Filter
-    self.publicationYearF = FiltersManagerService.getStartingPublicationYearF();
-    self.selfcitationsF = FiltersManagerService.getSelfCitationsF();
-    self.characterizationsF = FiltersManagerService.getCharacterizationsF();
-    self.authorsF = FiltersManagerService.getAuthorsF();        //con questo prendo la lista di autori del filtro
+    self.publicationYearF = CitationsFiltersManagerService.getStartingPublicationYearF();
+    self.selfcitationsF = CitationsFiltersManagerService.getSelfCitationsF();
+    self.characterizationsF = CitationsFiltersManagerService.getCharacterizationsF();
+    self.authorsF = CitationsFiltersManagerService.getAuthorsF();        //con questo prendo la lista di autori del filtro
     self.allAuthors = $rootScope.authors;
     self.selectedAuthor = ""; //
     self.authorAlreadyInList = false;
@@ -20,7 +20,7 @@ myApp.controller('BiblioFiltersController', ["FiltersManagerService", "$scope", 
     self.characterizationsV = self.characterizationsF.value;
     self.authorsV = self.authorsF.value;
 
-    /* checkboxes*/
+    /* checkboxes filters*/
     self.checkYear = false;
     self.checkSelfcitations = false;
     self.checkCharacterizations = false;
@@ -41,8 +41,8 @@ myApp.controller('BiblioFiltersController', ["FiltersManagerService", "$scope", 
             //console.log('filtro colori disattivato');
             self.setColorsAllChecked(true);
         }
-        FiltersManagerService.setCharacterizations(self.characterizationsV);
-        FiltersManagerService.setFilterActivated(self.checkCheckboxes());
+        CitationsFiltersManagerService.setCharacterizations(self.characterizationsV);
+        CitationsFiltersManagerService.setFilterActivated(self.checkCheckboxes());
     }
 
     self.switchYearFilter = function() {
@@ -50,10 +50,10 @@ myApp.controller('BiblioFiltersController', ["FiltersManagerService", "$scope", 
             //console.log('filtro anno attivato');
         } else {
             //console.log('filtro anno disattivato');
-            self.publicationYearV = 0;
-            FiltersManagerService.setStartingPublicationYear(self.publicationYearV)
+            self.publicationYearV = 1950;
+            CitationsFiltersManagerService.setStartingPublicationYear(self.publicationYearV)
         }
-        FiltersManagerService.setFilterActivated(self.checkCheckboxes());
+        CitationsFiltersManagerService.setFilterActivated(self.checkCheckboxes());
     }
 
     self.switchSelfcitations = function() {
@@ -64,19 +64,19 @@ myApp.controller('BiblioFiltersController', ["FiltersManagerService", "$scope", 
             //console.log('filtro solo autocitazioni disattivato');
             self.selfcitationsV = false;
         }
-        FiltersManagerService.setSelfCitations(self.selfcitationsV,self.excludeSelfcitationsV);
-        FiltersManagerService.setFilterActivated(self.checkCheckboxes());
+        CitationsFiltersManagerService.setSelfCitations(self.selfcitationsV,self.excludeSelfcitationsV);
+        CitationsFiltersManagerService.setFilterActivated(self.checkCheckboxes());
     }
 
     self.switchAuthors = function() {
         if (self.checkAuthors) {
             //console.log('filtro autori attivato');
-            FiltersManagerService.setAuthorsEnabled(true);
+            CitationsFiltersManagerService.setAuthorsEnabled(true);
         } else {
             //console.log('filtro autori disattivato');
-            FiltersManagerService.setAuthorsEnabled(false);
+            CitationsFiltersManagerService.setAuthorsEnabled(false);
         }
-        FiltersManagerService.setFilterActivated(self.checkCheckboxes());
+        CitationsFiltersManagerService.setFilterActivated(self.checkCheckboxes());
     }
 
 
@@ -93,7 +93,7 @@ myApp.controller('BiblioFiltersController', ["FiltersManagerService", "$scope", 
 
     /* applica il filtro per l'anno */
     self.applyYearFilter = function() {
-        FiltersManagerService.setStartingPublicationYear(self.publicationYearV);
+        CitationsFiltersManagerService.setStartingPublicationYear(self.publicationYearV);
     }
 
     //todo: controlli da rivedere
@@ -108,7 +108,7 @@ myApp.controller('BiblioFiltersController', ["FiltersManagerService", "$scope", 
             self.inputNotValid = false;
             self.authorAlreadyInList = false;
             self.authorsV.push(self.selectedAuthor);
-            FiltersManagerService.setAuthors(self.authorsV);
+            CitationsFiltersManagerService.setAuthors(self.authorsV);
         }
     }
 
@@ -119,7 +119,7 @@ myApp.controller('BiblioFiltersController', ["FiltersManagerService", "$scope", 
 
             }
         }
-        FiltersManagerService.setAuthors(self.authorsV);
+        CitationsFiltersManagerService.setAuthors(self.authorsV);
     }
 
     //todo: da rifattorizzare, non è il massimo dell'eleganza
@@ -139,7 +139,7 @@ myApp.controller('BiblioFiltersController', ["FiltersManagerService", "$scope", 
     /* applica il filtro autocitazioni */
     self.switchExcludeSelfcitations = function(exclude) {
         self.excludeSelfcitationsV = exclude;
-        FiltersManagerService.setSelfCitations(true,self.excludeSelfcitationsV);
+        CitationsFiltersManagerService.setSelfCitations(true,self.excludeSelfcitationsV);
     }
 
     var alreadyInList = function(author) {

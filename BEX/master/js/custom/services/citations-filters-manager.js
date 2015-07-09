@@ -7,10 +7,10 @@
 'use strict';
 
 myApp
-    .factory('FiltersManagerService', ["ArticlesInfoService", "$stateParams", "ORDER_BY", function(ArticlesInfoService, ORDER_BY) {
+    .factory('CitationsFiltersManagerService', ["ArticlesInfoService", "$stateParams", "ORDER_BY", function(ArticlesInfoService, $stateParams, ORDER_BY) {
         var filterActivated = { value: false}               //true se c'è almeno un filtro attivo, false altrimenti
         /* default vars filtri */
-        var startingPublicationYear =  { value: 0};         // anno di partenza per filtri. è un oggetto perchè sto valutando di aggiungere altre property e perchè lo trovo più conveniente
+        var startingPublicationYear =  { value: 1950};         // anno di partenza per filtri. è un oggetto perchè sto valutando di aggiungere altre property e perchè lo trovo più conveniente
         var selfcitations = { value: false, exclude:true};            // inizialmente mostro tutte le citazioni e quando il filtro viene attivato, di default vengono escluse le autocitazioni
         var characterizations = { value:
             {
@@ -203,8 +203,6 @@ myApp
         };                      //todo: richiederlo in modo dinamico come con gli autori
         var authors = {value: [], enabled:false}            // lista degli autori per il filtro autori, di default non ce n'è nessuno (non ci posso mettere 930 autori!)...con enabled si decide se (in biblioFilters) gli items devono essere filtrati
         var allAuthors = { value: [] };                //tutti gli autori
-
-
 
         /* vars order by */
         var defaultOrderByValue = ORDER_BY.publicationYear;    // l'ordinamento di default è per anno di pubblicazione

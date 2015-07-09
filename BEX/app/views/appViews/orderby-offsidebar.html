@@ -1,9 +1,9 @@
-<div ng-controller="BiblioOrderbyController as biblioOrderbyCtrl">
+<div ng-controller="ArticlesOrderbyController as ArticlesOrderbyCtrl">
     <h2 class="text-center text-thin">Order by </h2>
     <div class="p row-centered">
         <div class="btn-group col col-centered">
-            <label class="btn btn-primary" ng-model="biblioOrderbyCtrl.sortV"  btn-radio="false"  ng-change="biblioOrderbyCtrl.applySort()" ><em class="fa fa-sort-amount-asc fa-lg"></em> asc</label>
-            <label class="btn btn-primary" ng-model="biblioOrderbyCtrl.sortV"  btn-radio="true" ng-change="biblioOrderbyCtrl.applySort()" ><em class="fa fa-sort-amount-desc fa-lg"></em> desc</label>
+            <label class="btn btn-primary" ng-model="CitationsOrderbyCtrl.sortV"  btn-radio="false"  ng-change="ArticlesOrderbyCtrl.applySort()" ><em class="fa fa-sort-amount-asc fa-lg"></em> asc</label>
+            <label class="btn btn-primary" ng-model="CitationsOrderbyCtrl.sortV"  btn-radio="true" ng-change="ArticlesOrderbyCtrl.applySort()" ><em class="fa fa-sort-amount-desc fa-lg"></em> desc</label>
         </div>
     </div>
 
@@ -12,7 +12,7 @@
             <p class="pull-left">Year (default)</p>
             <div class="pull-right">
                 <label class="switch switch-lg">
-                    <input type="radio" name="orderBySwitch" ng-model="biblioOrderbyCtrl.orderByV" ng-value="biblioOrderbyCtrl.publicationYear" ng-change="biblioOrderbyCtrl.applyOrderBy()"/>
+                    <input type="radio" name="orderBySwitch" ng-model="CitationsOrderbyCtrl.orderByV" ng-value="ArticlesOrderbyCtrl.publicationYear" ng-change="ArticlesOrderbyCtrl.applyOrderBy()"/>
                     <span></span>
                 </label>
             </div>
@@ -21,7 +21,7 @@
             <p class="pull-left">Title</p>
             <div class="pull-right">
                 <label class="switch switch-lg">
-                    <input type="radio" name="orderBySwitch" ng-model="biblioOrderbyCtrl.orderByV" ng-value="biblioOrderbyCtrl.title" ng-change="biblioOrderbyCtrl.applyOrderBy()"/>
+                    <input type="radio" name="orderBySwitch" ng-model="CitationsOrderbyCtrl.orderByV" ng-value="ArticlesOrderbyCtrl.title" ng-change="ArticlesOrderbyCtrl.applyOrderBy()"/>
                     <span></span>
                 </label>
             </div>
@@ -30,7 +30,7 @@
             <p class="pull-left">Global Citations</p>
             <div class="pull-right">
                 <label class="switch switch-lg">
-                    <input type="radio" name="orderBySwitch" ng-model="biblioOrderbyCtrl.orderByV" ng-value="biblioOrderbyCtrl.globalCitations" ng-change="biblioOrderbyCtrl.applyOrderBy()"/>
+                    <input type="radio" name="orderBySwitch" ng-model="CitationsOrderbyCtrl.orderByV" ng-value="ArticlesOrderbyCtrl.globalCitations" ng-change="ArticlesOrderbyCtrl.applyOrderBy()"/>
                     <span></span>
                 </label>
             </div>
@@ -39,7 +39,7 @@
             <p class="pull-left">Citations (by the article)</p>
             <div class="pull-right">
                 <label class="switch switch-lg">
-                    <input type="radio" name="orderBySwitch" ng-model="biblioOrderbyCtrl.orderByV" ng-value="biblioOrderbyCtrl.totCitActs" ng-change="biblioOrderbyCtrl.applyOrderBy()"/>
+                    <input type="radio" name="orderBySwitch" ng-model="CitationsOrderbyCtrl.orderByV" ng-value="ArticlesOrderbyCtrl.totCitActs" ng-change="ArticlesOrderbyCtrl.applyOrderBy()"/>
                     <span></span>
                 </label>
             </div>
