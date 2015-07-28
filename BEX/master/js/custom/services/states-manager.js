@@ -6,7 +6,7 @@
 'use strict';
 
 myApp
-    .factory('StatesManagerService', ["$sessionStorage", '$rootScope', function($sessionStorage, $rootScope) {
+    .factory('StatesManagerService', ["$sessionStorage", '$rootScope','$stateParams', function($sessionStorage, $rootScope, $stateParams) {
         var states = [];
         var lastState = {state: undefined, params: undefined};
 
@@ -36,10 +36,15 @@ myApp
 		        lastState.params = params;
 	        },
 
+            updateCurrentStateParam: function(param,value) {
+	            states[states.length-1].params[param] = value;
+            },
+
             /* salva uno nuovo stato */
-            saveState: function(stateType, details) {
+            saveState: function(stateType, id, details) {
                 if (details) {
                     lastState.details = details;
+                    lastState.id = id;
                     var newState = angular.copy(lastState);
                     states.push(newState);
                 }
@@ -68,10 +73,10 @@ myApp
 
             /* per recuperare l'indice di un certo stato; ritorna -1 se non trovato */
 	        //todo: da rivedere i parametri
-            getStateIndex: function(type, details) {
+            getStateIndex: function(type, id) {
                 var index = -1;
                 for (var key in states) {
-                    if (states[key].params.searchType == type && states[key].details == details) {
+                    if (states[key].params.searchType == type && states[key].id == id) {
                         index = key;
                         break;
                     }

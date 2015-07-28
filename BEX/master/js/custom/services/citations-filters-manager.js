@@ -233,7 +233,7 @@ myApp
 
         return {
             /* getters e setters per i filtri */
-            getFilterActivated: function() {
+            getFilterActivatedBool: function() {
                 return filterActivated;
             },
 

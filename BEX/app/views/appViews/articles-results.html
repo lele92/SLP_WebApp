@@ -1,84 +1,25 @@
-<div class="header-div">
-    <breadcrumb></breadcrumb>
+<div class="animated fadeInDown">
+    <div class="header-div" tabindex="0" ui-keypress="{76:'ArticlesResultsCtrl.logStates()'}">
+        <breadcrumb ></breadcrumb>
+    </div>
+    <div ng-show="ArticlesResultsCtrl.articles.length > 1" class="header-div articles-info-header" >
+        <h4 class="no-margin num-articles-shown-info">
+            <span ng-show="filteredArticles.length < ArticlesResultsCtrl.articles.length"><span class="highlighted-txt">{{filteredArticles.length}}</span> of</span>
+            <span class="highlighted-txt">{{ArticlesResultsCtrl.articles.length}}</span>
+            article<span ng-show="filteredArticles.length != 1">s</span>
+            <span ng-show="filteredArticles.length < ArticlesResultsCtrl.articles.length"> are shown</span>
+        </h4>
+        <h4 class="no-margin articles-order-by-info">
+            ordered by <span class="highlighted-txt">{{ArticlesResultsCtrl.toOptionName(ArticlesResultsCtrl.articlesOrderByFil.value)}} </span>
+        </h4>
+        <h4 ng-show="ArticlesResultsCtrl.activatedFiltersBool.value" class="no-margin articles-filter-info">
+            filtered by <span class="highlighted-txt" ng-repeat="fil in ArticlesResultsCtrl.activatedFilters" >{{fil == "afterYear"?"year":fil}}{{!$last?",":""}}</span>
+        </h4>
+    </div>
 </div>
 
+
 <div tabindex="0" ui-keypress="{76:'ArticlesResultsCtrl.logResults()'}">
-    <!--<div>-->
-        <!--<h3>{{ArticlesResultsCtrl.selectedArticleTypes}} - starting from {{ArticlesResultsCtrl.articlesPublicationYearFil.value}}</h3>-->
-    <!--</div>-->
-
-    <!--<div class="row">-->
-        <!--<div class="col-lg-6 col-md-6 col-sm-12 " ng-show="ArticlesResultsCtrl.articlesNum.value > 1">-->
-            <!--&lt;!&ndash; START panel&ndash;&gt;-->
-            <!--<div id="panelOrder" class="panel panel-default panel-sort-results">-->
-                <!--<div ng-class="{'panel-heading-collapsed':panelOrder}" class="panel-heading">-->
-                    <!--<span class="large-text">Sort results by</span>-->
-                    <!--<paneltool tool-collapse="tool-collapse"></paneltool>-->
-                <!--</div>-->
-                <!--<div collapse="panelOrder" class="panel-wrapper">-->
-                    <!--<div class="panel-body">-->
-                        <!--<div class="col-lg-7 col-md-12" align="center">-->
-                            <!--<div class="row btn-group">-->
-                                <!--<label ng-model="ArticlesResultsCtrl.orderByV" btn-radio="ArticlesResultsCtrl.publicationYear" class="btn btn-primary"><span class="large-text">Year</span></label>-->
-                                <!--<label ng-model="ArticlesResultsCtrl.orderByV" btn-radio="ArticlesResultsCtrl.title" class="btn btn-primary"><span class="large-text">Title</span></label>-->
-                                <!--<label ng-model="ArticlesResultsCtrl.orderByV" btn-radio="ArticlesResultsCtrl.globalCitations" class="btn btn-primary"><span class="large-text">Global citations</span></label>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="col-lg-5 col-md-12" align="center">-->
-                            <!--<div class="row btn-group">-->
-                                <!--<label ng-model="ArticlesResultsCtrl.sortByV" btn-radio="false" class="btn btn-success"><span class="large-text"><em class="fa fa-sort-amount-asc fa-lg"></em> asc</span></label>-->
-                                <!--<label ng-model="ArticlesResultsCtrl.sortByV" btn-radio="true" class="btn btn-success"><span class="large-text"><em class="fa fa-sort-amount-desc fa-lg"></em> desc</span></label>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--&lt;!&ndash; END panel&ndash;&gt;-->
-        <!--</div>-->
-        <!--<div class="col-lg-6 col-md-6 col-sm-12 " ng-show="ArticlesResultsCtrl.articlesNum.value > 1">-->
-            <!--&lt;!&ndash; START panel&ndash;&gt;-->
-            <!--<div id="panelFilters" class="panel panel-default panel-filter-results">-->
-                <!--<div ng-class="{'panel-heading-collapsed':panelFilters}" class="panel-heading">-->
-                    <!--<span class="large-text">Filter results</span>-->
-                    <!--<paneltool tool-collapse="tool-collapse"></paneltool>-->
-                <!--</div>-->
-                <!--<div collapse="panelFilters" class="panel-wrapper">-->
-                    <!--<div class="panel-body">-->
-                        <!--<div class="col-lg-6">-->
-                            <!--<legend class="filter-legend">-->
-                                <!--<span ng-class="{'filter-enabled-heading': ArticlesResultsCtrl.checkType}"><em tooltip="Enabling this filter, you can visualize only the articles of the selected types" tooltip-placement="top" tooltip-popup-delay="500" class="fa fa-info-circle"></em> Articles types </span>-->
-                                <!--<label class="switch pull-right">-->
-                                    <!--<input type="checkbox"  ng-model="ArticlesResultsCtrl.checkType" ng-change="ArticlesResultsCtrl.switchTypeFilter()" />-->
-                                    <!--<span></span>-->
-                                <!--</label>-->
-                            <!--</legend>-->
-                            <!--<div collapse="!ArticlesResultsCtrl.checkType">-->
-                                <!--<div class="checkbox c-checkbox needsclick" ng-repeat="articleType in ArticlesResultsCtrl.articleTypes">-->
-                                    <!--<label class="needsclick">-->
-                                        <!--<input type="checkbox" ng-checked="ArticlesResultsCtrl.isInSelectedTypes(articleType)" ng-click="ArticlesResultsCtrl.switchType(articleType)" value="" class="needsclick" />-->
-                                        <!--<span class="fa fa-check"></span>{{articleType=="Article"?"Other":articleType}}s</label>-->
-                                <!--</div>-->
-                            <!--</div>-->
-
-                        <!--</div>-->
-                        <!--<div class="col-lg-1">-->
-                            <!--after year-->
-                        <!--</div>-->
-                        <!--<div class="col-lg-2">-->
-                            <!--<div class="input-group" >-->
-                                <!--<input placeholder="Year to start from" class="form-control" ng-disabled="false" type="number" ng-model="ArticlesResultsCtrl.pubYear" min="1970" max="{{ArticlesResultsCtrl.year}}">-->
-                         <!--<span class="input-group-btn">-->
-                            <!--<button ng-disabled="false" type="button" class="btn btn-default" ng-click="ArticlesResultsCtrl.applyYearFilter()">Set</button>-->
-                         <!--</span>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--&lt;!&ndash; END panel&ndash;&gt;-->
-        <!--</div>-->
-
-    <!--</div>-->
 
     <!--</div>-->
     <div class="row well well-sm" align="center" ng-show="ArticlesResultsCtrl.articlesNum.value != ArticlesResultsCtrl.completedArticles.value">
@@ -90,10 +31,10 @@
    <div class="row">
         <!--<button ng-click="ArticlesResultsCtrl.logResults()">log</button>-->
 
-        <article-item class="article-item" ng-repeat="article in ArticlesResultsCtrl.articles |
+        <article-item class="article-item" ng-repeat="article in filteredArticles = (ArticlesResultsCtrl.articles |
                             articleType:ArticlesResultsCtrl.selectedArticleTypes |
                             afterYear:ArticlesResultsCtrl.articlesPublicationYearFil.value |
-                            orderBy:ArticlesResultsCtrl.articlesOrderByFil.value:ArticlesResultsCtrl.articlesSortByFil.value"
+                            orderBy:ArticlesResultsCtrl.articlesOrderByFil.value:ArticlesResultsCtrl.articlesSortByFil.value)"
                         article-data="article"
                         article-index="{{$index + 1}}"
                         year-filter=ArticlesResultsCtrl.publicationYearFil
@@ -102,7 +43,8 @@
                         selfcitation-filter=ArticlesResultsCtrl.selfcitationsFil
                         characterizations-filter=ArticlesResultsCtrl.characterizationsFil
                         authors-filter="ArticlesResultsCtrl.authorsFil"
-                        check-bookmark = "{value: true}">
+                        check-bookmark = "{value: true}"
+                        <!--show-details="{value: true}">-->
         </article-item>
     </div>
 </div>

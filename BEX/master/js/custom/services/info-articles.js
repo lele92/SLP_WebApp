@@ -53,14 +53,19 @@ myApp
             },
 
 
-            getArticleCitationsInfo: function(expressionURI) {
+            getArticleIncomingCitationsInfo: function(expressionURI) {
                 var expr = {expression: expressionURI};
                 var queryURL = buildQueryURL('#query_incomingCitationsActs',expr);
 
                 return $http.get(queryURL);
             },
 
+            getArticleOutgoingCitationsInfo: function(expressionURI) {
+                var expr = {expression: expressionURI};
+                var queryURL = buildQueryURL('#query_outgoingCitationsActs',expr);
 
+                return $http.get(queryURL);
+            },
 
             //@guide per le info generiche sugli articoli citati da un certo articolo
             requestBiblioInfo: function(expressionURI) {

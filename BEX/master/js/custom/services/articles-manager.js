@@ -405,16 +405,28 @@ myApp
                     getType(articleData);
 
                     //@guide richiedo le info sulle citazioni (in entrata)
-                    ArticlesInfoService.getArticleCitationsInfo(articleData.expression.value).then(
+                    ArticlesInfoService.getArticleIncomingCitationsInfo(articleData.expression.value).then(
                         function (response) {
-                            articleData.inCitActs = response.data.results.bindings[0].numCitActs.value; //numero di citation acts
-                            articleData.inNumCites = response.data.results.bindings[0].numCites.value;  //numero di cites (<= numero di citation acts), citazioni uniche
+                            articleData.inCitActs = response.data.results.bindings[0].numCitActs.value; //numero di citation acts "in entrata"
+                            articleData.inNumCites = response.data.results.bindings[0].numCites.value;  //numero di cites (<= numero di citation acts), citazioni uniche "in entrata"
                         },
                         //todo caso da gestire meglio
                         function (errResponse) {
                             console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
                         }
                     );
+
+	                //@guide richiedo le info sulle citazioni (in uscita)
+	                ArticlesInfoService.getArticleOutgoingCitationsInfo(articleData.expression.value).then(
+		                function (response) {
+			                articleData.outCitActsNum = response.data.results.bindings[0].numCitActs.value; //numero di citation acts "in uscita"
+			                articleData.citedArticlesNum = response.data.results.bindings[0].numCites.value;  //numero di articoli citati
+		                },
+		                //todo caso da gestire meglio
+		                function (errResponse) {
+			                console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+		                }
+	                );
 
                     articlesResults.push(articleData); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia (si aggiorna comunque perchè articlese è passato per riferimento, ma con il watch aggiungo del comportamento )
                     if (sessionSearchResults) {
@@ -439,11 +451,11 @@ myApp
             });
         }
 
-		var checkState = function(searchType, details) {
-			var stateIndex = StatesManagerService.getStateIndex(searchType, details) // indice dello state, -1 se non presente
+		var checkState = function(searchType, id, details) {
+			var stateIndex = StatesManagerService.getStateIndex(searchType, id) // indice dello state, -1 se non presente
 
 			if (stateIndex == -1) {
-				StatesManagerService.saveState(searchType, details);
+				StatesManagerService.saveState(searchType, id, details);
 			} else {
 				StatesManagerService.restoreState(stateIndex); //se lo state è già presente, lo recupero ed elimino tutti gli states successivi
 			}
@@ -573,9 +585,9 @@ myApp
 	            if (newSearch) {
 		            StatesManagerService.removeAllStates(); //svuota la lista degli stati
 		            //$sessionStorage.searchResults.length = 0;
-		            StatesManagerService.saveState(SEARCH_TYPE.abstractSearch, searchText);
+		            StatesManagerService.saveState(SEARCH_TYPE.abstractSearch, searchText, searchText);
 	            } else {
-		            checkState(SEARCH_TYPE.abstractSearch, searchText);
+		            checkState(SEARCH_TYPE.abstractSearch, searchText, searchText);
 	            }
 
                 return RequestArticlesService.searchArticles(searchText).then(
@@ -641,9 +653,10 @@ myApp
             },
 
             //per visualizzare le info su un solo articolo
+	        //deprecated: titolo di un articolo non è necessriamente univoco
             getSingleArticle: function(artTitle/*, stateVal*/) {
                 RequestArticlesService.setPendingRequest(); //todo: in futuro questo dovrà essere evitato
-                checkState(SEARCH_TYPE.singleArticle, artTitle);
+                checkState(SEARCH_TYPE.singleArticle, artTitle, artTitle);
 
 
 
@@ -675,7 +688,7 @@ myApp
                             getType(art);
 
                             //@guide richiedo le info sulle citazioni (in entrata)
-                            ArticlesInfoService.getArticleCitationsInfo(art.expression.value).then(
+                            ArticlesInfoService.getArticleIncomingCitationsInfo(art.expression.value).then(
                                 function (response) {
                                     art.inCitActs = response.data.results.bindings[0].numCitActs.value; //numero di citation acts
                                     art.inNumCites = response.data.results.bindings[0].numCites.value;  //numero di cites (<= numero di citation acts), citazioni uniche
@@ -685,6 +698,18 @@ myApp
                                     console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
                                 }
                             );
+
+	                        //@guide richiedo le info sulle citazioni (in uscita)
+	                        ArticlesInfoService.getArticleOutgoingCitationsInfo(art.expression.value).then(
+		                        function (response) {
+			                        art.outCitActsNum = response.data.results.bindings[0].numCitActs.value; //numero di citation acts "in uscita"
+			                        art.citedArticlesNum = response.data.results.bindings[0].numCites.value;  //numero di articoli citati
+		                        },
+		                        //todo caso da gestire meglio
+		                        function (errResponse) {
+			                        console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+		                        }
+	                        );
                         }
 
 
@@ -725,9 +750,9 @@ myApp
 
 	            if (newSearch) {
 		            StatesManagerService.removeAllStates(); //svuota la lista degli stati
-		            StatesManagerService.saveState(SEARCH_TYPE.titleSearch, articleTitle);
+		            StatesManagerService.saveState(SEARCH_TYPE.titleSearch, articleTitle, articleTitle);
 	            } else {
-		           checkState(SEARCH_TYPE.titleSearch, articleTitle);
+		           checkState(SEARCH_TYPE.titleSearch, articleTitle, articleTitle);
 	            }
 
                 return ArticlesInfoService.requestArticlesByTitle(articleTitle).then(
@@ -785,9 +810,10 @@ myApp
             },
 
 	        /* per risultati di ricerca a partire dal DOI*/
-	        getSingleArticleByDoi: function(articleDoi){
+            //todo: aggiungere parametro titolo per leggibilità in breadcrumb
+	        getSingleArticleByDoi: function(articleDoi, articleTitle){
 		        RequestArticlesService.setPendingRequest(); //todo: in futuro questo dovrà essere evitato
-		        checkState(SEARCH_TYPE.singleArticleByDoi, articleDoi);
+		        checkState(SEARCH_TYPE.singleArticleDoi, articleDoi, articleTitle!=""?articleTitle : articleDoi);
 
 
 		        ArticlesInfoService.getArticleByDoi(articleDoi).then(
@@ -818,10 +844,22 @@ myApp
 					        getType(art);
 
 					        //@guide richiedo le info sulle citazioni (in entrata)
-					        ArticlesInfoService.getArticleCitationsInfo(art.expression.value).then(
+					        ArticlesInfoService.getArticleIncomingCitationsInfo(art.expression.value).then(
 						        function (response) {
 							        art.inCitActs = response.data.results.bindings[0].numCitActs.value; //numero di citation acts
 							        art.inNumCites = response.data.results.bindings[0].numCites.value;  //numero di cites (<= numero di citation acts), citazioni uniche
+						        },
+						        //todo caso da gestire meglio
+						        function (errResponse) {
+							        console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+						        }
+					        );
+
+					        //@guide richiedo le info sulle citazioni (in uscita)
+					        ArticlesInfoService.getArticleOutgoingCitationsInfo(art.expression.value).then(
+						        function (response) {
+							        art.outCitActsNum = response.data.results.bindings[0].numCitActs.value; //numero di citation acts "in uscita"
+							        art.citedArticlesNum = response.data.results.bindings[0].numCites.value;  //numero di articoli citati
 						        },
 						        //todo caso da gestire meglio
 						        function (errResponse) {
@@ -853,9 +891,9 @@ myApp
 	            if (newSearch) {
 		            StatesManagerService.removeAllStates(); //svuota la lista degli stati
 		            //$sessionStorage.searchResults.length = 0;
-		            StatesManagerService.saveState(SEARCH_TYPE.authorSearch, fullName);
+		            StatesManagerService.saveState(SEARCH_TYPE.authorSearch, fullName, fullName);
 	            } else {
-		            checkState(SEARCH_TYPE.authorSearch, fullName);
+		            checkState(SEARCH_TYPE.authorSearch, fullName, fullName);
 	            }
 
                 return AuthorInfoService.requestFullNameAuthorArticles(fullName).then(

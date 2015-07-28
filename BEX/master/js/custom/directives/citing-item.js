@@ -10,6 +10,7 @@ myApp.directive('citingItem', ["ngDialog", "ArticleManagerService","$rootScope",
         restrict: 'E',
         templateUrl: 'app/templates/citing-item.html', //todo: path relativo
         scope: {
+            citingIndex: '@',
             itemData: "=",
             citedArticleAuthors: "="
         },
@@ -32,12 +33,29 @@ myApp.directive('citingItem', ["ngDialog", "ArticleManagerService","$rootScope",
                 return elemId;
             }
 
+            /* per ottenere l'URL dell'articolo */
+            scope.getArticleLink = function() {
+                var generatedURL = $rootScope.$state.href("app.article-doi", {doi: scope.itemData.doi.value}, {absolute: true});
+                ngDialog.open({
+                    template: "app/templates/dialog-article-url",
+                    className: "ngdialog-theme-default-custom",
+                    data: {
+                        url: generatedURL
+                    }
+                });
+            }
+
             /* per avere maggiori info sul corrente elemento citante */
             scope.exploreCitingItem = function() {
-                ngDialog.closeAll();
                 //var strBreadCrumb = "["+scope.itemData.publicationYear+"] "+scope.itemData.title.value.substr(0,40)+"...";
-                $rootScope.$state.go('app.articles-article', {
-                        title: scope.itemData.title.value
+                $rootScope.$state.go(
+                    'app.article-doi',
+                    {
+	                    doi: scope.itemData.doi.value,
+	                    title: scope.itemData.title.value
+                    },
+                    {
+                        inherit: $rootScope.inheritUrlParams, //eureka!! bastava mettere questo a false per evitare di trascinarsi i parametri nell'url!!
                     }
                 );
             }
@@ -45,11 +63,18 @@ myApp.directive('citingItem', ["ngDialog", "ArticleManagerService","$rootScope",
             /* per visualizzare tutti gli articoli di un autore */
             scope.exploreAuthor = function(givenName, familyName) {
                 ngDialog.closeAll();
-                $rootScope.$state.go('app.articles-results', {
-                    newSearch: false,                                // è una nuova ricerca, quindi cancella tutti gli states e salva in sessionStorage i risultati
-                    searchType: SEARCH_TYPE.authorSearch,           // è una ricerca per autore
-                    searchQuery: givenName+" "+familyName        // nome dell'autore
-                });
+                $rootScope.$state.go(
+                    'app.author-articles',
+                    {
+                        newSearch: false,                                // è una nuova ricerca, quindi cancella tutti gli states e salva in sessionStorage i risultati
+                        searchType: SEARCH_TYPE.authorSearch,           // è una ricerca per autore
+                        searchQuery: givenName+" "+familyName,        // nome dell'autore
+                        authorId:  givenName+" "+familyName
+                    },
+                    {
+                        inherit: $rootScope.inheritUrlParams, //eureka!! bastava mettere questo a false per evitare di trascinarsi i parametri nell'url!!
+                    }
+                );
             }
 
             /* se un autore di un citing-item é anche autore dell'articolo citato, allora ritorna true, altrimenti false */
@@ -62,7 +87,21 @@ myApp.directive('citingItem', ["ngDialog", "ArticleManagerService","$rootScope",
 
                 return false;
             }
-        }
+
+	        scope.openAbstractDialog = function() {
+		        ngDialog.open({
+			        template: "/app/templates/dialog-abstract.html",
+			        className: "ngdialog-theme-default-custom",
+			        data: {
+				        absText: scope.itemData.abstractTxt.value,
+				        title: scope.itemData.title.value
+			        }
+		        });
+	        }
+        },
+        controller: ["$scope","$element", function($scope,$element) {
+            $scope.citingId = "citing_"+Date.now();
+        }]
     };
 
 }]);

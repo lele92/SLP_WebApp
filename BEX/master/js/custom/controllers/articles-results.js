@@ -1,9 +1,11 @@
-myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "ArticleManagerService", "CitationsFiltersManagerService","RequestArticlesService", "$scope", "$timeout", "$stateParams", "SEARCH_TYPE","$sessionStorage","BookmarksManagerService","ORDER_BY","ArticlesFiltersManager", function($rootScope, ngDialog, ArticleManagerService, CitationsFiltersManagerService, RequestArticlesService, $scope, $timeout, $stateParams, SEARCH_TYPE, $sessionStorage, BookmarksManagerService, ORDER_BY, ArticlesFiltersManager) {
+myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "ArticleManagerService", "CitationsFiltersManagerService","RequestArticlesService", "$scope", "$timeout", "$stateParams", "SEARCH_TYPE","$sessionStorage","BookmarksManagerService","ORDER_BY","ArticlesFiltersManager","StatesManagerService", function($rootScope, ngDialog, ArticleManagerService, CitationsFiltersManagerService, RequestArticlesService, $scope, $timeout, $stateParams, SEARCH_TYPE, $sessionStorage, BookmarksManagerService, ORDER_BY, ArticlesFiltersManager, StatesManagerService) {
     var self = this;
+    var date = new Date();
     self.$storage = $sessionStorage;
-	var date = new Date();
 	self.year = date.getFullYear();
 	self.selectedArticleTypes = ArticlesFiltersManager.getSelectedArticleTypes();
+	self.activatedFilters = ArticlesFiltersManager.getFilterActivatedList();
+	self.activatedFiltersBool = ArticlesFiltersManager.getFilterActivatedBool();
 
     switch ($stateParams.searchType) {
         case SEARCH_TYPE.abstractSearch:
@@ -15,11 +17,11 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
         case SEARCH_TYPE.authorSearch:
             ArticleManagerService.getArticlesByFullNameAuthor($stateParams.searchQuery, $stateParams.newSearch);
             break;
-        case SEARCH_TYPE.singleArticle:
-            ArticleManagerService.getSingleArticle($stateParams.title);
-            break;
+        //case SEARCH_TYPE.singleArticle:
+        //    ArticleManagerService.getSingleArticle($stateParams.title);
+        //    break;
         case SEARCH_TYPE.singleArticleDoi:
-            ArticleManagerService.getSingleArticleByDoi($stateParams.doi);
+            ArticleManagerService.getSingleArticleByDoi(decodeURIComponent($stateParams.doi),decodeURIComponent($stateParams.title));
             break;
     }
 
@@ -62,8 +64,8 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
 
 
     /* checkboxes filters*/
-    self.checkType = false;
-    self.checkYear = false;
+    //self.checkType = false;
+    //self.checkYear = false;
     /*===========================*/
 
 
@@ -85,6 +87,18 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
         return RequestArticlesService.getSearchString();
     }
 
+    self.toOptionName = function(option) {
+        switch (option) {
+            case ORDER_BY.publicationYear:
+                return "Publication year";
+            case ORDER_BY.title:
+                return "Title";
+            case ORDER_BY.globalCitations:
+                return "Global citations";
+        }
+
+    }
+
 
 
 
@@ -97,7 +111,7 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
             //todo: implementazione da raffinare
         }, true); //todo:valutare se lasciare questo true
 
-    //@guide: per essere aggiornato sullo stato della richiesta all'abstract finder
+    //@guide: per essere aggiornato sullo stato delle richieste
     $scope.$watch(RequestArticlesService.isRequestPending,
         function() {
             self.isRequestPending = RequestArticlesService.isRequestPending();
@@ -123,7 +137,7 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
                 //console.log("1.2 - REQUEST NOT PENDING");
                 self.articlesNum.value = ArticleManagerService.getArticlesNum();
                 if (requestPendingDialog) {
-                    $timeout(requestPendingDialog.close, 1000) //uso timeout per risolvere un problema di ngDialog (e anche per non flashare l'utente)
+                    $timeout(requestPendingDialog.close, 1250) //uso timeout per risolvere un problema di ngDialog (e anche per non flashare l'utente)
                 }
 
                 //se dall'abs finder non ci sono risultati mostro una notifica
@@ -177,5 +191,9 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
     self.logResults = function() {
         //console.log($stateParams);
         console.log(ArticleManagerService.getArticles());
+    }
+
+    self.logStates = function() {
+        console.log(StatesManagerService.getStates());
     }
 }]);

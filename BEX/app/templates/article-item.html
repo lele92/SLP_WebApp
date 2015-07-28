@@ -1,14 +1,15 @@
 <div id="article_{{articleIndex}}" class="panel panel-default panel-article-item " ng-class="{'whirl double-up': !articleData.authors}">
     <div class="panel-heading article-header panel-min-padding">
         <div class="article-header-info top-header-info">
+            <div ng-if="articleData.journalTitle"class="pull-left article-journal">
+                <span  >{{articleData.journalTitle.value}}</span>
+            </div>
             <div ng-if="articleData.type"class="pull-left article-type">
                 <span  >{{articleData.type}}</span>
             </div>
             <div ng-if="availableIssue(articleData)" class="pull-left article-vol">
                 <span  class="vol-info">vol. {{articleData.volumeNumber.value}} ({{articleData.issueNumber.value}})</span>
             </div>
-
-            <span class="article-year-top-header">{{articleData.publicationYear}}</span>
             <div class="top-header-buttons-group">
                 <div class="top-header-btn">
                     <span class="article-header-button" ng-click="getArticleLink()" tooltip="get article link" tooltip-placement="bottom" tooltip-popup-delay="500"><i class="icon-link icon-link-header-btn"></i></span>
@@ -22,10 +23,26 @@
             </div>
 
         </div>
-        <div class="article-header-info">
-            <span class="article-title">{{articleIndex}}. {{articleData.title}} </span>
+        <div class="article-header-info middle-header-info">
             <div>
-                <em tooltip="Authors"  tooltip-popup-delay="500" class="fa fa-users authors-icon biblio-round-icon"></em>
+                <div class="circle-header header-index">
+                    {{articleIndex}}
+                </div>
+                <span class="article-title animated fadeIn">{{articleData.title}}</span>
+            </div>
+
+            <div>
+                <div class="circle-header" >
+                    <em tooltip="Publication year"  tooltip-popup-delay="500" class="icon-calendar biblio-round-icon"></em>
+                </div>
+
+                <span class="article-pub-year">{{articleData.publicationYear}}</span>
+            </div>
+            <div>
+                <div class="circle-header" >
+                    <em tooltip="Authors"  tooltip-popup-delay="500" class="fa fa-users biblio-round-icon"></em>
+                </div>
+
                 <span tooltip="show author articles" class="label label-author pointer animated bounceIn" ng-repeat="author in articleData.authors" ng-click="exploreAuthor(author.givenName.value, author.familyName.value)">  {{author.givenName.value}} {{author.familyName.value}} </span>
             </div>
         </div>
@@ -55,58 +72,26 @@
         <!-- START panel tab-->
         <div class="panel row">
             <tabset justified="true">
-                <tab ng-init="showCiting = false">
+
+                <tab ng-init="showBiblio = true">
                     <tab-heading>
-                        <em class="fa fa-file-text"></em><em class="fa fa-arrow-left"></em> Incoming Citations (<span ng-show="articleData.citingArticles.length > 0">{{filteredCitingItems.length}}/</span>{{articleData.citingArticles.length}} item<span ng-show="articleData.biblioInfo.length > 1">s shown</span>)
+                        <em class="fa fa-file-text"></em><em class="fa fa-arrow-right"></em> References (in the dataset) (<span ng-show="articleData.biblioInfo.length > 0">{{filteredBiblioItems.length}}/</span>{{articleData.biblioInfo.length}} item<span ng-show="articleData.biblioInfo.length > 1">s shown</span>)
                     </tab-heading>
                     <div align="center">
-                        <div class="row text-center bg-gray-dark p-lg mb-xl cit-metrics-bar">
+                        <div ng-if="articleData.biblioInfo.length > 0" class="row text-center p-lg mb-xl cit-metrics-bar">
                             <div class="row row-table">
-                                <div ng-class="{'col-xs-4': articleData.inCitActs > 0, 'col-xs-6': articleData.inCitActs == 0}" class="br">
-                                    <em class="icon-globe fa-2x"></em>
-                                    <h4 class="m0">{{articleData.globalCountValue}} Global Citations</h4>
-                                </div>
-                                <div ng-class="{'col-xs-4': articleData.inCitActs > 0, 'col-xs-6': articleData.inCitActs == 0}" class="br">
+                                <div class="col-xs-6 br">
                                     <em class="fa fa-quote-left fa-2x"></em>
-                                    <h4 class="m0"> Cited {{articleData.inCitActs}} times by {{articleData.inNumCites}} articles </h4>
+                                    <h4 class="m0">{{articleData.outCitActsNum}} total citations to {{articleData.citedArticlesNum}} articles</h4>
                                 </div>
-                                <div ng-if="articleData.inCitActs > 0" class="col-xs-4">
-                                    <em tooltip="Overview on incoming citations" tooltip-placement="top" ng-show="articleData.inCitActs > 0" ng-click="showCitDetails()" class="fa icon-bar-chart fa-4x pointer"></em>
+                                <div class="col-xs-6 br">
+                                    <em class="fa fa-clock-o fa-2x"></em>
+                                    <h4 class="m0"> Years range: {{getCitationsMinYear()}} - {{getCitationsMaxYear()}} </h4>
                                 </div>
                             </div>
                         </div>
-                        <button  ng-show="filteredCitingItems.length > 0" type="button" ng-model="showCiting" btn-checkbox="btn-checkbox" btn-checkbox-true=true btn-checkbox-false=false class="btn btn-default show-cit-btn">
-                            <span class="large-text" ng-show="!showCiting">Show </span>
-                            <span class="large-text" ng-show="showCiting">Hide </span>
-                            <span class="large-text">{{filteredCitingItems.length}}</span>
-                            <span class="large-text">article</span><span class="large-text" ng-show="articleData.citingArticles.length > 1">s</span>
-                            <br/><em class="fa fa-3x" ng-class="{'fa-angle-down': !showCiting, 'fa-angle-up': showCiting }" ></em>
-                        </button>
-                        <div ng-if="showCiting" ng-init="excludedCiting = 0" ng-show="filteredCitingItems.length < articleData.citingArticles.length" class="alert alert-info"><em class="icon-info"> </em> {{excludedCiting = articleData.citingArticles.length - filteredCitingItems.length}} article<span ng-show="excludedCiting > 1">s are</span> <span ng-show="excludedCiting == 1">is</span> not shown because filters are applied</div>
-                        <citing-item align="left" ng-show="showCiting" ng-repeat="citingItem in filteredCitingItems = (articleData.citingArticles |
-                                    afterYear:yearFilter.value |
-                                    selfcitation:selfcitationFilter.value:selfcitationFilter.exclude |
-                                    characterizations:characterizationsFilter.value |
-                                    authors:authorsFilter.value:authorsFilter.enabled |
-                                    orderBy:orderFilter.value:sortFilter.value )"
-                                     item-data="citingItem"
-                                     cited-article-authors="articleData.authors" ></citing-item>
-                        <!-- END list group-->
-                        <!--<div class="panel-footer text-right"><a href="#" class="btn btn-default btn-sm">View All Activity </a>-->
-                        <!--</div>-->
-                    </div>
-                </tab>
-                <tab ng-init="showBiblio = false">
-                    <tab-heading>
-                        <em class="fa fa-file-text"></em><em class="fa fa-arrow-right"></em> Cited articles (in the dataset) (<span ng-show="articleData.biblioInfo.length > 0">{{filteredBiblioItems.length}}/</span>{{articleData.biblioInfo.length}} item<span ng-show="articleData.biblioInfo.length > 1">s shown</span>)
-                    </tab-heading>
-                    <div align="center">
                         <button  ng-show="filteredBiblioItems.length > 0" type="button" ng-model="showBiblio" btn-checkbox="btn-checkbox" btn-checkbox-true=true btn-checkbox-false=false class="btn btn-default show-cit-btn">
-                            <span class="large-text" ng-show="!showBiblio">Show </span>
-                            <span class="large-text" ng-show="showBiblio">Hide </span>
-                            <span class="large-text">{{filteredBiblioItems.length}}</span>
-                            <span class="large-text">article</span><span class="large-text" ng-show="articleData.biblioInfo.length > 1">s</span>
-                            <br/><em class="fa fa-3x" ng-class="{'fa-angle-down': !showBiblio, 'fa-angle-up': showBiblio }" ></em>
+                            <em class="fa fa-2x" ng-class="{'fa-chevron-down': !showBiblio, 'fa-chevron-up': showBiblio }" ></em>
                         </button>
                         <div ng-if="showBiblio" ng-init="excludedBiblio = 0"ng-show="filteredBiblioItems.length < articleData.biblioInfo.length" class="alert alert-info"><em class="icon-info"></em> {{excludedBiblio = articleData.biblioInfo.length - filteredBiblioItems.length}} article<span ng-show="excludedBiblio > 1">s are</span> <span ng-show="excludedBiblio == 1">is</span> not shown because filters are applied</div>
                         <biblio-item align="left" ng-show="showBiblio" ng-animate="'animate'" ng-repeat="biblioItem in filteredBiblioItems = (articleData.biblioInfo |
@@ -115,10 +100,48 @@
                                     characterizations:characterizationsFilter.value |
                                     authors:authorsFilter.value:authorsFilter.enabled |
                                     orderBy:orderFilter.value:sortFilter.value )"
+                                     biblio-index="{{$index + 1}}"
                                      item-data="biblioItem"
-                                     chart-id="{{articleData.doi}}_chart{{$index}}"
                                      citing-article-authors="articleData.authors"></biblio-item>
                         <!--<div class="panel-footer text-right"><a href="#" class="btn btn-default btn-sm">View All Transactions</a>-->
+                        <!--</div>-->
+                    </div>
+                </tab>
+                <tab ng-init="showCiting = true">
+                    <tab-heading>
+                        <em class="fa fa-file-text"></em><em class="fa fa-arrow-left"></em> Cited by (<span ng-show="articleData.citingArticles.length > 0">{{filteredCitingItems.length}}/</span>{{articleData.citingArticles.length}} item<span ng-show="articleData.biblioInfo.length > 1">s shown</span>)
+                    </tab-heading>
+                    <div align="center">
+                        <div class="row text-center p-lg mb-xl cit-metrics-bar">
+                            <div class="row row-table">
+                                <div ng-class="{'col-xs-4': articleData.inCitActs > 0, 'col-xs-6': articleData.inCitActs == 0}" class="br">
+                                    <em class="fa fa-quote-left fa-2x"></em>
+                                    <h4 class="m0"> Cited {{articleData.inCitActs}} times by {{articleData.inNumCites}} articles </h4>
+                                </div>
+                                <div ng-class="{'col-xs-4': articleData.inCitActs > 0, 'col-xs-6': articleData.inCitActs == 0}" class="br">
+                                    <em class="icon-globe fa-2x"></em>
+                                    <h4 class="m0">{{articleData.globalCountValue}} Global Citations</h4>
+                                </div>
+                                <div ng-if="articleData.inCitActs > 0" class="col-xs-4">
+                                    <em tooltip="Overview on incoming citations" tooltip-placement="top" ng-show="articleData.inCitActs > 0" ng-click="showCitDetails()" class="fa icon-bar-chart fa-4x pointer metrics-bar-charts"></em>
+                                </div>
+                            </div>
+                        </div>
+                        <button  ng-show="filteredCitingItems.length > 0" type="button" ng-model="showCiting" btn-checkbox="btn-checkbox" btn-checkbox-true=true btn-checkbox-false=false class="btn btn-default show-cit-btn">
+                            <em class="fa fa-2x" ng-class="{'fa-chevron-down': !showCiting, 'fa-chevron-up': showCiting }" ></em>
+                        </button>
+                        <div ng-if="showCiting" ng-init="excludedCiting = 0" ng-show="filteredCitingItems.length < articleData.citingArticles.length" class="alert alert-info"><em class="icon-info"> </em> {{excludedCiting = articleData.citingArticles.length - filteredCitingItems.length}} article<span ng-show="excludedCiting > 1">s are</span> <span ng-show="excludedCiting == 1">is</span> not shown because filters are applied</div>
+                        <citing-item align="left" ng-show="showCiting" ng-repeat="citingItem in filteredCitingItems = (articleData.citingArticles |
+                                    afterYear:yearFilter.value |
+                                    selfcitation:selfcitationFilter.value:selfcitationFilter.exclude |
+                                    characterizations:characterizationsFilter.value |
+                                    authors:authorsFilter.value:authorsFilter.enabled |
+                                    orderBy:orderFilter.value:sortFilter.value )"
+                                     citing-index="{{$index + 1}}"
+                                     item-data="citingItem"
+                                     cited-article-authors="articleData.authors" ></citing-item>
+                        <!-- END list group-->
+                        <!--<div class="panel-footer text-right"><a href="#" class="btn btn-default btn-sm">View All Activity </a>-->
                         <!--</div>-->
                     </div>
                 </tab>

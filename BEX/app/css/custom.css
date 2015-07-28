@@ -10,6 +10,7 @@
 .panel-biblio-item {
     border: 1px solid lightgray;
     margin: 0px 0px 15px ;
+    border-left: 40px solid #5d9cec;
 }
 
 .collapse-btn {
@@ -21,7 +22,7 @@
 }
 
 .label-author {
-    margin: 2px;
+    margin: 2px 4px 2px 0px;
     background-color: #33AF90;
     color: white;
     font-size: medium;
@@ -29,7 +30,7 @@
 }
 
 .label-author-light {
-    margin: 2px;
+    margin: 2px 2px 2px 0px;
     background-color: #8bb8f1;
     color: white;
     font-size: medium;
@@ -37,14 +38,15 @@
 }
 
 .article-year {
-    color: #1e983b;
+    color: #33AF90;
     font-size: x-large;
+    font-weight: bold;
 }
 
 .article-year-top-header {
-    color: #1e983b;
+    color: #33AF90;
     font-weight: bold;
-    font-size: 1.65em;
+    font-size: 1.4em;
     text-align: center;
     display: inline-block;
     border-left: 2px solid #CFDBE2;
@@ -106,7 +108,7 @@
 }
 
 .biblio-item-selfcitation {
-    background-color: #564aa3;
+    border-left-color: #564aa3;
 }
 
 .panel-min-padding {
@@ -147,7 +149,9 @@
 }
 
 #filter-check-circle {
-    color: #f47f7f;
+    color: #FFFFFF;
+    font-size: 1.2em;
+    margin-left: 3px;
 }
 
 .filter-well {
@@ -205,29 +209,12 @@
     margin-right: 5px;
 }
 
-.chart-panel {
-    height: 170px;
-    padding: 0px;
-}
-
 .chart-panel-md {
-    height: 220px;
-    padding: 0px;
-}
-
-.chart-panel-lg {
-    height: 250px;
-    padding: 0px;
-}
-
-.chart-panel-xl {
-    height: 350px;
-    padding: 0px;
+    min-height: 220px;
 }
 
 
 .panel-hover {
-    height: 220px;
     background-color: #E4E7ED;
     color: #C2C2C2;
     border: 2px solid #ADAEB3;
@@ -259,16 +246,8 @@
     border-radius: 50%;
 }
 
-.biblio-round-icon {
-    color: white;
-    background-color: #3a3f51;
-    border: 2px solid #3a3f51;
-    padding: 6px;
-    border-radius: 50%;
-}
-
 .biblio-info-body>.row {
-    margin-left: 5px;
+    margin-left: 0px;
     margin-bottom: 10px;
     margin-right: 5px;
 }
@@ -357,7 +336,7 @@
     margin: 0 auto;
 }
 
-.content-wrapper > div.header-div {
+.content-wrapper div.header-div {
     margin: -20px;
     margin-bottom: 20px;
     padding: 10px;
@@ -376,12 +355,14 @@
 }
 
 .self-cit {
-    color: #564aa3;
-    background-color: white;
-    margin: 20px;
+    color: white;
     font-size: xx-large;
     font-weight: bold;
-    border-radius: 10%;
+    position: absolute;
+    margin-left: -40px;
+    margin-top: 40px;
+    width: 40px;
+    text-align: center;
 }
 
 .selectable-breadcrumb {
@@ -471,10 +452,6 @@
 .article-title {
     font-size: 20px;
     margin-top: 0px;
-}
-
-.authors-icon {
-    font-size: 1.5em;
 }
 
 .authors-loading-spinner {
@@ -572,7 +549,7 @@
     padding-left: 15px;
     -moz-border-radius: 4px 0 0 4px;
     -webkit-border-radius: 4px;
-    border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px !important;
 }
 .breadcrumb-custom  li:first-child a:before {
     border: none;
@@ -640,21 +617,22 @@
 }
 
 .top-header-info {
+    height: 30px;
     margin-bottom: 6px;
     text-align: center;
     padding: 0px;
 }
 
-.article-type {
+.article-type, .article-journal {
     margin-left: -1px;
     margin-top: -1px;
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 0px;
-    font-size: 18px;
-    border-right: 2px solid #CFDBE2;
-    border-bottom: 2px solid #CFDBE2;
-    background-color: #E0DFF0;
+    font-size: 1.4em;
+    border-right: 2px solid #D0D1D5;
+    border-bottom: 1px solid #D0D1D5;
+    background-color: #E2E1F2;
     color: #6C7180;
     font-weight: bold;
 }
@@ -665,25 +643,23 @@
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 0px;
-    font-size: 18px;
-    border-right: 2px solid #CFDBE2;
-    border-bottom: 2px solid #CFDBE2;
-    border-radius: 0px 0px 5px;
-    background-color: #E0DFF0;
+    font-size: 1.4em;
+    border-right: 1px solid #D0D1D5;
+    border-bottom: 1px solid #D0D1D5;
+    border-radius: 0px 0px 6px;
+    background-color: #E2E1F2;
     color: #6C7180;
     font-weight: bold;
 }
 
 .top-header-buttons-group {
-    display: inline-block;
-    border-left: 2px solid #CFDBE2;
-    border-bottom: 2px solid #CFDBE2;
-    border-radius: 0px 0px 0px 5px;
     margin-top: -1px;
+    display: inline-block;
+    border-radius: 0px 0px 0px 5px;
     margin-right: -1px;
-    padding-left: 10px;
-    padding-right: 10px;
-    background-color: #E0DFF0;
+    padding-left: 6px;
+    background-color: #CFDBE2;
+    float: right;
     float: right;
     padding-top: 5px;
 }
@@ -711,8 +687,8 @@
 }
 
 .top-header-btn {
-    display: inline;
     padding-right: 10px;
+    display: inline-block;
 }
 
 .icon-link-header-btn {
@@ -815,11 +791,130 @@
 }
 
 .show-cit-btn {
-    width: 300px;
+    width: 400px;
     margin-bottom: 15px;
 }
 
 .cit-metrics-bar {
     padding: 5px !important;
-    border-radius: 6px
+    border-radius: 6px;
+    background-color: #FBFCFD;
+    border: 1px solid #C6CACB;
+}
+
+.biblio-item-row {
+    min-height: 220px;
+}
+
+.metrics-bar-charts:hover {
+    color: #659CEC;
+}
+
+.chart-panel-lg {
+    height: 300px;
+}
+
+.col-fixed {
+    width:50px;
+}
+
+.circle-header {
+    margin-left: -7px;
+    border-radius: 0px 10px 10px 0px !important;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    text-align: center;
+    vertical-align:middle;
+    color: white;
+    background-color: #3a3f51;
+    border-color: #3a3f51;
+    margin-bottom: 5px;
+    padding: 6px;
+    margin-right: 5px;
+}
+
+
+.circle-header-sm {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    text-align: center;
+    color: white;
+    background-color: #3a3f51;
+    border-color: #3a3f51;
+    padding: 7px 6px 6px 6px;
+    margin-right: 3px;
+}
+
+.header-index {
+    font-size: 20px;
+    padding: 0px !important;
+}
+
+.middle-header-info {
+    /*min-height: 97px;*/
+    padding: 5px;
+    display: inline-block !important;
+}
+
+.btn-biblio {
+    width: 60px;
+    font-size: 1.5em;
+    padding: 10px 0px;
+}
+
+.biblio-title {
+    display: inline;
+}
+
+.biblio-title-index {
+    font-size: 20px;
+    padding-top: 0px;
+    font-family: Georgia, serif;
+}
+
+.article-pub-year {
+    font-size: 21px;
+    font-weight: bold;
+    color: #5D9CEC;
+}
+
+.highlighted-txt {
+    color: #33AF90;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.num-articles-shown-info, .articles-order-by-info {
+    border-right: 1px solid #CFDBE2;
+
+
+}
+
+.articles-filter-info, .num-articles-shown-info, .articles-order-by-info {
+    display: inline-block;
+    padding: 10px;
+}
+
+.articles-info-header{
+    padding: 0px !important;
+}
+
+.cit-index {
+    background: rgba(255,255,255,0.3);
+    color: white;
+    font-size: xx-large;
+    font-weight: bold;
+    position: absolute;
+    margin-left: -40px;
+    margin-top: -5px;
+    width: 40px;
+    text-align: center;
+    border-bottom: 1px solid #D3D3D3;
 }

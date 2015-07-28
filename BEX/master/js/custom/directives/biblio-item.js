@@ -10,34 +10,55 @@ myApp.directive('biblioItem', ["ngDialog","$modal", "ArticleManagerService", "$r
         restrict: 'E',
         templateUrl: 'app/templates/biblio-item.html', //todo: path relativo
         scope: {
-            chartId: "@",
+            biblioIndex: '@',
             itemData: "=",
             citingArticleAuthors: "="
         },
         link: function(scope, element, attributes) {
-
-            var colorsMap = $rootScope.colorsMap;
-
-            scope.biblioInfoHeight = $(".panel-biblio-item").height();
-            console.log(scope.biblioInfoHeight);
-
+	        scope.elemHeight = element.height();
             /* per avere maggiori info sul corrente elemento bibliografico */
             scope.exploreBiblioItem = function() {
 
-                $rootScope.$state.go('app.articles-article', {
-                        title: scope.itemData.title
+                $rootScope.$state.go(
+                    'app.article-doi',
+                    {
+                        doi: scope.itemData.doi.value,
+	                    title: scope.itemData.title
+                    },
+                    {
+                        inherit: $rootScope.inheritUrlParams, //eureka!! bastava mettere questo a false per evitare di trascinarsi i parametri nell'url!!
                     }
                 );
 
             }
 
+            /* per ottenere l'URL dell'articolo */
+            scope.getArticleLink = function() {
+                var generatedURL = $rootScope.$state.href("app.article-doi", {doi: scope.itemData.doi.value}, {absolute: true});
+                ngDialog.open({
+                    template: "app/templates/dialog-article-url",
+                    className: "ngdialog-theme-default-custom",
+                    data: {
+                        url: generatedURL
+                    }
+                });
+            }
+
+
             /* per visualizzare tutti gli articoli di un autore */
             scope.exploreAuthor = function(givenName, familyName) {
-                $rootScope.$state.go('app.articles-results', {
-                    newSearch: false,                                // è una nuova ricerca, quindi cancella tutti gli states e salva in sessionStorage i risultati
-                    searchType: SEARCH_TYPE.authorSearch,           // è una ricerca per autore
-                    searchQuery: givenName+" "+familyName        // nome dell'autore
-                });
+                $rootScope.$state.go(
+                    'app.author-articles',
+                    {
+                        newSearch: false,                                // è una nuova ricerca, quindi cancella tutti gli states e salva in sessionStorage i risultati
+                        searchType: SEARCH_TYPE.authorSearch,           // è una ricerca per autore
+                        searchQuery: givenName+" "+familyName,        // nome dell'autore
+                        authorId:  givenName+" "+familyName
+                    },
+                    {
+                        inherit: $rootScope.inheritUrlParams, //eureka!! bastava mettere questo a false per evitare di trascinarsi i parametri nell'url!!
+                    }
+                );
             }
 
 
@@ -52,55 +73,9 @@ myApp.directive('biblioItem', ["ngDialog","$modal", "ArticleManagerService", "$r
                 return false;
             }
 
-            /* per ottenere i dati sulle citazioni nel formato richiesto per il rendering del donut chart */
-            var parseData = function(citActsInfo, totCitActs) {
-                var data = [];
-                for (var key in citActsInfo) {
-                    data.push({
-                        y: citActsInfo[key].numCitActs,
-                        indexLabel: citActsInfo[key].color,
-                        toolTipContent: "{indexLabel}: {y}",///"+totCitActs,
-                        color: colorsMap[citActsInfo[key]["colorURI"]]['color']
-                    });
-                }
-                return data;
-            }
 
-            /* invocata all'hover del mouse */
-            scope.renderChart = function(citActsInfo, totCitActs) {
 
-                // parsing dei dati da visualizzare
-                var citData = parseData(citActsInfo, totCitActs);
-                //console.log(citData);
-                // configura il donut
-                var chart = new CanvasJS.Chart(attributes.chartId,
-                    {
-                        //height: $(".panel-biblio-item").height(),
-                        //backgroundColor: "#EBECED",
-                        animationEnabled: true,
-                        animationDuration: 1000,
-                        data: [
-                            {
-                                type: "doughnut",
-                                startAngle:  -90,
-                                indexLabelFontSize: 12,
-                                dataPoints: citData
-                                //dataPoints: [
-                                //    { label: "Germany",       y: 16.6},
-                                //    { label: "France",        y: 12.8},
-                                //    { label: "United Kingdom",y: 12.3},
-                                //    { label: "Italy",         y: 11.9},
-                                //    { label: "Spain",         y: 9.0},
-                                //    { label: "Poland",        y: 7.7},
-                                //    { label: "Other (21 Countries)",y: 29.7}
-                                //]
-                            }
-                        ]
-                    });
 
-                // visualizza il donut
-                chart.render();
-            }
 
             scope.openAbstractDialog = function() {
                 ngDialog.open({
@@ -124,6 +99,8 @@ myApp.directive('biblioItem', ["ngDialog","$modal", "ArticleManagerService", "$r
                     }
                 });
             }
+
+
 
             var ModalBiblioCtrl = function ($scope, $modalInstance) {
 
@@ -158,7 +135,11 @@ myApp.directive('biblioItem', ["ngDialog","$modal", "ArticleManagerService", "$r
 
 
 
-        }
+        },
+		controller: ["$scope","$element", function($scope,$element) {
+			$scope.biblioId = "biblio_"+Date.now();
+			$scope.chartId = "donut_"+Date.now();
+		}]
     };
 
 }]);

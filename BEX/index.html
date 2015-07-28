@@ -20,6 +20,7 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="app/img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="app/img/favicon.ico" type="image/x-icon">
+    <!--<base href="/">-->
 </head>
 
 <body data-ng-class="{ 'layout-fixed' : app.layout.isFixed,
@@ -29,7 +30,7 @@
 
    <script src="app/js/base.js"></script>
    <script src="app/js/app.js"></script>
-   <script src="app/vendor/canvasjs-1.6.2/canvasjs.min.js"></script>
+   <script src="app/vendor/canvasjs-1.7.0/canvasjs.min.js"></script>
    <script src="master/js/custom/custom.js"></script>
    <script src="master/js/custom/filters/articlesFilters.js"></script>
    <script src="master/js/custom/controllers/articles-results.js"></script>
@@ -52,6 +53,7 @@
    <script src="master/js/custom/directives/biblio-item.js"></script>
    <script src="master/js/custom/directives/citing-item.js"></script>
    <script src="master/js/custom/directives/breadcrumb.js"></script>
+   <script src="master/js/custom/directives/donut-chart.js"></script>
    <script src="master/js/custom/services/info-articles.js"></script>
    <script src="master/js/custom/services/info-author.js"></script>
    <script src="master/js/custom/services/articles-manager.js"></script>
@@ -83,7 +85,7 @@
 
    <!-- query: info generiche su un articolo -->
    <script id="query_articleInfo" type="text/template">
-      select ?title ?doi ?expression ?volumeNumber ?issueNumber ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
+      select ?journalTitle ?title ?doi ?expression ?volumeNumber ?issueNumber ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
       where {
          <{{work}}> a fabio:Work;
                   frbr:creator ?authorsList;
@@ -112,7 +114,12 @@
                     frbr:partOf ?volume.
 
               ?volume a fabio:JournalVolume;
-                    prism:volume ?volumeNumber.
+                    prism:volume ?volumeNumber;
+                    frbr:partOf ?journal.
+
+              ?journal a fabio:Journal;
+                    dcterms:title ?journalTitle.
+
           }
 
           OPTIONAL {
@@ -138,7 +145,6 @@
       }
    </script>
 
-
    <!-- query: numero di citation acts in entrata (raggruppati per colore) -->
    <script id="query_incomingCitationsActsColor" type="text/template">
       select ?color (count(?color) as ?count)
@@ -160,7 +166,7 @@
        }
    </script>
 
-   <!-- query: numero di InTextReferencePointer "in entrata" e di cites in entrata -->
+   <!-- query: numero di CitationActs "in entrata" e di cites in entrata -->
    <script id="query_incomingCitationsActs" type="text/template">
        select (count(?citAct) as ?numCitActs) (count(?expr) as ?numCites)
        where {
@@ -172,6 +178,23 @@
             {
                ?expr a fabio:Expression;
                cito:cites <{{expression}}>.
+            }
+       }
+   </script>
+
+   <!-- query: numero di CitationActs "in uscita" e di articoli citati -->
+   <script id="query_outgoingCitationsActs" type="text/template">
+       select (count(?citAct) as ?numCitActs) (count(?expr) as ?numCites)
+       where {
+            {
+                ?citAct a cito:CitationAct;
+                    cito:hasCitingEntity <{{expression}}>;
+                    cito:hasCitedEntity [a fabio:Expression].
+            }
+            union
+            {
+                <{{expression}}>  cito:cites ?expr.
+                ?expr a fabio:Expression.
             }
        }
    </script>
@@ -205,7 +228,7 @@
 
    <!-- query: info sugli articoli citati (cito:cites, quindi articoli unici) da un articolo (partendo dall'expression)-->
    <script id="query_citedArticles" type="text/template">
-       select ?citedExpression ?articleWork ?articleExpression ?authorsList ?title ?publicationYear ?abstractTxt ?htmlItem ?globalCountValue ?globalCountDate
+       select ?doi ?citedExpression ?articleWork ?articleExpression ?authorsList ?title ?publicationYear ?abstractTxt ?htmlItem ?globalCountValue ?globalCountDate
        where {
             <{{expression}}> cito:cites ?citedExpression.
 
@@ -213,6 +236,7 @@
                             dcterms:title ?title;
                             frbr:embodiment ?man;
                             fabio:hasPublicationYear ?publicationYear;
+                            prism:doi ?doi;
                             frbr:realizationOf ?articleWork;
                             frbr:part [ a sro:Abstract;
                                             c4o:hasContent ?abstractTxt];
@@ -300,7 +324,7 @@
 
    <!-- query: info generiche sugli articoli citanti-->
    <script id="query_citingArticles" type="text/template">
-       select ?citingExp ?articleWork ?articleExpression ?title ?authorsList ?abstractTxt ?publicationYear ?htmlItem ?globalCountValue ?globalCountDate
+       select ?doi ?citingExp ?articleWork ?articleExpression ?title ?authorsList ?abstractTxt ?publicationYear ?htmlItem ?globalCountValue ?globalCountDate
        where {
             ?citingExp a fabio:Expression;
                     cito:cites <{{citedExpression}}>;
@@ -308,6 +332,7 @@
                    frbr:part [ a sro:Abstract;
                                 c4o:hasContent ?abstractTxt];
                    frbr:embodiment ?man;
+                   prism:doi ?doi;
                    fabio:hasPublicationYear ?publicationYear;
                    frbr:realizationOf ?articleWork;
                    c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
@@ -325,7 +350,6 @@
                 frbr:exemplar ?htmlItem.
        }
    </script>
-
 
    <!-- query: info generiche su un articolo (partendo dall'expression) (id:title) -->
    <script id="query_singleArticle" type="text/template">
@@ -496,7 +520,7 @@
        } LIMIT 50
    </script>
 
-    <script id="" type="text/template">
+   <script id="" type="text/template">
         select ?citingExp
         where {
             ?irp a c4o:InTextReferencePointer;
@@ -517,8 +541,7 @@
                     cito:hasCitationCharacterization ?color.
             }
         }
-    </script>
-
+   </script>
 
    <script id="query_articleType" type="text/template">
         select ?type

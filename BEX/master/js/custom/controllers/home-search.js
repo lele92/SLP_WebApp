@@ -63,8 +63,8 @@ myApp.controller('HomeSearchController', ["$rootScope", "RequestArticlesService"
                     $sessionStorage.searchQuery = self.searchText;
                     $rootScope.$state.go('app.articles-results', {
                         newSearch: true,                            // è una nuova ricerca, quindi cancella tutti gli states e salva in sessionStorage i risultati
-                        searchType: SEARCH_TYPE.abstractSearch,     // è una ricerca per abstract
-                        searchQuery: $sessionStorage.searchQuery    // testo dell'abstract search
+                        //searchType: SEARCH_TYPE.abstractSearch,     // è una ricerca per abstract
+                        abstract: $sessionStorage.searchQuery    // testo dell'abstract search
                     });
                 }
                 break;
@@ -74,8 +74,8 @@ myApp.controller('HomeSearchController', ["$rootScope", "RequestArticlesService"
 
                     $rootScope.$state.go('app.articles-results', {
                         newSearch: true,                            // è una nuova ricerca, quindi cancella tutti gli states e salva in sessionStorage i risultati
-                        searchType: SEARCH_TYPE.titleSearch,        // è una ricerca per titolo
-                        searchQuery: $sessionStorage.searchQuery    // titolo
+                        //searchType: SEARCH_TYPE.titleSearch,        // è una ricerca per titolo
+                        title: $sessionStorage.searchQuery    // titolo
                     });
                 }
 
@@ -85,8 +85,8 @@ myApp.controller('HomeSearchController', ["$rootScope", "RequestArticlesService"
                     $sessionStorage.searchQuery = self.searchAuthor;
                     $rootScope.$state.go('app.articles-results', {
                         newSearch: true,                                // è una nuova ricerca, quindi cancella tutti gli states e salva in sessionStorage i risultati
-                        searchType: SEARCH_TYPE.authorSearch,           // è una ricerca per autore
-                        searchQuery: $sessionStorage.searchQuery        // nome dell'autore
+                        //searchType: SEARCH_TYPE.authorSearch,           // è una ricerca per autore
+                        author: $sessionStorage.searchQuery        // nome dell'autore
                     });
                 }
                 break;

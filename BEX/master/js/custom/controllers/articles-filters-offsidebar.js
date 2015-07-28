@@ -1,26 +1,32 @@
-myApp.controller('ArticlesFiltersController', ["ArticlesFiltersManager", "$scope", "$rootScope", function(ArticlesFiltersManager, $scope, $rootScope) {
+myApp.controller('ArticlesFiltersController', ["ArticlesFiltersManager", "$scope", "$rootScope","FILTERS_TYPE", function(ArticlesFiltersManager, $scope, $rootScope, FILTERS_TYPE) {
+
 	var self = this;
+	var date = new Date();
+	self.year = date.getFullYear();
+
+
+	ArticlesFiltersManager.checkFilters(); //todo: soluzione migliorabile, questo check non dovrebbe essere fatto qui, in teoria
+	var activatedFiltersList = ArticlesFiltersManager.getFilterActivatedList();
 
 	self.articleTypes = ArticlesFiltersManager.getArticleTypes();
 	self.selectedArticleTypes = ArticlesFiltersManager.getSelectedArticleTypes();
 	self.publicationYearF = ArticlesFiltersManager.getStartingPublicationYearF();
-
 	self.publicationYearV = self.publicationYearF.value;
 
-	var date = new Date();
-	self.year = date.getFullYear();
 
-	/* values: valori dei filtri in html */ //'V' -> convenzione per Value
-	//self.publicationYearV = self.publicationYearF.value;
-	//self.selfcitationsV =  self.selfcitationsF.value;
-	//self.excludeSelfcitationsV = self.selfcitationsF.exclude;
-	//self.characterizationsV = self.characterizationsF.value;
-	//self.authorsV = self.authorsF.value;
+	self.checkType = activatedFiltersList.indexOf(FILTERS_TYPE.Articles_types) != -1;
+	self.checkYear = activatedFiltersList.indexOf(FILTERS_TYPE.Articles_afterYear) != -1;
 
-	/* checkboxes filters*/
-	self.checkType = false;
-	self.checkYear = false;
-	/*===========================*/
+	//todo: rifattorizzare
+	$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+		ArticlesFiltersManager.checkFilters();  //todo: soluzione migliorabile, questo check non dovrebbe essere fatto qui, in teoria
+		self.publicationYearV = self.publicationYearF.value;
+		/* checkboxes filters*/
+		self.checkType = activatedFiltersList.indexOf(FILTERS_TYPE.Articles_types) != -1;
+		self.checkYear = activatedFiltersList.indexOf(FILTERS_TYPE.Articles_afterYear) != -1;
+		/*===========================*/
+	})
+
 
 	/* funzioni invocate all'interazione con i filtri */
 
@@ -28,24 +34,19 @@ myApp.controller('ArticlesFiltersController', ["ArticlesFiltersManager", "$scope
 
 	self.switchYearFilter = function() {
 		if (self.checkYear) {
-			//console.log('filtro anno attivato');
+			ArticlesFiltersManager.addActivatedFilter(FILTERS_TYPE.Articles_afterYear);
 		} else {
-			//console.log('filtro anno disattivato');
-			self.publicationYearV = 1950;
-			ArticlesFiltersManager.setStartingPublicationYear(self.publicationYearV)
+			ArticlesFiltersManager.removeActivatedFilter(FILTERS_TYPE.Articles_afterYear);
 		}
 		ArticlesFiltersManager.setFilterActivated(self.checkCheckboxes());
 	}
 
 	self.switchTypeFilter = function() {
 		if (self.checkType) {
-			//todo fare controlli
+			ArticlesFiltersManager.addActivatedFilter(FILTERS_TYPE.Articles_types);
 		} else {
-			//todo: soluzione provvisoria, da rivedere
-			self.selectedArticleTypes.length = 0;
-			for (var key in self.articleTypes) {
-				self.selectedArticleTypes.push(self.articleTypes[key]);
-			}
+			ArticlesFiltersManager.removeActivatedFilter(FILTERS_TYPE.Articles_types);
+
 		}
 		ArticlesFiltersManager.setFilterActivated(self.checkCheckboxes());
 	}
@@ -59,12 +60,7 @@ myApp.controller('ArticlesFiltersController', ["ArticlesFiltersManager", "$scope
 
 
 	self.switchType = function(type) {
-		var index = self.selectedArticleTypes.indexOf(type)
-		if (index == -1) {
-			self.selectedArticleTypes.push(type)
-		} else {
-			self.selectedArticleTypes.splice(index,1);
-		}
+		ArticlesFiltersManager.switchArticleType(type)
 	}
 
 

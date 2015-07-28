@@ -1,54 +1,61 @@
 <!-- START widget-->
-<div  class="panel widget panel-biblio-item">
-    <div class="row row-table row-flush">
-
-        <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 bg-info text-center icon-biblio-item" ng-class="{'biblio-item-selfcitation': itemData.isSelfcitation }">
-            <div tooltip="Self-citation" tooltip-placement="bottom" ng-show="itemData.isSelfcitation" class="self-cit row"> S </div>
-            <div class="row">
-                <h4 ng-if="itemData.totCitActs > 0">Cited</h4>
-                <h2 ng-if="itemData.totCitActs > 0" class="no-margin">{{itemData.totCitActs}}</h2>
-                <h4 ng-if="itemData.totCitActs > 0">time<span ng-show="itemData.totCitActs > 1">s</span></h4>
-                <h4 ng-if="itemData.totCitActs == 0">No info</h4>
-            </div>
-        </div>
-
-        <div class="col-lg-10 col-md-9 col-sm-9 col-xs-9">
-            <div class="panel-body no-top-padding no-bottom-padding row">
-                <div class="col-lg-8 col-md-12 col-sm-12 biblio-info-body">
-                    <h4 class="mt0">{{itemData.title}} - <span class="article-year">{{itemData.publicationYear}}</span>
-                        <a tooltip="External link" tooltip-placement="bottom" tooltip-popup-delay="500" class="btn btn-oval btn-primary" ng-href="{{ itemData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i></a>
-                    </h4>
+<div  ng-attr-id="{{::biblioId}}" class="panel widget panel-biblio-item" ng-class="{'biblio-item-selfcitation': itemData.isSelfcitation }">
+    <div tooltip="Self-citation" tooltip-placement="bottom" ng-show="itemData.isSelfcitation" class="self-cit row"> S </div>
+    <div class="cit-index row">{{biblioIndex}}</div>
+    <div class="row row-table row-flush biblio-item-row">
+        <div class="col-lg-11 col-md-11 col-sm-10 col-xs-10">
+            <div class="panel-body no-top-padding no-bottom-padding row ">
+                <div class="col-lg-8 col-md-8 col-sm-12 biblio-info-body">
                     <div class="row">
-                        <em tooltip="Authors"  tooltip-popup-delay="500" class="fa fa-users biblio-round-icon"></em>
+                        <div class="circle-header-sm biblio-title-index">T</div>
+                        <h4 class="mt0 biblio-title">{{::itemData.title}} </h4>
+                    </div>
+                    <div class="row">
+                        <div class="circle-header-sm">
+                            <em tooltip="Publication Year"  tooltip-popup-delay="500" class="icon-calendar"></em>
+                        </div>
+
+                        <span class="article-year">{{::itemData.publicationYear}}</span>
+                    </div>
+
+                    <div class="row">
+                        <div class="circle-header-sm">
+                            <em tooltip="Authors"  tooltip-popup-delay="500" class="fa fa-users"></em>
+                        </div>
+
                         <span tooltip="show author articles" class="label label-author-light pointer " ng-class="{'shared-author': isSharedAuthor(author) }" ng-repeat="author in itemData.authors" ng-click="exploreAuthor(author.givenName.value, author.familyName.value)">
-                            {{author.givenName.value}} {{author.familyName.value}}
+                            {{::author.givenName.value}} {{::author.familyName.value}}
                         </span>
                     </div>
+
                     <div class="row">
-                        <em class="icon-globe biblio-round-icon"></em>
-                        <span class="large-text">Global Citations: {{itemData.globalCountValue}} (updated: {{itemData.globalCountDate}})</span>
+                        <div class="circle-header-sm">
+                            <em class="icon-globe"></em>
+                        </div>
+                        <span class="large-text "><span class="highlighted-txt">{{::itemData.globalCountValue}}</span> Global Citations  (updated: {{::itemData.globalCountDate}})</span>
                     </div>
                     <div align="center">
-                        <button tooltip="Read abstract"  tooltip-popup-delay="500" class="btn btn-default btn-lg large-text" ng-click="openAbstractDialog()"><em class="fa fa-file-o"></em> Abstract</button>
-                        <button ng-show="itemData.totCitActs > 0" tooltip="Show motivations for citation"  tooltip-popup-delay="500" class="btn btn-default btn-lg large-text" ng-click="openMotivationsDialog()"><em class="fa icon-tag"></em> Citation functions</button>
+                        <button tooltip="Read abstract"   class="btn btn-oval btn-default btn-lg btn-biblio large-text " ng-click="openAbstractDialog()"><em class="fa fa-file-o"></em></button>
+                        <button ng-show="itemData.totCitActs > 0" tooltip="motivations for citation" class="btn btn-biblio btn-oval btn-default btn-lg btn-biblio large-text" ng-click="openMotivationsDialog()"><em class="icon-tag"></em></button>
+                        <button tooltip="Get article link"   class="btn btn-oval btn-default btn-lg btn-biblio large-text " ng-click="getArticleLink()"><em class="icon-link"></em></button>
+                        <a tooltip="External link"  class="btn btn-oval btn-default btn-lg btn-biblio large-text" ng-href="{{::itemData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i></a>
                     </div>
 
 
                 </div>
-                <div ng-show="itemData.totCitActs > 0" id={{chartId}} align="center" class="chart-panel-md col-lg-4 col-md-12 col-sm-12">
-                    <div  class="col-lg-12 no-padding panel-hover" ng-mouseover="renderChart(itemData.citActsInfo, itemData.totCitActs)">
-                        <h4>Hover with mouse or tap to load</h4>
-                        <h2>Citation functions Chart</h2>
-                        <em class="fa fa-pie-chart fa-5x"></em>
-                    </div>
-                </div>
+                <donut-chart id="{{chartId}}" class="chart-panel-md col-lg-4 col-md-4 col-sm-12 col-xs-12"
+                             align="center" ng-style="{'height': elemHeight}"
+                             item-data="itemData"
+                             chart-id="chartId">
+
+                </donut-chart>
             </div>
         </div>
 
-        <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 text-center biblio-item-more-info">
+
+        <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2 text-center biblio-item-more-info">
             <em tooltip="Go to Article" class="fa fa-arrow-circle-right fa-4x pointer explore-biblio" ng-click="exploreBiblioItem()"></em>
         </div>
-
     </div>
 </div>
 <!-- END widget-->

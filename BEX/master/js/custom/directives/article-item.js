@@ -12,13 +12,14 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
         scope: {
             articleData: '=',
             articleIndex: '@',
-            yearFilter: '=',                //@guide attributo per passare il filtro per anno di pubblicazione
-            orderFilter: '=',               //@guide attributo per passare l'ordinamento da usare
-            sortFilter: '=',                //@guide attributo per passare il sort da usare
-            selfcitationFilter: '=',    //@guide attributo per passare il filtro per le autocitazioni
-            characterizationsFilter: '=',   //@guide attributo per passare il filtro per i colori delle citazioni
-            authorsFilter: '=',              //@guide attributo per passare il filtro per gli autori
-            checkBookmark: "="
+            yearFilter: '=',                    //@guide attributo per passare il filtro per anno di pubblicazione
+            orderFilter: '=',                   //@guide attributo per passare l'ordinamento da usare
+            sortFilter: '=',                    //@guide attributo per passare il sort da usare
+            selfcitationFilter: '=',            //@guide attributo per passare il filtro per le autocitazioni
+            characterizationsFilter: '=',       //@guide attributo per passare il filtro per i colori delle citazioni
+            authorsFilter: '=',                 //@guide attributo per passare il filtro per gli autori
+            checkBookmark: "=",
+	        showDetails: "="
         },
         link: function($scope, $element, $attributes) {
             $scope.articleIsCollapsed = true;
@@ -34,6 +35,11 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
                 checkBookmarked();
             }
 
+	        //if ($scope.showDetails.value) {
+		     //   checkArticlesCitationsDetails($scope.articleData);
+		     //   $scope.articleIsCollapsed = false;
+	        //}
+
 
             //todo: cambiare nome a questa funzione, fa pena
             $scope.toggleArticleDetails = function(articleData) {
@@ -42,19 +48,13 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
                 // se il panel non è collassato (vuol dire che pochi attimi fa era collassato, lo stato cambia qui sopra) e se le info non sono già state richieste
                 if (!$scope.articleIsCollapsed) {
                     detailsAlreadyRequested = !detailsAlreadyRequested;
-                    if (!articleData.citationsDetails) {
-                        ArticleManagerService.getCitationsInfo(articleData.expression.value, articleData.authors);
-                    }
-                    if (!articleData.biblioDetails) {
-                        ArticleManagerService.getBiblioInfo(articleData.expression.value, articleData.authors);
-                    }
-
-
+                    checkArticlesCitationsDetails(articleData);
                 }
             }
 
             $scope.toggleBookmark = function(articleData) {
                 if (!articleData.bookmark || articleData.bookmark == false) {
+                    checkArticlesCitationsDetails(articleData);
                     BookmarksManagerService.saveBookmark(articleData);
                 } else {
                     BookmarksManagerService.deleteBookmark(articleData.doi);
@@ -81,16 +81,23 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
 
             /* per visualizzare tutti gli articoli di un autore */
             $scope.exploreAuthor = function(givenName, familyName) {
-                $rootScope.$state.go('app.articles-results', {
-                    newSearch: false,                                // è una nuova ricerca, quindi cancella tutti gli states e salva in sessionStorage i risultati
-                    searchType: SEARCH_TYPE.authorSearch,           // è una ricerca per autore
-                    searchQuery: givenName+" "+familyName        // nome dell'autore
-                });
+                $rootScope.$state.go(
+	                'app.author-articles',
+	                {
+	                    newSearch: false,                                // è una nuova ricerca, quindi cancella tutti gli states e salva in sessionStorage i risultati
+	                    searchType: SEARCH_TYPE.authorSearch,           // è una ricerca per autore
+	                    searchQuery: givenName+" "+familyName,        // nome dell'autore
+		                authorId:  givenName+" "+familyName
+	                },
+	                {
+                        inherit: $rootScope.inheritUrlParams, //eureka!! bastava mettere questo a false per evitare di trascinarsi i parametri nell'url!!
+	                }
+                );
             }
 
             /* per ottenere l'URL dell'articolo */
             $scope.getArticleLink = function() {
-                var generatedURL = $rootScope.$state.href("app.articles-article", {title: $scope.articleData.title}, {absolute: true});
+                var generatedURL = $rootScope.$state.href("app.article-doi", {doi: $scope.articleData.doi}, {absolute: true});
                 ngDialog.open({
                     template: "app/templates/dialog-article-url",
                     className: "ngdialog-theme-default-custom",
@@ -99,6 +106,30 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
                     }
                 });
             }
+
+            $scope.getCitationsMinYear = function() {
+                var minYear = $scope.articleData.biblioInfo[0].publicationYear;
+                for (var key in $scope.articleData.biblioInfo) {
+                    if ($scope.articleData.biblioInfo[key].publicationYear < minYear) {
+	                    minYear = $scope.articleData.biblioInfo[key].publicationYear;
+                    }
+                }
+
+	            return minYear;
+            }
+
+	        $scope.getCitationsMaxYear = function() {
+		        var maxYear = $scope.articleData.biblioInfo[0].publicationYear;
+		        for (var key in $scope.articleData.biblioInfo) {
+			        if ($scope.articleData.biblioInfo[key].publicationYear > maxYear) {
+				        maxYear = $scope.articleData.biblioInfo[key].publicationYear;
+			        }
+		        }
+
+		        return maxYear;
+	        }
+
+
 
             //$scope.getUniqueCitingItems = function(citingItems) {
             //    var prevExp = "";
@@ -119,6 +150,15 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
             //
             //    console.log(data);
             //}
+
+	        function checkArticlesCitationsDetails(articleData) {
+		        if (!articleData.citationsDetails) {
+			        ArticleManagerService.getCitationsInfo(articleData.expression.value, articleData.authors);
+		        }
+		        if (!articleData.biblioDetails) {
+			        ArticleManagerService.getBiblioInfo(articleData.expression.value, articleData.authors);
+		        }
+	        }
         }
     };
 

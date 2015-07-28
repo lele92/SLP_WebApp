@@ -38,7 +38,6 @@ myApp.controller('CitationDetailsDialogController', ["$scope", "$rootScope", fun
 
     /* per ottenere i dati sulle citazioni nel formato richiesto per il donut chart */
     var parseDataForDonutChart = function(citInfo) {
-        //algoritmo semplice ma spettacolare
         var colorsDuplicate = [];
         var data = [];
         var tmpLbl;
@@ -159,7 +158,7 @@ myApp.controller('CitationDetailsDialogController', ["$scope", "$rootScope", fun
                     fontSize: 20,
                     fontFamily: "sans-serif"
                 },
-                //height: 170,
+                //height: 200,
                 //width: 350,
                 //backgroundColor: "#EBECED",
                 animationEnabled: true,
