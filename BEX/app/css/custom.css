@@ -705,7 +705,7 @@
     background: white;
     font-weight: bold;
     color: darkslategray;
-    border-radius: 3px;
+    border-radius: 7px;
     padding: 5px;
 }
 
@@ -917,4 +917,10 @@
     width: 40px;
     text-align: center;
     border-bottom: 1px solid #D3D3D3;
+}
+
+#no-bookmarks {
+    font-size: 4em;
+    font-weight: bold;
+    color: #CFDBE2;
 }

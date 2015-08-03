@@ -69,7 +69,7 @@ myApp.factory('ArticlesFiltersManager',["ORDER_BY","SORT","ARTICLE_TYPES","FILTE
 				selectedArticleTypes.push(types[key]);
 			}
 
-			console.log(selectedArticleTypes);
+			//console.log(selectedArticleTypes);
 		}
 	};
 
@@ -103,7 +103,7 @@ myApp.factory('ArticlesFiltersManager',["ORDER_BY","SORT","ARTICLE_TYPES","FILTE
 
 	$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
 		restoreDefaultFilters();
-		console.log("------------state change start------------","\ntoParams: ",toParams,"\nfromParams: ",fromParams)
+		//console.log("------------state change start------------","\ntoParams: ",toParams,"\nfromParams: ",fromParams)
 	})
 
 	//$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
@@ -185,12 +185,12 @@ myApp.factory('ArticlesFiltersManager',["ORDER_BY","SORT","ARTICLE_TYPES","FILTE
 					selectedArticleTypes.length = 0;
 					selectedArticleTypes.push.apply(selectedArticleTypes,articleTypes);
 					StatesManagerService.updateCurrentStateParam(fil,selectedArticleTypes.join($rootScope.paramsTokensDelimiter));
-					console.log("filtro anno disattivato")
+					//console.log("filtro anno disattivato")
 					break;
 				case FILTERS_TYPE.Articles_afterYear:
 					startingPublicationYear.value = defaultYear;
 					StatesManagerService.updateCurrentStateParam(fil,defaultYear);
-					console.log("filtro anno disattivato")
+					//console.log("filtro anno disattivato")
 					break;
 			}
 		},

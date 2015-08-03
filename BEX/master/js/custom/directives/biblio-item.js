@@ -90,7 +90,7 @@ myApp.directive('biblioItem', ["ngDialog","$modal", "ArticleManagerService", "$r
 
             scope.openMotivationsDialog = function() {
                 ngDialog.open({
-                    template: "/app/templates/dialog-motivations.html",
+                    template: "/app/templates/dialog-motivations-references.html",
                     controller: ModalMotivationsCtrl,
                     className: "ngdialog-theme-default-custom",
                     data: {

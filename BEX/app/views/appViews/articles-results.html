@@ -6,7 +6,7 @@
         <h4 class="no-margin num-articles-shown-info">
             <span ng-show="filteredArticles.length < ArticlesResultsCtrl.articles.length"><span class="highlighted-txt">{{filteredArticles.length}}</span> of</span>
             <span class="highlighted-txt">{{ArticlesResultsCtrl.articles.length}}</span>
-            article<span ng-show="filteredArticles.length != 1">s</span>
+            article<span ng-show="ArticlesResultsCtrl.articles.length != 1">s</span>
             <span ng-show="filteredArticles.length < ArticlesResultsCtrl.articles.length"> are shown</span>
         </h4>
         <h4 class="no-margin articles-order-by-info">

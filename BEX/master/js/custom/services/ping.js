@@ -17,7 +17,7 @@ myApp.factory('Ping',["$http","$rootScope","EndpointsManager","ngDialog", functi
 				timeout: 3000
 			}).
 				success(function(data, status, headers, config){
-					console.log("success");
+					//console.log("success");
 				}).
 				error(function(data, status, headers, config){
 					console.log("error");

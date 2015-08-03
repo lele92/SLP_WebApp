@@ -13,7 +13,7 @@ myApp.run([ "$log","$rootScope", "$state", "$stateParams", function($log,$rootSc
   //guide: https://github.com/angular-ui/ui-router/wiki/Quick-Reference#note-about-using-state-within-a-template
   $rootScope.$state = $state;
   $rootScope.$stateParams = $stateParams;
-  $rootScope.offsidebarOverlap = false;
+  $rootScope.offsidebarOverlap = true;
 	$rootScope.colorsMap = {
 	    "http://purl.org/spar/cito/citesForInformation": {
 	        color: "#1693A5" ,

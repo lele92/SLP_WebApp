@@ -98,6 +98,38 @@ myApp.directive('citingItem', ["ngDialog", "ArticleManagerService","$rootScope",
 			        }
 		        });
 	        }
+
+            scope.openMotivationsDialog = function() {
+                ngDialog.open({
+                    template: "/app/templates/dialog-motivations-citing.html",
+                    controller: ModalMotivationsCtrl,
+                    className: "ngdialog-theme-default-custom",
+                    data: {
+                        motivations: scope.itemData.motivations,
+                        title: scope.itemData.title.value
+                    }
+                });
+            }
+
+            var ModalMotivationsCtrl = ["$scope", function ($scope) {
+                $scope.$storage = {}; //todo: da rivedere: definisco storage per aggirare un possibile bug della direttiva panel-tools, vedere anche generateId()
+
+                $scope.empInTxtRefPointer = function(sentenceTxt, irpTxt) {
+                    var empSentence = sentenceTxt.replace(irpTxt, "<span class='irp'><b>"+irpTxt+"</b></span>")
+                    return empSentence;
+                };
+
+                $scope.generateId = function($index){
+                    var elemId = "motivation_"+$index+Math.floor((Math.random() * 100000) + 1);
+                    var data = angular.fromJson($scope.$storage["panelState"]);
+                    if(!data) {
+                        data = {};
+                    }
+                    data[elemId] = true;
+                    $scope.$storage["panelState"] = angular.toJson(data);
+                    return elemId;
+                }
+            }];
         },
         controller: ["$scope","$element", function($scope,$element) {
             $scope.citingId = "citing_"+Date.now();

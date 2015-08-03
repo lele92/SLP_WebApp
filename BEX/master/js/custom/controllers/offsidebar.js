@@ -5,6 +5,6 @@ myApp.controller('OffsidebarController',["$rootScope", function($rootScope){
 	self.switchOffsidebarOverlap = function() {
 		$rootScope.offsidebarOverlap?$('body').removeClass('offsidebar-open-overlap'):$('body').removeClass('offsidebar-open');
 		$rootScope.offsidebarOverlap = !$rootScope.offsidebarOverlap;
-		console.log($rootScope.offsidebarOverlap)
+		//console.log($rootScope.offsidebarOverlap)
 	}
 }]);

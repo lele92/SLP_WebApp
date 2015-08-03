@@ -22,7 +22,7 @@ myApp.controller('ArticlesOrderbyController', ["CitationsFiltersManagerService",
 	self.orderOptions = [ORDER_BY.publicationYear, ORDER_BY.title, ORDER_BY.globalCitations];
 
 	self.applySort = function() {
-		console.log("ordinamento: "+self.sortV);
+		//console.log("ordinamento: "+self.sortV);
 		ArticlesFiltersManager.setSort(self.sortV);
 	}
 
