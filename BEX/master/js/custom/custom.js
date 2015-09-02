@@ -10,10 +10,10 @@ var myApp = angular.module('SLP_WebApp', ['angle']);
 //}]);
 myApp.run([ "$log","$rootScope", "$state", "$stateParams", function($log,$rootScope, $state, $stateParams) {
 
-  //guide: https://github.com/angular-ui/ui-router/wiki/Quick-Reference#note-about-using-state-within-a-template
-  $rootScope.$state = $state;
-  $rootScope.$stateParams = $stateParams;
-  $rootScope.offsidebarOverlap = true;
+    //guide: https://github.com/angular-ui/ui-router/wiki/Quick-Reference#note-about-using-state-within-a-template
+    $rootScope.$state = $state;
+    $rootScope.$stateParams = $stateParams;
+    $rootScope.offsidebarOverlap = true;
 	$rootScope.colorsMap = {
 	    "http://purl.org/spar/cito/citesForInformation": {
 	        color: "#1693A5" ,
@@ -165,7 +165,8 @@ myApp.run([ "$log","$rootScope", "$state", "$stateParams", function($log,$rootSc
 	        value: "http://purl.org/spar/cito/plagiarizes" }
 	};
 	$rootScope.inheritUrlParams = false;
-	$rootScope.paramsTokensDelimiter = ";"
+	$rootScope.paramsTokensDelimiter = ";";
+	$rootScope.showRefiningOptions = {value: false}
 }]);
 
 /* costanti per le tipologie di risultati */
@@ -198,15 +199,16 @@ myApp
     .constant("FILTERS_TYPE", {
         Articles_types:"type",
         Articles_afterYear:"afterYear",
-        Citations_afterYear:"afterYear",
-        Citations_selfCitations:"self citations",
-        Citations_authors:"authors",
-        Citations_functions:"functions"
+        Citations_afterYear:"citAfterYear",
+        Citations_selfCitations:"selfCitations",
+        Citations_authors:"citAuthors",
+        Citations_functions:"citFunctionsExclude"
     })
+	//todo: usare FILTER_TYPE per queste costanti
 	.constant("ARTICLES_REFINEMENTS_PARAMS", "&orderBy&sort&afterYear&type")
-;
+	.constant("CITATIONS_REFINEMENTS_PARAMS", "&orderCitBy&sortCit&citAfterYear&selfCitations+citAuthors&citFunctionsExclude");
 
-myApp.config(["$stateProvider","SEARCH_TYPE","ARTICLES_REFINEMENTS_PARAMS", function($stateProvider, SEARCH_TYPE, ARTICLES_REFINEMENTS_PARAMS) {
+myApp.config(["$stateProvider","SEARCH_TYPE","ARTICLES_REFINEMENTS_PARAMS", "CITATIONS_REFINEMENTS_PARAMS", function($stateProvider, SEARCH_TYPE, ARTICLES_REFINEMENTS_PARAMS, CITATIONS_REFINEMENTS_PARAMS) {
   $stateProvider
       .state('app.home-search', {
         url: '/homeSearch',
@@ -216,7 +218,7 @@ myApp.config(["$stateProvider","SEARCH_TYPE","ARTICLES_REFINEMENTS_PARAMS", func
         controllerAs: 'HomeSearchCtrl'
       })
       .state('app.articles-results', {
-        url: '/articles/?abstract&author&title'+ARTICLES_REFINEMENTS_PARAMS,
+        url: '/articles/?abstract&author&title'+ARTICLES_REFINEMENTS_PARAMS+CITATIONS_REFINEMENTS_PARAMS,
         params: {
             newSearch: false,               // se newSearch=true vengono rimpiazzati i risultati di ricerca in LocalStorage e vengono rimossi tutti gli states
             searchQuery: undefined,          // query di ricerca (abstract, titolo, nome autore)
@@ -257,11 +259,11 @@ myApp.config(["$stateProvider","SEARCH_TYPE","ARTICLES_REFINEMENTS_PARAMS", func
       //.state ('app.author', {
 	   //   abstract: true,
 		//  url: '/author',
-	   //   controller: function() {console.log("baaaaaaaaaaaaaang")},
+	   //   controller: function() {},
 		//  templateUrl: getMyBasepath('articles-results.html')
       //})
 	  .state ('app.author-articles', {
-		  url: '/author/:authorId/articles/?'+ARTICLES_REFINEMENTS_PARAMS,
+		  url: '/author/:authorId/articles/?'+ARTICLES_REFINEMENTS_PARAMS+CITATIONS_REFINEMENTS_PARAMS,
 		  title: 'Author articles',
 		  params: {
 			  newSearch: false,               // se newSearch=true vengono rimpiazzati i risultati di ricerca in LocalStorage e vengono rimossi tutti gli states
@@ -299,7 +301,7 @@ myApp.config(["$stateProvider","SEARCH_TYPE","ARTICLES_REFINEMENTS_PARAMS", func
       //    }]
       //})
 	  .state('app.article-doi', {
-		  url: '/article/?doi',
+		  url: '/article/?doi'+CITATIONS_REFINEMENTS_PARAMS,
 		  title: 'Article',
 		  params: {
               title: "", //non lo setto a null o undefined per un problema di ui-router che li converte in stringa "null" e "undefined", strano...

@@ -1,6 +1,7 @@
 myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "ArticleManagerService", "CitationsFiltersManagerService","RequestArticlesService", "$scope", "$timeout", "$stateParams", "SEARCH_TYPE","$sessionStorage","BookmarksManagerService","ORDER_BY","ArticlesFiltersManager","StatesManagerService", function($rootScope, ngDialog, ArticleManagerService, CitationsFiltersManagerService, RequestArticlesService, $scope, $timeout, $stateParams, SEARCH_TYPE, $sessionStorage, BookmarksManagerService, ORDER_BY, ArticlesFiltersManager, StatesManagerService) {
     var self = this;
     var date = new Date();
+	$rootScope.showRefiningOptions.value = true;
     self.$storage = $sessionStorage;
 	self.year = date.getFullYear();
 	self.selectedArticleTypes = ArticlesFiltersManager.getSelectedArticleTypes();
@@ -24,7 +25,6 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
             ArticleManagerService.getSingleArticleByDoi(decodeURIComponent($stateParams.doi),decodeURIComponent($stateParams.title));
             break;
     }
-
 
     self.articles = ArticleManagerService.getArticles();
     self.resultsStates = ArticleManagerService.getResultsStates();

@@ -120,7 +120,7 @@
                                 </div>
                                 <div ng-class="{'col-xs-4': articleData.inCitActs > 0, 'col-xs-6': articleData.inCitActs == 0}" class="br">
                                     <em class="icon-globe fa-2x"></em>
-                                    <h4 class="m0">{{articleData.globalCountValue}} Global Citations</h4>
+                                    <h4 class="m0">{{articleData.globalCitations}} Global Citations</h4>
                                 </div>
                                 <div ng-if="articleData.inCitActs > 0" class="col-xs-4">
                                     <em tooltip="Overview on incoming citations" tooltip-placement="top" ng-show="articleData.inCitActs > 0" ng-click="showCitDetails()" class="fa icon-bar-chart fa-4x pointer metrics-bar-charts"></em>

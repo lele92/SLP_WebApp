@@ -12,74 +12,6 @@ myApp
             $sessionStorage.searchResults = [];
         }
 
-        var mockResults = [
-
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826806000230" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826809000225" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000838" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826808000413" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S157082680500017X" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000144" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000132" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826807000169" //cit
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000041" //todo: questo è un caso di errore in bibliografia
-            },
-
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000027"
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000813"
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826803000088"
-            },
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000223"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826811000187"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000168"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000193"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000272"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000284"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826805000338"
-            } ,
-            {
-                "value": "http://www.semanticlancet.eu/resource/1-s2.0-S1570826812000388"
-            }
-        ];
-
         //todo: da spostare
         var colorsMap = $rootScope.colorsMap;
         var isRetrievingArticlesInfo = false;               // indica se è in atto un'interrogazione a fuseki per avere le info sugli articoli (risultati di ricerca)
@@ -363,7 +295,8 @@ myApp
                     for (var j in citedArticle.citingArticles) {
                         var citingArticle = citedArticle.citingArticles[j];
                         citingArticle.publicationYear = parseInt(citingArticle.publicationYear.value);
-
+	                    citingArticle.globalCitations = stringToInt(citingArticle.globalCountValue.value);
+	                    citingArticle.title = citingArticle.title.value;
                         getSubItemAuthors(citingArticle, citedArticleAuthors, false);  //prendo gli autori e controllo se ce ne sono di condivisi con l'articolo citato
                         setCitingArticleMotivations(citingArticle, citationsInfo);           //per ogni articolo prendo i motivi per cui cita
                     }
@@ -389,7 +322,7 @@ myApp
                     articleData.title = articleData.title.value;
 	                articleData.doi = articleData.doi.value;
 
-                    articleData.globalCountValue = stringToInt(articleData.globalCountValue.value);
+                    articleData.globalCitations = stringToInt(articleData.globalCountValue.value);
 
                     /* properties per check presenza dettagli su citazioni e bibliografia, inizialmente non presenti, quindi = false*/
                     articleData.citationsDetails = false;
@@ -505,7 +438,7 @@ myApp
 
                         for (var j in res) {
                             res[j].color = colorsMap[res[j].color.value].toString;
-                            res[j].citingPubYear = parseInt(res[j].citingPubYear.value);
+                            res[j].citingPubYear = stringToInt(res[j].citingPubYear.value);
                             res[j].irpTxt = res[j].irpTxt.value;
                             res[j].sentenceTxt = res[j].sentenceTxt.value;
                         }
@@ -549,7 +482,7 @@ myApp
                             res[i].title = res[i].title.value;
                             res[i].publicationYear = stringToInt(res[i].publicationYear.value);
                             res[i].globalCountDate = res[i].globalCountDate.value;
-                            res[i].globalCountValue = stringToInt(res[i].globalCountValue.value);
+                            res[i].globalCitations = stringToInt(res[i].globalCountValue.value);
 
 
                             //metodi utili anche per avere uno scope isolato e non avere problemi con l'indice nelle callback
@@ -946,10 +879,10 @@ myApp
 
             //todo: soluzione provvisoria, da rivedere e rivalutare
             /* per aggiornare un singolo articolo nella collezione dei risultati di ricerca salvati nel sessionStorage */
-            refreshStoredSearchResult: function(newArticleData) {
-                for (var key in $sessionStorage.searchResults) {
-                    if ($sessionStorage.searchResults[key].doi == newArticleData.doi) {
-                        $sessionStorage.searchResults[key] = newArticleData;
+            reloadSearchResult: function(newArticleData) {
+                for (var key in articlesResults) {
+                    if (articlesResults[key].doi == newArticleData.doi) {
+	                    articlesResults[key] = newArticleData;
                     }
                 }
             }

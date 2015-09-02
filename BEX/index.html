@@ -21,6 +21,8 @@
     <link rel="shortcut icon" href="app/img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="app/img/favicon.ico" type="image/x-icon">
     <!--<base href="/">-->
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/idbwrapper/1.4.1/idbstore.min.js"></script>
 </head>
 
 <body data-ng-class="{ 'layout-fixed' : app.layout.isFixed,
@@ -31,39 +33,39 @@
    <script src="app/js/base.js"></script>
    <script src="app/js/app.js"></script>
    <script src="app/vendor/canvasjs-1.7.0/canvasjs.min.js"></script>
-   <!--<script src="master/js/custom/custom.js"></script>-->
-   <!--<script src="master/js/custom/filters/articlesFilters.js"></script>-->
-   <!--<script src="master/js/custom/controllers/articles-results.js"></script>-->
-   <!--<script src="master/js/custom/controllers/home-search.js"></script>-->
-   <!--<script src="master/js/custom/controllers/citations-filters-offsidebar.js"></script>-->
-   <!--<script src="master/js/custom/controllers/right-navbar.js"></script>-->
-   <!--<script src="master/js/custom/controllers/left-navbar.js"></script>-->
-   <!--<script src="master/js/custom/controllers/citations-orderby-offsidebar.js"></script>-->
-   <!--<script src="master/js/custom/controllers/citations-details-dialog.js"></script>-->
-   <!--<script src="master/js/custom/controllers/bookmarks.js"></script>-->
-   <!--<script src="master/js/custom/controllers/settings.js"></script>-->
-   <!--<script src="master/js/custom/controllers/settings.js"></script>-->
-   <!--<script src="master/js/custom/controllers/about.js"></script>-->
-   <!--<script src="master/js/custom/controllers/offsidebar.js"></script>-->
-   <!--<script src="master/js/custom/controllers/articles-orderby-offsidebar.js"></script>-->
-   <!--<script src="master/js/custom/controllers/articles-filters-offsidebar.js"></script>-->
-   <!--<script src="master/js/custom/controllers/test.js"></script>-->
-   <!--<script src="master/js/custom/services/citations-filters-manager.js"></script>-->
-   <!--<script src="master/js/custom/directives/article-item.js"></script>-->
-   <!--<script src="master/js/custom/directives/biblio-item.js"></script>-->
-   <!--<script src="master/js/custom/directives/citing-item.js"></script>-->
-   <!--<script src="master/js/custom/directives/breadcrumb.js"></script>-->
-   <!--<script src="master/js/custom/directives/donut-chart.js"></script>-->
-   <!--<script src="master/js/custom/services/info-articles.js"></script>-->
-   <!--<script src="master/js/custom/services/info-author.js"></script>-->
-   <!--<script src="master/js/custom/services/articles-manager.js"></script>-->
-   <!--<script src="master/js/custom/services/request-articles.js"></script>-->
-   <!--<script src="master/js/custom/services/states-manager.js"></script>-->
-   <!--<script src="master/js/custom/services/response-interceptor.js"></script>-->
-   <!--<script src="master/js/custom/services/bookmarks-manager.js"></script>-->
-   <!--<script src="master/js/custom/services/endpoints-manager.js"></script>-->
-   <!--<script src="master/js/custom/services/ping.js"></script>-->
-   <!--<script src="master/js/custom/services/articles-filters-manager.js"></script>-->
+   <script src="master/js/custom/custom.js"></script>
+   <script src="master/js/custom/filters/articlesFilters.js"></script>
+   <script src="master/js/custom/controllers/articles-results.js"></script>
+   <script src="master/js/custom/controllers/home-search.js"></script>
+   <script src="master/js/custom/controllers/citations-filters-offsidebar.js"></script>
+   <script src="master/js/custom/controllers/right-navbar.js"></script>
+   <script src="master/js/custom/controllers/left-navbar.js"></script>
+   <script src="master/js/custom/controllers/citations-orderby-offsidebar.js"></script>
+   <script src="master/js/custom/controllers/citations-details-dialog.js"></script>
+   <script src="master/js/custom/controllers/bookmarks.js"></script>
+   <script src="master/js/custom/controllers/settings.js"></script>
+   <script src="master/js/custom/controllers/settings.js"></script>
+   <script src="master/js/custom/controllers/about.js"></script>
+   <script src="master/js/custom/controllers/offsidebar.js"></script>
+   <script src="master/js/custom/controllers/articles-orderby-offsidebar.js"></script>
+   <script src="master/js/custom/controllers/articles-filters-offsidebar.js"></script>
+   <script src="master/js/custom/controllers/test.js"></script>
+   <script src="master/js/custom/services/citations-filters-manager.js"></script>
+   <script src="master/js/custom/directives/article-item.js"></script>
+   <script src="master/js/custom/directives/biblio-item.js"></script>
+   <script src="master/js/custom/directives/citing-item.js"></script>
+   <script src="master/js/custom/directives/breadcrumb.js"></script>
+   <script src="master/js/custom/directives/donut-chart.js"></script>
+   <script src="master/js/custom/services/info-articles.js"></script>
+   <script src="master/js/custom/services/info-author.js"></script>
+   <script src="master/js/custom/services/articles-manager.js"></script>
+   <script src="master/js/custom/services/request-articles.js"></script>
+   <script src="master/js/custom/services/states-manager.js"></script>
+   <script src="master/js/custom/services/response-interceptor.js"></script>
+   <script src="master/js/custom/services/bookmarks-manager.js"></script>
+   <script src="master/js/custom/services/endpoints-manager.js"></script>
+   <script src="master/js/custom/services/ping.js"></script>
+   <script src="master/js/custom/services/articles-filters-manager.js"></script>
 
    <!--query: tutti i prefissi-->
    <script id="prefixes" type="text/template">

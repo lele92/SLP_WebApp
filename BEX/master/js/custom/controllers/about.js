@@ -1,1 +1,1 @@
-myApp.controller("AboutController",[function() {}]);
+myApp.controller("AboutController",["$rootScope", function($rootScope) {}]);

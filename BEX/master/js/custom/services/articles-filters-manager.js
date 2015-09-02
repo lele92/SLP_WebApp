@@ -14,8 +14,6 @@ myApp.factory('ArticlesFiltersManager',["ORDER_BY","SORT","ARTICLE_TYPES","FILTE
 	var defaultSort = SORT.desc;                                 // true-> decrescente, false->crescente
 
 	var orderBy = { value: defaultOrderByValue};            // angular.copy(defaultOrderBy, orderBy); orderBy inzializzato al default; deep copy, non assegnazione per riferimento
-
-
 	var sort = { value: defaultSort};
 
 
@@ -40,27 +38,31 @@ myApp.factory('ArticlesFiltersManager',["ORDER_BY","SORT","ARTICLE_TYPES","FILTE
 	var checkOrderBy = function(){
 		if ($stateParams.orderBy && legalOrderByParam($stateParams.orderBy)) {
 			orderBy.value = $stateParams.orderBy;
+		} else if ($stateParams.orderBy && !legalOrderByParam($stateParams.orderBy)) {
+			console.error("Invalid 'orderBy' parameter");
 		}
 	};
 
 	var checkSort = function(){
 		if ($stateParams.sort && legalSortParam($stateParams.sort)) {
 			sort.value = SORT[$stateParams.sort];
+		} else if ($stateParams.sort && !legalSortParam($stateParams.sort)) {
+			console.error("Invalid 'sort' parameter");
 		}
 	};
 
 	var checkYearFilter = function(){
-		//todo: aggiungere controllo validità parametro anno
-		if ($stateParams[FILTERS_TYPE.Articles_afterYear] /*&& legalAfterYearParam($stateParams[FILTERS_TYPE.Articles_afterYear])*/) {
+		if ($stateParams[FILTERS_TYPE.Articles_afterYear] && legalAfterYearParam($stateParams[FILTERS_TYPE.Articles_afterYear])) {
 			filterActivatedBool.value = true;
 			activatedFilters.push(FILTERS_TYPE.Articles_afterYear);
 			startingPublicationYear.value = parseInt($stateParams[FILTERS_TYPE.Articles_afterYear]);
+		} else if ($stateParams[FILTERS_TYPE.Articles_afterYear] && !legalAfterYearParam($stateParams[FILTERS_TYPE.Articles_afterYear])){
+			console.error("Invalid 'afterYear' parameter");
 		}
 	};
 
 	var checkArticleTypes = function(){
-		//todo: aggiungere controllo validità parametro type
-		if ($stateParams[FILTERS_TYPE.Articles_types]/*&& legalTypes($stateParams[FILTERS_TYPE.Articles_types])*/) {
+		if ($stateParams[FILTERS_TYPE.Articles_types] && legalTypes($stateParams[FILTERS_TYPE.Articles_types])) {
 			filterActivatedBool.value = true;
 			activatedFilters.push(FILTERS_TYPE.Articles_types);
 			var types = $stateParams.type.split($rootScope.paramsTokensDelimiter);
@@ -68,8 +70,8 @@ myApp.factory('ArticlesFiltersManager',["ORDER_BY","SORT","ARTICLE_TYPES","FILTE
 			for (var key in types) {
 				selectedArticleTypes.push(types[key]);
 			}
-
-			//console.log(selectedArticleTypes);
+		} else if ($stateParams[FILTERS_TYPE.Articles_types] && !legalTypes($stateParams[FILTERS_TYPE.Articles_types])){
+			console.error("Invalid 'type' parameter");
 		}
 	};
 
@@ -78,10 +80,6 @@ myApp.factory('ArticlesFiltersManager',["ORDER_BY","SORT","ARTICLE_TYPES","FILTE
 		$location.search(key,value);
 		StatesManagerService.updateCurrentStateParam(key,value);
 	}
-
-
-
-
 
 	function legalOrderByParam(param) {
 		for (var key in ORDER_BY) {
@@ -99,6 +97,27 @@ myApp.factory('ArticlesFiltersManager',["ORDER_BY","SORT","ARTICLE_TYPES","FILTE
 			}
 		}
 		return false;
+	}
+
+	function legalAfterYearParam(param) {
+		return !isNaN(parseInt(param)) && parseInt(param) >= 1950 && parseInt(param) <= (new Date()).getFullYear();
+	}
+
+	function legalTypes(param) {
+		var types = param.split($rootScope.paramsTokensDelimiter);
+		for (var x in types) {
+			var found = false;
+			for (var y in ARTICLE_TYPES ) {
+				if (ARTICLE_TYPES[y] == types[x]) {
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
@@ -160,7 +179,7 @@ myApp.factory('ArticlesFiltersManager',["ORDER_BY","SORT","ARTICLE_TYPES","FILTE
 
 		setStartingPublicationYear: function(newStartingYear) {
 			startingPublicationYear.value = newStartingYear;
-			updateStateParam(FILTERS_TYPE.Articles_afterYear,newStartingYear);
+			updateStateParam(FILTERS_TYPE.Articles_afterYear, newStartingYear);
 
 		},
 
@@ -207,7 +226,6 @@ myApp.factory('ArticlesFiltersManager',["ORDER_BY","SORT","ARTICLE_TYPES","FILTE
 		checkOrder: function() {
 			checkOrderBy();
 			checkSort();
-
 		}
 
 	}

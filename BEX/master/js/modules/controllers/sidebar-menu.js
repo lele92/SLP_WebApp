@@ -48,7 +48,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
           return ArticleManagerService.getArticles().length;
           break;
         case "BookmarksLength":
-          return Object.keys(BookmarksManagerService.getBookmarks()).length;
+          return BookmarksManagerService.getBookmarks().length;
           break;
       }
 

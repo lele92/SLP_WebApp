@@ -121,7 +121,7 @@
             <!--</li>-->
             <!-- END Alert menu-->
             <!-- START filter button-->
-            <li  class="filter-navbar">
+            <li  class="filter-navbar animated fadeInRightBig" ng-show="RightNavbarCtrl.showRefiningOptions.value">
                <a tooltip-placement="left" tooltip="Refining options" tooltip-popup-delay="1000" href="#" toggle-state="{{RightNavbarCtrl.checkOffsidebarOverlap()}}" no-persist="no-persist">
                   <em  class="icon-equalizer"></em>
                   <em id="filter-check-circle" class="fa fa-exclamation-circle" ng-show="RightNavbarCtrl.citationsFilterActivated.value || RightNavbarCtrl.articlesFilterActivated.value"></em>

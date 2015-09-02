@@ -1,5 +1,3039 @@
-function getMyBasepath(e){return"app/views/appViews/"+e}if("undefined"==typeof $)throw new Error("This application's JavaScript requires jQuery");var App=angular.module("angle",["ngRoute","ngAnimate","ngStorage","ngCookies","pascalprecht.translate","ui.bootstrap","ui.router","oc.lazyLoad","cfp.loadingBar","ngSanitize","ngResource","tmh.dynamicLocale","ui.utils"]);App.run(["$rootScope","$state","$stateParams","$window","$templateCache","ArticlesInfoService",function(e,t,r,o,a,n){e.$state=t,e.$stateParams=r,e.$storage=o.localStorage,e.app={name:"BEX",description:"Web App to search and browse the contents of Semantic Lancet Triplestore",year:(new Date).getFullYear(),layout:{isFixed:!0,isCollapsed:!1,isBoxed:!1,isRTL:!1,horizontal:!1,isFloat:!1,asideHover:!1,theme:null},useFullLayout:!1,hiddenFooter:!1,viewAnimation:"ng-fadeInUp"},e.authors=[],n.getAllAuthors().then(function(t){e.authors=[];var r=t.data.results.bindings;for(var o in r)e.authors.push(r[o].fullName.value)},function(t){e.authors=[],console.error("Error while fetching authors. "+t.status+": "+t.statusText)})}]),App.config(["$stateProvider","$locationProvider","$urlRouterProvider","RouteHelpersProvider",function(e,t,r,o){"use strict";t.html5Mode(!1),r.otherwise("/app/homeSearch"),e.state("app",{url:"/app","abstract":!0,templateUrl:o.basepath("app.html"),controller:"AppController",resolve:o.resolveFor("loaders.css","spinkit","fastclick","modernizr","ngDialog","icons","screenfull","animo","slimscroll","toaster","whirl","ui.select","ui-router-extras")})}]).config(["$ocLazyLoadProvider","APP_REQUIRES",function(e,t){"use strict";e.config({debug:!1,events:!0,modules:t.modules})}]).config(["$controllerProvider","$compileProvider","$filterProvider","$provide",function(e,t,r,o){"use strict";App.controller=e.register,App.directive=t.directive,App.filter=r.register,App.factory=o.factory,App.service=o.service,App.constant=o.constant,App.value=o.value}]).config(["$translateProvider",function(e){e.useStaticFilesLoader({prefix:"app/i18n/",suffix:".json"}),e.preferredLanguage("en"),e.useLocalStorage(),e.usePostCompiling(!0)}]).config(["tmhDynamicLocaleProvider",function(e){e.localeLocationPattern("vendor/angular-i18n/angular-locale_{{locale}}.js")}]).config(["cfpLoadingBarProvider",function(e){e.includeBar=!0,e.includeSpinner=!1,e.latencyThreshold=500,e.parentSelector=".wrapper > section"}]).config(["$tooltipProvider",function(e){e.options({appendToBody:!0})}]),App.constant("APP_COLORS",{primary:"#5d9cec",success:"#27c24c",info:"#23b7e5",warning:"#ff902b",danger:"#f05050",inverse:"#131e26",green:"#37bc9b",pink:"#f532e5",purple:"#7266ba",dark:"#3a3f51",yellow:"#fad732","gray-darker":"#232735","gray-dark":"#3a3f51",gray:"#dde6e9","gray-light":"#e4eaec","gray-lighter":"#edf1f2"}).constant("APP_MEDIAQUERY",{desktopLG:1200,desktop:992,tablet:768,mobile:480}).constant("APP_REQUIRES",{scripts:{whirl:["vendor/whirl/dist/whirl.css"],classyloader:["vendor/jquery-classyloader/js/jquery.classyloader.min.js"],animo:["vendor/animo.js/animo.js"],fastclick:["vendor/fastclick/lib/fastclick.js"],modernizr:["vendor/modernizr/modernizr.js"],animate:["vendor/animate.css/animate.min.css"],icons:["vendor/skycons/skycons.js","vendor/fontawesome/css/font-awesome.min.css","vendor/simple-line-icons/css/simple-line-icons.css","vendor/weather-icons/css/weather-icons.min.css"],sparklines:["app/vendor/sparklines/jquery.sparkline.min.js"],wysiwyg:["vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js","vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js"],slimscroll:["vendor/slimScroll/jquery.slimscroll.min.js"],screenfull:["vendor/screenfull/dist/screenfull.js"],"vector-map":["vendor/ika.jvectormap/jquery-jvectormap-1.2.2.min.js","vendor/ika.jvectormap/jquery-jvectormap-1.2.2.css"],"vector-map-maps":["vendor/ika.jvectormap/jquery-jvectormap-world-mill-en.js","vendor/ika.jvectormap/jquery-jvectormap-us-mill-en.js"],loadGoogleMapsJS:["app/vendor/gmap/load-google-maps.js"],"flot-chart":["vendor/Flot/jquery.flot.js"],"flot-chart-plugins":["vendor/flot.tooltip/js/jquery.flot.tooltip.min.js","vendor/Flot/jquery.flot.resize.js","vendor/Flot/jquery.flot.pie.js","vendor/Flot/jquery.flot.time.js","vendor/Flot/jquery.flot.categories.js","vendor/flot-spline/js/jquery.flot.spline.min.js"],"jquery-ui":["vendor/jquery-ui/ui/core.js","vendor/jquery-ui/ui/widget.js"],"jquery-ui-widgets":["vendor/jquery-ui/ui/core.js","vendor/jquery-ui/ui/widget.js","vendor/jquery-ui/ui/mouse.js","vendor/jquery-ui/ui/draggable.js","vendor/jquery-ui/ui/droppable.js","vendor/jquery-ui/ui/sortable.js","vendor/jqueryui-touch-punch/jquery.ui.touch-punch.min.js"],moment:["vendor/moment/min/moment-with-locales.min.js"],inputmask:["vendor/jquery.inputmask/dist/jquery.inputmask.bundle.min.js"],flatdoc:["vendor/flatdoc/flatdoc.js"],codemirror:["vendor/codemirror/lib/codemirror.js","vendor/codemirror/lib/codemirror.css"],"codemirror-modes-web":["vendor/codemirror/mode/javascript/javascript.js","vendor/codemirror/mode/xml/xml.js","vendor/codemirror/mode/htmlmixed/htmlmixed.js","vendor/codemirror/mode/css/css.js"],taginput:["vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.css","vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"],filestyle:["vendor/bootstrap-filestyle/src/bootstrap-filestyle.js"],parsley:["vendor/parsleyjs/dist/parsley.min.js"],datatables:["vendor/datatables/media/js/jquery.dataTables.min.js","app/vendor/datatable-bootstrap/css/dataTables.bootstrap.css"],"datatables-pugins":["app/vendor/datatable-bootstrap/js/dataTables.bootstrap.js","app/vendor/datatable-bootstrap/js/dataTables.bootstrapPagination.js","vendor/datatables-colvis/js/dataTables.colVis.js","vendor/datatables-colvis/css/dataTables.colVis.css"],fullcalendar:["vendor/fullcalendar/dist/fullcalendar.min.js","vendor/fullcalendar/dist/fullcalendar.css"],gcal:["vendor/fullcalendar/dist/gcal.js"],nestable:["vendor/nestable/jquery.nestable.js"],chartjs:["vendor/Chart.js/Chart.js"],morris:["vendor/raphael/raphael.js","vendor/morris.js/morris.js","vendor/morris.js/morris.css"],"loaders.css":["vendor/loaders.css/loaders.css"],spinkit:["vendor/spinkit/css/spinkit.css"]},modules:[{name:"toaster",files:["vendor/angularjs-toaster/toaster.js","vendor/angularjs-toaster/toaster.css"]},{name:"localytics.directives",files:["vendor/chosen_v1.2.0/chosen.jquery.min.js","vendor/chosen_v1.2.0/chosen.min.css","vendor/angular-chosen-localytics/chosen.js"]},{name:"ngDialog",files:["vendor/ngDialog/js/ngDialog.min.js","vendor/ngDialog/css/ngDialog.min.css","vendor/ngDialog/css/ngDialog-theme-default.min.css"]},{name:"ngWig",files:["vendor/ngWig/dist/ng-wig.min.js"]},{name:"ngTable",files:["vendor/ng-table/dist/ng-table.min.js","vendor/ng-table/dist/ng-table.min.css"]},{name:"ngTableExport",files:["vendor/ng-table-export/ng-table-export.js"]},{name:"angularBootstrapNavTree",files:["vendor/angular-bootstrap-nav-tree/dist/abn_tree_directive.js","vendor/angular-bootstrap-nav-tree/dist/abn_tree.css"]},{name:"htmlSortable",files:["vendor/html.sortable/dist/html.sortable.js","vendor/html.sortable/dist/html.sortable.angular.js"]},{name:"xeditable",files:["vendor/angular-xeditable/dist/js/xeditable.js","vendor/angular-xeditable/dist/css/xeditable.css"]},{name:"angularFileUpload",files:["vendor/angular-file-upload/angular-file-upload.js"]},{name:"ngImgCrop",files:["vendor/ng-img-crop/compile/unminified/ng-img-crop.js","vendor/ng-img-crop/compile/unminified/ng-img-crop.css"]},{name:"ui.select",files:["vendor/angular-ui-select/dist/select.js","vendor/angular-ui-select/dist/select.css"]},{name:"ui.codemirror",files:["vendor/angular-ui-codemirror/ui-codemirror.js"]},{name:"angular-carousel",files:["vendor/angular-carousel/dist/angular-carousel.css","vendor/angular-carousel/dist/angular-carousel.js"]},{name:"ngGrid",files:["vendor/ng-grid/build/ng-grid.min.js","vendor/ng-grid/ng-grid.css"]},{name:"infinite-scroll",files:["vendor/ngInfiniteScroll/build/ng-infinite-scroll.js"]},{name:"ui.bootstrap-slider",files:["vendor/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js","vendor/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css","vendor/angular-bootstrap-slider/slider.js"]},{name:"ui.grid",files:["vendor/angular-ui-grid/ui-grid.min.css","vendor/angular-ui-grid/ui-grid.min.js"]},{name:"textAngularSetup",files:["vendor/textAngular/src/textAngularSetup.js"]},{name:"textAngular",files:["vendor/textAngular/dist/textAngular-rangy.min.js","vendor/textAngular/src/textAngular.js","vendor/textAngular/src/textAngular.css"]},{name:"angular-rickshaw",files:["vendor/d3/d3.min.js","vendor/rickshaw/rickshaw.js","vendor/rickshaw/rickshaw.min.css","vendor/angular-rickshaw/rickshaw.js"],serie:!0},{name:"angular-chartist",files:["vendor/chartist/dist/chartist.min.css","vendor/chartist/dist/chartist.js","vendor/angular-chartist.js/dist/angular-chartist.js"],serie:!0},{name:"ui.map",files:["vendor/angular-ui-map/ui-map.js"]},{name:"ui-router-extras",files:["vendor/ui-router-extras/release/ct-ui-router-extras.min.js"]}]}),App.controller("InfiniteScrollController",["$scope","$timeout",function(e,t){e.images=[1,2,3,4,5,6,7,8,9,10],e.loadMore=function(){for(var t=e.images[e.images.length-1],r=1;10>=r;r++)e.images.push(t+r)}}]).factory("datasource",["$log","$timeout",function(e,t){"use strict";var r=function(e,r,o){return t(function(){var t,a,n,i;for(a=[],t=n=e,i=e+r-1;i>=e?i>=n:n>=i;t=i>=e?++n:--n)a.push("item #"+t);return o(a)},100)};return{get:r}}]),App.controller("LocalizationController",["$rootScope","tmhDynamicLocale","$locale",function(e,t,r){e.availableLocales={en:"English",es:"Spanish",de:"German",fr:"French",ar:"Arabic",ja:"Japanese",ko:"Korean",zh:"Chinese"},e.model={selectedLocale:"en"},e.$locale=r,e.changeLocale=t.set}]),App.controller("AppController",["$rootScope","$scope","$state","$translate","$window","$localStorage","$timeout","toggleStateService","colors","browser","cfpLoadingBar",function(e,t,r,o,a,n,i,s,c,l,u){"use strict";e.app.layout.horizontal="app-h"==e.$stateParams.layout;var p;e.$on("$stateChangeStart",function(e,t,r,o,a){$(".wrapper > section").length&&(p=i(function(){u.start()},0))}),e.$on("$stateChangeSuccess",function(e,t,r,o,a){e.targetScope.$watch("$viewContentLoaded",function(){i.cancel(p),u.complete()})}),e.$on("$stateNotFound",function(e,t,r,o){console.log(t.to),console.log(t.toParams),console.log(t.options)}),e.$on("$stateChangeError",function(e,t,r,o,a,n){console.log(n)}),e.$on("$stateChangeSuccess",function(t,o,n,i,s){a.scrollTo(0,0),e.currTitle=r.current.title}),e.currTitle=r.current.title,e.pageTitle=function(){var t=e.app.name+" - "+(e.currTitle||e.app.description);return document.title=t,t},e.$watch("app.layout.isCollapsed",function(t,r){t===!1&&e.$broadcast("closeSidebarMenu")}),angular.isDefined(n.layout)?t.app.layout=n.layout:n.layout=t.app.layout,e.$watch("app.layout",function(){n.layout=t.app.layout},!0),t.colorByName=c.byName,t.toggleUserBlock=function(){t.$broadcast("toggleUserBlock")},t.language={listIsOpen:!1,available:{en:"English",es_AR:"Español"},init:function(){var e=o.proposedLanguage()||o.use(),r=o.preferredLanguage();t.language.selected=t.language.available[e||r]},set:function(e,r){o.use(e),t.language.selected=t.language.available[e],t.language.listIsOpen=!t.language.listIsOpen}},t.language.init(),s.restoreState($(document.body)),e.cancel=function(e){e.stopPropagation()}}]),App.controller("ModalController",["$scope","$modal",function(e,t){e.open=function(e){var o=t.open({templateUrl:"/myModalContent.html",controller:r,size:e}),a=$("#modal-state");o.result.then(function(){a.text("Modal dismissed with OK status")},function(){a.text("Modal dismissed with Cancel status")})};var r=function(e,t){e.ok=function(){t.close("closed")},e.cancel=function(){t.dismiss("cancel")}};r.$inject=["$scope","$modalInstance"]}]),App.controller("NotificationController",["$scope",function(e){function t(e){for(var t=e.offsetTop,r=40;e.offsetParent;)e=e.offsetParent,t+=e.offsetTop;return t-r-window.pageYOffset}function r(e){for(var t=e.offsetLeft,r=e.offsetWidth;e.offsetParent;)e=e.offsetParent,t+=e.offsetLeft;return t-r-window.pageXOffset}e.autoplace=function(e,o){var a="top";return t(o)<0&&(a="bottom"),r(o)<0&&(a="right"),a}}]),App.controller("SidebarController",["$rootScope","$scope","$state","$http","$timeout","Utils","StatesManagerService","ArticleManagerService","BookmarksManagerService",function(e,t,r,o,a,n,i,s,c){function l(e){e+="";for(var t in p)(0>e||e.indexOf(t)<0)&&(p[t]=!0)}function u(e){return"string"==typeof e&&!(e.indexOf("-")<0)}var p=[];e.$watch("app.layout.asideHover",function(e,t){t===!1&&e===!0&&l(-1)});var d=function(e){if(e){if(e.sref&&"#"!=e.sref)return r.is(e.sref)||r.includes(e.sref);var t=!1;return angular.forEach(e.submenu,function(e,r){d(e)&&(t=!0)}),t}};t.getMenuItemPropClasses=function(e){return(e.heading?"nav-heading":"")+(d(e)?" active":"")},t.getNum=function(e){switch(e){case"ArticlesLength":return s.getArticles().length;case"BookmarksLength":return Object.keys(c.getBookmarks()).length}},t.loadSidebarMenu=function(){var e="server/sidebar-menu.json",r=e+"?v="+(new Date).getTime();o.get(r).success(function(e){t.menuItems=e}).error(function(e,t,r,o){alert("Failure loading menu")})},t.loadSidebarMenu(),t.addCollapse=function(t,r){p[t]=e.app.layout.asideHover?!0:!d(r)},t.isCollapse=function(e){return p[e]},t.toggleCollapse=function(r,o){return n.isSidebarCollapsed()||e.app.layout.asideHover?!0:(angular.isDefined(p[r])?t.lastEventFromChild||(p[r]=!p[r],l(r)):o&&l(-1),t.lastEventFromChild=u(r),!0)},t.goTo=function(e){switch(e){case"app.home-search":r.go("app.home-search");break;case"app.articles-results":var t=i.getLastState();t.name?r.go(t.name,t.params):r.go("app.articles-results");break;default:r.go(e)}}}]),App.controller("uiSelectController",["$scope","$http",function(e,t){e.disabled=void 0,e.enable=function(){e.disabled=!1},e.disable=function(){e.disabled=!0},e.clear=function(){e.person.selected=void 0,e.address.selected=void 0,e.country.selected=void 0},e.person={},e.people=[{name:"Adam",email:"adam@email.com",age:10},{name:"Amalie",email:"amalie@email.com",age:12},{name:"Wladimir",email:"wladimir@email.com",age:30},{name:"Samantha",email:"samantha@email.com",age:31},{name:"Estefanía",email:"estefanía@email.com",age:16},{name:"Natasha",email:"natasha@email.com",age:54},{name:"Nicole",email:"nicole@email.com",age:43},{name:"Adrian",email:"adrian@email.com",age:21}],e.address={},e.refreshAddresses=function(r){var o={address:r,sensor:!1};return t.get("http://maps.googleapis.com/maps/api/geocode/json",{params:o}).then(function(t){e.addresses=t.data.results})},e.country={},e.countries=[{name:"Afghanistan",code:"AF"},{name:"Åland Islands",code:"AX"},{name:"Albania",code:"AL"},{name:"Algeria",code:"DZ"},{name:"American Samoa",code:"AS"},{name:"Andorra",code:"AD"},{name:"Angola",code:"AO"},{name:"Anguilla",code:"AI"},{name:"Antarctica",code:"AQ"},{name:"Antigua and Barbuda",code:"AG"},{name:"Argentina",code:"AR"},{name:"Armenia",code:"AM"},{name:"Aruba",code:"AW"},{name:"Australia",code:"AU"},{name:"Austria",code:"AT"},{name:"Azerbaijan",code:"AZ"},{name:"Bahamas",code:"BS"},{name:"Bahrain",code:"BH"},{name:"Bangladesh",code:"BD"},{name:"Barbados",code:"BB"},{name:"Belarus",code:"BY"},{name:"Belgium",code:"BE"},{name:"Belize",code:"BZ"},{name:"Benin",code:"BJ"},{name:"Bermuda",code:"BM"},{name:"Bhutan",code:"BT"},{name:"Bolivia",code:"BO"},{name:"Bosnia and Herzegovina",code:"BA"},{name:"Botswana",code:"BW"},{name:"Bouvet Island",code:"BV"},{name:"Brazil",code:"BR"},{name:"British Indian Ocean Territory",code:"IO"},{name:"Brunei Darussalam",code:"BN"},{name:"Bulgaria",code:"BG"},{name:"Burkina Faso",code:"BF"},{name:"Burundi",code:"BI"},{name:"Cambodia",code:"KH"},{name:"Cameroon",code:"CM"},{name:"Canada",code:"CA"},{name:"Cape Verde",code:"CV"},{name:"Cayman Islands",code:"KY"},{name:"Central African Republic",code:"CF"},{name:"Chad",code:"TD"},{name:"Chile",code:"CL"},{name:"China",code:"CN"},{name:"Christmas Island",code:"CX"},{name:"Cocos (Keeling) Islands",code:"CC"},{name:"Colombia",code:"CO"},{name:"Comoros",code:"KM"},{name:"Congo",code:"CG"},{name:"Congo, The Democratic Republic of the",code:"CD"},{name:"Cook Islands",code:"CK"},{name:"Costa Rica",code:"CR"},{name:"Cote D'Ivoire",code:"CI"},{name:"Croatia",code:"HR"},{name:"Cuba",code:"CU"},{name:"Cyprus",code:"CY"},{name:"Czech Republic",code:"CZ"},{name:"Denmark",code:"DK"},{name:"Djibouti",code:"DJ"},{name:"Dominica",code:"DM"},{name:"Dominican Republic",code:"DO"},{name:"Ecuador",code:"EC"},{name:"Egypt",code:"EG"},{name:"El Salvador",code:"SV"},{name:"Equatorial Guinea",code:"GQ"},{name:"Eritrea",code:"ER"},{name:"Estonia",code:"EE"},{name:"Ethiopia",code:"ET"},{name:"Falkland Islands (Malvinas)",code:"FK"},{name:"Faroe Islands",code:"FO"},{name:"Fiji",code:"FJ"},{name:"Finland",code:"FI"},{name:"France",code:"FR"},{name:"French Guiana",code:"GF"},{name:"French Polynesia",code:"PF"},{name:"French Southern Territories",code:"TF"},{name:"Gabon",code:"GA"},{name:"Gambia",code:"GM"},{name:"Georgia",code:"GE"},{name:"Germany",code:"DE"},{name:"Ghana",code:"GH"},{name:"Gibraltar",code:"GI"},{name:"Greece",code:"GR"},{name:"Greenland",code:"GL"},{name:"Grenada",code:"GD"},{name:"Guadeloupe",code:"GP"},{name:"Guam",code:"GU"},{name:"Guatemala",code:"GT"},{name:"Guernsey",code:"GG"},{name:"Guinea",code:"GN"},{name:"Guinea-Bissau",code:"GW"},{name:"Guyana",code:"GY"},{name:"Haiti",code:"HT"},{name:"Heard Island and Mcdonald Islands",code:"HM"},{name:"Holy See (Vatican City State)",code:"VA"},{name:"Honduras",code:"HN"},{name:"Hong Kong",code:"HK"},{name:"Hungary",code:"HU"},{name:"Iceland",code:"IS"},{name:"India",code:"IN"},{name:"Indonesia",code:"ID"},{name:"Iran, Islamic Republic Of",code:"IR"},{name:"Iraq",code:"IQ"},{name:"Ireland",code:"IE"},{name:"Isle of Man",code:"IM"},{name:"Israel",code:"IL"},{name:"Italy",code:"IT"},{name:"Jamaica",code:"JM"},{name:"Japan",code:"JP"},{name:"Jersey",code:"JE"},{name:"Jordan",code:"JO"},{name:"Kazakhstan",code:"KZ"},{name:"Kenya",code:"KE"},{name:"Kiribati",code:"KI"},{name:"Korea, Democratic People's Republic of",code:"KP"},{name:"Korea, Republic of",code:"KR"},{name:"Kuwait",code:"KW"},{name:"Kyrgyzstan",code:"KG"},{name:"Lao People's Democratic Republic",code:"LA"},{name:"Latvia",code:"LV"},{name:"Lebanon",code:"LB"},{name:"Lesotho",code:"LS"},{name:"Liberia",code:"LR"},{name:"Libyan Arab Jamahiriya",code:"LY"},{name:"Liechtenstein",code:"LI"},{name:"Lithuania",code:"LT"},{name:"Luxembourg",code:"LU"},{name:"Macao",code:"MO"},{name:"Macedonia, The Former Yugoslav Republic of",code:"MK"},{name:"Madagascar",code:"MG"},{name:"Malawi",code:"MW"},{name:"Malaysia",code:"MY"},{name:"Maldives",code:"MV"},{name:"Mali",code:"ML"},{name:"Malta",code:"MT"},{name:"Marshall Islands",code:"MH"},{name:"Martinique",code:"MQ"},{name:"Mauritania",code:"MR"},{name:"Mauritius",code:"MU"},{name:"Mayotte",code:"YT"},{name:"Mexico",code:"MX"},{name:"Micronesia, Federated States of",code:"FM"},{name:"Moldova, Republic of",code:"MD"},{name:"Monaco",code:"MC"},{name:"Mongolia",code:"MN"},{name:"Montserrat",code:"MS"},{name:"Morocco",code:"MA"},{name:"Mozambique",code:"MZ"},{name:"Myanmar",code:"MM"},{name:"Namibia",code:"NA"},{name:"Nauru",code:"NR"},{name:"Nepal",code:"NP"},{name:"Netherlands",code:"NL"},{name:"Netherlands Antilles",code:"AN"},{name:"New Caledonia",code:"NC"},{name:"New Zealand",code:"NZ"},{name:"Nicaragua",code:"NI"},{name:"Niger",code:"NE"},{name:"Nigeria",code:"NG"},{name:"Niue",code:"NU"},{name:"Norfolk Island",code:"NF"},{name:"Northern Mariana Islands",code:"MP"},{name:"Norway",code:"NO"},{name:"Oman",code:"OM"},{name:"Pakistan",code:"PK"},{name:"Palau",code:"PW"},{name:"Palestinian Territory, Occupied",code:"PS"},{name:"Panama",code:"PA"},{name:"Papua New Guinea",code:"PG"},{name:"Paraguay",code:"PY"},{name:"Peru",code:"PE"},{name:"Philippines",code:"PH"},{name:"Pitcairn",code:"PN"},{name:"Poland",code:"PL"},{name:"Portugal",code:"PT"},{name:"Puerto Rico",code:"PR"},{name:"Qatar",code:"QA"},{name:"Reunion",code:"RE"},{name:"Romania",code:"RO"},{name:"Russian Federation",code:"RU"},{name:"Rwanda",code:"RW"},{name:"Saint Helena",code:"SH"},{name:"Saint Kitts and Nevis",code:"KN"},{name:"Saint Lucia",code:"LC"},{name:"Saint Pierre and Miquelon",code:"PM"},{name:"Saint Vincent and the Grenadines",code:"VC"},{name:"Samoa",code:"WS"},{name:"San Marino",code:"SM"},{name:"Sao Tome and Principe",code:"ST"},{name:"Saudi Arabia",code:"SA"},{name:"Senegal",code:"SN"},{name:"Serbia and Montenegro",code:"CS"},{name:"Seychelles",code:"SC"},{name:"Sierra Leone",code:"SL"},{name:"Singapore",code:"SG"},{name:"Slovakia",code:"SK"},{name:"Slovenia",code:"SI"},{name:"Solomon Islands",code:"SB"},{name:"Somalia",code:"SO"},{name:"South Africa",code:"ZA"},{name:"South Georgia and the South Sandwich Islands",code:"GS"},{name:"Spain",code:"ES"},{name:"Sri Lanka",code:"LK"},{name:"Sudan",code:"SD"},{name:"Suriname",code:"SR"},{name:"Svalbard and Jan Mayen",code:"SJ"},{name:"Swaziland",code:"SZ"},{name:"Sweden",code:"SE"},{name:"Switzerland",code:"CH"},{name:"Syrian Arab Republic",code:"SY"},{name:"Taiwan, Province of China",code:"TW"},{name:"Tajikistan",code:"TJ"},{name:"Tanzania, United Republic of",code:"TZ"},{name:"Thailand",code:"TH"},{name:"Timor-Leste",code:"TL"},{name:"Togo",code:"TG"},{name:"Tokelau",code:"TK"},{name:"Tonga",code:"TO"},{name:"Trinidad and Tobago",code:"TT"},{name:"Tunisia",code:"TN"},{name:"Turkey",code:"TR"},{name:"Turkmenistan",code:"TM"},{name:"Turks and Caicos Islands",code:"TC"},{name:"Tuvalu",code:"TV"},{name:"Uganda",code:"UG"},{name:"Ukraine",code:"UA"},{name:"United Arab Emirates",code:"AE"},{name:"United Kingdom",code:"GB"},{name:"United States",code:"US"},{name:"United States Minor Outlying Islands",code:"UM"},{name:"Uruguay",code:"UY"},{name:"Uzbekistan",code:"UZ"},{name:"Vanuatu",code:"VU"},{name:"Venezuela",code:"VE"},{name:"Vietnam",code:"VN"},{name:"Virgin Islands, British",code:"VG"},{name:"Virgin Islands, U.S.",code:"VI"},{name:"Wallis and Futuna",code:"WF"},{name:"Western Sahara",code:"EH"},{name:"Yemen",code:"YE"},{name:"Zambia",code:"ZM"},{name:"Zimbabwe",code:"ZW"}],e.someGroupFn=function(e){return e.name[0]>="A"&&e.name[0]<="M"?"From A - M":e.name[0]>="N"&&e.name[0]<="Z"?"From N - Z":void 0},e.counter=0,e.someFunction=function(t,r){e.counter++,e.eventResult={item:t,model:r}},e.artilcesTypes=["Red","Green","Blue","Yellow","Magenta","Maroon","Umbra","Turquoise"],e.multipleDemo={},e.multipleDemo.colors=["Blue","Red"],e.multipleDemo.selectedPeople=[e.people[5],e.people[4]],e.multipleDemo.selectedPeopleWithGroupBy=[e.people[8],e.people[6]],e.multipleDemo.selectedPeopleSimple=["samantha@email.com","wladimir@email.com"]}]),App.filter("propsFilter",function(){return function(e,t){var r=[];return angular.isArray(e)?e.forEach(function(e){for(var o=!1,a=Object.keys(t),n=0;n<a.length;n++){var i=a[n],s=t[i].toLowerCase();if(-1!==e[i].toString().toLowerCase().indexOf(s)){o=!0;break}}o&&r.push(e)}):r=e,r}}),App.directive("href",function(){return{restrict:"A",compile:function(e,t){return function(e,r){(t.ngClick||""===t.href||"#"===t.href)&&(r.hasClass("dropdown-toggle")||r.on("click",function(e){e.preventDefault(),e.stopPropagation()}))}}}}),App.directive("animateEnabled",["$animate",function(e){return{link:function(t,r,o){t.$watch(function(){return t.$eval(o.animateEnabled,t)},function(t){e.enabled(!!t,r)})}}}]);var ChartJS=function(e){return{restrict:"A",scope:{data:"=",options:"=",id:"@",width:"=",height:"=",resize:"=",chart:"@",segments:"@",responsive:"=",tooltip:"=",legend:"="},link:function(t,r){var o=r[0].getContext("2d"),a=!1;t.size=function(){t.width<=0?(r.width(r.parent().width()),o.canvas.width=r.width()):(o.canvas.width=t.width||o.canvas.width,a=!0),t.height<=0?(r.height(r.parent().height()),o.canvas.height=o.canvas.width/2):(o.canvas.height=t.height||o.canvas.height,a=!0)},t.$watch("data",function(s,c){n&&n.destroy(),s&&(t.chart&&(e=t.chart),a&&(t.size(),i=new Chart(o)),(t.responsive||t.resize)&&(t.options.responsive=!0),void 0!==t.responsive&&(t.options.responsive=t.responsive),n=i[e](t.data,t.options),n.update(),t.legend&&angular.element(r[0]).parent().after(n.generateLegend()))},!0),t.$watch("tooltip",function(e,t){if(n&&n.draw(),void 0!==e&&n.segments&&!(!isFinite(e)||e>=n.segments.length||0>e)){var r=n.segments[e];r.save(),r.fillColor=r.highlightColor,n.showTooltip([r]),r.restore()}},!0),t.size();var n,i=new Chart(o)}}};App.directive("chartjs",function(){return ChartJS()}),App.directive("linechart",function(){return ChartJS("Line")}),App.directive("barchart",function(){return ChartJS("Bar")}),App.directive("radarchart",function(){return ChartJS("Radar")}),App.directive("polarchart",function(){return ChartJS("PolarArea")}),App.directive("piechart",function(){return ChartJS("Pie")}),App.directive("doughnutchart",function(){return ChartJS("Doughnut")}),App.directive("donutchart",function(){return ChartJS("Doughnut")}),App.directive("classyloader",["$timeout","Utils",function(e,t){"use strict";var r=$(window),o="js-is-in-view";return{restrict:"A",link:function(a,n,i){function s(e,r){var a=-20;!e.hasClass(o)&&t.isInView(e,{topoffset:a})&&c(e,r)}function c(e,t){e.ClassyLoader(t).addClass(o)}e(function(){var e=$(n),t=e.data();t&&(t.triggerInView?(r.scroll(function(){s(e,t)}),s(e,t)):c(e,t))},0)}}}]),App.directive("resetKey",["$state","$rootScope",function(e,t){"use strict";return{restrict:"A",scope:{resetKey:"="},link:function(e,t,r){e.resetKey=r.resetKey},controller:["$scope","$element",function(r,o){o.on("click",function(o){o.preventDefault(),r.resetKey?(delete t.$storage[r.resetKey],e.go(e.current,{},{reload:!0})):$.error("No storage key specified for reset.")})}]}}]),App.directive("filestyle",function(){return{restrict:"A",controller:["$scope","$element",function(e,t){var r=t.data();r.classInput=t.data("classinput")||r.classInput,t.filestyle(r)}]}}),App.directive("flatdoc",["$location",function(e){return{restrict:"EA",template:"<div role='flatdoc'><div role='flatdoc-menu'></div><div role='flatdoc-content'></div></div>",link:function(e,t,r){Flatdoc.run({fetcher:Flatdoc.file(r.src)});var o=$("html, body");$(document).on("flatdoc:ready",function(){var e=$('[role="flatdoc-menu"]');e.find("a").on("click",function(t){t.preventDefault(),t.stopPropagation();var r=$(this);e.find("a.active").removeClass("active"),r.addClass("active"),o.animate({scrollTop:$(this.getAttribute("href")).offset().top-($(".topnavbar").height()+10)},800)})})}}}]),App.directive("flot",["$http","$timeout",function(e,t){"use strict";function r(r,o,a){function n(){var e;if(r.dataset&&r.options)return e=$.plot(p,r.dataset,r.options),r.$emit("plotReady",e),r.callback&&r.callback(e,r),e}function i(e){return u?(u.setData(e),u.setupGrid(),u.draw()):(u=n(),s(r.series),u)}function s(e){function t(e){return function(t,o){r[o]&&r[o][e]&&(r[o][e].show=t)}}if(u&&e){var r=u.getData();for(var o in e)angular.forEach(e[o],t(o));u.setData(r),u.draw()}}function c(o){o&&e.get(o).success(function(e){t(function(){r.dataset=e})}).error(function(){$.error("Flot chart: Bad request.")})}var l,u,p,d,m=220;u=null,d=a.width||"100%",l=a.height||m,p=$(o.children()[0]),p.css({width:d,height:l}),r.$watchCollection("dataset",i,!0),r.$watch("series",s,!0),r.$watch("src",c)}return{restrict:"EA",template:"<div></div>",scope:{dataset:"=?",options:"=",series:"=",callback:"=",src:"="},link:r}}]),App.directive("formWizard",["$parse",function(e){"use strict";function t(e,t,r){var o=this;o.quantity=parseInt(e,10),o.validate=t,o.element=r,o.init=function(){return o.createsteps(o.quantity),o.go(1),o},o.go=function(e){if(angular.isDefined(o.steps[e])){if(o.validate&&1!==e){var t=$(o.element),r=t.children().children("div").get(e-2);if(!1===t.parsley().validate(r.id))return!1}o.cleanall(),o.steps[e]=!0}},o.active=function(e){return!!o.steps[e]},o.cleanall=function(){for(var e in o.steps)o.steps[e]=!1},o.createsteps=function(e){o.steps=[];for(var t=1;e>=t;t++)o.steps[t]=!1}}return{restrict:"A",scope:!0,link:function(r,o,a){var n=e(a.validateSteps)(r),i=new t(a.steps,!!n,o);r.wizard=i.init()}}}]),App.directive("toggleFullscreen",function(){"use strict";return{restrict:"A",link:function(e,t,r){t.on("click",function(e){e.preventDefault(),screenfull.enabled?(screenfull.toggle(),screenfull.isFullscreen?$(this).children("em").removeClass("fa-expand").addClass("fa-compress"):$(this).children("em").removeClass("fa-compress").addClass("fa-expand")):$.error("Fullscreen not enabled")})}}}),App.directive("loadCss",function(){"use strict";function e(e){var t="autoloaded-stylesheet",r=$("#"+t).attr("id",t+"-old");return $("head").append($("<link/>").attr({id:t,rel:"stylesheet",href:e})),r.length&&r.remove(),$("#"+t)}return{restrict:"A",link:function(t,r,o){r.on("click",function(t){r.is("a")&&t.preventDefault();var a,n=o.loadCss;n?(a=e(n),a||$.error("Error creating stylesheet link element.")):$.error("No stylesheet location defined.")})}}}),App.directive("masked",function(){return{restrict:"A",controller:["$scope","$element",function(e,t){var r=$(t);$.fn.inputmask&&r.inputmask()}]}}),function(){"use strict";function e(e){return function(){return{restrict:"EA",scope:{morrisData:"=",morrisOptions:"="},link:function(t,r,o){t.$watch("morrisData",function(e,r){e&&(t.morrisInstance.setData(e),t.morrisInstance.redraw())},!0),t.morrisOptions.element=r,t.morrisData&&(t.morrisOptions.data=t.morrisData),t.morrisInstance=new Morris[e](t.morrisOptions)}}}}App.directive("morrisBar",e("Bar")),App.directive("morrisDonut",e("Donut")),App.directive("morrisLine",e("Line")),App.directive("morrisArea",e("Area"))}(),App.directive("searchOpen",["navSearch",function(e){"use strict";return{restrict:"A",controller:["$scope","$element",function(t,r){r.on("click",function(e){e.stopPropagation()}).on("click",e.toggle)}]}}]).directive("searchDismiss",["navSearch",function(e){"use strict";var t='.navbar-form input[type="text"]';return{restrict:"A",controller:["$scope","$element",function(r,o){$(t).on("click",function(e){e.stopPropagation()}).on("keyup",function(t){27==t.keyCode&&e.dismiss()}),$(document).on("click",e.dismiss),o.on("click",function(e){e.stopPropagation()}).on("click",e.dismiss)}]}}]),App.directive("nestable",["$timeout",function(e){return{restrict:"A",scope:{nestableControl:"="},controller:["$scope","$element",function(t,r){function o(e){return function(){r.nestable(e)}}var a=r.data();if(e(function(){r.nestable(a)}),t.nestableControl){var n=t.nestableControl;n.serialize=function(){return r.nestable("serialize")},n.expandAll=o("expandAll"),n.collapseAll=o("collapseAll"),r.on("change",function(){"function"==typeof n.onchange&&e(function(){n.onchange.apply(arguments)})})}}]}}]),App.directive("notify",["$window","Notify",function(e,t){return{restrict:"A",scope:{options:"=",message:"="},link:function(e,r,o){r.on("click",function(r){r.preventDefault(),t.alert(e.message,e.options)})}}}]),App.directive("now",["dateFilter","$interval",function(e,t){return{restrict:"E",link:function(r,o,a){function n(){var t=e(new Date,i);o.text(t)}var i=a.format;n(),t(n,1e3)}}}]),App.directive("paneltool",["$compile","$timeout",function(e,t){function r(e,t){var r="";return t=t||{},t.toolCollapse&&(r+=o.collapse.replace(/{{panelId}}/g,e.parent().parent().attr("id"))),t.toolDismiss&&(r+=o.dismiss),t.toolRefresh&&(r+=o.refresh.replace(/{{spinner}}/g,t.toolRefresh)),r}var o={collapse:"<a href='#' panel-collapse='' tooltip='Collapse Panel' ng-click='{{panelId}} = !{{panelId}}'> \r\n                <em ng-show='{{panelId}}' class='fa fa-plus'></em> \r\n                <em ng-show='!{{panelId}}' class='fa fa-minus'></em> \r\n              </a>",dismiss:"<a href='#' panel-dismiss='' tooltip='Close Panel'>\r\n               <em class='fa fa-times'></em>\r\n             </a>",refresh:"<a href='#' panel-refresh='' data-spinner='{{spinner}}' tooltip='Refresh Panel'>\r\n               <em class='fa fa-refresh'></em>\r\n             </a>"};return{restrict:"E",scope:!1,
-link:function(o,a,n){var i=o.panelTools||n;t(function(){a.html(r(a,i)).show(),e(a.contents())(o),a.addClass("pull-right")})}}}]).directive("panelDismiss",["$q","Utils",function(e,t){"use strict";return{restrict:"A",controller:["$scope","$element",function(r,o){var a="panel-remove",n="panel-removed";o.on("click",function(){function o(){var t=e.defer(),o=t.promise;r.$emit(a,c.attr("id"),t),o.then(i)}function i(){t.support.animation?c.animo({animation:"bounceOut"},s):s()}function s(){var e=c.parent();c.remove(),e.filter(function(){var e=$(this);return e.is('[class*="col-"]:not(.sortable)')&&0===e.children("*").length}).remove(),r.$emit(n,c.attr("id"))}var c=$(this).closest(".panel");o()})}]}}]).directive("panelCollapse",["$timeout",function(e){"use strict";function t(e,t){if(!e)return!1;var r=angular.fromJson(o[a]);r||(r={}),r[e]=t,o[a]=angular.toJson(r)}function r(e){if(!e)return!1;var t=angular.fromJson(o[a]);return t?t[e]:void 0}var o,a="panelState";return{restrict:"A",scope:!1,controller:["$scope","$element",function(a,n){var i=$(n),s=i.closest(".panel"),c=s.attr("id");o=a.$storage;var l=r(c);"undefined"!=typeof l&&e(function(){a[c]=l},10),n.bind("click",function(){t(c,!a[c])})}]}}]).directive("panelRefresh",["$q",function(e){"use strict";return{restrict:"A",scope:!1,controller:["$scope","$element",function(e,t){function r(e,t){if(t){var r="#"==t.charAt(0)?t:"#"+t;angular.element(r).removeClass(a)}}var o="panel-refresh",a="whirl",n="standard";t.on("click",function(){var t=$(this),r=t.parents(".panel").eq(0),i=t.data("spinner")||n;r.addClass(a+" "+i),e.$emit(o,r.attr("id"))}),e.$on("removeSpinner",r)}]}}]),App.directive("animate",["$window","Utils",function(e,t){"use strict";var r=$(window).add("body, .wrapper");return{restrict:"A",link:function(e,o,a){function n(e){!e.hasClass("anim-running")&&t.isInView(e,{topoffset:s})&&(e.addClass("anim-running"),setTimeout(function(){e.addClass("anim-done").animo({animation:l,duration:.7})},c))}var i=$(o),s=i.data("offset"),c=i.data("delay")||100,l=i.data("play")||"bounce";"undefined"!=typeof s&&(n(i),r.scroll(function(){n(i)})),i.on("click",function(){var e=$(this),t=e.data("target"),r=e.data("play")||"bounce",o=$(t);o&&o.length&&o.animo({animation:r})})}}}]),App.directive("scrollable",function(){return{restrict:"EA",link:function(e,t,r){var o=250;t.slimScroll({height:r.height||o})}}}),App.directive("sidebar",["$rootScope","$window","Utils",function(e,t,r){function o(){var e=$("<div/>",{"class":"dropdown-backdrop"});e.insertAfter(".aside-inner").on("click mouseenter",function(){i()})}function a(e){e.siblings("li").removeClass("open").end().toggleClass("open")}function n(e){i();var t=e.children("ul");if(!t.length)return $();if(e.hasClass("open"))return a(e),$();var r=$(".aside"),o=$(".aside-inner"),n=parseInt(o.css("padding-top"),0)+parseInt(r.css("padding-top"),0),u=t.clone().appendTo(r);a(e);var p=e.position().top+n-c.scrollTop(),d=l.height();return u.addClass("nav-floating").css({position:s.app.layout.isFixed?"fixed":"absolute",top:p,bottom:u.outerHeight(!0)+p>d?0:"auto"}),u.on("mouseleave",function(){a(e),u.remove()}),u}function i(){$(".dropdown-backdrop").remove(),$(".sidebar-subnav.nav-floating").remove(),$(".sidebar li.open").removeClass("open")}var s,c,l=$(t),u=$("body"),p=e.$state.current.name;return{restrict:"EA",template:'<nav class="sidebar" ng-transclude></nav>',transclude:!0,replace:!0,link:function(t,a,d){s=t,c=a;var m=r.isTouch()?"click":"mouseenter",g=$();c.on(m,".nav > li",function(){(r.isSidebarCollapsed()||e.app.layout.asideHover)&&(g.trigger("mouseleave"),g=n($(this)),o())}),t.$on("closeSidebarMenu",function(){i()}),l.on("resize",function(){r.isMobile()||u.removeClass("aside-toggled")}),e.$on("$stateChangeStart",function(t,r,o,a,n){p=r.name,$("body.aside-toggled").removeClass("aside-toggled"),e.$broadcast("closeSidebarMenu")}),angular.isDefined(d.sidebarAnyclickClose)&&$(".wrapper").on("click.sidebar",function(e){u.hasClass("aside-toggled")&&($(e.target).parents(".aside").length||u.removeClass("aside-toggled"))})}}}]),App.directive("sparkline",["$timeout","$window",function(e,t){"use strict";function r(e){var t=e.data();t.type=t.type||"bar",t.disableHiddenCheck=!0,e.sparkline("html",t),t.resize&&$(window).resize(function(){e.sparkline("html",t)})}return{restrict:"EA",controller:["$scope","$element",function(t,o){var a=function(){r(o)};e(a)}]}}]),App.directive("checkAll",function(){"use strict";return{restrict:"A",controller:["$scope","$element",function(e,t){t.on("change",function(){var e=$(this),t=e.index()+1,r=e.find('input[type="checkbox"]'),o=e.parents("table");o.find("tbody > tr > td:nth-child("+t+') input[type="checkbox"]').prop("checked",r[0].checked)})}]}}),App.directive("tagsinput",["$timeout",function(e){return{restrict:"A",require:"ngModel",link:function(t,r,o,a){r.on("itemAdded itemRemoved",function(){a.$viewValue&&a.$viewValue.split&&(a.$setViewValue(a.$viewValue.split(",")),a.$render())}),e(function(){r.tagsinput()})}}}]),App.directive("toggleState",["toggleStateService",function(e){"use strict";return{restrict:"A",link:function(t,r,o){var a=$("body");$(r).on("click",function(t){t.preventDefault();var r=o.toggleState;r&&(a.hasClass(r)?(a.removeClass(r),o.noPersist||e.removeState(r)):(a.addClass(r),o.noPersist||e.addState(r)))})}}}]),App.directive("validateForm",function(){return{restrict:"A",controller:["$scope","$element",function(e,t){var r=$(t);$.fn.parsley&&r.parsley()}]}}),App.service("browser",function(){"use strict";var e,t,r=function(e){e=e.toLowerCase();var t=/(opr)[\/]([\w.]+)/.exec(e)||/(chrome)[ \/]([\w.]+)/.exec(e)||/(version)[ \/]([\w.]+).*(safari)[ \/]([\w.]+)/.exec(e)||/(webkit)[ \/]([\w.]+)/.exec(e)||/(opera)(?:.*version|)[ \/]([\w.]+)/.exec(e)||/(msie) ([\w.]+)/.exec(e)||e.indexOf("trident")>=0&&/(rv)(?::| )([\w.]+)/.exec(e)||e.indexOf("compatible")<0&&/(mozilla)(?:.*? rv:([\w.]+)|)/.exec(e)||[],r=/(ipad)/.exec(e)||/(iphone)/.exec(e)||/(android)/.exec(e)||/(windows phone)/.exec(e)||/(win)/.exec(e)||/(mac)/.exec(e)||/(linux)/.exec(e)||/(cros)/i.exec(e)||[];return{browser:t[3]||t[1]||"",version:t[2]||"0",platform:r[0]||""}};if(e=r(window.navigator.userAgent),t={},e.browser&&(t[e.browser]=!0,t.version=e.version,t.versionNumber=parseInt(e.version)),e.platform&&(t[e.platform]=!0),(t.android||t.ipad||t.iphone||t["windows phone"])&&(t.mobile=!0),(t.cros||t.mac||t.linux||t.win)&&(t.desktop=!0),(t.chrome||t.opr||t.safari)&&(t.webkit=!0),t.rv){var o="msie";e.browser=o,t[o]=!0}if(t.opr){var a="opera";e.browser=a,t[a]=!0}if(t.safari&&t.android){var n="android";e.browser=n,t[n]=!0}return t.name=e.browser,t.platform=e.platform,t}),App.factory("colors",["APP_COLORS",function(e){return{byName:function(t){return e[t]||"#fff"}}}]),App.service("navSearch",function(){var e="form.navbar-form";return{toggle:function(){var t=$(e);t.toggleClass("open");var r=t.hasClass("open");t.find("input")[r?"focus":"blur"]()},dismiss:function(){$(e).removeClass("open").find('input[type="text"]').blur().val("")}}}),App.service("Notify",["$timeout",function(e){function t(t,r){t&&e(function(){$.notify(t,r||{})})}this.alert=t}]),function(e,t,r){var o={},a={},n=function(t){return"string"==e.type(t)&&(t={message:t}),arguments[1]&&(t=e.extend(t,"string"==e.type(arguments[1])?{status:arguments[1]}:arguments[1])),new s(t).show()},i=function(e,t){if(e)for(var r in a)e===a[r].group&&a[r].close(t);else for(var r in a)a[r].close(t)},s=function(t){this.options=e.extend({},s.defaults,t),this.uuid="ID"+(new Date).getTime()+"RAND"+Math.ceil(1e5*Math.random()),this.element=e(['<div class="uk-notify-message alert-dismissable">','<a class="close">&times;</a>',"<div>"+this.options.message+"</div>","</div>"].join("")).data("notifyMessage",this),this.options.status&&(this.element.addClass("alert alert-"+this.options.status),this.currentstatus=this.options.status),this.group=this.options.group,a[this.uuid]=this,o[this.options.pos]||(o[this.options.pos]=e('<div class="uk-notify uk-notify-'+this.options.pos+'"></div>').appendTo("body").on("click",".uk-notify-message",function(){e(this).data("notifyMessage").close()}))};return e.extend(s.prototype,{uuid:!1,element:!1,timout:!1,currentstatus:"",group:!1,show:function(){if(!this.element.is(":visible")){var e=this;o[this.options.pos].show().prepend(this.element);var t=parseInt(this.element.css("margin-bottom"),10);return this.element.css({opacity:0,"margin-top":-1*this.element.outerHeight(),"margin-bottom":0}).animate({opacity:1,"margin-top":0,"margin-bottom":t},function(){if(e.options.timeout){var t=function(){e.close()};e.timeout=setTimeout(t,e.options.timeout),e.element.hover(function(){clearTimeout(e.timeout)},function(){e.timeout=setTimeout(t,e.options.timeout)})}}),this}},close:function(e){var t=this,r=function(){t.element.remove(),o[t.options.pos].children().length||o[t.options.pos].hide(),delete a[t.uuid]};this.timeout&&clearTimeout(this.timeout),e?r():this.element.animate({opacity:0,"margin-top":-1*this.element.outerHeight(),"margin-bottom":0},function(){r()})},content:function(e){var t=this.element.find(">div");return e?(t.html(e),this):t.html()},status:function(e){return e?(this.element.removeClass("alert alert-"+this.currentstatus).addClass("alert alert-"+e),this.currentstatus=e,this):this.currentstatus}}),s.defaults={message:"",status:"normal",timeout:5e3,group:null,pos:"top-center"},e.notify=n,e.notify.message=s,e.notify.closeAll=i,n}(jQuery,window,document),App.provider("RouteHelpers",["APP_REQUIRES",function(e){"use strict";this.basepath=function(e){return"app/views/"+e},this.resolveFor=function(){var t=arguments;return{deps:["$ocLazyLoad","$q",function(r,o){function a(e){return i.then("function"==typeof e?e:function(){var t=n(e);return t?r.load(t):$.error("Route resolve: Bad resource name ["+e+"]")})}function n(t){if(e.modules)for(var r in e.modules)if(e.modules[r].name&&e.modules[r].name===t)return e.modules[r];return e.scripts&&e.scripts[t]}for(var i=o.when(1),s=0,c=t.length;c>s;s++)i=a(t[s]);return i}]}},this.$get=function(){}}]),App.service("toggleStateService",["$rootScope",function(e){var t="toggleState",r={hasWord:function(e,t){return new RegExp("(^|\\s)"+t+"(\\s|$)").test(e)},addWord:function(e,t){return this.hasWord(e,t)?void 0:e+(e?" ":"")+t},removeWord:function(e,t){return this.hasWord(e,t)?e.replace(new RegExp("(^|\\s)*"+t+"(\\s|$)*","g"),""):void 0}};return{addState:function(o){var a=angular.fromJson(e.$storage[t]);a=a?r.addWord(a,o):o,e.$storage[t]=angular.toJson(a)},removeState:function(o){var a=e.$storage[t];a&&(a=r.removeWord(a,o),e.$storage[t]=angular.toJson(a))},restoreState:function(r){var o=angular.fromJson(e.$storage[t]);o&&r.addClass(o)}}}]),App.service("Utils",["$window","APP_MEDIAQUERY",function(e,t){"use strict";var r=angular.element("html"),o=angular.element(e),a=angular.element("body");return{support:{transition:function(){var e=function(){var e,t=document.body||document.documentElement,r={WebkitTransition:"webkitTransitionEnd",MozTransition:"transitionend",OTransition:"oTransitionEnd otransitionend",transition:"transitionend"};for(e in r)if(void 0!==t.style[e])return r[e]}();return e&&{end:e}}(),animation:function(){var e=function(){var e,t=document.body||document.documentElement,r={WebkitAnimation:"webkitAnimationEnd",MozAnimation:"animationend",OAnimation:"oAnimationEnd oanimationend",animation:"animationend"};for(e in r)if(void 0!==t.style[e])return r[e]}();return e&&{end:e}}(),requestAnimationFrame:window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.msRequestAnimationFrame||window.oRequestAnimationFrame||function(e){window.setTimeout(e,1e3/60)},touch:"ontouchstart"in window&&navigator.userAgent.toLowerCase().match(/mobile|tablet/)||window.DocumentTouch&&document instanceof window.DocumentTouch||window.navigator.msPointerEnabled&&window.navigator.msMaxTouchPoints>0||window.navigator.pointerEnabled&&window.navigator.maxTouchPoints>0||!1,mutationobserver:window.MutationObserver||window.WebKitMutationObserver||window.MozMutationObserver||null},isInView:function(e,t){var r=$(e);if(!r.is(":visible"))return!1;var a=o.scrollLeft(),n=o.scrollTop(),i=r.offset(),s=i.left,c=i.top;return t=$.extend({topoffset:0,leftoffset:0},t),c+r.height()>=n&&c-t.topoffset<=n+o.height()&&s+r.width()>=a&&s-t.leftoffset<=a+o.width()?!0:!1},langdirection:"rtl"==r.attr("dir")?"right":"left",isTouch:function(){return r.hasClass("touch")},isSidebarCollapsed:function(){return a.hasClass("aside-collapsed")},isSidebarToggled:function(){return a.hasClass("aside-toggled")},isMobile:function(){return o.width()<t.tablet}}}]),App.service("vectorMap",function(){"use strict";return{init:function(e,t,r,o){e.vectorMap({map:t.mapName,backgroundColor:t.bgColor,zoomMin:1,zoomMax:8,zoomOnScroll:!1,regionStyle:{initial:{fill:t.regionFill,"fill-opacity":1,stroke:"none","stroke-width":1.5,"stroke-opacity":1},hover:{"fill-opacity":.8},selected:{fill:"blue"},selectedHover:{}},focusOn:{x:.4,y:.6,scale:t.scale},markerStyle:{initial:{fill:t.markerColor,stroke:t.markerColor}},onRegionLabelShow:function(e,t,o){r&&r[o]&&t.html(t.html()+": "+r[o]+" visitors")},markers:o,series:{regions:[{values:r,scale:t.scaleColors,normalizeFunction:"polynomial"}]}})}}});var myApp=angular.module("SLP_WebApp",["angle"]);myApp.run(["$log","$rootScope","$state","$stateParams",function(e,t,r,o){t.$state=r,t.$stateParams=o,t.offsidebarOverlap=!0,t.colorsMap={"http://purl.org/spar/cito/citesForInformation":{color:"#1693A5",toString:"cites for information",value:"http://purl.org/spar/cito/citesForInformation"},"http://purl.org/spar/cito/citesAsMetadataDocument":{color:"#2f9e68",toString:"cites as metadata document",value:"http://purl.org/spar/cito/citesAsMetadataDocument"},"http://purl.org/spar/cito/citesAsDataSource":{color:"#1B6E72",toString:"cites as data source",value:"http://purl.org/spar/cito/citesAsDataSource"},"http://purl.org/spar/cito/citesAsAuthority":{color:"#6B8E23",toString:"cites as authority",value:"http://purl.org/spar/cito/citesAsAuthority"},"http://purl.org/spar/cito/obtainsSupportFrom":{color:"#663399",toString:"obtains support from",value:"http://purl.org/spar/cito/obtainsSupportFrom"},"http://purl.org/spar/cito/includesExcerptFrom":{color:"#2E8B57",toString:"includes excerpt from",value:"http://purl.org/spar/cito/includesExcerptFrom"},"http://purl.org/spar/cito/confirms":{color:"#D8BFD8",toString:"confirms",value:"http://purl.org/spar/cito/confirms"},"http://purl.org/spar/cito/containsAssertionFrom":{color:"#FF6347",toString:"contains assertion from",value:"http://purl.org/spar/cito/containsAssertionFrom"},"http://purl.org/spar/cito/derides":{color:"#CD5C5C",toString:"derides",value:"http://purl.org/spar/cito/derides"},"http://purl.org/spar/cito/includesQuotationFrom":{color:"#DAA520",toString:"includes quotation from",value:"http://purl.org/spar/cito/includesQuotationFrom"},"http://purl.org/spar/cito/citesAsRelated":{color:"#483D8B",toString:"cites as related",value:"http://purl.org/spar/cito/citesAsRelated"},"http://purl.org/spar/cito/usesMethodIn":{color:"#8B0000",toString:"uses method in",value:"http://purl.org/spar/cito/usesMethodIn"},"http://purl.org/spar/cito/documents":{color:"#008B8B",toString:"documents",value:"http://purl.org/spar/cito/documents"},"http://purl.org/spar/cito/describes":{color:"#698296",toString:"describes",value:"http://purl.org/spar/cito/describes"},"http://purl.org/spar/cito/usesConclusionsFrom":{color:"#efca95",toString:"uses conclusions from",value:"http://purl.org/spar/cito/usesConclusionsFrom"},"http://purl.org/spar/cito/repliesTo":{color:"#698296",toString:"replies to",value:"http://purl.org/spar/cito/repliesTo"},"http://purl.org/spar/cito/qualifies":{color:"#653838",toString:"qualifies",value:"http://purl.org/spar/cito/qualifies"},"http://purl.org/spar/cito/corrects":{color:"#7aa33e",toString:"corrects",value:"http://purl.org/spar/cito/corrects"},"http://purl.org/spar/cito/agreesWith":{color:"#6a5ca4",toString:"agrees with",value:"http://purl.org/spar/cito/agreesWith"},"http://purl.org/spar/cito/citesAsEvidence":{color:"#946D67",toString:"cites as evidence",value:"http://purl.org/spar/cito/citesAsEvidence"},"http://purl.org/spar/cito/usesDataFrom":{color:"#b559a2",toString:"uses data from",value:"http://purl.org/spar/cito/usesDataFrom"},"http://purl.org/spar/cito/parodies":{color:"#C71E3F",toString:"parodies",value:"http://purl.org/spar/cito/parodies"},"http://purl.org/spar/cito/critiques":{color:"#3d6e4e",toString:"critiques",value:"http://purl.org/spar/cito/critiques"},"http://purl.org/spar/cito/compiles":{color:"#ac4987",toString:"compiles",value:"http://purl.org/spar/cito/compiles"},"http://purl.org/spar/cito/speculatesOn":{color:"#896fc2",toString:"speculates on",value:"http://purl.org/spar/cito/speculatesOn"},"http://purl.org/spar/cito/extends":{color:"#613e49",toString:"extends",value:"http://purl.org/spar/cito/extends"},"http://purl.org/spar/cito/citesAsSourceDocument":{color:"#c4c5c9",toString:"cites as source document",value:"http://purl.org/spar/cito/citesAsSourceDocument"},"http://purl.org/spar/cito/updates":{color:"#f29598",toString:"updates",value:"http://purl.org/spar/cito/updates"},"http://purl.org/spar/cito/discusses":{color:"#1b3b14",toString:"discusses",value:"http://purl.org/spar/cito/discusses"},"http://purl.org/spar/cito/citesAsPotentialSolution":{color:"#2a2073",toString:"cites as potential solution",value:"http://purl.org/spar/cito/citesAsPotentialSolution"},"http://purl.org/spar/cito/obtainsBackgroundFrom":{color:"#2c51af",toString:"obtains background from",value:"http://purl.org/spar/cito/obtainsBackgroundFrom"},"http://purl.org/spar/cito/reviews":{color:"#302006",toString:"reviews",value:"http://purl.org/spar/cito/reviews"},"http://purl.org/spar/cito/supports":{color:"#7d7b58",toString:"supports",value:"http://purl.org/spar/cito/supports"},"http://purl.org/spar/cito/citesAsRecommendedReading":{color:"#cc370e",toString:"cites as recommended reading",value:"http://purl.org/spar/cito/citesAsRecommendedReading"},"http://purl.org/spar/cito/credits":{color:"#d3ccf0",toString:"credits",value:"http://purl.org/spar/cito/credits"},"http://purl.org/spar/cito/disagreesWith":{color:"#e89ec8",toString:"disagrees with",value:"http://purl.org/spar/cito/disagreesWith"},"http://purl.org/spar/cito/plagiarizes":{color:"#312673",toString:"plagiarizes",value:"http://purl.org/spar/cito/plagiarizes"}},t.inheritUrlParams=!1,t.paramsTokensDelimiter=";"}]),myApp.constant("SEARCH_TYPE",{abstractSearch:"abstractSearch",titleSearch:"titleSearch",authorSearch:"authorSearch",singleArticleDoi:"singleArticleDoi"}).constant("ORDER_BY",{publicationYear:"publicationYear",title:"title",globalCitations:"globalCitations",totCitActs:"totCitActs"}).constant("SORT",{desc:!0,asc:!1}).constant("ARTICLE_TYPES",{JournalArticle:"Journal Article",ConferencePaper:"Conference Paper",JournalReviewArticle:"Journal Review Article",JournalEditorial:"Journal Editorial",Letter:"Letter",Article:"Article"}).constant("FILTERS_TYPE",{Articles_types:"type",Articles_afterYear:"afterYear",Citations_afterYear:"afterYear",Citations_selfCitations:"self citations",Citations_authors:"authors",Citations_functions:"functions"}).constant("ARTICLES_REFINEMENTS_PARAMS","&orderBy&sort&afterYear&type"),myApp.config(["$stateProvider","SEARCH_TYPE","ARTICLES_REFINEMENTS_PARAMS",function(e,t,r){e.state("app.home-search",{url:"/homeSearch",title:"Search",templateUrl:getMyBasepath("home-search.html"),controller:"HomeSearchController",controllerAs:"HomeSearchCtrl"}).state("app.articles-results",{url:"/articles/?abstract&author&title"+r,params:{newSearch:!1,searchQuery:void 0,searchType:void 0},templateUrl:getMyBasepath("articles-results.html"),controller:"ArticlesResultsController",controllerAs:"ArticlesResultsCtrl",onEnter:["StatesManagerService","$stateParams","ArticlesFiltersManager",function(e,r,o){function a(e){return!0}a(r)&&(r["abstract"]?(r.searchType=t.abstractSearch,r.searchQuery=r["abstract"]):r.author?(r.searchType=t.authorSearch,r.searchQuery=r.author):r.title&&(r.searchType=t.titleSearch,r.searchQuery=r.title)),e.setState("app.articles-results",r)}],reloadOnSearch:!1}).state("app.author-articles",{url:"/author/:authorId/articles/?"+r,title:"Author articles",params:{newSearch:!1,searchQuery:void 0,searchType:t.authorSearch},templateUrl:getMyBasepath("articles-results.html"),controller:"ArticlesResultsController",controllerAs:"ArticlesResultsCtrl",onEnter:["ArticlesFiltersManager","StatesManagerService","$stateParams",function(e,t,r){r.searchQuery=r.authorId,t.setState("app.author-articles",r)}],reloadOnSearch:!1}).state("app.article-doi",{url:"/article/?doi",title:"Article",params:{title:"",searchType:t.singleArticleDoi},templateUrl:getMyBasepath("articles-results.html"),controller:"ArticlesResultsController",controllerAs:"ArticlesResultsCtrl",onEnter:["StatesManagerService","$stateParams",function(e,t){e.setState("app.article-doi",t)}],reloadOnSearch:!1}).state("app.bookmarks",{url:"/bookmarks",title:"Bookmarks",templateUrl:getMyBasepath("bookmarks.html"),controller:"BookmarksController",controllerAs:"BookmarksCtrl"}).state("app.settings",{url:"/settings",title:"Settings",templateUrl:getMyBasepath("settings.html"),controller:"SettingsController",controllerAs:"SettingsCtrl"}).state("app.about",{url:"/about",title:"About",templateUrl:getMyBasepath("about.html"),controller:"AboutController",controllerAs:"AboutCtrl"}).state("app.stateTest",{url:"/test/articles/:searchType/:searchQuery?param0&param1",title:"test",templateUrl:getMyBasepath("testView.html"),controller:"testController",controllerAs:"testCtrl",reloadOnSearch:!1})}]),myApp.controller("AboutController",[function(){}]),myApp.controller("ArticlesFiltersController",["ArticlesFiltersManager","$scope","$rootScope","FILTERS_TYPE",function(e,t,r,o){var a=this,n=new Date;a.year=n.getFullYear(),e.checkFilters();var i=e.getFilterActivatedList();a.articleTypes=e.getArticleTypes(),a.selectedArticleTypes=e.getSelectedArticleTypes(),a.publicationYearF=e.getStartingPublicationYearF(),a.publicationYearV=a.publicationYearF.value,a.checkType=-1!=i.indexOf(o.Articles_types),a.checkYear=-1!=i.indexOf(o.Articles_afterYear),r.$on("$stateChangeSuccess",function(t,r,n,s,c){e.checkFilters(),a.publicationYearV=a.publicationYearF.value,a.checkType=-1!=i.indexOf(o.Articles_types),a.checkYear=-1!=i.indexOf(o.Articles_afterYear)}),a.switchYearFilter=function(){a.checkYear?e.addActivatedFilter(o.Articles_afterYear):e.removeActivatedFilter(o.Articles_afterYear),e.setFilterActivated(a.checkCheckboxes())},a.switchTypeFilter=function(){a.checkType?e.addActivatedFilter(o.Articles_types):e.removeActivatedFilter(o.Articles_types),e.setFilterActivated(a.checkCheckboxes())},a.isInSelectedTypes=function(e){return-1!=a.selectedArticleTypes.indexOf(e)},a.switchType=function(t){e.switchArticleType(t)},a.checkCheckboxes=function(){return a.checkYear||a.checkType?!0:!1},a.applyYearFilter=function(){e.setStartingPublicationYear(a.publicationYearV)}}]),myApp.controller("ArticlesOrderbyController",["CitationsFiltersManagerService","ORDER_BY","ArticlesFiltersManager","$rootScope",function(e,t,r,o){var a=this;r.checkOrder(),a.orderByF=r.getOrderBy(),a.sortF=r.getSort(),a.orderByV=a.orderByF.value,a.sortV=a.sortF.value,o.$on("$stateChangeSuccess",function(e,t,o,n,i){r.checkOrder(),a.orderByV=a.orderByF.value,a.sortV=a.sortF.value}),a.orderOptions=[t.publicationYear,t.title,t.globalCitations],a.applySort=function(){r.setSort(a.sortV)},a.applyOrderBy=function(){r.setOrderBy(a.orderByV)},a.toOptionName=function(e){switch(e){case t.publicationYear:return"Publication year";case t.title:return"Title";case t.globalCitations:return"Global citations"}}}]),myApp.controller("ArticlesResultsController",["$rootScope","ngDialog","ArticleManagerService","CitationsFiltersManagerService","RequestArticlesService","$scope","$timeout","$stateParams","SEARCH_TYPE","$sessionStorage","BookmarksManagerService","ORDER_BY","ArticlesFiltersManager","StatesManagerService",function(e,t,r,o,a,n,i,s,c,l,u,p,d,m){var g=this,f=new Date;switch(g.$storage=l,g.year=f.getFullYear(),g.selectedArticleTypes=d.getSelectedArticleTypes(),g.activatedFilters=d.getFilterActivatedList(),g.activatedFiltersBool=d.getFilterActivatedBool(),s.searchType){case c.abstractSearch:r.getArticlesByAbstract(s.searchQuery,s.newSearch);break;case c.titleSearch:r.getArticlesByTitle(s.searchQuery,s.newSearch);break;case c.authorSearch:r.getArticlesByFullNameAuthor(s.searchQuery,s.newSearch);break;case c.singleArticleDoi:r.getSingleArticleByDoi(decodeURIComponent(s.doi),decodeURIComponent(s.title))}g.articles=r.getArticles(),g.resultsStates=r.getResultsStates(),g.publicationYear=p.publicationYear,g.title=p.title,g.globalCitations=p.globalCitations,g.totCitActs=p.totCitActs,g.publicationYearFil=o.getStartingPublicationYearF(),g.selfcitationsFil=o.getSelfCitationsF(),g.characterizationsFil=o.getCharacterizationsF(),g.authorsFil=o.getAuthorsF(),g.orderByFil=o.getOrderBy(),g.sortFil=o.getSort(),g.articlesOrderByFil=d.getOrderBy(),g.articlesSortByFil=d.getSort(),g.articlesPublicationYearFil=d.getStartingPublicationYearF(),g.isRequestPending=a.isRequestPending(),g.isRetrievingArticlesInfo=r.isRetrievingArticlesInfo(),g.articlesNum={value:g.articles.length},g.completedArticles={value:0},g.completedPercent={value:0},g.currentState="Results";var h;g.isRequestPending||0!=g.articles.length||t.open({template:"app/templates/dialog-empty-results.html",controller:["$rootScope","$scope",function(e,r){r.goToHomeSearch=function(){e.$state.go("app.home-search"),t.close()}}]}),g.getSearchText=function(){return a.getSearchString()},g.toOptionName=function(e){switch(e){case p.publicationYear:return"Publication year";case p.title:return"Title";case p.globalCitations:return"Global citations"}},n.$watchCollection(function(){return g.articles},function(){g.articlesNum.value=r.getArticlesNum()},!0),n.$watch(a.isRequestPending,function(){g.isRequestPending=a.isRequestPending(),g.isRequestPending?h=t.open({template:"app/templates/dialog-retrieving-results.html",closeByEscape:!1,showClose:!1,closeByDocument:!1}):(g.articlesNum.value=r.getArticlesNum(),h&&i(h.close,1250),r.getArticlesResultsState()==g.resultsStates.NO_RESULTS&&(g.articlesNum.value=0,t.open({template:"app/templates/dialog-no-results.html"})),r.getArticlesResultsState()==g.resultsStates.RESULTS&&(g.articlesNum.value=r.getArticlesNum()))}),n.$watch(r.isRetrievingArticlesInfo,function(){g.isRetrievingArticlesInfo=r.isRetrievingArticlesInfo(),g.articlesNum.value=r.getArticlesNum(),g.isRetrievingArticlesInfo}),n.$watch(r.getCompletedArticles,function(){g.completedArticles.value=r.getCompletedArticles(),g.completedPercent.value=g.completedArticles.value/g.articlesNum.value*100}),g.logResults=function(){console.log(r.getArticles())},g.logStates=function(){console.log(m.getStates())}}]),myApp.controller("BookmarksController",["BookmarksManagerService",function(e){"use strict";var t=this;t.bookmarks=e.getBookmarks(),t.numBookmarks=Object.keys(t.bookmarks).length,t.removeAllBookmarks=function(){e.deleteAllBookmarks()}}]),myApp.controller("CitationDetailsDialogController",["$scope","$rootScope",function(e,t){var r=t.colorsMap,o=function(e,t,r){var o,a=0;for(var n in r)o=r[n],o.citingPubYear==e&&o.color==t&&a++;return a},a=function(e,t,r){for(var a,n=[],i=0;i<e.length;i++){a=e[i];var s={label:a,y:o(a,t,r)};n.push(s)}return n},n=function(e){var t,r=[],o=[],a="";for(var n in e)r.push(e[n].color);r.sort();for(var s=0;s<r.length;s++)t=r[s],t!==a?o.push({indexLabel:t,y:1,toolTipContent:"{indexLabel}: {y}",color:i(t)}):o[o.length-1].y++,a=t;return o},i=function(e){for(key in r)if(r[key].toString===e)return r[key].color},s=function(e){var t,r=[],o=[],n="";for(var s in e)o.push(e[s].color);o.sort();for(var c=0;c<o.length;c++)t=o[c],t!==n&&r.push(t),n=t;var l,u=[],p=[],d=0;for(var s in e)p.push(e[s].citingPubYear);p.sort(function(e,t){return e-t});for(var c=0;c<p.length;c++)l=p[c],l!==d&&u.push(l),d=l;var m=[];for(var s in r){var g={type:"stackedColumn",name:r[s],showInLegend:!0,dataPoints:a(u,r[s],e),color:i(r[s])};m.push(g)}return m},c=function(e){var t=s(e);t.push({});var r=new CanvasJS.Chart("stacked_chart",{axisY:{title:"cit"},toolTip:{shared:"true"},legend:{fontSize:20,fontFamily:"sans-serif"},animationEnabled:!0,animationDuration:2e3,data:t});r.render()},l=function(e){var t=n(e),r=new CanvasJS.Chart("donut_chart",{animationEnabled:!0,animationDuration:2e3,data:[{type:"doughnut",startAngle:-90,indexLabelFontSize:15,dataPoints:t}]});r.render()};e.$on("ngDialog.opened",function(){l(e.ngDialogData.articleData.citationsInfo),c(e.ngDialogData.articleData.citationsInfo)})}]),myApp.controller("CitationsFiltersController",["CitationsFiltersManagerService","$scope","$rootScope",function(e,t,r){var o=this;o.publicationYearF=e.getStartingPublicationYearF(),o.selfcitationsF=e.getSelfCitationsF(),o.characterizationsF=e.getCharacterizationsF(),o.authorsF=e.getAuthorsF(),o.allAuthors=r.authors,o.selectedAuthor="",o.authorAlreadyInList=!1,o.inputNotValid=!1;var a=new Date;o.year=a.getFullYear(),o.publicationYearV=o.publicationYearF.value,o.selfcitationsV=o.selfcitationsF.value,o.excludeSelfcitationsV=o.selfcitationsF.exclude,o.characterizationsV=o.characterizationsF.value,o.authorsV=o.authorsF.value,o.checkYear=!1,o.checkSelfcitations=!1,o.checkCharacterizations=!1,o.checkAuthors=!1,o.setColorsAllChecked=function(e){for(var t in o.characterizationsV)o.characterizationsV[t].checked=e},o.switchColorsFilter=function(){o.checkCharacterizations||o.setColorsAllChecked(!0),e.setCharacterizations(o.characterizationsV),e.setFilterActivated(o.checkCheckboxes())},o.switchYearFilter=function(){o.checkYear||(o.publicationYearV=1950,e.setStartingPublicationYear(o.publicationYearV)),e.setFilterActivated(o.checkCheckboxes())},o.switchSelfcitations=function(){o.selfcitationsV=o.checkSelfcitations?!0:!1,e.setSelfCitations(o.selfcitationsV,o.excludeSelfcitationsV),e.setFilterActivated(o.checkCheckboxes())},o.switchAuthors=function(){e.setAuthorsEnabled(o.checkAuthors?!0:!1),e.setFilterActivated(o.checkCheckboxes())},o.checkCheckboxes=function(){return o.checkYear||o.checkSelfcitations||o.checkCharacterizations||o.checkAuthors?!0:!1},o.applyYearFilter=function(){e.setStartingPublicationYear(o.publicationYearV)},o.updateAuthorFilter=function(){n(o.selectedAuthor)?(o.authorAlreadyInList=!0,console.log("autore già in lista")):i(o.selectedAuthor)?(o.inputNotValid=!1,o.authorAlreadyInList=!1,o.authorsV.push(o.selectedAuthor),e.setAuthors(o.authorsV)):(o.inputNotValid=!0,console.log("input non valido"))},o.removeAuthorFromFilter=function(t){for(var r in o.authorsV)o.authorsV[r]==t&&o.authorsV.splice(r,1);e.setAuthors(o.authorsV)},o.checkExcludeSelfCitations=function(e){return e&&o.excludeSelfcitationsV?!0:e&&!o.excludeSelfcitationsV?!1:!e&&o.excludeSelfcitationsV?!1:e||o.excludeSelfcitationsV?void 0:!0},o.switchExcludeSelfcitations=function(t){o.excludeSelfcitationsV=t,e.setSelfCitations(!0,o.excludeSelfcitationsV)};var n=function(e){for(var t in o.authorsV)if(o.authorsV[t]==e)return!0;return!1},i=function(e){return angular.isDefined(e)&&""!=e}}]),myApp.controller("CitationsOrderbyController",["CitationsFiltersManagerService","ORDER_BY",function(e,t){var r=this;r.orderByF=e.getOrderBy(),r.sortF=e.getSort(),r.orderByV=r.orderByF.value,r.sortV=r.sortF.value,r.orderOptions=[t.publicationYear,t.title,t.globalCitations,t.totCitActs],r.applySort=function(){e.setSort(r.sortV)},r.applyOrderBy=function(){e.setOrderBy(r.orderByV)},r.toOptionName=function(e){switch(e){case t.publicationYear:return"Publication year";case t.title:return"Title";case t.globalCitations:return"Global citations";case t.totCitActs:return"Citations (by the article)"}}}]),myApp.controller("HomeSearchController",["$rootScope","RequestArticlesService","ArticleManagerService","SEARCH_TYPE","$sessionStorage","Ping",function(e,t,r,o,a,n){var i=this,s=o.abstractSearch;i.authors=[],i.searchText="",
-i.searchTitle="",i.searchAuthor="",n.pingEndpoint();i.searchForArticles=function(){switch(t.setSearchString(i.searchText),s){case o.abstractSearch:i.searchText&&(a.searchQuery=i.searchText,e.$state.go("app.articles-results",{newSearch:!0,"abstract":a.searchQuery}));break;case o.titleSearch:i.searchTitle&&(a.searchQuery=i.searchTitle,e.$state.go("app.articles-results",{newSearch:!0,title:a.searchQuery}));break;case o.authorSearch:i.searchAuthor&&(a.searchQuery=i.searchAuthor,e.$state.go("app.articles-results",{newSearch:!0,author:a.searchQuery}))}},i.switchSearch=function(e){switch(e){case 0:s=o.abstractSearch;break;case 1:s=o.titleSearch;break;case 2:s=o.authorSearch}},i.refreshAuthors=function(t){i.authors.length=0;for(key in e.authors)e.authors[key].toUpperCase().startsWith(t.toUpperCase())&&i.authors.push(e.authors[key])},i.keyPressCallBack=function(e){i.searchForArticles(),e.preventDefault()}}]),myApp.controller("LeftNavbarController",["ngDialog",function(e){var t=this;t.openInfoDialog=function(){e.open({template:"app/templates/dialog-project-info.html",controller:["$rootScope","$scope",function(e,t){}]})}}]),myApp.controller("OffsidebarController",["$rootScope",function(e){var t=this;t.overlap=e.offsidebarOverlap,t.switchOffsidebarOverlap=function(){$("body").removeClass(e.offsidebarOverlap?"offsidebar-open-overlap":"offsidebar-open"),e.offsidebarOverlap=!e.offsidebarOverlap}}]),myApp.controller("RightNavbarController",["CitationsFiltersManagerService","ArticlesFiltersManager","$rootScope",function(e,t,r){var o=this;o.citationsFilterActivated=e.getFilterActivatedBool(),o.articlesFilterActivated=t.getFilterActivatedBool(),o.checkOffsidebarOverlap=function(){return r.offsidebarOverlap?"offsidebar-open-overlap":"offsidebar-open"}}]),myApp.controller("SettingsController",["$rootScope","$localStorage","$sessionStorage","EndpointsManager",function(e,t,r,o){"use strict";var a=this;a.endpoints=o.getEndpoints(),a.selectedEndpoint=o.getSelectedEndpoint(),a.newEndpoint="",a.isSelectedEndpoint=function(e){return e===a.selectedEndpoint},a.removeEndpoint=function(e){o.removeEndpoint(e)},a.addEndpoint=function(){o.addEndpoint(a.newEndpoint),a.newEndpoint=""},a.setSelectedEndpoint=function(e){o.setSelectedEndpoint(e)},a.clearLocalStorage=function(){t.$reset()},a.clearSessionStorage=function(){r.$reset()}}]),myApp.controller("testController",["$rootScope","ngDialog","ArticleManagerService","CitationsFiltersManagerService","RequestArticlesService","$scope","$timeout","$stateParams","SEARCH_TYPE","$sessionStorage","BookmarksManagerService","ORDER_BY","ArticlesFiltersManager","$location",function(e,t,r,o,a,n,i,s,c,l,u,p,d,m){var g=this;g.params=s,console.log(g.params),g.changeParam=function(){m.search("param0","foo")}}]),myApp.directive("articleItem",["ngDialog","ArticleManagerService","$rootScope","BookmarksManagerService","SEARCH_TYPE",function(e,t,r,o,a){"use strict";return{restrict:"E",templateUrl:"app/templates/article-item.html",scope:{articleData:"=",articleIndex:"@",yearFilter:"=",orderFilter:"=",sortFilter:"=",selfcitationFilter:"=",characterizationsFilter:"=",authorsFilter:"=",checkBookmark:"=",showDetails:"="},link:function(n,i,s){function c(e){e.citationsDetails||t.getCitationsInfo(e.expression.value,e.authors),e.biblioDetails||t.getBiblioInfo(e.expression.value,e.authors)}n.articleIsCollapsed=!0;var l=!1,u=function(){o.isBookmarked(n.articleData.doi)&&o.replaceBookmark(n.articleData)};n.checkBookmark.value&&u(),n.toggleArticleDetails=function(e){n.articleIsCollapsed=!n.articleIsCollapsed,n.articleIsCollapsed||(l=!l,c(e))},n.toggleBookmark=function(e){e.bookmark&&0!=e.bookmark?(o.deleteBookmark(e.doi),t.refreshStoredSearchResult(e)):(c(e),o.saveBookmark(e))},n.availableIssue=function(e){return e.hasOwnProperty("issueNumber")&&e.hasOwnProperty("volumeNumber")},n.showCitDetails=function(){e.open({template:"app/templates/dialog-citations-details.html",controller:"CitationDetailsDialogController",className:"ngdialog-theme-default-custom",data:{articleData:n.articleData,citDonutChartId:"donut_chart",citStackedChartId:"stackedColumn_chart"}})},n.exploreAuthor=function(e,t){r.$state.go("app.author-articles",{newSearch:!1,searchType:a.authorSearch,searchQuery:e+" "+t,authorId:e+" "+t},{inherit:r.inheritUrlParams})},n.getArticleLink=function(){var t=r.$state.href("app.article-doi",{doi:n.articleData.doi},{absolute:!0});e.open({template:"app/templates/dialog-article-url",className:"ngdialog-theme-default-custom",data:{url:t}})},n.getCitationsMinYear=function(){var e=n.articleData.biblioInfo[0].publicationYear;for(var t in n.articleData.biblioInfo)n.articleData.biblioInfo[t].publicationYear<e&&(e=n.articleData.biblioInfo[t].publicationYear);return e},n.getCitationsMaxYear=function(){var e=n.articleData.biblioInfo[0].publicationYear;for(var t in n.articleData.biblioInfo)n.articleData.biblioInfo[t].publicationYear>e&&(e=n.articleData.biblioInfo[t].publicationYear);return e}}}}]),myApp.directive("biblioItem",["ngDialog","$modal","ArticleManagerService","$rootScope","SEARCH_TYPE",function(e,t,r,o,a){"use strict";return{restrict:"E",templateUrl:"app/templates/biblio-item.html",scope:{biblioIndex:"@",itemData:"=",citingArticleAuthors:"="},link:function(t,r,n){t.elemHeight=r.height(),t.exploreBiblioItem=function(){o.$state.go("app.article-doi",{doi:t.itemData.doi.value,title:t.itemData.title},{inherit:o.inheritUrlParams})},t.getArticleLink=function(){var r=o.$state.href("app.article-doi",{doi:t.itemData.doi.value},{absolute:!0});e.open({template:"app/templates/dialog-article-url",className:"ngdialog-theme-default-custom",data:{url:r}})},t.exploreAuthor=function(e,t){o.$state.go("app.author-articles",{newSearch:!1,searchType:a.authorSearch,searchQuery:e+" "+t,authorId:e+" "+t},{inherit:o.inheritUrlParams})},t.isSharedAuthor=function(e){for(var r in t.citingArticleAuthors)if(t.citingArticleAuthors[r].fullName===e.fullName)return!0;return!1},t.openAbstractDialog=function(){e.open({template:"/app/templates/dialog-abstract.html",className:"ngdialog-theme-default-custom",data:{absText:t.itemData.abstractTxt.value,title:t.itemData.title}})},t.openMotivationsDialog=function(){e.open({template:"/app/templates/dialog-motivations-references.html",controller:i,className:"ngdialog-theme-default-custom",data:{citActsInfo:t.itemData.citActsInfo,title:t.itemData.title}})};var i=["$scope",function(e){e.$storage={},e.empInTxtRefPointer=function(e,t){var r=e.replace(t,"<span class='irp'><b>"+t+"</b></span>");return r},e.generateId=function(t){var r="motivation_"+t+Math.floor(1e5*Math.random()+1),o=angular.fromJson(e.$storage.panelState);return o||(o={}),o[r]=!0,e.$storage.panelState=angular.toJson(o),r}}]},controller:["$scope","$element",function(e,t){e.biblioId="biblio_"+Date.now(),e.chartId="donut_"+Date.now()}]}}]),myApp.directive("breadcrumb",["StatesManagerService","$rootScope","SEARCH_TYPE",function(e,t,r){"use strict";return{restrict:"E",templateUrl:"app/templates/breadcrumb.html",scope:{},link:function(o){o.states=e.getStates(),o.types=r,o.changeState=function(r,o){if(!o){var a=e.getState(r);t.$state.go(a.name,a.params)}}}}}]),myApp.directive("citingItem",["ngDialog","ArticleManagerService","$rootScope","SEARCH_TYPE",function(e,t,r,o){"use strict";return{restrict:"E",templateUrl:"app/templates/citing-item.html",scope:{citingIndex:"@",itemData:"=",citedArticleAuthors:"="},link:function(t,a,n){t.$storage={},t.emphasizeInTxtRefPointer=function(e,t){var r=e.replace(t,"<span class='irp'><b>"+t+"</b></span>");return r},t.generateId=function(e){var r="motivation_"+e+Math.floor(1e5*Math.random()+1),o=angular.fromJson(t.$storage.panelState);return o||(o={}),o[r]=!0,t.$storage.panelState=angular.toJson(o),r},t.getArticleLink=function(){var o=r.$state.href("app.article-doi",{doi:t.itemData.doi.value},{absolute:!0});e.open({template:"app/templates/dialog-article-url",className:"ngdialog-theme-default-custom",data:{url:o}})},t.exploreCitingItem=function(){r.$state.go("app.article-doi",{doi:t.itemData.doi.value,title:t.itemData.title.value},{inherit:r.inheritUrlParams})},t.exploreAuthor=function(t,a){e.closeAll(),r.$state.go("app.author-articles",{newSearch:!1,searchType:o.authorSearch,searchQuery:t+" "+a,authorId:t+" "+a},{inherit:r.inheritUrlParams})},t.isSharedAuthor=function(e){for(var r in t.citedArticleAuthors)if(t.citedArticleAuthors[r].fullName===e.fullName)return!0;return!1},t.openAbstractDialog=function(){e.open({template:"/app/templates/dialog-abstract.html",className:"ngdialog-theme-default-custom",data:{absText:t.itemData.abstractTxt.value,title:t.itemData.title.value}})},t.openMotivationsDialog=function(){e.open({template:"/app/templates/dialog-motivations-citing.html",controller:i,className:"ngdialog-theme-default-custom",data:{motivations:t.itemData.motivations,title:t.itemData.title.value}})};var i=["$scope",function(e){e.$storage={},e.empInTxtRefPointer=function(e,t){var r=e.replace(t,"<span class='irp'><b>"+t+"</b></span>");return r},e.generateId=function(t){var r="motivation_"+t+Math.floor(1e5*Math.random()+1),o=angular.fromJson(e.$storage.panelState);return o||(o={}),o[r]=!0,e.$storage.panelState=angular.toJson(o),r}}]},controller:["$scope","$element",function(e,t){e.citingId="citing_"+Date.now()}]}}]),myApp.directive("donutChart",["$rootScope","$timeout",function(e,t){"use strict";return{restrict:"E",templateUrl:"app/templates/donut-chart.html",scope:{itemData:"=",chartId:"="},link:function(r,o,a){r.parentHeight=o.parent().height();var n=e.colorsMap,i=function(e,t){var r=[];for(var o in e)r.push({y:e[o].numCitActs,indexLabel:e[o].color,toolTipContent:"{indexLabel}: {y}",color:n[e[o].colorURI].color});return r};r.renderChart=function(){if($("#"+r.chartId).length>0){var e=i(r.itemData.citActsInfo,r.itemData.totCitActs),t=0;for(var o in e)t+=e[o].y;var a=new CanvasJS.Chart(r.chartId,{animationEnabled:!0,animationDuration:1e3,title:{text:t.toString(),horizontalAlign:"center",verticalAlign:"center",fontSize:40,dockInsidePlotArea:!0,fontColor:"#656565"},data:[{type:"doughnut",startAngle:-90,indexLabelFontSize:16,dataPoints:e}]});a.render()}},r.$watch("itemData.citActsInfo",function(e,o){r.itemData.citActsInfo&&t(r.renderChart,1e3)})}}}]),myApp.filter("afterYear",function(){return function(e,t){if(!angular.isUndefined(e)&&!angular.isUndefined(t)&&angular.isArray(e)){for(var r,o=[],a=0;a<e.length;a++)r=e[a],r.publicationYear>=t&&o.push(r);return o}return e}}).filter("selfcitation",function(){return function(e,t,r){if(0==t)return e;if(!angular.isUndefined(e)&&!angular.isUndefined(t)){var o,a=[];switch(r){case!0:for(var n=0;n<e.length;n++)o=e[n],0==o.isSelfcitation&&a.push(o);return a;case!1:for(var n=0;n<e.length;n++)o=e[n],1==o.isSelfcitation&&a.push(o);return a}}return e}}).filter("characterizations",function(){return function(e,t){if(!angular.isUndefined(e)&&!angular.isUndefined(t)){var r,o,a=[];for(var n in e)if(r=e[n],o=r.citActsInfo,!angular.isUndefined(o)&&o.length>0){for(var i in o)if(1==t[o[i].colorURI].checked){a.push(r);break}}else a.push(r);return a}return e}}).filter("authors",function(){return function(e,t,r){if(!angular.isUndefined(e)&&!angular.isUndefined(t)&&r){var o,a,n=[];for(var i in e){o=e[i],a=o.authors;for(var s in a)if(t.indexOf(a[s].fullName)>-1){n.push(o);break}}return n}return e}}).filter("articleType",function(){return function(e,t){if(!angular.isUndefined(e)&&!angular.isUndefined(t)){var r,o,a=[];for(var n in e)r=e[n],o=r.type,o&&-1==t.indexOf(o)||a.push(r);return a}return e}}),myApp.factory("ArticlesFiltersManager",["ORDER_BY","SORT","ARTICLE_TYPES","FILTERS_TYPE","$stateParams","$location","StatesManagerService","$rootScope",function(e,t,r,o,a,n,i,s){function c(t){for(var r in e)if(e[r]==t)return!0;return!1}function l(e){for(var r in t)if(r==e)return!0;return!1}var u={value:!1},p=[],d=1950,m=e.publicationYear,g=t.desc,f={value:m},h={value:g},v=[r.JournalArticle,r.JournalReviewArticle,r.JournalEditorial,r.ConferencePaper,r.Letter,r.Article],A=[r.Article,r.JournalArticle,r.JournalReviewArticle,r.JournalEditorial,r.Letter,r.ConferencePaper],S={value:d},b=function(){u.value=!1,p.length=0,f.value=m,h.value=g,S.value=d,A.length=0;for(var e in v)A.push(v[e])},y=function(){a.orderBy&&c(a.orderBy)&&(f.value=a.orderBy)},C=function(){a.sort&&l(a.sort)&&(h.value=t[a.sort])},k=function(){a[o.Articles_afterYear]&&(u.value=!0,p.push(o.Articles_afterYear),S.value=parseInt(a[o.Articles_afterYear]))},$=function(){if(a[o.Articles_types]){u.value=!0,p.push(o.Articles_types);var e=a.type.split(s.paramsTokensDelimiter);A.length=0;for(var t in e)A.push(e[t])}},w=function(e,t){n.search(e,t),i.updateCurrentStateParam(e,t)};return s.$on("$stateChangeStart",function(e,t,r,o,a){b()}),{getOrderBy:function(){return f},getSort:function(){return h},setOrderBy:function(e){f.value=e,w("orderBy",e)},setSort:function(e){h.value=e;for(var r in t)t[r]==e&&w("sort",r)},getArticleTypes:function(){return v},getSelectedArticleTypes:function(){return A},switchArticleType:function(e){var t=A.indexOf(e);-1==t?A.push(e):A.splice(t,1),w(o.Articles_types,A.join(s.paramsTokensDelimiter))},getStartingPublicationYearF:function(){return S},setStartingPublicationYear:function(e){S.value=e,w(o.Articles_afterYear,e)},setFilterActivated:function(e){u.value=e},getFilterActivatedBool:function(){return u},addActivatedFilter:function(e){p.push(e)},removeActivatedFilter:function(e){switch(p.splice(p.indexOf(e),1),n.search(e,null),e){case o.Articles_types:A.length=0,A.push.apply(A,v),i.updateCurrentStateParam(e,A.join(s.paramsTokensDelimiter));break;case o.Articles_afterYear:S.value=d,i.updateCurrentStateParam(e,d)}},getFilterActivatedList:function(){return p},checkFilters:function(){k(),$()},checkOrder:function(){y(),C()}}}]),myApp.factory("ArticleManagerService",["RequestArticlesService","CitationsFiltersManagerService","ArticlesInfoService","StatesManagerService","AuthorInfoService","ngDialog","$rootScope","$sessionStorage","SEARCH_TYPE","ARTICLE_TYPES",function(e,t,r,o,a,n,i,s,c,l){var u=[];s.searchResults||(s.searchResults=[]);var p=i.colorsMap,d=!1,m=0,g=0,f={NOT_AVAILABLE:0,RESULTS:1,NO_RESULTS:2},h=f.NOT_AVAILABLE,v=function(e){return angular.isString(e)?parseInt(e):e},A=function(e){r.getArticleType(e.expression.value).then(function(t){if(t.data.results.bindings[0]){var r=t.data.results.bindings[0].type.value;switch(r){case"http://purl.org/spar/fabio/JournalArticle":e.type=l.JournalArticle;break;case"http://purl.org/spar/fabio/ConferencePaper":e.type=l.ConferencePaper;break;case"http://purl.org/spar/fabio/JournalReviewArticle":e.type=l.JournalReviewArticle;break;case"http://purl.org/spar/fabio/JournalEditorial":e.type=l.JournalEditorial;break;case"http://purl.org/spar/fabio/Letter":e.type=l.Letter;break;default:e.type=l.Article}}else e.type=l.Article},function(e){console.error("Error. "+e.status+": "+e.statusText)})},S=function(e){var t=0;for(var r in e)t+=e[r].numCitActs;return t},b=function(e){return p[e].toString},y=function(e){var t=[];for(var r in e)e[r].colorURI=e[r].color.value,e[r].color=b(e[r].color.value);e.sort(function(e,t){return e.color<t.color?-1:e.color>t.color?1:0});for(var o,a={color:""},n=0;n<e.length;n++){var o=e[n];o.color!==a.color?t.push({colorURI:o.colorURI,color:o.color,numCitActs:1,inTextRefPointers:[{irpTxt:o.irpTxt.value,sentenceTxt:o.sentenceTxt.value}]}):(t[t.length-1].numCitActs++,t[t.length-1].inTextRefPointers.push({irpTxt:o.irpTxt.value,sentenceTxt:o.sentenceTxt.value})),a=o}return t},C=function(e,t){r.getCitationActsInfoNotGrouped(e,t.citedExpression.value).then(function(e){var r=e.data.results.bindings;t.citActsInfo=y(r),t.totCitActs=S(t.citActsInfo)},function(e){console.error("Error while fetching articles. "+e.status+": "+e.statusText)})},k=function(e,t,r){return""==e.data||!e.data[t][r]},$=function(e,t){if(void 0!==t&&void 0!==e.authors){e.sharedAuthors=[],e.isSelfcitation=!1;var r;for(var o in e.authors){r=e.authors[o];for(var a in t)t[a].fullName===r.fullName&&(e.isSelfcitation=!0,e.sharedAuthors.push(r.fullName))}}else alert("Non è stato possibile stabilire se '"+e.title+"' sia una autocitazione")},w=function(e){r.getArticleAuthors(e.authorsList.value).then(function(t){e.authors=t.data.results.bindings;for(var r in e.authors)e.authors[r].fullName=e.authors[r].fullName.value},function(e){console.error("Error while fetching articles. "+e.status+": "+e.statusText)})},R=function(e,t,o){r.getArticleAuthors(e.authorsList.value).then(function(r){e.authors=r.data.results.bindings;for(var o in e.authors)e.authors[o].fullName=e.authors[o].fullName.value;$(e,t)},function(e){console.error("Error while fetching articles. "+e.status+": "+e.statusText)})},I=function(e,t,r){var o=[];for(var a in r)r[a].citingExp.value==t&&r[a].color==e&&o.push({irpTxt:r[a].irpTxt,sentenceTxt:r[a].sentenceTxt});return o},T=function(e,t){e.motivations=[];var r,o=[],a="";for(var n in t)t[n].citingExp.value==e.citingExp.value&&o.push(t[n].color);o.sort();for(var i=0;i<o.length;i++)r=o[i],r!==a&&e.motivations.push({colorStr:r,inTextRefPointers:I(r,e.citingExp.value,t)}),a=r},E=function(e,t,o,a){return r.requestCitingArticles(t).then(function(t){e.citingArticles=t.data.results.bindings;for(var r in e.citingArticles){var n=e.citingArticles[r];n.publicationYear=parseInt(n.publicationYear.value),R(n,o,!1),T(n,a)}},function(e){console.error("Error while fetching articles. "+e.status+": "+e.statusText)})},F=function(e,t){r.getArticleGeneralInfo(e).then(function(e){var o=e.data.results.bindings[0];o.publicationYear=v(o.publicationYear.value),o.title=o.title.value,o.doi=o.doi.value,o.globalCountValue=v(o.globalCountValue.value),o.citationsDetails=!1,o.biblioDetails=!1,o.bookmark=!1,w(o),A(o),r.getArticleIncomingCitationsInfo(o.expression.value).then(function(e){o.inCitActs=e.data.results.bindings[0].numCitActs.value,o.inNumCites=e.data.results.bindings[0].numCites.value},function(e){console.error("Error while fetching articles. "+e.status+": "+e.statusText)}),r.getArticleOutgoingCitationsInfo(o.expression.value).then(function(e){o.outCitActsNum=e.data.results.bindings[0].numCitActs.value,o.citedArticlesNum=e.data.results.bindings[0].numCites.value},function(e){console.error("Error while fetching articles. "+e.status+": "+e.statusText)}),u.push(o),t&&s.searchResults.push(o)},function(e){console.error("Error while fetching articles. "+e.status+": "+e.statusText)})},x=function(){n.open({template:"app/templates/dialog-error.html",controller:["$rootScope","$scope",function(e,t){}]})},D=function(e,t,r){var a=o.getStateIndex(e,t);-1==a?o.saveState(e,t,r):o.restoreState(a)};return{getArticles:function(){return u},getColorsMap:function(){return p},isRetrievingArticlesInfo:function(){return d},setCompletedRetrievingArticlesInfo:function(){d=!1},getArticlesNum:function(){return m},getCompletedArticles:function(){return g=u.length},getResultsStates:function(){return f},getArticlesResultsState:function(){return h},getCitationsInfo:function(e,t){return r.requestCitationsInfo(e).then(function(r){var o=r.data.results.bindings;for(var a in o)o[a].color=p[o[a].color.value].toString,o[a].citingPubYear=parseInt(o[a].citingPubYear.value),o[a].irpTxt=o[a].irpTxt.value,o[a].sentenceTxt=o[a].sentenceTxt.value;for(var n in u){var i=u[n];if(i.expression.value==e){i.citationsInfo=o,i.citationsDetails=!0,E(i,e,t,o);break}}},function(e){console.error("Error while fetching articles. "+e.status+": "+e.statusText)})},getBiblioInfo:function(e,t){r.requestBiblioInfo(e).then(function(r){var o=r.data.results.bindings;for(var a in o)o[a].title=o[a].title.value,o[a].publicationYear=v(o[a].publicationYear.value),o[a].globalCountDate=o[a].globalCountDate.value,o[a].globalCountValue=v(o[a].globalCountValue.value),R(o[a],t,!0),C(e,o[a]);for(var n in u){var i=u[n];if(i.expression.value==e){i.biblioInfo=o,i.biblioDetails=!0;break}}},function(e){console.error("Error while fetching articles. "+e.status+": "+e.statusText)})},getArticlesByAbstract:function(t,r){return r?(o.removeAllStates(),o.saveState(c.abstractSearch,t,t)):D(c.abstractSearch,t,t),e.searchArticles(t).then(function(t){u.length=0,s.searchResults.length=0;var r="http://stanbol.apache.org/ontology/entityhub/query#QueryResultSet",o="http://stanbol.apache.org/ontology/entityhub/query#queryResult",a=null;if(k(t,r,o))h=f.NO_RESULTS,console.log("NO RESULTS!"),a=[],e.setCompletedRequest();else{h=f.RESULTS,a=t.data[r][o],m=a.length,g=u.length,e.setCompletedRequest(),d=!0;for(var n in a)F(a[n].value,!0),u.length==a.length&&(d=!1)}},function(t){s.searchResults.length=0,e.setCompletedRequest(),x()})},getSingleArticle:function(t){e.setPendingRequest(),D(c.singleArticle,t,t),r.getArticle(t).then(function(o){if(u.length=0,0==o.data.results.bindings.length)h=f.NO_RESULTS,console.log("NO RESULTS!"),e.setCompletedRequest();else{h=f.RESULTS;var a=o.data.results.bindings[0];a.publicationYear=v(a.publicationYear.value),a.title=t,a.doi=a.doi.value,a.globalCountValue=v(a.globalCountValue.value),u.push(a),m=1,g=1,e.setCompletedRequest(),w(a),A(a),r.getArticleIncomingCitationsInfo(a.expression.value).then(function(e){a.inCitActs=e.data.results.bindings[0].numCitActs.value,a.inNumCites=e.data.results.bindings[0].numCites.value},function(e){console.error("Error while fetching articles. "+e.status+": "+e.statusText)}),r.getArticleOutgoingCitationsInfo(a.expression.value).then(function(e){a.outCitActsNum=e.data.results.bindings[0].numCitActs.value,a.citedArticlesNum=e.data.results.bindings[0].numCites.value},function(e){console.error("Error while fetching articles. "+e.status+": "+e.statusText)})}},function(e){console.error("Error while fetching articles. "+e.status+": "+e.statusText)})},setArticlesResults:function(e){var t=o.restoreState(e);angular.copy(t.articles,u),m=u.length,g=u.length},ResetSearchResults:function(){angular.copy(s.searchResults,u),m=u.length,g=u.length,o.removeAllStates()},getArticlesByTitle:function(t,a){return e.setPendingRequest(),a?(o.removeAllStates(),o.saveState(c.titleSearch,t,t)):D(c.titleSearch,t,t),r.requestArticlesByTitle(t).then(function(t){u.length=0,s.searchResults.length=0;var r=null;if(0==t.data.results.bindings.length)h=f.NO_RESULTS,console.log("NO RESULTS!"),r=[],e.setCompletedRequest();else{h=f.RESULTS;var o=t.data.results.bindings;r=t.data.results.bindings,m=o.length,g=u.length,e.setCompletedRequest();for(var a in r)F(r[a].work.value,!0),u.length==r.length&&(d=!1)}},function(t){s.searchResults.length=0,e.setCompletedRequest(),x()})},getSingleArticleByDoi:function(t,o){e.setPendingRequest(),D(c.singleArticleDoi,t,""!=o?o:t),r.getArticleByDoi(t).then(function(o){if(u.length=0,0==o.data.results.bindings.length)h=f.NO_RESULTS,console.log("NO RESULTS!"),e.setCompletedRequest();else{h=f.RESULTS;var a=o.data.results.bindings[0];a.publicationYear=v(a.publicationYear.value),a.title=a.title.value,a.doi=t,a.globalCountValue=v(a.globalCountValue.value),u.push(a),m=1,g=1,e.setCompletedRequest(),w(a),A(a),r.getArticleIncomingCitationsInfo(a.expression.value).then(function(e){a.inCitActs=e.data.results.bindings[0].numCitActs.value,a.inNumCites=e.data.results.bindings[0].numCites.value},function(e){console.error("Error while fetching articles. "+e.status+": "+e.statusText)}),r.getArticleOutgoingCitationsInfo(a.expression.value).then(function(e){a.outCitActsNum=e.data.results.bindings[0].numCitActs.value,a.citedArticlesNum=e.data.results.bindings[0].numCites.value},function(e){console.error("Error while fetching articles. "+e.status+": "+e.statusText)})}},function(e){console.error("Error while fetching articles. "+e.status+": "+e.statusText)})},getArticlesByAuthor:function(e,t){this.getArticlesByFullNameAuthor(e+" "+t,!1)},getArticlesByFullNameAuthor:function(t,r){return e.setPendingRequest(),r?(o.removeAllStates(),o.saveState(c.authorSearch,t,t)):D(c.authorSearch,t,t),a.requestFullNameAuthorArticles(t).then(function(t){u.length=0;var o=null;if(0==t.data.results.bindings.length)h=f.NO_RESULTS,console.log("NO RESULTS!"),e.setCompletedRequest();else{h=f.RESULTS,o=t.data.results.bindings,m=o.length,g=u.length,e.setCompletedRequest(),d=!0;for(var a in o)F(o[a].work.value,r),u.length==o.length&&(d=!1)}},function(e){s.searchResults.length=0,console.error("Error while fetching articles. "+e.status+": "+e.statusText)})},refreshStoredSearchResult:function(e){for(var t in s.searchResults)s.searchResults[t].doi==e.doi&&(s.searchResults[t]=e)}}}]),myApp.factory("BookmarksManagerService",["$localStorage",function(e){var t={};return e.bookmarks?t=e.bookmarks:e.bookmarks=t,{saveBookmark:function(e){e.bookmark=!0,t[e.doi]=e,console.log(t)},deleteBookmark:function(e){t[e]&&(t[e].bookmark=!1,delete t[e])},getBookmark:function(e){return t[e]?t[e]:null},getBookmarks:function(){return t},deleteAllBookmarks:function(){for(var e in t)t[e].bookmark=!1,delete t[e]},isBookmarked:function(e){return t[e]?!0:!1},replaceBookmark:function(e){e.bookmark=!0,t[e.doi]=e}}}]),myApp.factory("CitationsFiltersManagerService",["ArticlesInfoService","$stateParams","ORDER_BY",function(e,t,r){var o={value:!1},a={value:1950},n={value:!1,exclude:!0},i={value:{"http://purl.org/spar/cito/citesForInformation":{toString:"cites For Information",valueURI:"http://purl.org/spar/cito/citesForInformation",checked:!0},"http://purl.org/spar/cito/citesAsMetadataDocument":{toString:"cites As Metadata Document",valueURI:"http://purl.org/spar/cito/citesAsMetadataDocument",checked:!0},"http://purl.org/spar/cito/citesAsDataSource":{toString:"cites As Data Source",valueURI:"http://purl.org/spar/cito/citesAsDataSource",checked:!0},"http://purl.org/spar/cito/citesAsAuthority":{toString:"cites As Authority",valueURI:"http://purl.org/spar/cito/citesAsAuthority",checked:!0},"http://purl.org/spar/cito/obtainsSupportFrom":{toString:"obtains Support From",valueURI:"http://purl.org/spar/cito/obtainsSupportFrom",checked:!0},"http://purl.org/spar/cito/includesExcerptFrom":{toString:"includes Excerpt From",valueURI:"http://purl.org/spar/cito/includesExcerptFrom",checked:!0},"http://purl.org/spar/cito/confirms":{toString:"confirms",valueURI:"http://purl.org/spar/cito/confirms",checked:!0},"http://purl.org/spar/cito/containsAssertionFrom":{toString:"contains Assertion From",valueURI:"http://purl.org/spar/cito/containsAssertionFrom",checked:!0},"http://purl.org/spar/cito/derides":{toString:"derides",valueURI:"http://purl.org/spar/cito/derides",checked:!0},"http://purl.org/spar/cito/includesQuotationFrom":{toString:"includes Quotation From",valueURI:"http://purl.org/spar/cito/includesQuotationFrom",checked:!0},"http://purl.org/spar/cito/citesAsRelated":{toString:"cites As Related",valueURI:"http://purl.org/spar/cito/citesAsRelated",checked:!0},"http://purl.org/spar/cito/usesMethodIn":{toString:"uses Method In",valueURI:"http://purl.org/spar/cito/usesMethodIn",checked:!0},"http://purl.org/spar/cito/documents":{toString:"documents",valueURI:"http://purl.org/spar/cito/documents",checked:!0},"http://purl.org/spar/cito/describes":{toString:"describes",valueURI:"http://purl.org/spar/cito/describes",checked:!0},"http://purl.org/spar/cito/usesConclusionsFrom":{toString:"uses Conclusions From",valueURI:"http://purl.org/spar/cito/usesConclusionsFrom",checked:!0},"http://purl.org/spar/cito/repliesTo":{toString:"replies To",valueURI:"http://purl.org/spar/cito/repliesTo",checked:!0},"http://purl.org/spar/cito/qualifies":{toString:"qualifies",valueURI:"http://purl.org/spar/cito/qualifies",checked:!0},"http://purl.org/spar/cito/corrects":{toString:"corrects",valueURI:"http://purl.org/spar/cito/corrects",checked:!0},"http://purl.org/spar/cito/agreesWith":{toString:"agrees With",valueURI:"http://purl.org/spar/cito/agreesWith",checked:!0},"http://purl.org/spar/cito/citesAsEvidence":{toString:"cites As Evidence",valueURI:"http://purl.org/spar/cito/citesAsEvidence",checked:!0},"http://purl.org/spar/cito/usesDataFrom":{toString:"uses Data From",valueURI:"http://purl.org/spar/cito/usesDataFrom",checked:!0},"http://purl.org/spar/cito/parodies":{toString:"parodies",valueURI:"http://purl.org/spar/cito/parodies",checked:!0},"http://purl.org/spar/cito/critiques":{toString:"critiques",valueURI:"http://purl.org/spar/cito/critiques",checked:!0},"http://purl.org/spar/cito/compiles":{toString:"compiles",valueURI:"http://purl.org/spar/cito/compiles",checked:!0},"http://purl.org/spar/cito/speculatesOn":{toString:"speculates On",valueURI:"http://purl.org/spar/cito/speculatesOn",checked:!0},"http://purl.org/spar/cito/extends":{toString:"extends",valueURI:"http://purl.org/spar/cito/extends",checked:!0},"http://purl.org/spar/cito/citesAsSourceDocument":{toString:"cites As Source Document",valueURI:"http://purl.org/spar/cito/citesAsSourceDocument",checked:!0},"http://purl.org/spar/cito/updates":{toString:"updates",valueURI:"http://purl.org/spar/cito/updates",checked:!0},"http://purl.org/spar/cito/discusses":{toString:"discusses",valueURI:"http://purl.org/spar/cito/discusses",checked:!0},"http://purl.org/spar/cito/citesAsPotentialSolution":{toString:"cites As Potential Solution",valueURI:"http://purl.org/spar/cito/citesAsPotentialSolution",checked:!0},"http://purl.org/spar/cito/obtainsBackgroundFrom":{toString:"obtains Background From",valueURI:"http://purl.org/spar/cito/obtainsBackgroundFrom",checked:!0},"http://purl.org/spar/cito/reviews":{toString:"reviews",valueURI:"http://purl.org/spar/cito/reviews",checked:!0},"http://purl.org/spar/cito/supports":{toString:"supports",valueURI:"http://purl.org/spar/cito/supports",checked:!0},"http://purl.org/spar/cito/citesAsRecommendedReading":{toString:"cites As Recommended Reading",valueURI:"http://purl.org/spar/cito/citesAsRecommendedReading",checked:!0},"http://purl.org/spar/cito/credits":{toString:"credits",valueURI:"http://purl.org/spar/cito/credits",checked:!0},"http://purl.org/spar/cito/disagreesWith":{toString:"disagrees With",valueURI:"http://purl.org/spar/cito/disagreesWith",checked:!0},"http://purl.org/spar/cito/plagiarizes":{toString:"plagiarizes",valueURI:"http://purl.org/spar/cito/plagiarizes",checked:!0}}},s={value:[],enabled:!1},c={value:[]},l=r.publicationYear,u=!0,p={value:l},d={value:u},m=function(e){if(null==e)return!0;if(e.length>0)return!1;if(0===e.length)return!0;for(var t in e)if(hasOwnProperty.call(e,t))return!1;return!0};return{getFilterActivatedBool:function(){return o},setFilterActivated:function(e){o.value=e},getStartingPublicationYearF:function(){return a},setStartingPublicationYear:function(e){a.value=e},getAuthorsF:function(){return s},setAuthors:function(e){s.value=e},setAuthorsEnabled:function(e){s.enabled=e},getAllArticlesAuthors:function(){return m(c.value)&&e.getAllAuthors().then(function(e){var t=e.data.results.bindings;for(var r in t)c.value.push(t[r].fullName.value)},function(e){console.error("Error while fetching authors. "+e.status+": "+e.statusText)}),c},getSelfCitationsF:function(){return n},setSelfCitations:function(e,t){n.value=e,n.exclude=t},getCharacterizationsF:function(){return i},setCharacterizations:function(e){i=e},getOrderBy:function(){return p},setOrderBy:function(e){p.value=e},getSort:function(){return d},setSort:function(e){d.value=e},restoreDefaultOrderBy:function(){}}}]),myApp.factory("EndpointsManager",["$localStorage",function(e){var t,r;return e.endpoints?t=e.endpoints:e.endpoints=t=["http://two.eelst.cs.unibo.it:8181/data/query"],e.selectedEndpoint?r=e.selectedEndpoint:e.selectedEndpoint=r={value:t[0]},{getEndpoints:function(){return t},removeEndpoint:function(e){t.splice(e,1)},addEndpoint:function(e){t.push(e)},setSelectedEndpoint:function(e){r.value=t[e]},getSelectedEndpoint:function(){return r.value}}}]),myApp.factory("ArticlesInfoService",["$http","$interpolate","$rootScope","EndpointsManager",function(e,t,r,o){var a=o.getSelectedEndpoint(),n=$("#prefixes").text(),i=function(e,r){var o=$(e).text(),i=n+t(o)(r),s=encodeURIComponent(i);return a+"?format=json&query="+s};return{getArticleGeneralInfo:function(t){var r={work:t},o=i("#query_articleInfo",r);return e.get(o)},requestCitationsInfo:function(t){var r={citedExpression:t},o=i("#query_citationsInfo",r);
+if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript requires jQuery'); }
 
-return e.get(o)},requestCitingArticles:function(t){var r={citedExpression:t},o=i("#query_citingArticles",r);return e.get(o)},getArticleAuthors:function(t){var r={authorsList:t},o=i("#query_articleAuthors",r);return e.get(o)},getArticleIncomingCitationsInfo:function(t){var r={expression:t},o=i("#query_incomingCitationsActs",r);return e.get(o)},getArticleOutgoingCitationsInfo:function(t){var r={expression:t},o=i("#query_outgoingCitationsActs",r);return e.get(o)},requestBiblioInfo:function(t){var r={expression:t},o=i("#query_citedArticles",r);return e.get(o)},getCitationActsInfo:function(t,r){var o={artExpression:t,citedExpression:r},a=i("#query_citationActsInfo",o);return e.get(a)},getCitationActsInfoNotGrouped:function(t,r){var o={artExpression:t,citedExpression:r},a=i("#query_citationActsInfoNotGrouped",o);return e.get(a)},getAllAuthors:function(){var t=$("#query_allAuthors").text(),r=n+t,o=encodeURIComponent(r);return e.get(a+"?format=json&query="+o)},getArticle:function(t){var r={title:t},o=i("#query_singleArticle",r);return e.get(o)},getArticleByDoi:function(t){var r={doi:t},o=i("#query_singleArticleByDoi",r);return e.get(o)},requestArticlesByTitle:function(t){var r={title:t},o=i("#query_articlesWork_fromTitle",r);return e.get(o)},getArticleType:function(t){var r={expression:t},o=i("#query_articleType",r);return e.get(o)}}}]),myApp.factory("AuthorInfoService",["$http","$interpolate","$rootScope","EndpointsManager",function(e,t,r,o){var a=o.getSelectedEndpoint(),n=$("#prefixes").text(),i=function(e,r){var o=$(e).text(),i=n+t(o)(r),s=encodeURIComponent(i);return a+"?format=json&query="+s};return{requestAuthorArticles:function(t,r){var o={authorFamilyName:t,authorGivenName:r},a=i("#query_authorArticles",o);return e.get(a)},requestFullNameAuthorArticles:function(t){var r={authorFullName:t},o=i("#query_FullNameAuthorArticles",r);return e.get(o)}}}]),myApp.factory("Ping",["$http","$rootScope","EndpointsManager","ngDialog",function(e,t,r,o){var a=r.getSelectedEndpoint();return{pingEndpoint:function(){var t="ASK  { ?x ?y ?z }";e({method:"GET",url:a+"?format=json&query="+encodeURIComponent(t),timeout:3e3}).success(function(e,t,r,o){}).error(function(e,t,r,a){return console.log("error"),o.open({template:"app/templates/dialog-error.html"}),!1})}}}]),myApp.factory("RequestArticlesService",["$http","$rootScope",function(e,t){var r="",o="application/rdf+json",a="http://www.semanticlancet.eu/abstractfinder/",n=!1;return{setCompletedRequest:function(){n=!1},isRequestPending:function(){return n},setPendingRequest:function(){n=!0},searchArticles:function(t){n=!0,r=t;var i={method:"GET",params:{query:r},headers:{Accept:o},url:a};return e(i)},setSearchString:function(e){r=e},getSearchString:function(){return r}}}]),myApp.factory("ResponseInterceptorService",["$q",function(e){return{responseError:function(t){return 0===t.status&&console.log("server non contattabile"),e.reject(t)}}}]).config(["$httpProvider",function(e){e.interceptors.push("ResponseInterceptorService")}]),myApp.factory("StatesManagerService",["$sessionStorage","$rootScope","$stateParams",function(e,t,r){var o=[],a={state:void 0,params:void 0};return e.states?o=e.states:e.states=o,e.lastState?a=e.lastState:e.lastState=a,{setState:function(e,t){a.name=e,a.params=t},updateCurrentStateParam:function(e,t){o[o.length-1].params[e]=t},saveState:function(e,t,r){if(r){a.details=r,a.id=t;var n=angular.copy(a);o.push(n)}},restoreState:function(e){for(var t=o.length-1;t>e;t--)o.pop();return o[e]},getStates:function(){return o},getState:function(e){return o[e]},removeAllStates:function(){o.length=0},getStateIndex:function(e,t){var r=-1;for(var a in o)if(o[a].params.searchType==e&&o[a].id==t){r=a;break}return r},getLastState:function(){return a}}}]);
+// APP START
+// ----------------------------------- 
+
+var App = angular.module('angle', [
+    'ngRoute',
+    'ngAnimate',
+    'ngStorage',
+    'ngCookies',
+    'pascalprecht.translate',
+    'ui.bootstrap',
+    'ui.router',
+    'oc.lazyLoad',
+    'cfp.loadingBar',
+    'ngSanitize',
+    'ngResource',
+    'tmh.dynamicLocale',
+    'ui.utils'
+  ]);
+
+App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', 'ArticlesInfoService', function ($rootScope, $state, $stateParams, $window, $templateCache, ArticlesInfoService) {
+  // Set reference to access them from any scope
+  $rootScope.$state = $state;
+  $rootScope.$stateParams = $stateParams;
+  $rootScope.$storage = $window.localStorage;
+
+  // Uncomment this to disable template cache
+  /*$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+      if (typeof(toState) !== 'undefined'){
+        $templateCache.remove(toState.templateUrl);
+      }
+  });*/
+
+  // Scope Globals
+  // ----------------------------------- 
+  $rootScope.app = {
+    name: 'BEX',
+    description: 'Web App to search and browse the contents of Semantic Lancet Triplestore',
+    year: ((new Date()).getFullYear()),
+    layout: {
+      isFixed: true,
+      isCollapsed: false,
+      isBoxed: false,
+      isRTL: false,
+      horizontal: false,
+      isFloat: false,
+      asideHover: false,
+      theme: null
+    },
+    useFullLayout: false,
+    hiddenFooter: false,
+    viewAnimation: 'ng-fadeInUp'
+  };
+
+    $rootScope.authors = [];
+    /*richiedo tutti gli autori*/
+    ArticlesInfoService.getAllAuthors().then(
+        function (response) {
+            $rootScope.authors = [];
+            var authorsFullName = response.data.results.bindings;
+
+            for (var i in authorsFullName) {
+                $rootScope.authors.push(authorsFullName[i].fullName.value);
+            }
+        },
+        //todo caso da gestire meglio
+        function (errResponse) {
+            $rootScope.authors = [];
+            //ngDialog.open({template: "app/templates/dialog-error.html"});
+            console.error("Error while fetching authors. " + errResponse.status + ": " + errResponse.statusText)
+        }
+    );
+
+
+
+}]);
+
+/**=========================================================
+ * Module: config.js
+ * App routes and resources configuration
+ =========================================================*/
+
+App.config(['$stateProvider', '$locationProvider', '$urlRouterProvider', 'RouteHelpersProvider',
+function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
+  'use strict';
+
+  // Set the following to true to enable the HTML5 Mode
+  // You may have to set <base> tag in index and a routing configuration in your server
+    //todo: aprire issue
+  $locationProvider.html5Mode(false);
+
+    // defaults to home-search
+    $urlRouterProvider.otherwise('/app/homeSearch');
+
+  // 
+  // Application Routes
+  // -----------------------------------   
+  $stateProvider
+    .state('app', {
+        url: '/app',
+        abstract: true,
+        templateUrl: helper.basepath('app.html'),
+        controller: 'AppController',
+        resolve: helper.resolveFor('loaders.css', 'spinkit','fastclick', 'modernizr', 'ngDialog', 'icons', 'screenfull', 'animo', 'slimscroll', 'toaster','whirl', 'ui.select', 'ui-router-extras')
+    })
+    // 
+    // CUSTOM RESOLVES
+    //   Add your own resolves properties
+    //   following this object extend
+    //   method
+    // ----------------------------------- 
+    // .state('app.someroute', {
+    //   url: '/some_url',
+    //   templateUrl: 'path_to_template.html',
+    //   controller: 'someController',
+    //   resolve: angular.extend(
+    //     helper.resolveFor(), {
+    //     // YOUR RESOLVES GO HERE
+    //     }
+    //   )
+    // })
+    ;
+
+
+}]).config(['$ocLazyLoadProvider', 'APP_REQUIRES', function ($ocLazyLoadProvider, APP_REQUIRES) {
+    'use strict';
+
+    // Lazy Load modules configuration
+    $ocLazyLoadProvider.config({
+      debug: false,
+      events: true,
+      modules: APP_REQUIRES.modules
+    });
+
+}]).config(['$controllerProvider', '$compileProvider', '$filterProvider', '$provide',
+    function ( $controllerProvider, $compileProvider, $filterProvider, $provide) {
+      'use strict';
+      // registering components after bootstrap
+      App.controller = $controllerProvider.register;
+      App.directive  = $compileProvider.directive;
+      App.filter     = $filterProvider.register;
+      App.factory    = $provide.factory;
+      App.service    = $provide.service;
+      App.constant   = $provide.constant;
+      App.value      = $provide.value;
+
+}]).config(['$translateProvider', function ($translateProvider) {
+
+    $translateProvider.useStaticFilesLoader({
+        prefix : 'app/i18n/',
+        suffix : '.json'
+    });
+    $translateProvider.preferredLanguage('en');
+    $translateProvider.useLocalStorage();
+    $translateProvider.usePostCompiling(true);
+
+}]).config(['tmhDynamicLocaleProvider', function (tmhDynamicLocaleProvider) {
+
+    tmhDynamicLocaleProvider.localeLocationPattern('vendor/angular-i18n/angular-locale_{{locale}}.js');
+
+    // tmhDynamicLocaleProvider.useStorage('$cookieStore');
+
+}]).config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+
+    cfpLoadingBarProvider.includeBar = true;
+    cfpLoadingBarProvider.includeSpinner = false;
+    cfpLoadingBarProvider.latencyThreshold = 500;
+    cfpLoadingBarProvider.parentSelector = '.wrapper > section';
+
+}]).config(['$tooltipProvider', function ($tooltipProvider) {
+
+    $tooltipProvider.options({appendToBody: true});
+
+}])
+;
+
+/**=========================================================
+ * Module: constants.js
+ * Define constants to inject across the application
+ =========================================================*/
+App
+    .constant('APP_COLORS', {
+        'primary':                '#5d9cec',
+        'success':                '#27c24c',
+        'info':                   '#23b7e5',
+        'warning':                '#ff902b',
+        'danger':                 '#f05050',
+        'inverse':                '#131e26',
+        'green':                  '#37bc9b',
+        'pink':                   '#f532e5',
+        'purple':                 '#7266ba',
+        'dark':                   '#3a3f51',
+        'yellow':                 '#fad732',
+        'gray-darker':            '#232735',
+        'gray-dark':              '#3a3f51',
+        'gray':                   '#dde6e9',
+        'gray-light':             '#e4eaec',
+        'gray-lighter':           '#edf1f2'
+    })
+    .constant('APP_MEDIAQUERY', {
+        'desktopLG':             1200,
+        'desktop':                992,
+        'tablet':                 768,
+        'mobile':                 480
+    })
+    .constant('APP_REQUIRES', {
+        // jQuery based and standalone scripts
+        scripts: {
+            'whirl':              ['vendor/whirl/dist/whirl.css'],
+            'classyloader':       ['vendor/jquery-classyloader/js/jquery.classyloader.min.js'],
+            'animo':              ['vendor/animo.js/animo.js'],
+            'fastclick':          ['vendor/fastclick/lib/fastclick.js'],
+            'modernizr':          ['vendor/modernizr/modernizr.js'],
+            'animate':            ['vendor/animate.css/animate.min.css'],
+            'icons':              ['vendor/skycons/skycons.js',
+                'vendor/fontawesome/css/font-awesome.min.css',
+                'vendor/simple-line-icons/css/simple-line-icons.css',
+                'vendor/weather-icons/css/weather-icons.min.css'],
+            'sparklines':         ['app/vendor/sparklines/jquery.sparkline.min.js'],
+            'wysiwyg':            ['vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js',
+                'vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js'],
+            'slimscroll':         ['vendor/slimScroll/jquery.slimscroll.min.js'],
+            'screenfull':         ['vendor/screenfull/dist/screenfull.js'],
+            'vector-map':         ['vendor/ika.jvectormap/jquery-jvectormap-1.2.2.min.js',
+                'vendor/ika.jvectormap/jquery-jvectormap-1.2.2.css'],
+            'vector-map-maps':    ['vendor/ika.jvectormap/jquery-jvectormap-world-mill-en.js',
+                'vendor/ika.jvectormap/jquery-jvectormap-us-mill-en.js'],
+            'loadGoogleMapsJS':   ['app/vendor/gmap/load-google-maps.js'],
+            'flot-chart':         ['vendor/Flot/jquery.flot.js'],
+            'flot-chart-plugins': ['vendor/flot.tooltip/js/jquery.flot.tooltip.min.js',
+                'vendor/Flot/jquery.flot.resize.js',
+                'vendor/Flot/jquery.flot.pie.js',
+                'vendor/Flot/jquery.flot.time.js',
+                'vendor/Flot/jquery.flot.categories.js',
+                'vendor/flot-spline/js/jquery.flot.spline.min.js'],
+            // jquery core and widgets
+            'jquery-ui':          ['vendor/jquery-ui/ui/core.js',
+                'vendor/jquery-ui/ui/widget.js'],
+            // loads only jquery required modules and touch support
+            'jquery-ui-widgets':  ['vendor/jquery-ui/ui/core.js',
+                'vendor/jquery-ui/ui/widget.js',
+                'vendor/jquery-ui/ui/mouse.js',
+                'vendor/jquery-ui/ui/draggable.js',
+                'vendor/jquery-ui/ui/droppable.js',
+                'vendor/jquery-ui/ui/sortable.js',
+                'vendor/jqueryui-touch-punch/jquery.ui.touch-punch.min.js'],
+            'moment' :            ['vendor/moment/min/moment-with-locales.min.js'],
+            'inputmask':          ['vendor/jquery.inputmask/dist/jquery.inputmask.bundle.min.js'],
+            'flatdoc':            ['vendor/flatdoc/flatdoc.js'],
+            'codemirror':         ['vendor/codemirror/lib/codemirror.js',
+                'vendor/codemirror/lib/codemirror.css'],
+            // modes for common web files
+            'codemirror-modes-web': ['vendor/codemirror/mode/javascript/javascript.js',
+                'vendor/codemirror/mode/xml/xml.js',
+                'vendor/codemirror/mode/htmlmixed/htmlmixed.js',
+                'vendor/codemirror/mode/css/css.js'],
+            'taginput' :          ['vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.css',
+                'vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js'],
+            'filestyle':          ['vendor/bootstrap-filestyle/src/bootstrap-filestyle.js'],
+            'parsley':            ['vendor/parsleyjs/dist/parsley.min.js'],
+            'datatables':         ['vendor/datatables/media/js/jquery.dataTables.min.js',
+                'app/vendor/datatable-bootstrap/css/dataTables.bootstrap.css'],
+            'datatables-pugins':  ['app/vendor/datatable-bootstrap/js/dataTables.bootstrap.js',
+                'app/vendor/datatable-bootstrap/js/dataTables.bootstrapPagination.js',
+                'vendor/datatables-colvis/js/dataTables.colVis.js',
+                'vendor/datatables-colvis/css/dataTables.colVis.css'],
+            'fullcalendar':       ['vendor/fullcalendar/dist/fullcalendar.min.js',
+                'vendor/fullcalendar/dist/fullcalendar.css'],
+            'gcal':               ['vendor/fullcalendar/dist/gcal.js'],
+            'nestable':           ['vendor/nestable/jquery.nestable.js'],
+            'chartjs':            ['vendor/Chart.js/Chart.js'],
+            'morris':             ['vendor/raphael/raphael.js',
+                'vendor/morris.js/morris.js',
+                'vendor/morris.js/morris.css'],
+            'loaders.css':          ['vendor/loaders.css/loaders.css'],
+            'spinkit':              ['vendor/spinkit/css/spinkit.css'],
+
+        },
+        // Angular based script (use the right module name)
+        modules: [
+            {name: 'toaster',                   files: ['vendor/angularjs-toaster/toaster.js',
+                'vendor/angularjs-toaster/toaster.css']},
+            {name: 'localytics.directives',     files: ['vendor/chosen_v1.2.0/chosen.jquery.min.js',
+                'vendor/chosen_v1.2.0/chosen.min.css',
+                'vendor/angular-chosen-localytics/chosen.js']},
+            {name: 'ngDialog',                  files: ['vendor/ngDialog/js/ngDialog.min.js',
+                'vendor/ngDialog/css/ngDialog.min.css',
+                'vendor/ngDialog/css/ngDialog-theme-default.min.css'] },
+            {name: 'ngWig',                     files: ['vendor/ngWig/dist/ng-wig.min.js'] },
+            {name: 'ngTable',                   files: ['vendor/ng-table/dist/ng-table.min.js',
+                'vendor/ng-table/dist/ng-table.min.css']},
+            {name: 'ngTableExport',             files: ['vendor/ng-table-export/ng-table-export.js']},
+            {name: 'angularBootstrapNavTree',   files: ['vendor/angular-bootstrap-nav-tree/dist/abn_tree_directive.js',
+                'vendor/angular-bootstrap-nav-tree/dist/abn_tree.css']},
+            {name: 'htmlSortable',              files: ['vendor/html.sortable/dist/html.sortable.js',
+                'vendor/html.sortable/dist/html.sortable.angular.js']},
+            {name: 'xeditable',                 files: ['vendor/angular-xeditable/dist/js/xeditable.js',
+                'vendor/angular-xeditable/dist/css/xeditable.css']},
+            {name: 'angularFileUpload',         files: ['vendor/angular-file-upload/angular-file-upload.js']},
+            {name: 'ngImgCrop',                 files: ['vendor/ng-img-crop/compile/unminified/ng-img-crop.js',
+                'vendor/ng-img-crop/compile/unminified/ng-img-crop.css']},
+            {name: 'ui.select',                 files: ['vendor/angular-ui-select/dist/select.js',
+                'vendor/angular-ui-select/dist/select.css']},
+            {name: 'ui.codemirror',             files: ['vendor/angular-ui-codemirror/ui-codemirror.js']},
+            {name: 'angular-carousel',          files: ['vendor/angular-carousel/dist/angular-carousel.css',
+                'vendor/angular-carousel/dist/angular-carousel.js']},
+            {name: 'ngGrid',                    files: ['vendor/ng-grid/build/ng-grid.min.js',
+                'vendor/ng-grid/ng-grid.css' ]},
+            {name: 'infinite-scroll',           files: ['vendor/ngInfiniteScroll/build/ng-infinite-scroll.js']},
+            {name: 'ui.bootstrap-slider',       files: ['vendor/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js',
+                'vendor/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css',
+                'vendor/angular-bootstrap-slider/slider.js']},
+            {name: 'ui.grid',                   files: ['vendor/angular-ui-grid/ui-grid.min.css',
+                'vendor/angular-ui-grid/ui-grid.min.js']},
+            {name: 'textAngularSetup',          files: ['vendor/textAngular/src/textAngularSetup.js']},
+            {name: 'textAngular',               files: ['vendor/textAngular/dist/textAngular-rangy.min.js',
+                'vendor/textAngular/src/textAngular.js',
+                'vendor/textAngular/src/textAngular.css']},
+            {name: 'angular-rickshaw',          files: ['vendor/d3/d3.min.js',
+                'vendor/rickshaw/rickshaw.js',
+                'vendor/rickshaw/rickshaw.min.css',
+                'vendor/angular-rickshaw/rickshaw.js'], serie: true},
+            {name: 'angular-chartist',          files: ['vendor/chartist/dist/chartist.min.css',
+                'vendor/chartist/dist/chartist.js',
+                'vendor/angular-chartist.js/dist/angular-chartist.js'], serie: true},
+            {name: 'ui.map',                    files: ['vendor/angular-ui-map/ui-map.js']},
+            {name:'ui-router-extras',    files: ['vendor/ui-router-extras/release/ct-ui-router-extras.min.js']}
+        ]
+    })
+;
+/**=========================================================
+ * Module: calendar-ui.js
+ * This script handle the calendar demo with draggable 
+ * events and events creations
+ =========================================================*/
+
+App.controller('InfiniteScrollController', ["$scope", "$timeout", function($scope, $timeout) {
+
+  $scope.images = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  $scope.loadMore = function() {
+    var last = $scope.images[$scope.images.length - 1];
+    for(var i = 1; i <= 10; i++) {
+      $scope.images.push(last + i);
+    }
+  };
+
+}]).factory('datasource', [
+    '$log', '$timeout', function(console, $timeout) {
+        'use strict';
+
+        var get = function(index, count, success) {
+            return $timeout(function() {
+                var i, result, _i, _ref;
+                result = [];
+                for (i = _i = index, _ref = index + count - 1; index <= _ref ? _i <= _ref : _i >= _ref; i = index <= _ref ? ++_i : --_i) {
+                    result.push('item #' + i);
+                }
+                return success(result);
+            }, 100);
+        };
+        return {
+            get: get
+        };
+    }]);
+/**=========================================================
+ * Module: locale.js
+ * Demo for locale settings
+ =========================================================*/
+
+App.controller('LocalizationController', ["$rootScope", "tmhDynamicLocale", "$locale", function($rootScope, tmhDynamicLocale, $locale) {
+  
+  $rootScope.availableLocales = {
+    'en': 'English',
+    'es': 'Spanish',
+    'de': 'German',
+    'fr': 'French',
+    'ar': 'Arabic',
+    'ja': 'Japanese',
+    'ko': 'Korean',
+    'zh': 'Chinese'};
+  
+  $rootScope.model = {selectedLocale: 'en'};
+  
+  $rootScope.$locale = $locale;
+  
+  $rootScope.changeLocale = tmhDynamicLocale.set;
+
+}]);
+
+/**=========================================================
+ * Module: main.js
+ * Main Application Controller
+ =========================================================*/
+
+App.controller('AppController',
+  ['$rootScope', '$scope', '$state', '$translate', '$window', '$localStorage', '$timeout', 'toggleStateService', 'colors', 'browser', 'cfpLoadingBar',
+  function($rootScope, $scope, $state, $translate, $window, $localStorage, $timeout, toggle, colors, browser, cfpLoadingBar) {
+    "use strict";
+
+    // Setup the layout mode
+    $rootScope.app.layout.horizontal = ( $rootScope.$stateParams.layout == 'app-h') ;
+
+    // Loading bar transition
+    // ----------------------------------- 
+    var thBar;
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+        if($('.wrapper > section').length) // check if bar container exists
+          thBar = $timeout(function() {
+            cfpLoadingBar.start();
+          }, 0); // sets a latency Threshold
+    });
+    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+        event.targetScope.$watch("$viewContentLoaded", function () {
+          $timeout.cancel(thBar);
+          cfpLoadingBar.complete();
+        });
+    });
+
+
+    // Hook not found
+    $rootScope.$on('$stateNotFound',
+      function(event, unfoundState, fromState, fromParams) {
+          console.log(unfoundState.to); // "lazy.state"
+          console.log(unfoundState.toParams); // {a:1, b:2}
+          console.log(unfoundState.options); // {inherit:false} + default options
+      });
+    // Hook error
+    $rootScope.$on('$stateChangeError',
+      function(event, toState, toParams, fromState, fromParams, error){
+        console.log(error);
+      });
+    // Hook success
+    $rootScope.$on('$stateChangeSuccess',
+      function(event, toState, toParams, fromState, fromParams) {
+        // display new view from top
+        $window.scrollTo(0, 0);
+        // Save the route title
+        $rootScope.currTitle = $state.current.title;
+      });
+
+    $rootScope.currTitle = $state.current.title;
+    $rootScope.pageTitle = function() {
+      var title = $rootScope.app.name + ' - ' + ($rootScope.currTitle || $rootScope.app.description);
+      document.title = title;
+      return title;
+    };
+
+    // iPad may presents ghost click issues
+    // if( ! browser.ipad )
+      // FastClick.attach(document.body);
+
+    // Close submenu when sidebar change from collapsed to normal
+    $rootScope.$watch('app.layout.isCollapsed', function(newValue, oldValue) {
+      if( newValue === false )
+        $rootScope.$broadcast('closeSidebarMenu');
+    });
+
+    // Restore layout settings
+    if( angular.isDefined($localStorage.layout) )
+      $scope.app.layout = $localStorage.layout;
+    else
+      $localStorage.layout = $scope.app.layout;
+
+    $rootScope.$watch("app.layout", function () {
+      $localStorage.layout = $scope.app.layout;
+    }, true);
+
+    
+    // Allows to use branding color with interpolation
+    // {{ colorByName('primary') }}
+    $scope.colorByName = colors.byName;
+
+    // Hides/show user avatar on sidebar
+    $scope.toggleUserBlock = function(){
+      $scope.$broadcast('toggleUserBlock');
+    };
+
+    // Internationalization
+    // ----------------------
+
+    $scope.language = {
+      // Handles language dropdown
+      listIsOpen: false,
+      // list of available languages
+      available: {
+        'en':       'English',
+        'es_AR':    'Español'
+      },
+      // display always the current ui language
+      init: function () {
+        var proposedLanguage = $translate.proposedLanguage() || $translate.use();
+        var preferredLanguage = $translate.preferredLanguage(); // we know we have set a preferred one in app.config
+        $scope.language.selected = $scope.language.available[ (proposedLanguage || preferredLanguage) ];
+      },
+      set: function (localeId, ev) {
+        // Set the new idiom
+        $translate.use(localeId);
+        // save a reference for the current language
+        $scope.language.selected = $scope.language.available[localeId];
+        // finally toggle dropdown
+        $scope.language.listIsOpen = ! $scope.language.listIsOpen;
+      }
+    };
+
+    $scope.language.init();
+
+    // Restore application classes state
+    toggle.restoreState( $(document.body) );
+
+    // cancel click event easily
+    $rootScope.cancel = function($event) {
+      $event.stopPropagation();
+    };
+
+}]);
+
+/**=========================================================
+ * Module: modals.js
+ * Provides a simple way to implement bootstrap modals from templates
+ =========================================================*/
+
+App.controller('ModalController', ['$scope', '$modal', function ($scope, $modal) {
+
+  $scope.open = function (size) {
+
+    var modalInstance = $modal.open({
+      templateUrl: '/myModalContent.html',
+      controller: ModalInstanceCtrl,
+      size: size
+    });
+
+    var state = $('#modal-state');
+    modalInstance.result.then(function () {
+      state.text('Modal dismissed with OK status');
+    }, function () {
+      state.text('Modal dismissed with Cancel status');
+    });
+  };
+
+  // Please note that $modalInstance represents a modal window (instance) dependency.
+  // It is not the same as the $modal service used above.
+
+  var ModalInstanceCtrl = function ($scope, $modalInstance) {
+
+    $scope.ok = function () {
+      $modalInstance.close('closed');
+    };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  };
+  ModalInstanceCtrl.$inject = ["$scope", "$modalInstance"];
+
+}]);
+
+/**=========================================================
+ * Module: notifications.js
+ * Initializes the notifications system
+ =========================================================*/
+App.controller('NotificationController', ['$scope', function($scope){
+
+ $scope.autoplace = function (context, source) {
+    //return (predictTooltipTop(source) < 0) ?  "bottom": "top";
+    var pos = 'top';
+    if(predictTooltipTop(source) < 0)
+      pos = 'bottom';
+    if(predictTooltipLeft(source) < 0)
+      pos = 'right';
+    return pos;
+  };
+
+  // Predicts tooltip top position 
+  // based on the trigger element
+  function predictTooltipTop(el) {
+    var top = el.offsetTop;
+    var height = 40; // asumes ~40px tooltip height
+
+    while(el.offsetParent) {
+      el = el.offsetParent;
+      top += el.offsetTop;
+    }
+    return (top - height) - (window.pageYOffset);
+  }
+
+  // Predicts tooltip top position 
+  // based on the trigger element
+  function predictTooltipLeft(el) {
+    var left = el.offsetLeft;
+    var width = el.offsetWidth;
+
+    while(el.offsetParent) {
+      el = el.offsetParent;
+      left += el.offsetLeft;
+    }
+    return (left - width) - (window.pageXOffset);
+  }
+
+}]);
+/**=========================================================
+ * Module: sidebar-menu.js
+ * Handle sidebar collapsible elements
+ =========================================================*/
+
+App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', '$timeout', 'Utils','StatesManagerService','ArticleManagerService', 'BookmarksManagerService',
+  function($rootScope, $scope, $state, $http, $timeout, Utils, StatesManagerService, ArticleManagerService, BookmarksManagerService){
+
+    var collapseList = [];
+
+    // demo: when switch from collapse to hover, close all items
+    $rootScope.$watch('app.layout.asideHover', function(oldVal, newVal){
+      if ( newVal === false && oldVal === true) {
+        closeAllBut(-1);
+      }
+    });
+
+    // Check item and children active state
+    var isActive = function(item) {
+
+      if(!item) return;
+
+      if( !item.sref || item.sref == '#') {
+        var foundActive = false;
+        angular.forEach(item.submenu, function(value, key) {
+          if(isActive(value)) foundActive = true;
+        });
+        return foundActive;
+      }
+      else
+        return $state.is(item.sref) || $state.includes(item.sref);
+    };
+
+    // Load menu from json file
+    // -----------------------------------
+
+    $scope.getMenuItemPropClasses = function(item) {
+      return (item.heading ? 'nav-heading' : '') +
+          (isActive(item) ? ' active' : '');
+          //+ (item.bottom == true ? 'bottom-item' : '');
+    };
+
+
+
+    $scope.getNum = function(id) {
+      switch (id) {
+        case "ArticlesLength":
+          return ArticleManagerService.getArticles().length;
+          break;
+        case "BookmarksLength":
+            var x = BookmarksManagerService.getBookmarks();
+          return x.length;
+          break;
+      }
+
+    };
+
+    $scope.loadSidebarMenu = function() {
+
+      var menuJson = 'server/sidebar-menu.json',
+          menuURL  = menuJson + '?v=' + (new Date().getTime()); // jumps cache
+      $http.get(menuURL)
+          .success(function(items) {
+            $scope.menuItems = items;
+          })
+          .error(function(data, status, headers, config) {
+            alert('Failure loading menu');
+          });
+    };
+
+    $scope.loadSidebarMenu();
+
+    // Handle sidebar collapse items
+    // -----------------------------------
+
+    $scope.addCollapse = function($index, item) {
+      collapseList[$index] = $rootScope.app.layout.asideHover ? true : !isActive(item);
+    };
+
+    $scope.isCollapse = function($index) {
+      return (collapseList[$index]);
+    };
+
+    $scope.toggleCollapse = function($index, isParentItem) {
+
+
+      // collapsed sidebar doesn't toggle drodopwn
+      if( Utils.isSidebarCollapsed() || $rootScope.app.layout.asideHover ) return true;
+
+      // make sure the item index exists
+      if( angular.isDefined( collapseList[$index] ) ) {
+        if ( ! $scope.lastEventFromChild ) {
+          collapseList[$index] = !collapseList[$index];
+          closeAllBut($index);
+        }
+      }
+      else if ( isParentItem ) {
+        closeAllBut(-1);
+      }
+
+      $scope.lastEventFromChild = isChild($index);
+
+      return true;
+
+    };
+
+    $scope.goTo = function(sref) {
+      switch(sref) {
+        case "app.home-search":
+          $state.go("app.home-search");
+          break;
+        case "app.articles-results": //todo:barbatrucco da rivedere: in realtà non vado ad app.articles, ma all'ultimo state visitato dall'utente
+          var lastState = StatesManagerService.getLastState();
+
+          if(!lastState.name) {
+            $state.go("app.articles-results");
+          } else {
+            $state.go(lastState.name,lastState.params);
+          }
+          break;
+        default :
+          $state.go(sref);
+          break;
+      }
+    }
+
+    function closeAllBut(index) {
+      index += '';
+      for(var i in collapseList) {
+        if(index < 0 || index.indexOf(i) < 0)
+          collapseList[i] = true;
+      }
+    }
+
+    function isChild($index) {
+      return (typeof $index === 'string') && !($index.indexOf('-') < 0);
+    }
+
+  }]);
+/**=========================================================
+ * Module: uiselect.js
+ * uiSelect controller
+ =========================================================*/
+
+App.controller('uiSelectController', ["$scope", "$http", function($scope, $http) {
+  $scope.disabled = undefined;
+
+  $scope.enable = function() {
+    $scope.disabled = false;
+  };
+
+  $scope.disable = function() {
+    $scope.disabled = true;
+  };
+
+  $scope.clear = function() {
+    $scope.person.selected = undefined;
+    $scope.address.selected = undefined;
+    $scope.country.selected = undefined;
+  };
+
+  $scope.person = {};
+  $scope.people = [
+    { name: 'Adam',      email: 'adam@email.com',      age: 10 },
+    { name: 'Amalie',    email: 'amalie@email.com',    age: 12 },
+    { name: 'Wladimir',  email: 'wladimir@email.com',  age: 30 },
+    { name: 'Samantha',  email: 'samantha@email.com',  age: 31 },
+    { name: 'Estefanía', email: 'estefanía@email.com', age: 16 },
+    { name: 'Natasha',   email: 'natasha@email.com',   age: 54 },
+    { name: 'Nicole',    email: 'nicole@email.com',    age: 43 },
+    { name: 'Adrian',    email: 'adrian@email.com',    age: 21 }
+  ];
+
+  $scope.address = {};
+  $scope.refreshAddresses = function(address) {
+    var params = {address: address, sensor: false};
+    return $http.get(
+      'http://maps.googleapis.com/maps/api/geocode/json',
+      {params: params}
+    ).then(function(response) {
+      $scope.addresses = response.data.results;
+    });
+  };
+
+  $scope.country = {};
+  $scope.countries = [ // Taken from https://gist.github.com/unceus/6501985
+    {name: 'Afghanistan', code: 'AF'},
+    {name: 'Åland Islands', code: 'AX'},
+    {name: 'Albania', code: 'AL'},
+    {name: 'Algeria', code: 'DZ'},
+    {name: 'American Samoa', code: 'AS'},
+    {name: 'Andorra', code: 'AD'},
+    {name: 'Angola', code: 'AO'},
+    {name: 'Anguilla', code: 'AI'},
+    {name: 'Antarctica', code: 'AQ'},
+    {name: 'Antigua and Barbuda', code: 'AG'},
+    {name: 'Argentina', code: 'AR'},
+    {name: 'Armenia', code: 'AM'},
+    {name: 'Aruba', code: 'AW'},
+    {name: 'Australia', code: 'AU'},
+    {name: 'Austria', code: 'AT'},
+    {name: 'Azerbaijan', code: 'AZ'},
+    {name: 'Bahamas', code: 'BS'},
+    {name: 'Bahrain', code: 'BH'},
+    {name: 'Bangladesh', code: 'BD'},
+    {name: 'Barbados', code: 'BB'},
+    {name: 'Belarus', code: 'BY'},
+    {name: 'Belgium', code: 'BE'},
+    {name: 'Belize', code: 'BZ'},
+    {name: 'Benin', code: 'BJ'},
+    {name: 'Bermuda', code: 'BM'},
+    {name: 'Bhutan', code: 'BT'},
+    {name: 'Bolivia', code: 'BO'},
+    {name: 'Bosnia and Herzegovina', code: 'BA'},
+    {name: 'Botswana', code: 'BW'},
+    {name: 'Bouvet Island', code: 'BV'},
+    {name: 'Brazil', code: 'BR'},
+    {name: 'British Indian Ocean Territory', code: 'IO'},
+    {name: 'Brunei Darussalam', code: 'BN'},
+    {name: 'Bulgaria', code: 'BG'},
+    {name: 'Burkina Faso', code: 'BF'},
+    {name: 'Burundi', code: 'BI'},
+    {name: 'Cambodia', code: 'KH'},
+    {name: 'Cameroon', code: 'CM'},
+    {name: 'Canada', code: 'CA'},
+    {name: 'Cape Verde', code: 'CV'},
+    {name: 'Cayman Islands', code: 'KY'},
+    {name: 'Central African Republic', code: 'CF'},
+    {name: 'Chad', code: 'TD'},
+    {name: 'Chile', code: 'CL'},
+    {name: 'China', code: 'CN'},
+    {name: 'Christmas Island', code: 'CX'},
+    {name: 'Cocos (Keeling) Islands', code: 'CC'},
+    {name: 'Colombia', code: 'CO'},
+    {name: 'Comoros', code: 'KM'},
+    {name: 'Congo', code: 'CG'},
+    {name: 'Congo, The Democratic Republic of the', code: 'CD'},
+    {name: 'Cook Islands', code: 'CK'},
+    {name: 'Costa Rica', code: 'CR'},
+    {name: 'Cote D\'Ivoire', code: 'CI'},
+    {name: 'Croatia', code: 'HR'},
+    {name: 'Cuba', code: 'CU'},
+    {name: 'Cyprus', code: 'CY'},
+    {name: 'Czech Republic', code: 'CZ'},
+    {name: 'Denmark', code: 'DK'},
+    {name: 'Djibouti', code: 'DJ'},
+    {name: 'Dominica', code: 'DM'},
+    {name: 'Dominican Republic', code: 'DO'},
+    {name: 'Ecuador', code: 'EC'},
+    {name: 'Egypt', code: 'EG'},
+    {name: 'El Salvador', code: 'SV'},
+    {name: 'Equatorial Guinea', code: 'GQ'},
+    {name: 'Eritrea', code: 'ER'},
+    {name: 'Estonia', code: 'EE'},
+    {name: 'Ethiopia', code: 'ET'},
+    {name: 'Falkland Islands (Malvinas)', code: 'FK'},
+    {name: 'Faroe Islands', code: 'FO'},
+    {name: 'Fiji', code: 'FJ'},
+    {name: 'Finland', code: 'FI'},
+    {name: 'France', code: 'FR'},
+    {name: 'French Guiana', code: 'GF'},
+    {name: 'French Polynesia', code: 'PF'},
+    {name: 'French Southern Territories', code: 'TF'},
+    {name: 'Gabon', code: 'GA'},
+    {name: 'Gambia', code: 'GM'},
+    {name: 'Georgia', code: 'GE'},
+    {name: 'Germany', code: 'DE'},
+    {name: 'Ghana', code: 'GH'},
+    {name: 'Gibraltar', code: 'GI'},
+    {name: 'Greece', code: 'GR'},
+    {name: 'Greenland', code: 'GL'},
+    {name: 'Grenada', code: 'GD'},
+    {name: 'Guadeloupe', code: 'GP'},
+    {name: 'Guam', code: 'GU'},
+    {name: 'Guatemala', code: 'GT'},
+    {name: 'Guernsey', code: 'GG'},
+    {name: 'Guinea', code: 'GN'},
+    {name: 'Guinea-Bissau', code: 'GW'},
+    {name: 'Guyana', code: 'GY'},
+    {name: 'Haiti', code: 'HT'},
+    {name: 'Heard Island and Mcdonald Islands', code: 'HM'},
+    {name: 'Holy See (Vatican City State)', code: 'VA'},
+    {name: 'Honduras', code: 'HN'},
+    {name: 'Hong Kong', code: 'HK'},
+    {name: 'Hungary', code: 'HU'},
+    {name: 'Iceland', code: 'IS'},
+    {name: 'India', code: 'IN'},
+    {name: 'Indonesia', code: 'ID'},
+    {name: 'Iran, Islamic Republic Of', code: 'IR'},
+    {name: 'Iraq', code: 'IQ'},
+    {name: 'Ireland', code: 'IE'},
+    {name: 'Isle of Man', code: 'IM'},
+    {name: 'Israel', code: 'IL'},
+    {name: 'Italy', code: 'IT'},
+    {name: 'Jamaica', code: 'JM'},
+    {name: 'Japan', code: 'JP'},
+    {name: 'Jersey', code: 'JE'},
+    {name: 'Jordan', code: 'JO'},
+    {name: 'Kazakhstan', code: 'KZ'},
+    {name: 'Kenya', code: 'KE'},
+    {name: 'Kiribati', code: 'KI'},
+    {name: 'Korea, Democratic People\'s Republic of', code: 'KP'},
+    {name: 'Korea, Republic of', code: 'KR'},
+    {name: 'Kuwait', code: 'KW'},
+    {name: 'Kyrgyzstan', code: 'KG'},
+    {name: 'Lao People\'s Democratic Republic', code: 'LA'},
+    {name: 'Latvia', code: 'LV'},
+    {name: 'Lebanon', code: 'LB'},
+    {name: 'Lesotho', code: 'LS'},
+    {name: 'Liberia', code: 'LR'},
+    {name: 'Libyan Arab Jamahiriya', code: 'LY'},
+    {name: 'Liechtenstein', code: 'LI'},
+    {name: 'Lithuania', code: 'LT'},
+    {name: 'Luxembourg', code: 'LU'},
+    {name: 'Macao', code: 'MO'},
+    {name: 'Macedonia, The Former Yugoslav Republic of', code: 'MK'},
+    {name: 'Madagascar', code: 'MG'},
+    {name: 'Malawi', code: 'MW'},
+    {name: 'Malaysia', code: 'MY'},
+    {name: 'Maldives', code: 'MV'},
+    {name: 'Mali', code: 'ML'},
+    {name: 'Malta', code: 'MT'},
+    {name: 'Marshall Islands', code: 'MH'},
+    {name: 'Martinique', code: 'MQ'},
+    {name: 'Mauritania', code: 'MR'},
+    {name: 'Mauritius', code: 'MU'},
+    {name: 'Mayotte', code: 'YT'},
+    {name: 'Mexico', code: 'MX'},
+    {name: 'Micronesia, Federated States of', code: 'FM'},
+    {name: 'Moldova, Republic of', code: 'MD'},
+    {name: 'Monaco', code: 'MC'},
+    {name: 'Mongolia', code: 'MN'},
+    {name: 'Montserrat', code: 'MS'},
+    {name: 'Morocco', code: 'MA'},
+    {name: 'Mozambique', code: 'MZ'},
+    {name: 'Myanmar', code: 'MM'},
+    {name: 'Namibia', code: 'NA'},
+    {name: 'Nauru', code: 'NR'},
+    {name: 'Nepal', code: 'NP'},
+    {name: 'Netherlands', code: 'NL'},
+    {name: 'Netherlands Antilles', code: 'AN'},
+    {name: 'New Caledonia', code: 'NC'},
+    {name: 'New Zealand', code: 'NZ'},
+    {name: 'Nicaragua', code: 'NI'},
+    {name: 'Niger', code: 'NE'},
+    {name: 'Nigeria', code: 'NG'},
+    {name: 'Niue', code: 'NU'},
+    {name: 'Norfolk Island', code: 'NF'},
+    {name: 'Northern Mariana Islands', code: 'MP'},
+    {name: 'Norway', code: 'NO'},
+    {name: 'Oman', code: 'OM'},
+    {name: 'Pakistan', code: 'PK'},
+    {name: 'Palau', code: 'PW'},
+    {name: 'Palestinian Territory, Occupied', code: 'PS'},
+    {name: 'Panama', code: 'PA'},
+    {name: 'Papua New Guinea', code: 'PG'},
+    {name: 'Paraguay', code: 'PY'},
+    {name: 'Peru', code: 'PE'},
+    {name: 'Philippines', code: 'PH'},
+    {name: 'Pitcairn', code: 'PN'},
+    {name: 'Poland', code: 'PL'},
+    {name: 'Portugal', code: 'PT'},
+    {name: 'Puerto Rico', code: 'PR'},
+    {name: 'Qatar', code: 'QA'},
+    {name: 'Reunion', code: 'RE'},
+    {name: 'Romania', code: 'RO'},
+    {name: 'Russian Federation', code: 'RU'},
+    {name: 'Rwanda', code: 'RW'},
+    {name: 'Saint Helena', code: 'SH'},
+    {name: 'Saint Kitts and Nevis', code: 'KN'},
+    {name: 'Saint Lucia', code: 'LC'},
+    {name: 'Saint Pierre and Miquelon', code: 'PM'},
+    {name: 'Saint Vincent and the Grenadines', code: 'VC'},
+    {name: 'Samoa', code: 'WS'},
+    {name: 'San Marino', code: 'SM'},
+    {name: 'Sao Tome and Principe', code: 'ST'},
+    {name: 'Saudi Arabia', code: 'SA'},
+    {name: 'Senegal', code: 'SN'},
+    {name: 'Serbia and Montenegro', code: 'CS'},
+    {name: 'Seychelles', code: 'SC'},
+    {name: 'Sierra Leone', code: 'SL'},
+    {name: 'Singapore', code: 'SG'},
+    {name: 'Slovakia', code: 'SK'},
+    {name: 'Slovenia', code: 'SI'},
+    {name: 'Solomon Islands', code: 'SB'},
+    {name: 'Somalia', code: 'SO'},
+    {name: 'South Africa', code: 'ZA'},
+    {name: 'South Georgia and the South Sandwich Islands', code: 'GS'},
+    {name: 'Spain', code: 'ES'},
+    {name: 'Sri Lanka', code: 'LK'},
+    {name: 'Sudan', code: 'SD'},
+    {name: 'Suriname', code: 'SR'},
+    {name: 'Svalbard and Jan Mayen', code: 'SJ'},
+    {name: 'Swaziland', code: 'SZ'},
+    {name: 'Sweden', code: 'SE'},
+    {name: 'Switzerland', code: 'CH'},
+    {name: 'Syrian Arab Republic', code: 'SY'},
+    {name: 'Taiwan, Province of China', code: 'TW'},
+    {name: 'Tajikistan', code: 'TJ'},
+    {name: 'Tanzania, United Republic of', code: 'TZ'},
+    {name: 'Thailand', code: 'TH'},
+    {name: 'Timor-Leste', code: 'TL'},
+    {name: 'Togo', code: 'TG'},
+    {name: 'Tokelau', code: 'TK'},
+    {name: 'Tonga', code: 'TO'},
+    {name: 'Trinidad and Tobago', code: 'TT'},
+    {name: 'Tunisia', code: 'TN'},
+    {name: 'Turkey', code: 'TR'},
+    {name: 'Turkmenistan', code: 'TM'},
+    {name: 'Turks and Caicos Islands', code: 'TC'},
+    {name: 'Tuvalu', code: 'TV'},
+    {name: 'Uganda', code: 'UG'},
+    {name: 'Ukraine', code: 'UA'},
+    {name: 'United Arab Emirates', code: 'AE'},
+    {name: 'United Kingdom', code: 'GB'},
+    {name: 'United States', code: 'US'},
+    {name: 'United States Minor Outlying Islands', code: 'UM'},
+    {name: 'Uruguay', code: 'UY'},
+    {name: 'Uzbekistan', code: 'UZ'},
+    {name: 'Vanuatu', code: 'VU'},
+    {name: 'Venezuela', code: 'VE'},
+    {name: 'Vietnam', code: 'VN'},
+    {name: 'Virgin Islands, British', code: 'VG'},
+    {name: 'Virgin Islands, U.S.', code: 'VI'},
+    {name: 'Wallis and Futuna', code: 'WF'},
+    {name: 'Western Sahara', code: 'EH'},
+    {name: 'Yemen', code: 'YE'},
+    {name: 'Zambia', code: 'ZM'},
+    {name: 'Zimbabwe', code: 'ZW'}
+  ];
+
+
+  // Multiple
+  $scope.someGroupFn = function (item){
+
+    if (item.name[0] >= 'A' && item.name[0] <= 'M')
+        return 'From A - M';
+
+    if (item.name[0] >= 'N' && item.name[0] <= 'Z')
+        return 'From N - Z';
+
+  };
+
+  $scope.counter = 0;
+  $scope.someFunction = function (item, model){
+    $scope.counter++;
+    $scope.eventResult = {item: item, model: model};
+  };
+
+  $scope.artilcesTypes = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
+
+  $scope.multipleDemo = {};
+  $scope.multipleDemo.colors = ['Blue','Red'];
+  $scope.multipleDemo.selectedPeople = [$scope.people[5], $scope.people[4]];
+  $scope.multipleDemo.selectedPeopleWithGroupBy = [$scope.people[8], $scope.people[6]];
+  $scope.multipleDemo.selectedPeopleSimple = ['samantha@email.com','wladimir@email.com'];
+
+}]);
+
+
+/**
+ * AngularJS default filter with the following expression:
+ * "person in people | filter: {name: $select.search, age: $select.search}"
+ * performs a AND between 'name: $select.search' and 'age: $select.search'.
+ * We want to perform a OR.
+ */
+App.filter('propsFilter', function() {
+  return function(items, props) {
+    var out = [];
+
+    if (angular.isArray(items)) {
+      items.forEach(function(item) {
+        var itemMatches = false;
+
+        var keys = Object.keys(props);
+        for (var i = 0; i < keys.length; i++) {
+          var prop = keys[i];
+          var text = props[prop].toLowerCase();
+          if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+            itemMatches = true;
+            break;
+          }
+        }
+
+        if (itemMatches) {
+          out.push(item);
+        }
+      });
+    } else {
+      // Let the output be the input untouched
+      out = items;
+    }
+
+    return out;
+  };
+});
+/**=========================================================
+ * Module: anchor.js
+ * Disables null anchor behavior
+ =========================================================*/
+
+App.directive('href', function() {
+
+  return {
+    restrict: 'A',
+    compile: function(element, attr) {
+        return function(scope, element) {
+          if(attr.ngClick || attr.href === '' || attr.href === '#'){
+            if( !element.hasClass('dropdown-toggle') )
+              element.on('click', function(e){
+                e.preventDefault();
+                e.stopPropagation();
+              });
+          }
+        };
+      }
+   };
+});
+/**=========================================================
+ * Module: animate-enabled.js
+ * Enable or disables ngAnimate for element with directive
+ =========================================================*/
+
+App.directive("animateEnabled", ["$animate", function ($animate) {
+  return {
+    link: function (scope, element, attrs) {
+      scope.$watch(function () {
+        return scope.$eval(attrs.animateEnabled, scope);
+      }, function (newValue) {
+        $animate.enabled(!!newValue, element);
+      });
+    }
+  };
+}]);
+/**=========================================================
+ * Module: chart.js
+ * Wrapper directive for chartJS. 
+ * Based on https://gist.github.com/AndreasHeiberg/9837868
+ =========================================================*/
+
+var ChartJS = function (type) {
+    return {
+        restrict: "A",
+        scope: {
+            data: "=",
+            options: "=",
+            id: "@",
+            width: "=",
+            height: "=",
+            resize: "=",
+            chart: "@",
+            segments: "@",
+            responsive: "=",
+            tooltip: "=",
+            legend: "="
+        },
+        link: function ($scope, $elem) {
+            var ctx = $elem[0].getContext("2d");
+            var autosize = false;
+
+            $scope.size = function () {
+                if ($scope.width <= 0) {
+                    $elem.width($elem.parent().width());
+                    ctx.canvas.width = $elem.width();
+                } else {
+                    ctx.canvas.width = $scope.width || ctx.canvas.width;
+                    autosize = true;
+                }
+
+                if($scope.height <= 0){
+                    $elem.height($elem.parent().height());
+                    ctx.canvas.height = ctx.canvas.width / 2;
+                } else {
+                    ctx.canvas.height = $scope.height || ctx.canvas.height;
+                    autosize = true;
+                }
+            };
+
+            $scope.$watch("data", function (newVal, oldVal) {
+                if(chartCreated)
+                    chartCreated.destroy();
+
+                // if data not defined, exit
+                if (!newVal) {
+                    return;
+                }
+                if ($scope.chart) { type = $scope.chart; }
+
+                if(autosize){
+                    $scope.size();
+                    chart = new Chart(ctx);
+                }
+
+                if($scope.responsive || $scope.resize)
+                    $scope.options.responsive = true;
+
+                if($scope.responsive !== undefined)
+                    $scope.options.responsive = $scope.responsive;
+
+                chartCreated = chart[type]($scope.data, $scope.options);
+                chartCreated.update();
+                if($scope.legend)
+                    angular.element($elem[0]).parent().after( chartCreated.generateLegend() );
+            }, true);
+
+            $scope.$watch("tooltip", function (newVal, oldVal) {
+                if (chartCreated)
+                    chartCreated.draw();
+                if(newVal===undefined || !chartCreated.segments)
+                    return;
+                if(!isFinite(newVal) || newVal >= chartCreated.segments.length || newVal < 0)
+                    return;
+                var activeSegment = chartCreated.segments[newVal];
+                activeSegment.save();
+                activeSegment.fillColor = activeSegment.highlightColor;
+                chartCreated.showTooltip([activeSegment]);
+                activeSegment.restore();
+            }, true);
+
+            $scope.size();
+            var chart = new Chart(ctx);
+            var chartCreated;
+        }
+    };
+};
+
+/* Aliases for various chart types */
+App.directive("chartjs",       function () { return ChartJS(); });
+App.directive("linechart",     function () { return ChartJS("Line"); });
+App.directive("barchart",      function () { return ChartJS("Bar"); });
+App.directive("radarchart",    function () { return ChartJS("Radar"); });
+App.directive("polarchart",    function () { return ChartJS("PolarArea"); });
+App.directive("piechart",      function () { return ChartJS("Pie"); });
+App.directive("doughnutchart", function () { return ChartJS("Doughnut"); });
+App.directive("donutchart",    function () { return ChartJS("Doughnut"); });
+
+/**=========================================================
+ * Module: classy-loader.js
+ * Enable use of classyloader directly from data attributes
+ =========================================================*/
+
+App.directive('classyloader', ["$timeout", "Utils", function($timeout, Utils) {
+  'use strict';
+
+  var $scroller       = $(window),
+      inViewFlagClass = 'js-is-in-view'; // a classname to detect when a chart has been triggered after scroll
+
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      // run after interpolation  
+      $timeout(function(){
+  
+        var $element = $(element),
+            options  = $element.data();
+        
+        // At lease we need a data-percentage attribute
+        if(options) {
+          if( options.triggerInView ) {
+
+            $scroller.scroll(function() {
+              checkLoaderInVIew($element, options);
+            });
+            // if the element starts already in view
+            checkLoaderInVIew($element, options);
+          }
+          else
+            startLoader($element, options);
+        }
+
+      }, 0);
+
+      function checkLoaderInVIew(element, options) {
+        var offset = -20;
+        if( ! element.hasClass(inViewFlagClass) &&
+            Utils.isInView(element, {topoffset: offset}) ) {
+          startLoader(element, options);
+        }
+      }
+      function startLoader(element, options) {
+        element.ClassyLoader(options).addClass(inViewFlagClass);
+      }
+    }
+  };
+}]);
+
+/**=========================================================
+ * Module: clear-storage.js
+ * Removes a key from the browser storage via element click
+ =========================================================*/
+
+App.directive('resetKey',  ['$state','$rootScope', function($state, $rootScope) {
+  'use strict';
+
+  return {
+    restrict: 'A',
+    scope: {
+      resetKey: '='
+    },
+    link: function(scope, element, attrs) {
+      
+      scope.resetKey = attrs.resetKey;
+
+    },
+    controller: ["$scope", "$element", function($scope, $element) {
+    
+      $element.on('click', function (e) {
+          e.preventDefault();
+
+          if($scope.resetKey) {
+            delete $rootScope.$storage[$scope.resetKey];
+            $state.go($state.current, {}, {reload: true});
+          }
+          else {
+            $.error('No storage key specified for reset.');
+          }
+      });
+
+    }]
+
+  };
+
+}]);
+/**=========================================================
+ * Module: filestyle.js
+ * Initializes the fielstyle plugin
+ =========================================================*/
+
+App.directive('filestyle', function() {
+  return {
+    restrict: 'A',
+    controller: ["$scope", "$element", function($scope, $element) {
+      var options = $element.data();
+      
+      // old usage support
+        options.classInput = $element.data('classinput') || options.classInput;
+      
+      $element.filestyle(options);
+    }]
+  };
+});
+
+/**=========================================================
+ * Module: flatdoc.js
+ * Creates the flatdoc markup and initializes the plugin
+ =========================================================*/
+
+App.directive('flatdoc', ['$location', function($location) {
+  return {
+    restrict: "EA",
+    template: "<div role='flatdoc'><div role='flatdoc-menu'></div><div role='flatdoc-content'></div></div>",
+    link: function(scope, element, attrs) {
+
+      Flatdoc.run({
+        fetcher: Flatdoc.file(attrs.src)
+      });
+      
+      var $root = $('html, body');
+      $(document).on('flatdoc:ready', function() {
+        var docMenu = $('[role="flatdoc-menu"]');
+        docMenu.find('a').on('click', function(e) {
+          e.preventDefault(); e.stopPropagation();
+          
+          var $this = $(this);
+          
+          docMenu.find('a.active').removeClass('active');
+          $this.addClass('active');
+
+          $root.animate({
+                scrollTop: $(this.getAttribute('href')).offset().top - ($('.topnavbar').height() + 10)
+            }, 800);
+        });
+
+      });
+    }
+  };
+
+}]);
+/**=========================================================
+ * Module: flot.js
+ * Initializes the Flot chart plugin and handles data refresh
+ =========================================================*/
+
+App.directive('flot', ['$http', '$timeout', function($http, $timeout) {
+  'use strict';
+  return {
+    restrict: 'EA',
+    template: '<div></div>',
+    scope: {
+      dataset: '=?',
+      options: '=',
+      series: '=',
+      callback: '=',
+      src: '='
+    },
+    link: linkFunction
+  };
+  
+  function linkFunction(scope, element, attributes) {
+    var height, plot, plotArea, width;
+    var heightDefault = 220;
+
+    plot = null;
+
+    width = attributes.width || '100%';
+    height = attributes.height || heightDefault;
+
+    plotArea = $(element.children()[0]);
+    plotArea.css({
+      width: width,
+      height: height
+    });
+
+    function init() {
+      var plotObj;
+      if(!scope.dataset || !scope.options) return;
+      plotObj = $.plot(plotArea, scope.dataset, scope.options);
+      scope.$emit('plotReady', plotObj);
+      if (scope.callback) {
+        scope.callback(plotObj, scope);
+      }
+
+      return plotObj;
+    }
+
+    function onDatasetChanged(dataset) {
+      if (plot) {
+        plot.setData(dataset);
+        plot.setupGrid();
+        return plot.draw();
+      } else {
+        plot = init();
+        onSerieToggled(scope.series);
+        return plot;
+      }
+    }
+    scope.$watchCollection('dataset', onDatasetChanged, true);
+
+    function onSerieToggled (series) {
+      if( !plot || !series ) return;
+      var someData = plot.getData();
+      for(var sName in series) {
+        angular.forEach(series[sName], toggleFor(sName));
+      }
+      
+      plot.setData(someData);
+      plot.draw();
+      
+      function toggleFor(sName) {
+        return function (s, i){
+          if(someData[i] && someData[i][sName])
+            someData[i][sName].show = s;
+        };
+      }
+    }
+    scope.$watch('series', onSerieToggled, true);
+    
+    function onSrcChanged(src) {
+
+      if( src ) {
+
+        $http.get(src)
+          .success(function (data) {
+
+            $timeout(function(){
+              scope.dataset = data;
+            });
+
+        }).error(function(){
+          $.error('Flot chart: Bad request.');
+        });
+        
+      }
+    }
+    scope.$watch('src', onSrcChanged);
+  }
+
+}]);
+
+/**=========================================================
+ * Module: form-wizard.js
+ * Handles form wizard plugin and validation
+ =========================================================*/
+
+App.directive('formWizard', ["$parse", function($parse){
+  'use strict';
+
+  return {
+    restrict: 'A',
+    scope: true,
+    link: function(scope, element, attribute) {
+      var validate = $parse(attribute.validateSteps)(scope),
+          wiz = new Wizard(attribute.steps, !!validate, element);
+      scope.wizard = wiz.init();
+
+    }
+  };
+
+  function Wizard (quantity, validate, element) {
+    
+    var self = this;
+    self.quantity = parseInt(quantity,10);
+    self.validate = validate;
+    self.element = element;
+    
+    self.init = function() {
+      self.createsteps(self.quantity);
+      self.go(1); // always start at fist step
+      return self;
+    };
+
+    self.go = function(step) {
+      
+      if ( angular.isDefined(self.steps[step]) ) {
+
+        if(self.validate && step !== 1) {
+          var form = $(self.element),
+              group = form.children().children('div').get(step - 2);
+
+          if (false === form.parsley().validate( group.id )) {
+            return false;
+          }
+        }
+
+        self.cleanall();
+        self.steps[step] = true;
+      }
+    };
+
+    self.active = function(step) {
+      return !!self.steps[step];
+    };
+
+    self.cleanall = function() {
+      for(var i in self.steps){
+        self.steps[i] = false;
+      }
+    };
+
+    self.createsteps = function(q) {
+      self.steps = [];
+      for(var i = 1; i <= q; i++) self.steps[i] = false;
+    };
+
+  }
+
+}]);
+
+/**=========================================================
+ * Module: fullscreen.js
+ * Toggle the fullscreen mode on/off
+ =========================================================*/
+
+App.directive('toggleFullscreen', function() {
+  'use strict';
+
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+
+      element.on('click', function (e) {
+          e.preventDefault();
+
+          if (screenfull.enabled) {
+            
+            screenfull.toggle();
+            
+            // Switch icon indicator
+            if(screenfull.isFullscreen)
+              $(this).children('em').removeClass('fa-expand').addClass('fa-compress');
+            else
+              $(this).children('em').removeClass('fa-compress').addClass('fa-expand');
+
+          } else {
+            $.error('Fullscreen not enabled');
+          }
+
+      });
+    }
+  };
+
+});
+
+
+/**=========================================================
+ * Module: load-css.js
+ * Request and load into the current page a css file
+ =========================================================*/
+
+App.directive('loadCss', function() {
+  'use strict';
+
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      element.on('click', function (e) {
+          if(element.is('a')) e.preventDefault();
+          var uri = attrs.loadCss,
+              link;
+
+          if(uri) {
+            link = createLink(uri);
+            if ( !link ) {
+              $.error('Error creating stylesheet link element.');
+            }
+          }
+          else {
+            $.error('No stylesheet location defined.');
+          }
+
+      });
+
+    }
+  };
+
+  function createLink(uri) {
+    var linkId = 'autoloaded-stylesheet',
+        oldLink = $('#'+linkId).attr('id', linkId + '-old');
+
+    $('head').append($('<link/>').attr({
+      'id':   linkId,
+      'rel':  'stylesheet',
+      'href': uri
+    }));
+
+    if( oldLink.length ) {
+      oldLink.remove();
+    }
+
+    return $('#'+linkId);
+  }
+
+
+});
+/**=========================================================
+ * Module: masked,js
+ * Initializes the masked inputs
+ =========================================================*/
+
+App.directive('masked', function() {
+  return {
+    restrict: 'A',
+    controller: ["$scope", "$element", function($scope, $element) {
+      var $elem = $($element);
+      if($.fn.inputmask)
+        $elem.inputmask();
+    }]
+  };
+});
+
+/**=========================================================
+ * Module: morris.js
+ * AngularJS Directives for Morris Charts
+ =========================================================*/
+
+(function() {
+    "use strict";
+
+    App.directive('morrisBar',   morrisChart('Bar')   );
+    App.directive('morrisDonut', morrisChart('Donut') );
+    App.directive('morrisLine',  morrisChart('Line')  );
+    App.directive('morrisArea',  morrisChart('Area')  );
+
+    function morrisChart(type) {
+      return function () {
+        return {
+          restrict: 'EA',
+          scope: {
+            morrisData: '=',
+            morrisOptions: '='
+          },
+          link: function($scope, elem, attrs) {
+            // start ready to watch for changes in data
+            $scope.$watch("morrisData", function(newVal, oldVal) {
+              if (newVal) {
+                $scope.morrisInstance.setData(newVal);
+                $scope.morrisInstance.redraw();
+              }
+            }, true);
+            // the element that contains the chart
+            $scope.morrisOptions.element = elem;
+            // If data defined copy to options
+            if($scope.morrisData)
+              $scope.morrisOptions.data = $scope.morrisData;
+            // Init chart
+            $scope.morrisInstance = new Morris[type]($scope.morrisOptions);
+
+          }
+        }
+      }
+    }
+
+})();
+
+/**=========================================================
+ * Module: navbar-search.js
+ * Navbar search toggler * Auto dismiss on ESC key
+ =========================================================*/
+
+App.directive('searchOpen', ['navSearch', function(navSearch) {
+  'use strict';
+
+  return {
+    restrict: 'A',
+    controller: ["$scope", "$element", function($scope, $element) {
+      $element
+        .on('click', function (e) { e.stopPropagation(); })
+        .on('click', navSearch.toggle);
+    }]
+  };
+
+}]).directive('searchDismiss', ['navSearch', function(navSearch) {
+  'use strict';
+
+  var inputSelector = '.navbar-form input[type="text"]';
+
+  return {
+    restrict: 'A',
+    controller: ["$scope", "$element", function($scope, $element) {
+
+      $(inputSelector)
+        .on('click', function (e) { e.stopPropagation(); })
+        .on('keyup', function(e) {
+          if (e.keyCode == 27) // ESC
+            navSearch.dismiss();
+        });
+        
+      // click anywhere closes the search
+      $(document).on('click', navSearch.dismiss);
+      // dismissable options
+      $element
+        .on('click', function (e) { e.stopPropagation(); })
+        .on('click', navSearch.dismiss);
+    }]
+  };
+
+}]);
+
+
+/**=========================================================
+ * Module: nestable.js
+ * Initializes the nestable plugin
+ =========================================================*/
+
+App.directive('nestable', ["$timeout", function($timeout) {
+  return {
+    restrict: 'A',
+    scope: {
+      'nestableControl': '='
+    },
+    controller: ["$scope", "$element", function($scope, $element) {
+      var options = $element.data();
+      
+      $timeout(function(){
+        $element.nestable(options);
+      });
+
+      if ( $scope.nestableControl ) {
+        var nest = $scope.nestableControl;
+        nest.serialize = function() { return $element.nestable('serialize'); };
+        nest.expandAll = runMethod('expandAll');
+        nest.collapseAll = runMethod('collapseAll');
+
+        $element.on('change', function(){
+          if ( typeof nest.onchange === 'function')
+            $timeout(function() {
+              nest.onchange.apply(arguments);
+            });
+        });
+      }
+      
+      function runMethod(name) {
+        return function() {
+          $element.nestable(name);
+        };
+      }
+    }]
+  };
+
+}]);
+
+/**=========================================================
+ * Module: notify.js
+ * Directive for notify plugin
+ =========================================================*/
+
+App.directive('notify', ["$window", "Notify", function($window, Notify){
+
+  return {
+    restrict: 'A',
+    scope: {
+        options: '=',
+        message: '='
+    },
+    link: function (scope, element, attrs) {
+      
+      element.on('click', function (e) {
+        e.preventDefault();
+        Notify.alert(scope.message, scope.options);
+      });
+
+    }
+  };
+
+}]);
+
+
+/**=========================================================
+ * Module: now.js
+ * Provides a simple way to display the current time formatted
+ =========================================================*/
+
+App.directive("now", ['dateFilter', '$interval', function(dateFilter, $interval){
+    return {
+      restrict: 'E',
+      link: function(scope, element, attrs){
+        
+        var format = attrs.format;
+
+        function updateTime() {
+          var dt = dateFilter(new Date(), format);
+          element.text(dt);
+        }
+
+        updateTime();
+        $interval(updateTime, 1000);
+      }
+    };
+}]);
+/**=========================================================
+ * Module panel-tools.js
+ * Directive tools to control panels. 
+ * Allows collapse, refresh and dismiss (remove)
+ * Saves panel state in browser storage
+ =========================================================*/
+
+App.directive('paneltool', ["$compile", "$timeout", function($compile, $timeout){
+  var templates = {
+    /* jshint multistr: true */
+    collapse:"<a href='#' panel-collapse='' tooltip='Collapse Panel' ng-click='{{panelId}} = !{{panelId}}'> \
+                <em ng-show='{{panelId}}' class='fa fa-plus'></em> \
+                <em ng-show='!{{panelId}}' class='fa fa-minus'></em> \
+              </a>",
+    dismiss: "<a href='#' panel-dismiss='' tooltip='Close Panel'>\
+               <em class='fa fa-times'></em>\
+             </a>",
+    refresh: "<a href='#' panel-refresh='' data-spinner='{{spinner}}' tooltip='Refresh Panel'>\
+               <em class='fa fa-refresh'></em>\
+             </a>"
+  };
+
+  function getTemplate( elem, attrs ){
+    var temp = '';
+    attrs = attrs || {};
+    if(attrs.toolCollapse)
+      temp += templates.collapse.replace(/{{panelId}}/g, (elem.parent().parent().attr('id')) );
+    if(attrs.toolDismiss)
+      temp += templates.dismiss;
+    if(attrs.toolRefresh)
+      temp += templates.refresh.replace(/{{spinner}}/g, attrs.toolRefresh);
+    return temp;
+  }
+  
+  return {
+    restrict: 'E',
+    scope: false,
+    link: function (scope, element, attrs) {
+
+      var tools = scope.panelTools || attrs;
+  
+      $timeout(function() {
+        element.html(getTemplate(element, tools )).show();
+        $compile(element.contents())(scope);
+        
+        element.addClass('pull-right');
+      });
+
+    }
+  };
+}])
+/**=========================================================
+ * Dismiss panels * [panel-dismiss]
+ =========================================================*/
+.directive('panelDismiss', ["$q", "Utils", function($q, Utils){
+  'use strict';
+  return {
+    restrict: 'A',
+    controller: ["$scope", "$element", function ($scope, $element) {
+      var removeEvent   = 'panel-remove',
+          removedEvent  = 'panel-removed';
+
+      $element.on('click', function () {
+
+        // find the first parent panel
+        var parent = $(this).closest('.panel');
+
+        removeElement();
+
+        function removeElement() {
+          var deferred = $q.defer();
+          var promise = deferred.promise;
+          
+          // Communicate event destroying panel
+          $scope.$emit(removeEvent, parent.attr('id'), deferred);
+          promise.then(destroyMiddleware);
+        }
+
+        // Run the animation before destroy the panel
+        function destroyMiddleware() {
+          if(Utils.support.animation) {
+            parent.animo({animation: 'bounceOut'}, destroyPanel);
+          }
+          else destroyPanel();
+        }
+
+        function destroyPanel() {
+
+          var col = parent.parent();
+          parent.remove();
+          // remove the parent if it is a row and is empty and not a sortable (portlet)
+          col
+            .filter(function() {
+            var el = $(this);
+            return (el.is('[class*="col-"]:not(.sortable)') && el.children('*').length === 0);
+          }).remove();
+
+          // Communicate event destroyed panel
+          $scope.$emit(removedEvent, parent.attr('id'));
+
+        }
+      });
+    }]
+  };
+}])
+/**=========================================================
+ * Collapse panels * [panel-collapse]
+ =========================================================*/
+.directive('panelCollapse', ['$timeout', function($timeout){
+  'use strict';
+  
+  var storageKeyName = 'panelState',
+      storage;
+  
+  return {
+    restrict: 'A',
+    scope: false,
+    controller: ["$scope", "$element", function ($scope, $element) {
+
+      // Prepare the panel to be collapsible
+      var $elem   = $($element),
+          parent  = $elem.closest('.panel'), // find the first parent panel
+          panelId = parent.attr('id');
+
+      storage = $scope.$storage;
+
+      // Load the saved state if exists
+      var currentState = loadPanelState( panelId );
+      if ( typeof currentState !== 'undefined') {
+        $timeout(function(){
+            $scope[panelId] = currentState; },
+          10);
+      }
+
+      // bind events to switch icons
+      $element.bind('click', function() {
+
+        savePanelState( panelId, !$scope[panelId] );
+
+      });
+    }]
+  };
+
+  function savePanelState(id, state) {
+    if(!id) return false;
+    var data = angular.fromJson(storage[storageKeyName]);
+    if(!data) { data = {}; }
+    data[id] = state;
+    storage[storageKeyName] = angular.toJson(data);
+  }
+
+  function loadPanelState(id) {
+    if(!id) return false;
+    var data = angular.fromJson(storage[storageKeyName]);
+    if(data) {
+      return data[id];
+    }
+  }
+
+}])
+/**=========================================================
+ * Refresh panels
+ * [panel-refresh] * [data-spinner="standard"]
+ =========================================================*/
+.directive('panelRefresh', ["$q", function($q){
+  'use strict';
+  
+  return {
+    restrict: 'A',
+    scope: false,
+    controller: ["$scope", "$element", function ($scope, $element) {
+      
+      var refreshEvent   = 'panel-refresh',
+          whirlClass     = 'whirl',
+          defaultSpinner = 'standard';
+
+
+      // catch clicks to toggle panel refresh
+      $element.on('click', function () {
+        var $this   = $(this),
+            panel   = $this.parents('.panel').eq(0),
+            spinner = $this.data('spinner') || defaultSpinner
+            ;
+
+        // start showing the spinner
+        panel.addClass(whirlClass + ' ' + spinner);
+
+        // Emit event when refresh clicked
+        $scope.$emit(refreshEvent, panel.attr('id'));
+
+      });
+
+      // listen to remove spinner
+      $scope.$on('removeSpinner', removeSpinner);
+
+      // method to clear the spinner when done
+      function removeSpinner (ev, id) {
+        if (!id) return;
+        var newid = id.charAt(0) == '#' ? id : ('#'+id);
+        angular
+          .element(newid)
+          .removeClass(whirlClass);
+      }
+    }]
+  };
+}]);
+
+/**=========================================================
+ * Module: play-animation.js
+ * Provides a simple way to run animation with a trigger
+ * Requires animo.js
+ =========================================================*/
+ 
+App.directive('animate', ["$window", "Utils", function($window, Utils){
+
+  'use strict';
+
+  var $scroller = $(window).add('body, .wrapper');
+  
+  return {
+    restrict: 'A',
+    link: function (scope, elem, attrs) {
+
+      // Parse animations params and attach trigger to scroll
+      var $elem     = $(elem),
+          offset    = $elem.data('offset'),
+          delay     = $elem.data('delay')     || 100, // milliseconds
+          animation = $elem.data('play')      || 'bounce';
+      
+      if(typeof offset !== 'undefined') {
+        
+        // test if the element starts visible
+        testAnimation($elem);
+        // test on scroll
+        $scroller.scroll(function(){
+          testAnimation($elem);
+        });
+
+      }
+
+      // Test an element visibilty and trigger the given animation
+      function testAnimation(element) {
+          if ( !element.hasClass('anim-running') &&
+              Utils.isInView(element, {topoffset: offset})) {
+          element
+            .addClass('anim-running');
+
+          setTimeout(function() {
+            element
+              .addClass('anim-done')
+              .animo( { animation: animation, duration: 0.7} );
+          }, delay);
+
+        }
+      }
+
+      // Run click triggered animations
+      $elem.on('click', function() {
+
+        var $elem     = $(this),
+            targetSel = $elem.data('target'),
+            animation = $elem.data('play') || 'bounce',
+            target    = $(targetSel);
+
+        if(target && target.length) {
+          target.animo( { animation: animation } );
+        }
+        
+      });
+    }
+  };
+
+}]);
+
+/**=========================================================
+ * Module: scroll.js
+ * Make a content box scrollable
+ =========================================================*/
+
+App.directive('scrollable', function(){
+  return {
+    restrict: 'EA',
+    link: function(scope, elem, attrs) {
+      var defaultHeight = 250;
+      elem.slimScroll({
+          height: (attrs.height || defaultHeight)
+      });
+    }
+  };
+});
+/**=========================================================
+ * Module: sidebar.js
+ * Wraps the sidebar and handles collapsed state
+ =========================================================*/
+
+App.directive('sidebar', ['$rootScope', '$window', 'Utils', function($rootScope, $window, Utils) {
+  
+  var $win  = $($window);
+  var $body = $('body');
+  var $scope;
+  var $sidebar;
+  var currentState = $rootScope.$state.current.name;
+
+  return {
+    restrict: 'EA',
+    template: '<nav class="sidebar" ng-transclude></nav>',
+    transclude: true,
+    replace: true,
+    link: function(scope, element, attrs) {
+      
+      $scope   = scope;
+      $sidebar = element;
+
+      var eventName = Utils.isTouch() ? 'click' : 'mouseenter' ;
+      var subNav = $();
+      $sidebar.on( eventName, '.nav > li', function() {
+
+        if( Utils.isSidebarCollapsed() || $rootScope.app.layout.asideHover ) {
+
+          subNav.trigger('mouseleave');
+          subNav = toggleMenuItem( $(this) );
+
+          // Used to detect click and touch events outside the sidebar          
+          sidebarAddBackdrop();
+
+        }
+
+      });
+
+      scope.$on('closeSidebarMenu', function() {
+        removeFloatingNav();
+      });
+
+      // Normalize state when resize to mobile
+      $win.on('resize', function() {
+        if( ! Utils.isMobile() )
+          $body.removeClass('aside-toggled');
+      });
+
+      // Adjustment on route changes
+      $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+        currentState = toState.name;
+        // Hide sidebar automatically on mobile
+        $('body.aside-toggled').removeClass('aside-toggled');
+
+        $rootScope.$broadcast('closeSidebarMenu');
+      });
+
+      // Allows to close
+      if ( angular.isDefined(attrs.sidebarAnyclickClose) ) {
+
+        $('.wrapper').on('click.sidebar', function(e){
+          // don't check if sidebar not visible
+          if( ! $body.hasClass('aside-toggled')) return;
+
+          // if not child of sidebar
+          if( ! $(e.target).parents('.aside').length ) {
+            $body.removeClass('aside-toggled');          
+          }
+
+        });
+      }
+
+    }
+  };
+
+  function sidebarAddBackdrop() {
+    var $backdrop = $('<div/>', { 'class': 'dropdown-backdrop'} );
+    $backdrop.insertAfter('.aside-inner').on("click mouseenter", function () {
+      removeFloatingNav();
+    });
+  }
+
+  // Open the collapse sidebar submenu items when on touch devices 
+  // - desktop only opens on hover
+  function toggleTouchItem($element){
+    $element
+      .siblings('li')
+      .removeClass('open')
+      .end()
+      .toggleClass('open');
+  }
+
+  // Handles hover to open items under collapsed menu
+  // ----------------------------------- 
+  function toggleMenuItem($listItem) {
+
+    removeFloatingNav();
+
+    var ul = $listItem.children('ul');
+    
+    if( !ul.length ) return $();
+    if( $listItem.hasClass('open') ) {
+      toggleTouchItem($listItem);
+      return $();
+    }
+
+    var $aside = $('.aside');
+    var $asideInner = $('.aside-inner'); // for top offset calculation
+    // float aside uses extra padding on aside
+    var mar = parseInt( $asideInner.css('padding-top'), 0) + parseInt( $aside.css('padding-top'), 0);
+    var subNav = ul.clone().appendTo( $aside );
+    
+    toggleTouchItem($listItem);
+
+    var itemTop = ($listItem.position().top + mar) - $sidebar.scrollTop();
+    var vwHeight = $win.height();
+
+    subNav
+      .addClass('nav-floating')
+      .css({
+        position: $scope.app.layout.isFixed ? 'fixed' : 'absolute',
+        top:      itemTop,
+        bottom:   (subNav.outerHeight(true) + itemTop > vwHeight) ? 0 : 'auto'
+      });
+
+    subNav.on('mouseleave', function() {
+      toggleTouchItem($listItem);
+      subNav.remove();
+    });
+
+    return subNav;
+  }
+
+  function removeFloatingNav() {
+    $('.dropdown-backdrop').remove();
+    $('.sidebar-subnav.nav-floating').remove();
+    $('.sidebar li.open').removeClass('open');
+  }
+
+}]);
+/**=========================================================
+ * Module: sparkline.js
+ * SparkLines Mini Charts
+ =========================================================*/
+ 
+App.directive('sparkline', ['$timeout', '$window', function($timeout, $window){
+
+  'use strict';
+
+  return {
+    restrict: 'EA',
+    controller: ["$scope", "$element", function ($scope, $element) {
+      var runSL = function(){
+        initSparLine($element);
+      };
+
+      $timeout(runSL);
+    }]
+  };
+
+  function initSparLine($element) {
+    var options = $element.data();
+
+    options.type = options.type || 'bar'; // default chart is bar
+    options.disableHiddenCheck = true;
+
+    $element.sparkline('html', options);
+
+    if(options.resize) {
+      $(window).resize(function(){
+        $element.sparkline('html', options);
+      });
+    }
+  }
+
+}]);
+
+/**=========================================================
+ * Module: table-checkall.js
+ * Tables check all checkbox
+ =========================================================*/
+
+App.directive('checkAll', function() {
+  'use strict';
+  
+  return {
+    restrict: 'A',
+    controller: ["$scope", "$element", function($scope, $element){
+      
+      $element.on('change', function() {
+        var $this = $(this),
+            index= $this.index() + 1,
+            checkbox = $this.find('input[type="checkbox"]'),
+            table = $this.parents('table');
+        // Make sure to affect only the correct checkbox column
+        table.find('tbody > tr > td:nth-child('+index+') input[type="checkbox"]')
+          .prop('checked', checkbox[0].checked);
+
+      });
+    }]
+  };
+
+});
+/**=========================================================
+ * Module: tags-input.js
+ * Initializes the tag inputs plugin
+ =========================================================*/
+
+App.directive('tagsinput', ["$timeout", function($timeout) {
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function(scope, element, attrs, ngModel) {
+
+      element.on('itemAdded itemRemoved', function(){
+        // check if view value is not empty and is a string
+        // and update the view from string to an array of tags
+        if(ngModel.$viewValue && ngModel.$viewValue.split) {
+          ngModel.$setViewValue( ngModel.$viewValue.split(',') );
+          ngModel.$render();
+        }
+      });
+
+      $timeout(function(){
+        element.tagsinput();
+      });
+
+    }
+  };
+}]);
+
+/**=========================================================
+ * Module: toggle-state.js
+ * Toggle a classname from the BODY Useful to change a state that 
+ * affects globally the entire layout or more than one item 
+ * Targeted elements must have [toggle-state="CLASS-NAME-TO-TOGGLE"]
+ * User no-persist to avoid saving the sate in browser storage
+ =========================================================*/
+
+App.directive('toggleState', ['toggleStateService', function(toggle) {
+  'use strict';
+  
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+
+      var $body = $('body');
+
+      $(element)
+        .on('click', function (e) {
+          e.preventDefault();
+          var classname = attrs.toggleState;
+          
+          if(classname) {
+            if( $body.hasClass(classname) ) {
+              $body.removeClass(classname);
+              if( ! attrs.noPersist)
+                toggle.removeState(classname);
+            }
+            else {
+              $body.addClass(classname);
+              if( ! attrs.noPersist)
+                toggle.addState(classname);
+            }
+            
+          }
+
+      });
+    }
+  };
+  
+}]);
+
+/**=========================================================
+ * Module: validate-form.js
+ * Initializes the validation plugin Parsley
+ =========================================================*/
+
+App.directive('validateForm', function() {
+  return {
+    restrict: 'A',
+    controller: ["$scope", "$element", function($scope, $element) {
+      var $elem = $($element);
+      if($.fn.parsley)
+        $elem.parsley();
+    }]
+  };
+});
+
+/**=========================================================
+ * Module: browser.js
+ * Browser detection
+ =========================================================*/
+
+App.service('browser', function(){
+  "use strict";
+
+  var matched, browser;
+
+  var uaMatch = function( ua ) {
+    ua = ua.toLowerCase();
+
+    var match = /(opr)[\/]([\w.]+)/.exec( ua ) ||
+      /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
+      /(version)[ \/]([\w.]+).*(safari)[ \/]([\w.]+)/.exec( ua ) ||
+      /(webkit)[ \/]([\w.]+)/.exec( ua ) ||
+      /(opera)(?:.*version|)[ \/]([\w.]+)/.exec( ua ) ||
+      /(msie) ([\w.]+)/.exec( ua ) ||
+      ua.indexOf("trident") >= 0 && /(rv)(?::| )([\w.]+)/.exec( ua ) ||
+      ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
+      [];
+
+    var platform_match = /(ipad)/.exec( ua ) ||
+      /(iphone)/.exec( ua ) ||
+      /(android)/.exec( ua ) ||
+      /(windows phone)/.exec( ua ) ||
+      /(win)/.exec( ua ) ||
+      /(mac)/.exec( ua ) ||
+      /(linux)/.exec( ua ) ||
+      /(cros)/i.exec( ua ) ||
+      [];
+
+    return {
+      browser: match[ 3 ] || match[ 1 ] || "",
+      version: match[ 2 ] || "0",
+      platform: platform_match[ 0 ] || ""
+    };
+  };
+
+  matched = uaMatch( window.navigator.userAgent );
+  browser = {};
+
+  if ( matched.browser ) {
+    browser[ matched.browser ] = true;
+    browser.version = matched.version;
+    browser.versionNumber = parseInt(matched.version);
+  }
+
+  if ( matched.platform ) {
+    browser[ matched.platform ] = true;
+  }
+
+  // These are all considered mobile platforms, meaning they run a mobile browser
+  if ( browser.android || browser.ipad || browser.iphone || browser[ "windows phone" ] ) {
+    browser.mobile = true;
+  }
+
+  // These are all considered desktop platforms, meaning they run a desktop browser
+  if ( browser.cros || browser.mac || browser.linux || browser.win ) {
+    browser.desktop = true;
+  }
+
+  // Chrome, Opera 15+ and Safari are webkit based browsers
+  if ( browser.chrome || browser.opr || browser.safari ) {
+    browser.webkit = true;
+  }
+
+  // IE11 has a new token so we will assign it msie to avoid breaking changes
+  if ( browser.rv )
+  {
+    var ie = "msie";
+
+    matched.browser = ie;
+    browser[ie] = true;
+  }
+
+  // Opera 15+ are identified as opr
+  if ( browser.opr )
+  {
+    var opera = "opera";
+
+    matched.browser = opera;
+    browser[opera] = true;
+  }
+
+  // Stock Android browsers are marked as Safari on Android.
+  if ( browser.safari && browser.android )
+  {
+    var android = "android";
+
+    matched.browser = android;
+    browser[android] = true;
+  }
+
+  // Assign the name and platform variable
+  browser.name = matched.browser;
+  browser.platform = matched.platform;
+
+
+  return browser;
+
+});
+/**=========================================================
+ * Module: colors.js
+ * Services to retrieve global colors
+ =========================================================*/
+ 
+App.factory('colors', ['APP_COLORS', function(colors) {
+  
+  return {
+    byName: function(name) {
+      return (colors[name] || '#fff');
+    }
+  };
+
+}]);
+
+/**=========================================================
+ * Module: nav-search.js
+ * Services to share navbar search functions
+ =========================================================*/
+ 
+App.service('navSearch', function() {
+  var navbarFormSelector = 'form.navbar-form';
+  return {
+    toggle: function() {
+      
+      var navbarForm = $(navbarFormSelector);
+
+      navbarForm.toggleClass('open');
+      
+      var isOpen = navbarForm.hasClass('open');
+      
+      navbarForm.find('input')[isOpen ? 'focus' : 'blur']();
+
+    },
+
+    dismiss: function() {
+      $(navbarFormSelector)
+        .removeClass('open')      // Close control
+        .find('input[type="text"]').blur() // remove focus
+        .val('')                    // Empty input
+        ;
+    }
+  };
+
+});
+/**=========================================================
+ * Module: notify.js
+ * Create a notifications that fade out automatically.
+ * Based on Notify addon from UIKit (http://getuikit.com/docs/addons_notify.html)
+ =========================================================*/
+
+App.service('Notify', ["$timeout", function($timeout){
+    this.alert = alert;
+
+    ////////////////
+
+    function alert(msg, opts) {
+        if ( msg ) {
+            $timeout(function(){
+                $.notify(msg, opts || {});
+            });
+        }
+    }
+
+}]);
+
+
+
+/**
+ * Notify Addon definition as jQuery plugin
+ * Adapted version to work with Bootstrap classes
+ * More information http://getuikit.com/docs/addons_notify.html
+ */
+
+(function($, window, document){
+
+    var containers = {},
+        messages   = {},
+
+        notify     =  function(options){
+
+            if ($.type(options) == 'string') {
+                options = { message: options };
+            }
+
+            if (arguments[1]) {
+                options = $.extend(options, $.type(arguments[1]) == 'string' ? {status:arguments[1]} : arguments[1]);
+            }
+
+            return (new Message(options)).show();
+        },
+        closeAll  = function(group, instantly){
+            if(group) {
+                for(var id in messages) { if(group===messages[id].group) messages[id].close(instantly); }
+            } else {
+                for(var id in messages) { messages[id].close(instantly); }
+            }
+        };
+
+    var Message = function(options){
+
+        var $this = this;
+
+        this.options = $.extend({}, Message.defaults, options);
+
+        this.uuid    = "ID"+(new Date().getTime())+"RAND"+(Math.ceil(Math.random() * 100000));
+        this.element = $([
+            // @geedmo: alert-dismissable enables bs close icon
+            '<div class="uk-notify-message alert-dismissable">',
+                '<a class="close">&times;</a>',
+                '<div>'+this.options.message+'</div>',
+            '</div>'
+
+        ].join('')).data("notifyMessage", this);
+
+        // status
+        if (this.options.status) {
+            this.element.addClass('alert alert-'+this.options.status);
+            this.currentstatus = this.options.status;
+        }
+
+        this.group = this.options.group;
+
+        messages[this.uuid] = this;
+
+        if(!containers[this.options.pos]) {
+            containers[this.options.pos] = $('<div class="uk-notify uk-notify-'+this.options.pos+'"></div>').appendTo('body').on("click", ".uk-notify-message", function(){
+                $(this).data("notifyMessage").close();
+            });
+        }
+    };
+
+
+    $.extend(Message.prototype, {
+
+        uuid: false,
+        element: false,
+        timout: false,
+        currentstatus: "",
+        group: false,
+
+        show: function() {
+
+            if (this.element.is(":visible")) return;
+
+            var $this = this;
+
+            containers[this.options.pos].show().prepend(this.element);
+
+            var marginbottom = parseInt(this.element.css("margin-bottom"), 10);
+
+            this.element.css({"opacity":0, "margin-top": -1*this.element.outerHeight(), "margin-bottom":0}).animate({"opacity":1, "margin-top": 0, "margin-bottom":marginbottom}, function(){
+
+                if ($this.options.timeout) {
+
+                    var closefn = function(){ $this.close(); };
+
+                    $this.timeout = setTimeout(closefn, $this.options.timeout);
+
+                    $this.element.hover(
+                        function() { clearTimeout($this.timeout); },
+                        function() { $this.timeout = setTimeout(closefn, $this.options.timeout);  }
+                    );
+                }
+
+            });
+
+            return this;
+        },
+
+        close: function(instantly) {
+
+            var $this    = this,
+                finalize = function(){
+                    $this.element.remove();
+
+                    if(!containers[$this.options.pos].children().length) {
+                        containers[$this.options.pos].hide();
+                    }
+
+                    delete messages[$this.uuid];
+                };
+
+            if(this.timeout) clearTimeout(this.timeout);
+
+            if(instantly) {
+                finalize();
+            } else {
+                this.element.animate({"opacity":0, "margin-top": -1* this.element.outerHeight(), "margin-bottom":0}, function(){
+                    finalize();
+                });
+            }
+        },
+
+        content: function(html){
+
+            var container = this.element.find(">div");
+
+            if(!html) {
+                return container.html();
+            }
+
+            container.html(html);
+
+            return this;
+        },
+
+        status: function(status) {
+
+            if(!status) {
+                return this.currentstatus;
+            }
+
+            this.element.removeClass('alert alert-'+this.currentstatus).addClass('alert alert-'+status);
+
+            this.currentstatus = status;
+
+            return this;
+        }
+    });
+
+    Message.defaults = {
+        message: "",
+        status: "normal",
+        timeout: 5000,
+        group: null,
+        pos: 'top-center'
+    };
+
+
+    $["notify"]          = notify;
+    $["notify"].message  = Message;
+    $["notify"].closeAll = closeAll;
+
+    return notify;
+
+}(jQuery, window, document));
+
+/**=========================================================
+ * Module: helpers.js
+ * Provides helper functions for routes definition
+ =========================================================*/
+
+App.provider('RouteHelpers', ['APP_REQUIRES', function (appRequires) {
+  "use strict";
+
+  // Set here the base of the relative path
+  // for all app views
+  this.basepath = function (uri) {
+    return 'app/views/' + uri;
+  };
+
+  // Generates a resolve object by passing script names
+  // previously configured in constant.APP_REQUIRES
+  this.resolveFor = function () {
+    var _args = arguments;
+    return {
+      deps: ['$ocLazyLoad','$q', function ($ocLL, $q) {
+        // Creates a promise chain for each argument
+        var promise = $q.when(1); // empty promise
+        for(var i=0, len=_args.length; i < len; i ++){
+          promise = andThen(_args[i]);
+        }
+        return promise;
+
+        // creates promise to chain dynamically
+        function andThen(_arg) {
+          // also support a function that returns a promise
+          if(typeof _arg == 'function')
+              return promise.then(_arg);
+          else
+              return promise.then(function() {
+                // if is a module, pass the name. If not, pass the array
+                var whatToLoad = getRequired(_arg);
+                // simple error check
+                if(!whatToLoad) return $.error('Route resolve: Bad resource name [' + _arg + ']');
+                // finally, return a promise
+                return $ocLL.load( whatToLoad );
+              });
+        }
+        // check and returns required data
+        // analyze module items with the form [name: '', files: []]
+        // and also simple array of script files (for not angular js)
+        function getRequired(name) {
+          if (appRequires.modules)
+              for(var m in appRequires.modules)
+                  if(appRequires.modules[m].name && appRequires.modules[m].name === name)
+                      return appRequires.modules[m];
+          return appRequires.scripts && appRequires.scripts[name];
+        }
+
+      }]};
+  }; // resolveFor
+
+  // not necessary, only used in config block for routes
+  this.$get = function(){};
+
+}]);
+
+
+/**=========================================================
+ * Module: toggle-state.js
+ * Services to share toggle state functionality
+ =========================================================*/
+
+App.service('toggleStateService', ['$rootScope', function($rootScope) {
+
+  var storageKeyName  = 'toggleState';
+
+  // Helper object to check for words in a phrase //
+  var WordChecker = {
+    hasWord: function (phrase, word) {
+      return new RegExp('(^|\\s)' + word + '(\\s|$)').test(phrase);
+    },
+    addWord: function (phrase, word) {
+      if (!this.hasWord(phrase, word)) {
+        return (phrase + (phrase ? ' ' : '') + word);
+      }
+    },
+    removeWord: function (phrase, word) {
+      if (this.hasWord(phrase, word)) {
+        return phrase.replace(new RegExp('(^|\\s)*' + word + '(\\s|$)*', 'g'), '');
+      }
+    }
+  };
+
+  // Return service public methods
+  return {
+    // Add a state to the browser storage to be restored later
+    addState: function(classname){
+      var data = angular.fromJson($rootScope.$storage[storageKeyName]);
+      
+      if(!data)  {
+        data = classname;
+      }
+      else {
+        data = WordChecker.addWord(data, classname);
+      }
+
+      $rootScope.$storage[storageKeyName] = angular.toJson(data);
+    },
+
+    // Remove a state from the browser storage
+    removeState: function(classname){
+      var data = $rootScope.$storage[storageKeyName];
+      // nothing to remove
+      if(!data) return;
+
+      data = WordChecker.removeWord(data, classname);
+
+      $rootScope.$storage[storageKeyName] = angular.toJson(data);
+    },
+    
+    // Load the state string and restore the classlist
+    restoreState: function($elem) {
+      var data = angular.fromJson($rootScope.$storage[storageKeyName]);
+      
+      // nothing to restore
+      if(!data) return;
+      $elem.addClass(data);
+    }
+
+  };
+
+}]);
+/**=========================================================
+ * Module: utils.js
+ * Utility library to use across the theme
+ =========================================================*/
+
+App.service('Utils', ["$window", "APP_MEDIAQUERY", function($window, APP_MEDIAQUERY) {
+    'use strict';
+    
+    var $html = angular.element("html"),
+        $win  = angular.element($window),
+        $body = angular.element('body');
+
+    return {
+      // DETECTION
+      support: {
+        transition: (function() {
+                var transitionEnd = (function() {
+
+                    var element = document.body || document.documentElement,
+                        transEndEventNames = {
+                            WebkitTransition: 'webkitTransitionEnd',
+                            MozTransition: 'transitionend',
+                            OTransition: 'oTransitionEnd otransitionend',
+                            transition: 'transitionend'
+                        }, name;
+
+                    for (name in transEndEventNames) {
+                        if (element.style[name] !== undefined) return transEndEventNames[name];
+                    }
+                }());
+
+                return transitionEnd && { end: transitionEnd };
+            })(),
+        animation: (function() {
+
+            var animationEnd = (function() {
+
+                var element = document.body || document.documentElement,
+                    animEndEventNames = {
+                        WebkitAnimation: 'webkitAnimationEnd',
+                        MozAnimation: 'animationend',
+                        OAnimation: 'oAnimationEnd oanimationend',
+                        animation: 'animationend'
+                    }, name;
+
+                for (name in animEndEventNames) {
+                    if (element.style[name] !== undefined) return animEndEventNames[name];
+                }
+            }());
+
+            return animationEnd && { end: animationEnd };
+        })(),
+        requestAnimationFrame: window.requestAnimationFrame ||
+                               window.webkitRequestAnimationFrame ||
+                               window.mozRequestAnimationFrame ||
+                               window.msRequestAnimationFrame ||
+                               window.oRequestAnimationFrame ||
+                               function(callback){ window.setTimeout(callback, 1000/60); },
+        touch: (
+            ('ontouchstart' in window && navigator.userAgent.toLowerCase().match(/mobile|tablet/)) ||
+            (window.DocumentTouch && document instanceof window.DocumentTouch)  ||
+            (window.navigator['msPointerEnabled'] && window.navigator['msMaxTouchPoints'] > 0) || //IE 10
+            (window.navigator['pointerEnabled'] && window.navigator['maxTouchPoints'] > 0) || //IE >=11
+            false
+        ),
+        mutationobserver: (window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver || null)
+      },
+      // UTILITIES
+      isInView: function(element, options) {
+
+          var $element = $(element);
+
+          if (!$element.is(':visible')) {
+              return false;
+          }
+
+          var window_left = $win.scrollLeft(),
+              window_top  = $win.scrollTop(),
+              offset      = $element.offset(),
+              left        = offset.left,
+              top         = offset.top;
+
+          options = $.extend({topoffset:0, leftoffset:0}, options);
+
+          if (top + $element.height() >= window_top && top - options.topoffset <= window_top + $win.height() &&
+              left + $element.width() >= window_left && left - options.leftoffset <= window_left + $win.width()) {
+            return true;
+          } else {
+            return false;
+          }
+      },
+      langdirection: $html.attr("dir") == "rtl" ? "right" : "left",
+      isTouch: function () {
+        return $html.hasClass('touch');
+      },
+      isSidebarCollapsed: function () {
+        return $body.hasClass('aside-collapsed');
+      },
+      isSidebarToggled: function () {
+        return $body.hasClass('aside-toggled');
+      },
+      isMobile: function () {
+        return $win.width() < APP_MEDIAQUERY.tablet;
+      }
+    };
+}]);
+/**=========================================================
+ * Module: vector-map.js
+ * Services to initialize vector map plugin
+ =========================================================*/
+
+App.service('vectorMap', function() {
+  'use strict';
+  return {
+    init: function($element, opts, series, markers) {
+          $element.vectorMap({
+            map:             opts.mapName,
+            backgroundColor: opts.bgColor,
+            zoomMin:         1,
+            zoomMax:         8,
+            zoomOnScroll:    false,
+            regionStyle: {
+              initial: {
+                'fill':           opts.regionFill,
+                'fill-opacity':   1,
+                'stroke':         'none',
+                'stroke-width':   1.5,
+                'stroke-opacity': 1
+              },
+              hover: {
+                'fill-opacity': 0.8
+              },
+              selected: {
+                fill: 'blue'
+              },
+              selectedHover: {
+              }
+            },
+            focusOn:{ x:0.4, y:0.6, scale: opts.scale},
+            markerStyle: {
+              initial: {
+                fill: opts.markerColor,
+                stroke: opts.markerColor
+              }
+            },
+            onRegionLabelShow: function(e, el, code) {
+              if ( series && series[code] )
+                el.html(el.html() + ': ' + series[code] + ' visitors');
+            },
+            markers: markers,
+            series: {
+                regions: [{
+                    values: series,
+                    scale: opts.scaleColors,
+                    normalizeFunction: 'polynomial'
+                }]
+            },
+          });
+        }
+  };
+});

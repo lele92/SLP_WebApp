@@ -8,7 +8,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 biblio-info-body">
                     <div class="row">
                         <div class=" biblio-title-index circle-header-sm">T</div>
-                        <h4 class="mt0 biblio-title">{{::itemData.title.value}}</h4>
+                        <h4 class="mt0 biblio-title">{{::itemData.title}}</h4>
                     </div>
 
                     <div class="row">
@@ -33,7 +33,7 @@
                             <em class="icon-globe"></em>
                         </div>
 
-                        <span class="large-text "><span class="highlighted-txt">{{::itemData.globalCountValue.value}}</span> Global Citations  (updated: {{::itemData.globalCountDate.value}})</span>
+                        <span class="large-text "><span class="highlighted-txt">{{::itemData.globalCitations}}</span> Global Citations  (updated: {{::itemData.globalCountDate.value}})</span>
                     </div>
                     <div align="center">
                         <button tooltip="Read abstract"   class="btn btn-oval btn-default btn-lg btn-biblio large-text " ng-click="openAbstractDialog()"><em class="fa fa-file-o"></em></button>

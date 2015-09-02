@@ -1,6 +1,5 @@
 myApp.controller('SettingsController',['$rootScope','$localStorage','$sessionStorage','EndpointsManager', function($rootScope, $localStorage, $sessionStorage,EndpointsManager){
 	"use strict";
-
 	var self = this;
 
 	self.endpoints = EndpointsManager.getEndpoints();

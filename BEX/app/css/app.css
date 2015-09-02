@@ -1354,7 +1354,7 @@ body {
   top: 0;
   bottom: 0;
   right: 0;
-  width: 235px;
+  width: 270px;
   margin-top: 115px;
   border-left: 1px solid #cccccc;
   background-color: #ffffff;
@@ -1416,8 +1416,8 @@ body {
 }
 /* Transformation ready devices*/
 .csstransforms3d .offsidebar {
-  -webkit-transform: translate3d(235px, 0, 0);
-  transform: translate3d(235px, 0, 0);
+  -webkit-transform: translate3d(270px, 0, 0);
+  transform: translate3d(270px, 0, 0);
 }
 .csstransforms3d .offsidebar-open .offsidebar {
   -webkit-transform: translate3d(0, 0, 0);

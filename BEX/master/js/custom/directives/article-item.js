@@ -25,14 +25,10 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
             $scope.articleIsCollapsed = true;
             var detailsAlreadyRequested = false; //todo: da cambiare: questa info deve stare in ArticleManagerService
 
-            var checkBookmarked = function() {
-                if (BookmarksManagerService.isBookmarked($scope.articleData.doi)) {
-                    BookmarksManagerService.replaceBookmark($scope.articleData);
-                }
-            }
 
             if ($scope.checkBookmark.value) {
-                checkBookmarked();
+	            //todo: sono costretto a farlo
+	            BookmarksManagerService.checkBookmarked($scope.articleData);
             }
 
 	        //if ($scope.showDetails.value) {
@@ -54,11 +50,13 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
 
             $scope.toggleBookmark = function(articleData) {
                 if (!articleData.bookmark || articleData.bookmark == false) {
+	                articleData.bookmark = true;
                     checkArticlesCitationsDetails(articleData);
-                    BookmarksManagerService.saveBookmark(articleData);
+
                 } else {
-                    BookmarksManagerService.deleteBookmark(articleData.doi);
-                    ArticleManagerService.refreshStoredSearchResult(articleData); //todo: da rivedere
+	                articleData.bookmark = false;
+                    BookmarksManagerService.deleteBookmark(articleData);
+
                 }
             }
 
@@ -159,6 +157,29 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
 			        ArticleManagerService.getBiblioInfo(articleData.expression.value, articleData.authors);
 		        }
 	        }
+
+
+	        if ($scope.checkBookmark.value) {
+		        $scope.$watch(function() { return $scope.articleData.biblioInfo},
+			        function() {
+				        if ($scope.articleData.bookmark) {
+					        BookmarksManagerService.saveBookmark($scope.articleData);
+				        }
+			        },
+			        true
+		        );
+
+		        $scope.$watch(function() { return $scope.articleData.citingArticles },
+			        function() {
+				        if ($scope.articleData.bookmark) {
+					        BookmarksManagerService.saveBookmark($scope.articleData);
+				        }
+			        },
+			        true
+		        );
+	        }
+
+
         }
     };
 

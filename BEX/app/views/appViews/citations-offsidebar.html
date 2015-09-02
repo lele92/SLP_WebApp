@@ -18,7 +18,7 @@
     <div class="p" >
         <div>
             <legend class="filter-legend">
-                <span ng-class="{'filter-enabled-heading': citationsFiltersCtrl.checkYear}"><em tooltip="Enabling this filter, you can visualize only the cited articles with the publication year greater than or equal to the one inserted" tooltip-placement="right" tooltip-popup-delay="500" class="fa fa-info-circle"></em> Year </span>
+                <span ng-class="{'filter-enabled-heading': citationsFiltersCtrl.checkYear}"><em tooltip="Enabling this filter, you can visualize only the cited articles with the publication year greater than or equal to the one inserted" tooltip-placement="right" tooltip-popup-delay="500" class="fa fa-info-circle"></em> After year </span>
                 <label class="switch pull-right">
                     <input type="checkbox"  ng-model="citationsFiltersCtrl.checkYear" ng-change="citationsFiltersCtrl.switchYearFilter()" />
                     <span></span>
@@ -52,7 +52,7 @@
                 <div class="radio c-radio c-radio-nofont">
                     <label>
                         <input ng-click="citationsFiltersCtrl.switchExcludeSelfcitations(false)" type="radio" name="selfCitRadio"  ng-checked="citationsFiltersCtrl.checkExcludeSelfCitations(false)"/>
-                        <span></span>Show only Self-citations
+                        <span></span>Isolate Self-citations
                     </label>
                 </div>
             </div>
@@ -100,8 +100,8 @@
                 <scrollable class="form-group well filter-well">
                     <div class="checkbox c-checkbox" ng-repeat="color in citationsFiltersCtrl.characterizationsV">
                         <label>
-                            <input type="checkbox" ng-model="color.checked" ng-checked="color.checked" ng-disabled="!citationsFiltersCtrl.checkCharacterizations"  ng-value="color.valueURI" />
-                            <span class="fa fa-check"></span>{{color.toString}}
+                            <input type="checkbox" ng-model="color.checked" ng-checked="color.checked" ng-click="citationsFiltersCtrl.switchColorChecked(color)" ng-disabled="!citationsFiltersCtrl.checkCharacterizations"  ng-value="color.valueURI" />
+                            <span class="fa fa-check"></span>{{citationsFiltersCtrl.noCamelCase(color.toString)}}
                         </label>
                     </div>
                 </scrollable>

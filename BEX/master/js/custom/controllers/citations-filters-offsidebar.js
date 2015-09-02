@@ -1,5 +1,6 @@
-myApp.controller('CitationsFiltersController', ["CitationsFiltersManagerService", "$scope", "$rootScope", function(CitationsFiltersManagerService, $scope, $rootScope) {
+myApp.controller('CitationsFiltersController', ["CitationsFiltersManagerService", "$scope", "$rootScope", "FILTERS_TYPE", function(CitationsFiltersManagerService, $scope, $rootScope, FILTERS_TYPE) {
     var self = this;
+
     /* filters and order objs: oggetti {value: ...} di filterManagerService */ //'F' -> convenzione per Filter
     self.publicationYearF = CitationsFiltersManagerService.getStartingPublicationYearF();
     self.selfcitationsF = CitationsFiltersManagerService.getSelfCitationsF();
@@ -13,6 +14,9 @@ myApp.controller('CitationsFiltersController', ["CitationsFiltersManagerService"
     var date = new Date();
     self.year = date.getFullYear();
 
+	CitationsFiltersManagerService.checkFilters(); //todo: soluzione migliorabile, questo check non dovrebbe essere fatto qui, in teoria
+	var activatedFiltersList = CitationsFiltersManagerService.getFilterActivatedList();
+
     /* values: valori dei filtri in html */ //'V' -> convenzione per Value
     self.publicationYearV = self.publicationYearF.value;
     self.selfcitationsV =  self.selfcitationsF.value;
@@ -21,37 +25,59 @@ myApp.controller('CitationsFiltersController', ["CitationsFiltersManagerService"
     self.authorsV = self.authorsF.value;
 
     /* checkboxes filters*/
-    self.checkYear = false;
-    self.checkSelfcitations = false;
-    self.checkCharacterizations = false;
-    self.checkAuthors = false;
+    self.checkYear = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_afterYear) != -1;
+	self.checkSelfcitations  = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_selfCitations) != -1;
+    self.checkCharacterizations = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_functions) != -1;
+    self.checkAuthors = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_authors) != -1;
+
+
+
+
+    //todo: rifattorizzare
+    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+        CitationsFiltersManagerService.checkFilters();  //todo: soluzione migliorabile, questo check non dovrebbe essere fatto qui, in teoria
+        self.publicationYearV = self.publicationYearF.value;
+        /* checkboxes filters*/
+	    self.checkYear = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_afterYear) != -1;
+	    self.checkSelfcitations  = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_selfCitations) != -1;
+	    self.checkCharacterizations = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_functions) != -1;
+	    self.checkAuthors = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_authors) != -1;
+        /*===========================*/
+    })
 
     /* funzioni invocate all'interazione con i filtri */
 
     self.setColorsAllChecked = function(bool) {
+
         for (var i in self.characterizationsV) {
             self.characterizationsV[i].checked = bool;
+	        CitationsFiltersManagerService.switchColorChecked(self.characterizationsV[i]);
         }
     }
 
     self.switchColorsFilter = function() {
         if (self.checkCharacterizations) {
+	        CitationsFiltersManagerService.addActivatedFilter(FILTERS_TYPE.Citations_functions);
             //console.log('filtro colori attivato');
         } else {
+	        self.setColorsAllChecked(true);
+	        CitationsFiltersManagerService.removeActivatedFilter(FILTERS_TYPE.Citations_functions);
             //console.log('filtro colori disattivato');
-            self.setColorsAllChecked(true);
+
         }
         CitationsFiltersManagerService.setCharacterizations(self.characterizationsV);
         CitationsFiltersManagerService.setFilterActivated(self.checkCheckboxes());
     }
 
+	self.switchColorChecked = function (color) {
+		CitationsFiltersManagerService.switchColorChecked(color);
+	}
+
     self.switchYearFilter = function() {
         if (self.checkYear) {
-            //console.log('filtro anno attivato');
+	        CitationsFiltersManagerService.addActivatedFilter(FILTERS_TYPE.Citations_afterYear);
         } else {
-            //console.log('filtro anno disattivato');
-            self.publicationYearV = 1950;
-            CitationsFiltersManagerService.setStartingPublicationYear(self.publicationYearV)
+	        CitationsFiltersManagerService.removeActivatedFilter(FILTERS_TYPE.Citations_afterYear);
         }
         CitationsFiltersManagerService.setFilterActivated(self.checkCheckboxes());
     }
@@ -60,9 +86,11 @@ myApp.controller('CitationsFiltersController', ["CitationsFiltersManagerService"
         if (self.checkSelfcitations) {
             //console.log('filtro solo autocitazioni attivato');
             self.selfcitationsV = true;
+	        CitationsFiltersManagerService.addActivatedFilter(FILTERS_TYPE.Citations_selfCitations);
         } else {
             //console.log('filtro solo autocitazioni disattivato');
             self.selfcitationsV = false;
+	        CitationsFiltersManagerService.removeActivatedFilter(FILTERS_TYPE.Citations_selfCitations);
         }
         CitationsFiltersManagerService.setSelfCitations(self.selfcitationsV,self.excludeSelfcitationsV);
         CitationsFiltersManagerService.setFilterActivated(self.checkCheckboxes());
@@ -72,16 +100,18 @@ myApp.controller('CitationsFiltersController', ["CitationsFiltersManagerService"
         if (self.checkAuthors) {
             //console.log('filtro autori attivato');
             CitationsFiltersManagerService.setAuthorsEnabled(true);
+	        CitationsFiltersManagerService.addActivatedFilter(FILTERS_TYPE.Citations_authors);
         } else {
             //console.log('filtro autori disattivato');
             CitationsFiltersManagerService.setAuthorsEnabled(false);
+	        CitationsFiltersManagerService.removeActivatedFilter(FILTERS_TYPE.Citations_authors);
         }
         CitationsFiltersManagerService.setFilterActivated(self.checkCheckboxes());
     }
 
 
 
-    /* controlla lo stato delle checkboxes: s'è c'è almeno un filtro attivo ritorna true, false altrimenti */
+    /* controlla lo stato delle checkboxes: se c'è almeno un filtro attivo ritorna true, false altrimenti */
     //chiunque legga mi scusi, non ho resistito alla tentazione di chiamarla così
     self.checkCheckboxes = function() {
         if (self.checkYear || self.checkSelfcitations || self.checkCharacterizations || self.checkAuthors) {
@@ -141,6 +171,10 @@ myApp.controller('CitationsFiltersController', ["CitationsFiltersManagerService"
         self.excludeSelfcitationsV = exclude;
         CitationsFiltersManagerService.setSelfCitations(true,self.excludeSelfcitationsV);
     }
+
+	self.noCamelCase = function(str) {
+		return str.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); })
+	}
 
     var alreadyInList = function(author) {
         for (var i in self.authorsV) {
