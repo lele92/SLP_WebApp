@@ -56,6 +56,7 @@ myApp
 				"plagiarizes"
 			];
 		var excludedFunctions = [];
+		var functions = angular.copy(characterizationsList);
 		var characterizations = {
 			value: {}
 		};
@@ -276,7 +277,7 @@ myApp
 			//year
 			startingPublicationYear.value = defaultYear;
 			//selfcitation
-			selfcitations.value = false
+			selfcitations.value = false;
 			selfcitations.exclude = true;
 			//authors
 			authors.value.length = 0;
@@ -358,13 +359,30 @@ myApp
 			}
 		}
 
+		var checkFunctionsExcludedFilter = function() {
+			if ($stateParams[FILTERS_TYPE.Citations_functions_exclude] && legalFunctionsParam($stateParams[FILTERS_TYPE.Citations_functions_exclude])) {
+				filterActivatedBool.value = true;
+				activatedFilters.push(FILTERS_TYPE.Citations_functions_exclude);
+				excludedFunctions = $stateParams.citFunctionsExclude.split($rootScope.paramsTokensDelimiter);
+				for (var key in excludedFunctions) {
+					characterizations.value[functionsUriPrefix+excludedFunctions[key]].checked = false;
+				}
+			} else if ($stateParams[FILTERS_TYPE.Citations_functions_exclude] && !legalFunctionsParam($stateParams[FILTERS_TYPE.Citations_functions_exclude])) {
+				console.error("Invalid 'citFunctionsExclude' parameter");
+			}
+		}
+
 		var checkFunctionsFilter = function() {
 			if ($stateParams[FILTERS_TYPE.Citations_functions] && legalFunctionsParam($stateParams[FILTERS_TYPE.Citations_functions])) {
 				filterActivatedBool.value = true;
 				activatedFilters.push(FILTERS_TYPE.Citations_functions);
-				excludedFunctions = $stateParams.citFunctionsExclude.split($rootScope.paramsTokensDelimiter);;
-				for (var key in excludedFunctions) {
-					characterizations.value[functionsUriPrefix+excludedFunctions[key]].checked = false;
+				functions = $stateParams.citFunctions.split($rootScope.paramsTokensDelimiter);
+				for (var key in characterizations.value) { //prima li devo disattivare tutti
+					characterizations.value[key].checked = false;
+				}
+				for (var key in functions) {
+					//characterizations.value[functionsUriPrefix+functions[key]].checked = false;
+					characterizations.value[functionsUriPrefix+functions[key]].checked = true;
 				}
 			} else if ($stateParams[FILTERS_TYPE.Citations_functions] && !legalFunctionsParam($stateParams[FILTERS_TYPE.Citations_functions])) {
 				console.error("Invalid 'citFunctions' parameter");
@@ -542,19 +560,30 @@ myApp
 
             setCharacterizations: function(newCharacterizations) {
                 characterizations.value = newCharacterizations;
+	            updateStateParam(FILTERS_TYPE.Citations_functions,functions.join($rootScope.paramsTokensDelimiter))
             },
 
 	        switchColorChecked: function(color) {
+		        //if (!color.checked) {
+			     //   excludedFunctions.push(color.toString);
+		        //} else {
+			     //   var i = excludedFunctions.indexOf(color.toString);
+			     //   if (i != -1) {
+				 //       excludedFunctions.splice(i,1);
+			     //   }
+		        //}
+
+		        //updateStateParam(FILTERS_TYPE.Citations_functions_exclude,excludedFunctions.join($rootScope.paramsTokensDelimiter))
 		        if (!color.checked) {
-			        excludedFunctions.push(color.toString);
-		        } else {
-			        var i = excludedFunctions.indexOf(color.toString);
+			        var i = functions.indexOf(color.toString);
 			        if (i != -1) {
-				        excludedFunctions.splice(i,1);
+				        functions.splice(i,1);
 			        }
+		        } else {
+			        functions.push(color.toString);
 		        }
 
-		        updateStateParam(FILTERS_TYPE.Citations_functions,excludedFunctions.join($rootScope.paramsTokensDelimiter))
+		        updateStateParam(FILTERS_TYPE.Citations_functions,functions.join($rootScope.paramsTokensDelimiter))
 	        },
 
 
@@ -592,25 +621,29 @@ myApp
 
 	        removeActivatedFilter: function(fil) {
 		        activatedFilters.splice(activatedFilters.indexOf(fil),1);
+		        StatesManagerService.updateCurrentStateParam(fil,undefined);
 
 		        $location.search(fil,null);
 		        switch(fil) {
 			        case FILTERS_TYPE.Citations_afterYear:
 				        startingPublicationYear.value = defaultYear;
-				        StatesManagerService.updateCurrentStateParam(fil,defaultYear);
+				        //StatesManagerService.updateCurrentStateParam(fil,defaultYear);
 				        break;
 			        case FILTERS_TYPE.Citations_selfCitations:
 				        selfcitations.value = false;
 				        selfcitations.exclude = true;
-				        StatesManagerService.updateCurrentStateParam(fil,selfcitations.exclude?"exclude":"isolate");
+				        //StatesManagerService.updateCurrentStateParam(fil,selfcitations.exclude?"exclude":"isolate");
 				        break;
 			        case FILTERS_TYPE.Citations_authors:
 				        authors.enabled = false;
 				        authors.value.length = 0;
-				        StatesManagerService.updateCurrentStateParam(fil,null);
+				        //StatesManagerService.updateCurrentStateParam(fil,null);
+				        break;
+			        case FILTERS_TYPE.Citations_functions_exclude:
+				        //StatesManagerService.updateCurrentStateParam(fil,[]);
 				        break;
 			        case FILTERS_TYPE.Citations_functions:
-				        StatesManagerService.updateCurrentStateParam(fil,[]);
+				        //StatesManagerService.updateCurrentStateParam(fil,[]);
 				        break;
 			        //todo: aggiungere altri case per gli altri filtri (vd articles-filters-manager.removeActivatedFilter)
 		        }
@@ -627,6 +660,7 @@ myApp
 		        checkSelfCitationsFilter();
 		        checkAuthorsFilter();
 		        checkFunctionsFilter();
+		        //checkFunctionsExcludedFilter();
 	        },
 
 	        checkOrder: function() {

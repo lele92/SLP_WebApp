@@ -197,18 +197,17 @@ myApp.factory('ArticlesFiltersManager',["ORDER_BY","SORT","ARTICLE_TYPES","FILTE
 
 		removeActivatedFilter: function(fil) {
 			activatedFilters.splice(activatedFilters.indexOf(fil),1);
-
+			StatesManagerService.updateCurrentStateParam(fil,undefined);
 			$location.search(fil,null);
 			switch(fil) {
 				case FILTERS_TYPE.Articles_types:
 					selectedArticleTypes.length = 0;
 					selectedArticleTypes.push.apply(selectedArticleTypes,articleTypes);
-					StatesManagerService.updateCurrentStateParam(fil,selectedArticleTypes.join($rootScope.paramsTokensDelimiter));
-					//console.log("filtro anno disattivato")
+					//StatesManagerService.updateCurrentStateParam(fil,selectedArticleTypes.join($rootScope.paramsTokensDelimiter));
 					break;
 				case FILTERS_TYPE.Articles_afterYear:
 					startingPublicationYear.value = defaultYear;
-					StatesManagerService.updateCurrentStateParam(fil,defaultYear);
+					//StatesManagerService.updateCurrentStateParam(fil,defaultYear);
 					//console.log("filtro anno disattivato")
 					break;
 			}

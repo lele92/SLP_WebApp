@@ -8,7 +8,12 @@ myApp
     .factory('ArticlesInfoService', ["$http", "$interpolate","$rootScope","EndpointsManager", function($http,$interpolate,$rootScope,EndpointsManager) {
         var endpoint = EndpointsManager.getSelectedEndpoint();
         //endpoint = "http://localhost:8181/data/query"; //todo: endpoint locale
-        var prefixes = $('#prefixes').text();
+		var prefixes;
+
+		//$rootScope.$on('$includeContentLoaded', function(event,src) {
+			prefixes = $('#prefixes').text();
+		//});
+
 
         /* per costruire la query; query presa dallo script nell'html alla quale vengono sostituite le espressioni con ctx */
         var buildQueryURL = function(queryId,ctx) {

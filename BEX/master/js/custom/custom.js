@@ -176,7 +176,8 @@ myApp
         titleSearch: "titleSearch",
         authorSearch: "authorSearch",
         //singleArticle: "singleArticle",
-		singleArticleDoi: "singleArticleDoi"
+		singleArticleDoi: "singleArticleDoi",
+		list: "list"
     })
 	.constant("ORDER_BY", {
 		publicationYear : "publicationYear",
@@ -202,11 +203,12 @@ myApp
         Citations_afterYear:"citAfterYear",
         Citations_selfCitations:"selfCitations",
         Citations_authors:"citAuthors",
-        Citations_functions:"citFunctionsExclude"
+        Citations_functions_exclude:"citFunctionsExclude",
+		Citations_functions:"citFunctions"
     })
 	//todo: usare FILTER_TYPE per queste costanti
 	.constant("ARTICLES_REFINEMENTS_PARAMS", "&orderBy&sort&afterYear&type")
-	.constant("CITATIONS_REFINEMENTS_PARAMS", "&orderCitBy&sortCit&citAfterYear&selfCitations+citAuthors&citFunctionsExclude");
+	.constant("CITATIONS_REFINEMENTS_PARAMS", "&orderCitBy&sortCit&citAfterYear&selfCitations&citAuthors&citFunctions");
 
 myApp.config(["$stateProvider","SEARCH_TYPE","ARTICLES_REFINEMENTS_PARAMS", "CITATIONS_REFINEMENTS_PARAMS", function($stateProvider, SEARCH_TYPE, ARTICLES_REFINEMENTS_PARAMS, CITATIONS_REFINEMENTS_PARAMS) {
   $stateProvider
@@ -218,11 +220,12 @@ myApp.config(["$stateProvider","SEARCH_TYPE","ARTICLES_REFINEMENTS_PARAMS", "CIT
         controllerAs: 'HomeSearchCtrl'
       })
       .state('app.articles-results', {
-        url: '/articles/?abstract&author&title'+ARTICLES_REFINEMENTS_PARAMS+CITATIONS_REFINEMENTS_PARAMS,
+        url: '/articles/?abstract&author&title&list'+ARTICLES_REFINEMENTS_PARAMS+CITATIONS_REFINEMENTS_PARAMS,
         params: {
             newSearch: false,               // se newSearch=true vengono rimpiazzati i risultati di ricerca in LocalStorage e vengono rimossi tutti gli states
             searchQuery: undefined,          // query di ricerca (abstract, titolo, nome autore)
-			searchType: undefined
+			searchType: undefined,
+            noReload: false
         },
         templateUrl: getMyBasepath('articles-results.html'),
         controller: 'ArticlesResultsController',
@@ -241,7 +244,10 @@ myApp.config(["$stateProvider","SEARCH_TYPE","ARTICLES_REFINEMENTS_PARAMS", "CIT
 	            } else if ($stateParams.title) {
 		            $stateParams.searchType = SEARCH_TYPE.titleSearch;
 	                $stateParams.searchQuery = $stateParams['title']
-	            }
+	            } else if ($stateParams.list) {
+	                $stateParams.searchType = SEARCH_TYPE.list;
+	                $stateParams.searchQuery = $stateParams['list']
+                }
             } else {
 	            //todo: notificare che la modalità di ricerca è unica
             }
@@ -268,7 +274,8 @@ myApp.config(["$stateProvider","SEARCH_TYPE","ARTICLES_REFINEMENTS_PARAMS", "CIT
 		  params: {
 			  newSearch: false,               // se newSearch=true vengono rimpiazzati i risultati di ricerca in LocalStorage e vengono rimossi tutti gli states
 			  searchQuery: undefined,          // query di ricerca (abstract, titolo, nome autore)
-			  searchType: SEARCH_TYPE.authorSearch
+			  searchType: SEARCH_TYPE.authorSearch,
+			  noReload: false
 		  },
 		  templateUrl: getMyBasepath('articles-results.html'),
 		  controller: 'ArticlesResultsController',
@@ -305,7 +312,8 @@ myApp.config(["$stateProvider","SEARCH_TYPE","ARTICLES_REFINEMENTS_PARAMS", "CIT
 		  title: 'Article',
 		  params: {
               title: "", //non lo setto a null o undefined per un problema di ui-router che li converte in stringa "null" e "undefined", strano...
-			  searchType: SEARCH_TYPE.singleArticleDoi            // tipologia di ricerca (abstract, titolo, autore)
+			  searchType: SEARCH_TYPE.singleArticleDoi,            // tipologia di ricerca (abstract, titolo, autore)
+			  noReload: false
 		  },
 		  templateUrl: getMyBasepath('articles-results.html'),
 		  controller: 'ArticlesResultsController',

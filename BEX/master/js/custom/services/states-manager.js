@@ -86,7 +86,7 @@ myApp
             },
 
             getLastState: function() {
-                return lastState;
+                return states[states.length-1];
             }
 
 

@@ -15,7 +15,7 @@ myApp.directive('biblioItem', ["ngDialog","$modal", "ArticleManagerService", "$r
             citingArticleAuthors: "="
         },
         link: function(scope, element, attributes) {
-	        scope.elemHeight = element.height();
+	        //scope.elemHeight = element.height();
             /* per avere maggiori info sul corrente elemento bibliografico */
             scope.exploreBiblioItem = function() {
 

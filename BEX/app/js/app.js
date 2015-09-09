@@ -54,23 +54,29 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '
   };
 
     $rootScope.authors = [];
-    /*richiedo tutti gli autori*/
-    ArticlesInfoService.getAllAuthors().then(
-        function (response) {
-            $rootScope.authors = [];
-            var authorsFullName = response.data.results.bindings;
 
-            for (var i in authorsFullName) {
-                $rootScope.authors.push(authorsFullName[i].fullName.value);
-            }
-        },
-        //todo caso da gestire meglio
-        function (errResponse) {
-            $rootScope.authors = [];
-            //ngDialog.open({template: "app/templates/dialog-error.html"});
-            console.error("Error while fetching authors. " + errResponse.status + ": " + errResponse.statusText)
-        }
-    );
+    /*$rootScope.$on('$includeContentLoaded', function(event,src) {
+	    if (src == "queries.html") {*/
+		    /*richiedo tutti gli autori*/
+		    ArticlesInfoService.getAllAuthors().then(
+			    function (response) {
+				    $rootScope.authors = [];
+				    var authorsFullName = response.data.results.bindings;
+
+				    for (var i in authorsFullName) {
+					    $rootScope.authors.push(authorsFullName[i].fullName.value);
+				    }
+			    },
+			    //todo caso da gestire meglio
+			    function (errResponse) {
+				    $rootScope.authors = [];
+				    //ngDialog.open({template: "app/templates/dialog-error.html"});
+				    console.error("Error while fetching authors. " + errResponse.status + ": " + errResponse.statusText)
+			    }
+		    );
+	/*    }
+    });*/
+
 
 
 
@@ -649,7 +655,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
           return ArticleManagerService.getArticles().length;
           break;
         case "BookmarksLength":
-            var x = BookmarksManagerService.getBookmarks();
+            var x = BookmarksManagerService.getBookmarksIDB().values;
           return x.length;
           break;
       }
@@ -713,10 +719,17 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
         case "app.articles-results": //todo:barbatrucco da rivedere: in realtà non vado ad app.articles, ma all'ultimo state visitato dall'utente
           var lastState = StatesManagerService.getLastState();
 
+	      if (!lastState) {
+		      $state.go("app.articles-results");
+		      break;
+	      }
+
           if(!lastState.name) {
             $state.go("app.articles-results");
           } else {
-            $state.go(lastState.name,lastState.params);
+	          var params = angular.copy(lastState.params);
+	          params.noReload = true
+	          $state.go(lastState.name,params);
           }
           break;
         default :

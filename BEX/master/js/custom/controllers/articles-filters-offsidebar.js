@@ -1,4 +1,4 @@
-myApp.controller('ArticlesFiltersController', ["ArticlesFiltersManager", "$scope", "$rootScope","FILTERS_TYPE", function(ArticlesFiltersManager, $scope, $rootScope, FILTERS_TYPE) {
+myApp.controller('ArticlesFiltersController', ["ArticlesFiltersManager", "$scope", "$rootScope","FILTERS_TYPE","StatesManagerService", function(ArticlesFiltersManager, $scope, $rootScope, FILTERS_TYPE, StatesManagerService) {
 
 	var self = this;
 	var date = new Date();
@@ -19,6 +19,7 @@ myApp.controller('ArticlesFiltersController', ["ArticlesFiltersManager", "$scope
 
 	//todo: rifattorizzare
 	$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+		//console.log(StatesManagerService.getStates());
 		ArticlesFiltersManager.checkFilters();  //todo: soluzione migliorabile, questo check non dovrebbe essere fatto qui, in teoria
 		self.publicationYearV = self.publicationYearF.value;
 		/* checkboxes filters*/

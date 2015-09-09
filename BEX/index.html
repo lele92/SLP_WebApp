@@ -67,6 +67,8 @@
    <script src="master/js/custom/services/ping.js"></script>
    <script src="master/js/custom/services/articles-filters-manager.js"></script>
 
+   <!--<div ng-include="queries.html"></div>-->
+
    <!--query: tutti i prefissi-->
    <script id="prefixes" type="text/template">
       PREFIX fabio: <http://purl.org/spar/fabio/>
@@ -384,30 +386,45 @@
 
    <!-- query: info generiche su un articolo (partendo dall'expression) (id: doi)-->
    <script id="query_singleArticleByDoi" type="text/template">
-       select ?title ?expression ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
+       select ?journalTitle ?volumeNumber ?issueNumber ?title ?expression ?abstractTxt ?publicationYear ?htmlItem ?authorsList ?globalCountSource ?globalCountValue ?globalCountDate
        where {
 
-       ?expression a fabio:Expression;
-       frbr:part [ a sro:Abstract;
-       c4o:hasContent ?abstractTxt];
-       dcterms:title ?title;
-       frbr:embodiment ?man;
-       frbr:realizationOf ?articleWork;
-       prism:doi "{{doi}}";
-       fabio:hasPublicationYear ?publicationYear;
-       c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
-       c4o:hasGlobalCountSource ?globalCountSource;
-       c4o:hasGlobalCountValue ?globalCountValue;
-       c4o:hasGlobalCountDate ?globalCountDate].
+           ?expression a fabio:Expression;
+                frbr:part [ a sro:Abstract;
+                c4o:hasContent ?abstractTxt];
+                dcterms:title ?title;
+                frbr:embodiment ?man;
+                frbr:realizationOf ?articleWork;
+               prism:doi "{{doi}}";
+               fabio:hasPublicationYear ?publicationYear;
+               c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
+               c4o:hasGlobalCountSource ?globalCountSource;
+               c4o:hasGlobalCountValue ?globalCountValue;
+               c4o:hasGlobalCountDate ?globalCountDate].
 
-       ?articleWork a fabio:Work;
-       frbr:creator ?authorsList.
+           ?articleWork a fabio:Work;
+                frbr:creator ?authorsList.
 
-       ?authorsList a co:List.
+           ?authorsList a co:List.
 
-       ?man a fabio:Manifestation, fabio:WebPage;
-       dcterms:format <http://purl.org/NET/mediatypes/text/html>;
-       frbr:exemplar ?htmlItem.
+           ?man a fabio:Manifestation, fabio:WebPage;
+               dcterms:format <http://purl.org/NET/mediatypes/text/html>;
+               frbr:exemplar ?htmlItem.
+
+           OPTIONAL {
+               ?expression ^frbr:part ?issue.
+               ?issue a fabio:JournalIssue;
+               prism:issueIdentifier ?issueNumber;
+               frbr:partOf ?volume.
+
+               ?volume a fabio:JournalVolume;
+               prism:volume ?volumeNumber;
+               frbr:partOf ?journal.
+
+               ?journal a fabio:Journal;
+               dcterms:title ?journalTitle.
+
+           }
        }
    </script>
 

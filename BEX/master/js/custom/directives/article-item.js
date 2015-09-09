@@ -29,6 +29,7 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
             if ($scope.checkBookmark.value) {
 	            //todo: sono costretto a farlo
 	            BookmarksManagerService.checkBookmarked($scope.articleData);
+
             }
 
 	        //if ($scope.showDetails.value) {
@@ -51,8 +52,11 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
             $scope.toggleBookmark = function(articleData) {
                 if (!articleData.bookmark || articleData.bookmark == false) {
 	                articleData.bookmark = true;
-                    checkArticlesCitationsDetails(articleData);
-
+	                if (!articleData.citationsDetails || !articleData.biblioDetails) {
+		                checkArticlesCitationsDetails(articleData);
+	                } else if (articleData.citationsDetails && articleData.biblioDetails) {
+		                BookmarksManagerService.saveBookmark($scope.articleData);
+	                }
                 } else {
 	                articleData.bookmark = false;
                     BookmarksManagerService.deleteBookmark(articleData);
@@ -158,7 +162,7 @@ myApp.directive('articleItem', ["ngDialog", "ArticleManagerService","$rootScope"
 		        }
 	        }
 
-
+            /* se stai leggendo queste righe di codice probabilmente non stai capendo che senso abbiano...contattami*/
 	        if ($scope.checkBookmark.value) {
 		        $scope.$watch(function() { return $scope.articleData.biblioInfo},
 			        function() {

@@ -742,6 +742,95 @@ myApp
                 );
             },
 
+	        /* per risultati di ricerca a partire dal titolo */
+	        getArticlesFromList: function(doisToSplit, newSearch) {
+		        RequestArticlesService.setPendingRequest(); //todo: in futuro questo dovrà essere evitato
+		        var list = doisToSplit.split($rootScope.paramsTokensDelimiter);
+		        //RequestArticlesService.setPendingRequest(); //todo: in futuro questo dovrà essere evitato
+
+		        //todo: da rifattorizzare...creare una funzione unica
+
+		        var x = "List "+Math.floor((Math.random() * 10000) + 1);
+		        if (newSearch) {
+			        StatesManagerService.removeAllStates(); //svuota la lista degli stati
+
+			        StatesManagerService.saveState(SEARCH_TYPE.list, x, x);
+		        } else {
+			        checkState(SEARCH_TYPE.list, x, x);
+		        }
+
+
+		        var getArticleByDoi = function(articleDoi) {
+			        //todo: rifattorizzare
+			        ArticlesInfoService.getArticleByDoi(articleDoi).then(
+				        function(response) {
+
+					        if (response.data.results.bindings.length == 0) {
+						        articlesResultsState = resultsStates.NO_RESULTS;           // non ci sono risultati
+						        console.log("NO RESULTS!");
+
+						        //RequestArticlesService.setCompletedRequest();
+					        } else {
+						        articlesResultsState = resultsStates.RESULTS;
+						        var art = response.data.results.bindings[0];
+						        art.publicationYear = stringToInt(art.publicationYear.value);
+						        art.title = art.title.value;
+						        art.doi = articleDoi;
+						        art.globalCountValue = stringToInt(art.globalCountValue.value);
+						        articlesResults.push(art); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia (si aggiorna comunque perchè articles è passato per riferimento, ma con il watch aggiungo del comportamento )
+
+						        RequestArticlesService.setCompletedRequest();
+
+						        //@guide richiedo la lista degli autori
+						        getArticleAuthors(art);
+						        getType(art);
+
+						        //@guide richiedo le info sulle citazioni (in entrata)
+						        ArticlesInfoService.getArticleIncomingCitationsInfo(art.expression.value).then(
+							        function (response) {
+								        art.inCitActs = response.data.results.bindings[0].numCitActs.value; //numero di citation acts
+								        art.inNumCites = response.data.results.bindings[0].numCites.value;  //numero di cites (<= numero di citation acts), citazioni uniche
+							        },
+							        //todo caso da gestire meglio
+							        function (errResponse) {
+								        console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+							        }
+						        );
+
+						        //@guide richiedo le info sulle citazioni (in uscita)
+						        ArticlesInfoService.getArticleOutgoingCitationsInfo(art.expression.value).then(
+							        function (response) {
+								        art.outCitActsNum = response.data.results.bindings[0].numCitActs.value; //numero di citation acts "in uscita"
+								        art.citedArticlesNum = response.data.results.bindings[0].numCites.value;  //numero di articoli citati
+							        },
+							        //todo caso da gestire meglio
+							        function (errResponse) {
+								        console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+							        }
+						        );
+					        }
+
+
+				        },
+
+				        //todo caso da gestire meglio
+				        function (errResponse) {
+					        console.error("Error while fetching articles. " + errResponse.status + ": " + errResponse.statusText)
+				        }
+			        );
+		        }
+
+
+		        articlesResults.length = 0;
+		        $sessionStorage.searchResults.length = 0;
+		        articlesNum = list.length;                        // numero totale di articoli di cui richiedere le info
+		        completedArticles = articlesResults.length;
+
+		        for (var key in list) {
+			        getArticleByDoi(list[key]);
+		        }
+	        },
+
 	        /* per risultati di ricerca a partire dal DOI*/
             //todo: aggiungere parametro titolo per leggibilità in breadcrumb
 	        getSingleArticleByDoi: function(articleDoi, articleTitle){
@@ -749,6 +838,7 @@ myApp
 		        checkState(SEARCH_TYPE.singleArticleDoi, articleDoi, articleTitle!=""?articleTitle : articleDoi);
 
 
+		        //todo: rifattorizzare
 		        ArticlesInfoService.getArticleByDoi(articleDoi).then(
 			        function(response) {
 

@@ -1,6 +1,8 @@
 myApp
-	.factory('BookmarksManagerService',['ArticleManagerService', function(ArticleManagerService){
-		var bookmarksIDB = [];
+	.factory('BookmarksManagerService',['ArticleManagerService','$rootScope', function(ArticleManagerService, $rootScope){
+		var bookmarksIDB = {
+			values: []
+		};
 		var BOOKMARKS_STORE_NAME = 'BookmarksStore';
 		var PREFIX = 'BEX-'
 
@@ -19,9 +21,12 @@ myApp
 		function refreshBookmarks() {
 			BookmarksStore.getAll(
 				function(data) {
-					angular.copy(data, bookmarksIDB);
+					angular.copy(data, bookmarksIDB.values);
+					//@guide: http://www.sitepoint.com/understanding-angulars-apply-digest/
+					$rootScope.$apply();
 				}
 			)
+
 		}
 
 		function deleteBookmarksStore() {
@@ -49,7 +54,7 @@ myApp
 				BookmarksStore.put(
 					articleData,
 					function() {
-						refreshBookmarks()
+						refreshBookmarks();
 					},
 					function(err) {
 						console.log(err)
@@ -64,7 +69,7 @@ myApp
 				function onSuccess(result){
 					if(result !== false){
 						refreshBookmarks();
-						console.log('DELETE success');
+						//console.log('DELETE success');
 					}
 				}
 				function onError(error){
@@ -79,7 +84,7 @@ myApp
 				BookmarksStore.get(doi, function(data) {return data}, function() {return null});
 			},
 
-			getBookmarks: function() {
+			getBookmarksIDB: function() {
 				return bookmarksIDB;
 			},
 
@@ -87,19 +92,19 @@ myApp
 			deleteAllBookmarks: function() {
 				var onsuccess = function(){
 					refreshBookmarks();
-					console.log('CLEAN success!');
+					//console.log('CLEAN success!');
 				}
 				var onerror = function(error){
 					console.log('CLEAN error', error);
 				}
 
-				for (var key in bookmarksIDB) {
-					bookmarksIDB[key].bookmark = false;
-					ArticleManagerService.reloadSearchResult(bookmarksIDB[key])
+				for (var key in bookmarksIDB.values) {
+					bookmarksIDB.values[key].bookmark = false;
+					ArticleManagerService.reloadSearchResult(bookmarksIDB.values[key])
 
 				}
 
-				bookmarksIDB.length = 0; //todo: piccolo barbatrucco per velocizzare le cose
+				bookmarksIDB.values.length = 0; //todo: piccolo barbatrucco per velocizzare le cose
 				BookmarksStore.clear(onsuccess, onerror);
 			},
 

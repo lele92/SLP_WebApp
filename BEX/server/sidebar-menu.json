@@ -31,6 +31,12 @@
     "bottom": false
   },
   {
+    "text": "Settings",
+    "sref": "app.settings",
+    "icon": "fa fa-cog",
+    "bottom": true
+  },
+  {
     "text": "About",
     "sref": "app.about",
     "icon": "fa fa-info-circle",

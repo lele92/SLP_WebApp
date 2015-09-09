@@ -8,23 +8,29 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
 	self.activatedFilters = ArticlesFiltersManager.getFilterActivatedList();
 	self.activatedFiltersBool = ArticlesFiltersManager.getFilterActivatedBool();
 
-    switch ($stateParams.searchType) {
-        case SEARCH_TYPE.abstractSearch:
-            ArticleManagerService.getArticlesByAbstract($stateParams.searchQuery, $stateParams.newSearch);
-            break;
-        case SEARCH_TYPE.titleSearch:
-            ArticleManagerService.getArticlesByTitle($stateParams.searchQuery, $stateParams.newSearch);
-            break;
-        case SEARCH_TYPE.authorSearch:
-            ArticleManagerService.getArticlesByFullNameAuthor($stateParams.searchQuery, $stateParams.newSearch);
-            break;
-        //case SEARCH_TYPE.singleArticle:
-        //    ArticleManagerService.getSingleArticle($stateParams.title);
-        //    break;
-        case SEARCH_TYPE.singleArticleDoi:
-            ArticleManagerService.getSingleArticleByDoi(decodeURIComponent($stateParams.doi),decodeURIComponent($stateParams.title));
-            break;
-    }
+	if (!$stateParams.noReload) {
+		switch ($stateParams.searchType) {
+			case SEARCH_TYPE.abstractSearch:
+				ArticleManagerService.getArticlesByAbstract($stateParams.searchQuery, $stateParams.newSearch);
+				break;
+			case SEARCH_TYPE.titleSearch:
+				ArticleManagerService.getArticlesByTitle($stateParams.searchQuery, $stateParams.newSearch);
+				break;
+			case SEARCH_TYPE.authorSearch:
+				ArticleManagerService.getArticlesByFullNameAuthor($stateParams.searchQuery, $stateParams.newSearch);
+				break;
+			//case SEARCH_TYPE.singleArticle:
+			//    ArticleManagerService.getSingleArticle($stateParams.title);
+			//    break;
+			case SEARCH_TYPE.singleArticleDoi:
+				ArticleManagerService.getSingleArticleByDoi(decodeURIComponent($stateParams.doi), decodeURIComponent($stateParams.title));
+				break;
+			case SEARCH_TYPE.list:
+				ArticleManagerService.getArticlesFromList(decodeURIComponent($stateParams.searchQuery), $stateParams.newSearch);
+				break;
+		}
+	}
+
 
     self.articles = ArticleManagerService.getArticles();
     self.resultsStates = ArticleManagerService.getResultsStates();
@@ -137,7 +143,7 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
                 //console.log("1.2 - REQUEST NOT PENDING");
                 self.articlesNum.value = ArticleManagerService.getArticlesNum();
                 if (requestPendingDialog) {
-                    $timeout(requestPendingDialog.close, 1250) //uso timeout per risolvere un problema di ngDialog (e anche per non flashare l'utente)
+                    $timeout(requestPendingDialog.close, 1300) //uso timeout per risolvere un problema di ngDialog (e anche per non flashare l'utente)
                 }
 
                 //se dall'abs finder non ci sono risultati mostro una notifica

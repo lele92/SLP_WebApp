@@ -48,7 +48,7 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
           return ArticleManagerService.getArticles().length;
           break;
         case "BookmarksLength":
-          return BookmarksManagerService.getBookmarks().length;
+          return BookmarksManagerService.getBookmarksIDB().values.length;
           break;
       }
 
@@ -111,10 +111,17 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
         case "app.articles-results": //todo:barbatrucco da rivedere: in realtà non vado ad app.articles, ma all'ultimo state visitato dall'utente
           var lastState = StatesManagerService.getLastState();
 
+	      if (!lastState) {
+		      $state.go("app.articles-results");
+		      break;
+	      }
+
           if(!lastState.name) {
             $state.go("app.articles-results");
           } else {
-            $state.go(lastState.name,lastState.params);
+            var params = angular.copy(lastState.params);
+            params.noReload = true;
+            $state.go(lastState.name,params);
           }
           break;
         default :

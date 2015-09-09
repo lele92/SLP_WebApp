@@ -43,7 +43,8 @@ myApp.directive('donutChart', ["$rootScope","$timeout", function($rootScope, $ti
 					}
 					var chart = new CanvasJS.Chart(scope.chartId,
 						{
-							//height: $(".panel-biblio-item").height(),
+							height: 230,
+							//width:300,
 							animationEnabled: true,
 							animationDuration: 1000,
 							title:{

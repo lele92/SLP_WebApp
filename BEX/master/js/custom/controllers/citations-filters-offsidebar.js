@@ -25,24 +25,22 @@ myApp.controller('CitationsFiltersController', ["CitationsFiltersManagerService"
     self.authorsV = self.authorsF.value;
 
     /* checkboxes filters*/
-    self.checkYear = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_afterYear) != -1;
-	self.checkSelfcitations  = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_selfCitations) != -1;
-    self.checkCharacterizations = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_functions) != -1;
-    self.checkAuthors = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_authors) != -1;
+	function checkActivatedFilters() {
+		self.checkYear = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_afterYear) != -1;
+		self.checkSelfcitations  = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_selfCitations) != -1;
+		self.checkAuthors = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_authors) != -1;
+		self.checkCharacterizations = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_functions) != -1;
+		//self.checkCharacterizations = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_functions_exclude) != -1;
+	}
 
-
-
+	checkActivatedFilters();
 
     //todo: rifattorizzare
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
         CitationsFiltersManagerService.checkFilters();  //todo: soluzione migliorabile, questo check non dovrebbe essere fatto qui, in teoria
-        self.publicationYearV = self.publicationYearF.value;
-        /* checkboxes filters*/
-	    self.checkYear = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_afterYear) != -1;
-	    self.checkSelfcitations  = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_selfCitations) != -1;
-	    self.checkCharacterizations = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_functions) != -1;
-	    self.checkAuthors = activatedFiltersList.indexOf(FILTERS_TYPE.Citations_authors) != -1;
-        /*===========================*/
+	    checkActivatedFilters();
+	    self.publicationYearV = self.publicationYearF.value;
+	    self.authorsV = self.authorsF.value;
     })
 
     /* funzioni invocate all'interazione con i filtri */
@@ -57,15 +55,17 @@ myApp.controller('CitationsFiltersController', ["CitationsFiltersManagerService"
 
     self.switchColorsFilter = function() {
         if (self.checkCharacterizations) {
+	        //CitationsFiltersManagerService.addActivatedFilter(FILTERS_TYPE.Citations_functions_exclude);
+	        CitationsFiltersManagerService.setCharacterizations(self.characterizationsV);
 	        CitationsFiltersManagerService.addActivatedFilter(FILTERS_TYPE.Citations_functions);
-            //console.log('filtro colori attivato');
         } else {
 	        self.setColorsAllChecked(true);
+	        //CitationsFiltersManagerService.removeActivatedFilter(FILTERS_TYPE.Citations_functions_exclude);
+	        CitationsFiltersManagerService.setCharacterizations(self.characterizationsV);
 	        CitationsFiltersManagerService.removeActivatedFilter(FILTERS_TYPE.Citations_functions);
-            //console.log('filtro colori disattivato');
 
         }
-        CitationsFiltersManagerService.setCharacterizations(self.characterizationsV);
+
         CitationsFiltersManagerService.setFilterActivated(self.checkCheckboxes());
     }
 
