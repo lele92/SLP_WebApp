@@ -1,1 +1,180 @@
-!function(t){"object"==typeof exports&&"object"==typeof module?t(require("../../lib/codemirror")):"function"==typeof define&&define.amd?define(["../../lib/codemirror"],t):t(CodeMirror)}(function(t){"use strict";function r(t){var r=[];return t.split(" ").forEach(function(t){r.push({name:t})}),r}var n=r("INVERT AND OR XOR\r\n 2* 2/ LSHIFT RSHIFT\r\n 0= = 0< < > U< MIN MAX\r\n 2DROP 2DUP 2OVER 2SWAP ?DUP DEPTH DROP DUP OVER ROT SWAP\r\n >R R> R@\r\n + - 1+ 1- ABS NEGATE\r\n S>D * M* UM*\r\n FM/MOD SM/REM UM/MOD */ */MOD / /MOD MOD\r\n HERE , @ ! CELL+ CELLS C, C@ C! CHARS 2@ 2!\r\n ALIGN ALIGNED +! ALLOT\r\n CHAR [CHAR] [ ] BL\r\n FIND EXECUTE IMMEDIATE COUNT LITERAL STATE\r\n ; DOES> >BODY\r\n EVALUATE\r\n SOURCE >IN\r\n <# # #S #> HOLD SIGN BASE >NUMBER HEX DECIMAL\r\n FILL MOVE\r\n . CR EMIT SPACE SPACES TYPE U. .R U.R\r\n ACCEPT\r\n TRUE FALSE\r\n <> U> 0<> 0>\r\n NIP TUCK ROLL PICK\r\n 2>R 2R@ 2R>\r\n WITHIN UNUSED MARKER\r\n I J\r\n TO\r\n COMPILE, [COMPILE]\r\n SAVE-INPUT RESTORE-INPUT\r\n PAD ERASE\r\n 2LITERAL DNEGATE\r\n D- D+ D0< D0= D2* D2/ D< D= DMAX DMIN D>S DABS\r\n M+ M*/ D. D.R 2ROT DU<\r\n CATCH THROW\r\n FREE RESIZE ALLOCATE\r\n CS-PICK CS-ROLL\r\n GET-CURRENT SET-CURRENT FORTH-WORDLIST GET-ORDER SET-ORDER\r\n PREVIOUS SEARCH-WORDLIST WORDLIST FIND ALSO ONLY FORTH DEFINITIONS ORDER\r\n -TRAILING /STRING SEARCH COMPARE CMOVE CMOVE> BLANK SLITERAL"),e=r("IF ELSE THEN BEGIN WHILE REPEAT UNTIL RECURSE [IF] [ELSE] [THEN] ?DO DO LOOP +LOOP UNLOOP LEAVE EXIT AGAIN CASE OF ENDOF ENDCASE");t.defineMode("forth",function(){function t(t,r){var n;for(n=t.length-1;n>=0;n--)if(t[n].name===r.toUpperCase())return t[n];return void 0}return{startState:function(){return{state:"",base:10,coreWordList:n,immediateWordList:e,wordList:[]}},token:function(r,n){var e;if(r.eatSpace())return null;if(""===n.state){if(r.match(/^(\]|:NONAME)(\s|$)/i))return n.state=" compilation","builtin compilation";if(e=r.match(/^(\:)\s+(\S+)(\s|$)+/))return n.wordList.push({name:e[2].toUpperCase()}),n.state=" compilation","def"+n.state;if(e=r.match(/^(VARIABLE|2VARIABLE|CONSTANT|2CONSTANT|CREATE|POSTPONE|VALUE|WORD)\s+(\S+)(\s|$)+/i))return n.wordList.push({name:e[2].toUpperCase()}),"def"+n.state;if(e=r.match(/^(\'|\[\'\])\s+(\S+)(\s|$)+/))return"builtin"+n.state}else{if(r.match(/^(\;|\[)(\s)/))return n.state="",r.backUp(1),"builtin compilation";if(r.match(/^(\;|\[)($)/))return n.state="","builtin compilation";if(r.match(/^(POSTPONE)\s+\S+(\s|$)+/))return"builtin"}return e=r.match(/^(\S+)(\s+|$)/),e?void 0!==t(n.wordList,e[1])?"variable"+n.state:"\\"===e[1]?(r.skipToEnd(),"comment"+n.state):void 0!==t(n.coreWordList,e[1])?"builtin"+n.state:void 0!==t(n.immediateWordList,e[1])?"keyword"+n.state:"("===e[1]?(r.eatWhile(function(t){return")"!==t}),r.eat(")"),"comment"+n.state):".("===e[1]?(r.eatWhile(function(t){return")"!==t}),r.eat(")"),"string"+n.state):'S"'===e[1]||'."'===e[1]||'C"'===e[1]?(r.eatWhile(function(t){return'"'!==t}),r.eat('"'),"string"+n.state):e[1]-68719476735?"number"+n.state:"atom"+n.state:void 0}}}),t.defineMIME("text/x-forth","forth")});
+// CodeMirror, copyright (c) by Marijn Haverbeke and others
+// Distributed under an MIT license: http://codemirror.net/LICENSE
+
+// Author: Aliaksei Chapyzhenka
+
+(function(mod) {
+  if (typeof exports == "object" && typeof module == "object") // CommonJS
+    mod(require("../../lib/codemirror"));
+  else if (typeof define == "function" && define.amd) // AMD
+    define(["../../lib/codemirror"], mod);
+  else // Plain browser env
+    mod(CodeMirror);
+})(function(CodeMirror) {
+  "use strict";
+
+  function toWordList(words) {
+    var ret = [];
+    words.split(' ').forEach(function(e){
+      ret.push({name: e});
+    });
+    return ret;
+  }
+
+  var coreWordList = toWordList(
+'INVERT AND OR XOR\
+ 2* 2/ LSHIFT RSHIFT\
+ 0= = 0< < > U< MIN MAX\
+ 2DROP 2DUP 2OVER 2SWAP ?DUP DEPTH DROP DUP OVER ROT SWAP\
+ >R R> R@\
+ + - 1+ 1- ABS NEGATE\
+ S>D * M* UM*\
+ FM/MOD SM/REM UM/MOD */ */MOD / /MOD MOD\
+ HERE , @ ! CELL+ CELLS C, C@ C! CHARS 2@ 2!\
+ ALIGN ALIGNED +! ALLOT\
+ CHAR [CHAR] [ ] BL\
+ FIND EXECUTE IMMEDIATE COUNT LITERAL STATE\
+ ; DOES> >BODY\
+ EVALUATE\
+ SOURCE >IN\
+ <# # #S #> HOLD SIGN BASE >NUMBER HEX DECIMAL\
+ FILL MOVE\
+ . CR EMIT SPACE SPACES TYPE U. .R U.R\
+ ACCEPT\
+ TRUE FALSE\
+ <> U> 0<> 0>\
+ NIP TUCK ROLL PICK\
+ 2>R 2R@ 2R>\
+ WITHIN UNUSED MARKER\
+ I J\
+ TO\
+ COMPILE, [COMPILE]\
+ SAVE-INPUT RESTORE-INPUT\
+ PAD ERASE\
+ 2LITERAL DNEGATE\
+ D- D+ D0< D0= D2* D2/ D< D= DMAX DMIN D>S DABS\
+ M+ M*/ D. D.R 2ROT DU<\
+ CATCH THROW\
+ FREE RESIZE ALLOCATE\
+ CS-PICK CS-ROLL\
+ GET-CURRENT SET-CURRENT FORTH-WORDLIST GET-ORDER SET-ORDER\
+ PREVIOUS SEARCH-WORDLIST WORDLIST FIND ALSO ONLY FORTH DEFINITIONS ORDER\
+ -TRAILING /STRING SEARCH COMPARE CMOVE CMOVE> BLANK SLITERAL');
+
+  var immediateWordList = toWordList('IF ELSE THEN BEGIN WHILE REPEAT UNTIL RECURSE [IF] [ELSE] [THEN] ?DO DO LOOP +LOOP UNLOOP LEAVE EXIT AGAIN CASE OF ENDOF ENDCASE');
+
+  CodeMirror.defineMode('forth', function() {
+    function searchWordList (wordList, word) {
+      var i;
+      for (i = wordList.length - 1; i >= 0; i--) {
+        if (wordList[i].name === word.toUpperCase()) {
+          return wordList[i];
+        }
+      }
+      return undefined;
+    }
+  return {
+    startState: function() {
+      return {
+        state: '',
+        base: 10,
+        coreWordList: coreWordList,
+        immediateWordList: immediateWordList,
+        wordList: []
+      };
+    },
+    token: function (stream, stt) {
+      var mat;
+      if (stream.eatSpace()) {
+        return null;
+      }
+      if (stt.state === '') { // interpretation
+        if (stream.match(/^(\]|:NONAME)(\s|$)/i)) {
+          stt.state = ' compilation';
+          return 'builtin compilation';
+        }
+        mat = stream.match(/^(\:)\s+(\S+)(\s|$)+/);
+        if (mat) {
+          stt.wordList.push({name: mat[2].toUpperCase()});
+          stt.state = ' compilation';
+          return 'def' + stt.state;
+        }
+        mat = stream.match(/^(VARIABLE|2VARIABLE|CONSTANT|2CONSTANT|CREATE|POSTPONE|VALUE|WORD)\s+(\S+)(\s|$)+/i);
+        if (mat) {
+          stt.wordList.push({name: mat[2].toUpperCase()});
+          return 'def' + stt.state;
+        }
+        mat = stream.match(/^(\'|\[\'\])\s+(\S+)(\s|$)+/);
+        if (mat) {
+          return 'builtin' + stt.state;
+        }
+        } else { // compilation
+        // ; [
+        if (stream.match(/^(\;|\[)(\s)/)) {
+          stt.state = '';
+          stream.backUp(1);
+          return 'builtin compilation';
+        }
+        if (stream.match(/^(\;|\[)($)/)) {
+          stt.state = '';
+          return 'builtin compilation';
+        }
+        if (stream.match(/^(POSTPONE)\s+\S+(\s|$)+/)) {
+          return 'builtin';
+        }
+      }
+
+      // dynamic wordlist
+      mat = stream.match(/^(\S+)(\s+|$)/);
+      if (mat) {
+        if (searchWordList(stt.wordList, mat[1]) !== undefined) {
+          return 'variable' + stt.state;
+        }
+
+        // comments
+        if (mat[1] === '\\') {
+          stream.skipToEnd();
+            return 'comment' + stt.state;
+          }
+
+          // core words
+          if (searchWordList(stt.coreWordList, mat[1]) !== undefined) {
+            return 'builtin' + stt.state;
+          }
+          if (searchWordList(stt.immediateWordList, mat[1]) !== undefined) {
+            return 'keyword' + stt.state;
+          }
+
+          if (mat[1] === '(') {
+            stream.eatWhile(function (s) { return s !== ')'; });
+            stream.eat(')');
+            return 'comment' + stt.state;
+          }
+
+          // // strings
+          if (mat[1] === '.(') {
+            stream.eatWhile(function (s) { return s !== ')'; });
+            stream.eat(')');
+            return 'string' + stt.state;
+          }
+          if (mat[1] === 'S"' || mat[1] === '."' || mat[1] === 'C"') {
+            stream.eatWhile(function (s) { return s !== '"'; });
+            stream.eat('"');
+            return 'string' + stt.state;
+          }
+
+          // numbers
+          if (mat[1] - 0xfffffffff) {
+            return 'number' + stt.state;
+          }
+          // if (mat[1].match(/^[-+]?[0-9]+\.[0-9]*/)) {
+          //     return 'number' + stt.state;
+          // }
+
+          return 'atom' + stt.state;
+        }
+      }
+    };
+  });
+  CodeMirror.defineMIME("text/x-forth", "forth");
+});

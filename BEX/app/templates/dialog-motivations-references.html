@@ -6,11 +6,11 @@
         <div class="col-lg-12" ng-repeat="citActInfo in ngDialogData.citActsInfo" ng-init="motivationId = generateId($index)">
             <!-- START panel-->
             <div id="{{motivationId}}" class="panel panel-default">
-                <div class="panel-heading">
-                    {{citActInfo.color}} ({{citActInfo.inTextRefPointers.length}})
-                    <paneltool tool-collapse="tool-collapse"></paneltool>
+                <div class="panel-heading panel-heading-collapsed">
+                    <span class="large-text text-bold">{{citActInfo.color}} ({{citActInfo.inTextRefPointers.length}})</span>
+                    <i class="pull-right collapse-btn" ng-click="isCollapsed = !isCollapsed" ng-class="{'fa fa-plus-square fa-2x': isCollapsed, 'fa fa-minus-square fa-2x': !isCollapsed}"></i>
                 </div>
-                <div collapse="{{motivationId}}" class="panel-wrapper">
+                <div collapse="isCollapsed" class="panel-wrapper">
                     <div class="panel-body">
                         <ul>
                             <li ng-repeat="irp in citActInfo.inTextRefPointers" ng-bind-html="empInTxtRefPointer(irp.sentenceTxt, irp.irpTxt)"></li>

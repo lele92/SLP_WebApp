@@ -81,18 +81,22 @@
                         <div ng-if="articleData.biblioInfo.length > 0" class="row text-center p-lg mb-xl cit-metrics-bar">
                             <div class="row row-table">
                                 <div class="col-xs-6 br">
-                                    <em class="fa fa-quote-left fa-2x"></em>
-                                    <h4 class="m0">{{articleData.outCitActsNum}} total citations to {{articleData.citedArticlesNum}} articles</h4>
+                                    <em class="fa fa-quote-left metrics-icon"></em>
+                                    <span class="m0 metrics-txt"> {{articleData.outCitActsNum}} total citations to {{articleData.citedArticlesNum}} articles</span>
                                 </div>
                                 <div class="col-xs-6 br">
-                                    <em class="fa fa-clock-o fa-2x"></em>
-                                    <h4 class="m0"> Years range: {{getCitationsMinYear()}} - {{getCitationsMaxYear()}} </h4>
+                                    <em class="fa fa-clock-o metrics-icon"></em>
+                                    <span class="m0 metrics-txt"> Years range: {{getCitationsMinYear()}} - {{getCitationsMaxYear()}} </span>
                                 </div>
                             </div>
                         </div>
-                        <button  ng-show="filteredBiblioItems.length > 0" type="button" ng-model="showBiblio" btn-checkbox="btn-checkbox" btn-checkbox-true=true btn-checkbox-false=false class="btn btn-default show-cit-btn">
-                            <em class="fa fa-2x" ng-class="{'fa-chevron-down': !showBiblio, 'fa-chevron-up': showBiblio }" ></em>
-                        </button>
+                        <div class="row">
+                            <button  ng-show="filteredBiblioItems.length > 0" type="button" ng-model="showBiblio" btn-checkbox="btn-checkbox" btn-checkbox-true=true btn-checkbox-false=false class="btn btn-default show-cit-btn pull-left">
+                                <em class="fa fa-2x" ng-class="{'fa-chevron-down': !showBiblio, 'fa-chevron-up': showBiblio }" ></em>
+                            </button>
+                        </div>
+
+
                         <div ng-if="showBiblio" ng-init="excludedBiblio = 0"ng-show="filteredBiblioItems.length < articleData.biblioInfo.length" class="alert alert-info"><em class="icon-info"></em> {{excludedBiblio = articleData.biblioInfo.length - filteredBiblioItems.length}} article<span ng-show="excludedBiblio > 1">s are</span> <span ng-show="excludedBiblio == 1">is</span> not shown because filters are applied</div>
                         <biblio-item align="left" ng-show="showBiblio" ng-animate="'animate'" ng-repeat="biblioItem in filteredBiblioItems = (articleData.biblioInfo |
                                     afterYear:yearFilter.value |
@@ -115,21 +119,24 @@
                         <div class="row text-center p-lg mb-xl cit-metrics-bar">
                             <div class="row row-table">
                                 <div ng-class="{'col-xs-4': articleData.inCitActs > 0, 'col-xs-6': articleData.inCitActs == 0}" class="br">
-                                    <em class="fa fa-quote-left fa-2x"></em>
-                                    <h4 class="m0"> Cited {{articleData.inCitActs}} times by {{articleData.inNumCites}} articles </h4>
+                                    <em class="fa fa-quote-left metrics-icon"></em>
+                                    <span class="m0 metrics-txt"> Cited {{articleData.inCitActs}} times by {{articleData.inNumCites}} articles </span>
                                 </div>
                                 <div ng-class="{'col-xs-4': articleData.inCitActs > 0, 'col-xs-6': articleData.inCitActs == 0}" class="br">
-                                    <em class="icon-globe fa-2x"></em>
-                                    <h4 class="m0">{{articleData.globalCitations}} Global Citations</h4>
+                                    <em class="icon-globe metrics-icon"></em>
+                                    <span class="m0 metrics-txt"> {{articleData.globalCitations}} Global Citations</span>
                                 </div>
                                 <div ng-if="articleData.inCitActs > 0" class="col-xs-4">
-                                    <em tooltip="Overview on incoming citations" tooltip-placement="top" ng-show="articleData.inCitActs > 0" ng-click="showCitDetails()" class="fa icon-bar-chart fa-4x pointer metrics-bar-charts"></em>
+                                    <em tooltip="Overview on incoming citations" tooltip-placement="top" ng-show="articleData.inCitActs > 0" ng-click="showCitDetails()" class="fa icon-bar-chart pointer metrics-bar-charts metrics-icon"></em>
                                 </div>
                             </div>
                         </div>
-                        <button  ng-show="filteredCitingItems.length > 0" type="button" ng-model="showCiting" btn-checkbox="btn-checkbox" btn-checkbox-true=true btn-checkbox-false=false class="btn btn-default show-cit-btn">
-                            <em class="fa fa-2x" ng-class="{'fa-chevron-down': !showCiting, 'fa-chevron-up': showCiting }" ></em>
-                        </button>
+                        <div class="row">
+                            <button  ng-show="filteredCitingItems.length > 0" type="button" ng-model="showCiting" btn-checkbox="btn-checkbox" btn-checkbox-true=true btn-checkbox-false=false class="btn btn-default show-cit-btn pull-left">
+                                <em class="fa fa-2x" ng-class="{'fa-chevron-down': !showCiting, 'fa-chevron-up': showCiting }" ></em>
+                            </button>
+                        </div>
+
                         <div ng-if="showCiting" ng-init="excludedCiting = 0" ng-show="filteredCitingItems.length < articleData.citingArticles.length" class="alert alert-info"><em class="icon-info"> </em> {{excludedCiting = articleData.citingArticles.length - filteredCitingItems.length}} article<span ng-show="excludedCiting > 1">s are</span> <span ng-show="excludedCiting == 1">is</span> not shown because filters are applied</div>
                         <citing-item align="left" ng-show="showCiting" ng-repeat="citingItem in filteredCitingItems = (articleData.citingArticles |
                                     afterYear:yearFilter.value |

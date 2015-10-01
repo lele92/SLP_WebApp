@@ -308,7 +308,7 @@ myApp.config(["$stateProvider","SEARCH_TYPE","ARTICLES_REFINEMENTS_PARAMS", "CIT
       //    }]
       //})
 	  .state('app.article-doi', {
-		  url: '/article/?doi'+CITATIONS_REFINEMENTS_PARAMS,
+		  url: '/article/:doi?'+CITATIONS_REFINEMENTS_PARAMS,
 		  title: 'Article',
 		  params: {
               title: "", //non lo setto a null o undefined per un problema di ui-router che li converte in stringa "null" e "undefined", strano...

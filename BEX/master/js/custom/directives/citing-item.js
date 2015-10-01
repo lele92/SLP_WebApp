@@ -94,7 +94,7 @@ myApp.directive('citingItem', ["ngDialog", "ArticleManagerService","$rootScope",
 			        className: "ngdialog-theme-default-custom",
 			        data: {
 				        absText: scope.itemData.abstractTxt.value,
-				        title: scope.itemData.title.value
+				        title: scope.itemData.title
 			        }
 		        });
 	        }
@@ -106,7 +106,7 @@ myApp.directive('citingItem', ["ngDialog", "ArticleManagerService","$rootScope",
                     className: "ngdialog-theme-default-custom",
                     data: {
                         motivations: scope.itemData.motivations,
-                        title: scope.itemData.title.value
+                        title: scope.itemData.title
                     }
                 });
             }

@@ -791,7 +791,7 @@
 }
 
 .show-cit-btn {
-    width: 400px;
+    width: 60px;
     margin-bottom: 15px;
 }
 
@@ -943,3 +943,17 @@
 }
 
 
+article-item .nav > li > a > tab-heading {
+    font-size: larger;
+}
+
+.metrics-txt {
+    font-weight: bold;
+    font-size: larger;
+    vertical-align: middle;
+}
+
+.metrics-icon {
+    font-size: 1.6em !important;
+    vertical-align: middle !important;
+}

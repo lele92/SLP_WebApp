@@ -37,7 +37,7 @@
                     </div>
                     <div align="center">
                         <button tooltip="Read abstract"   class="btn btn-oval btn-default btn-lg btn-biblio large-text " ng-click="openAbstractDialog()"><em class="fa fa-file-o"></em></button>
-                        <button ng-show="itemData.motivations.length > 0" tooltip="motivations for citations" class="btn btn-biblio btn-oval btn-default btn-lg btn-biblio large-text" ng-click="openMotivationsDialog()"><em class="icon-tag"></em></button>
+                        <button ng-show="itemData.motivations.length > 0" tooltip="citation contexts and functions" class="btn btn-biblio btn-oval btn-default btn-lg btn-biblio large-text" ng-click="openMotivationsDialog()"><em class="icon-tag"></em></button>
                         <button tooltip="Get article link"   class="btn btn-oval btn-default btn-lg btn-biblio large-text " ng-click="getArticleLink()"><em class="icon-link"></em></button>
                         <a tooltip="External link"  class="btn btn-oval btn-default btn-lg btn-biblio large-text" ng-href="{{::itemData.htmlItem.value}}" target="_blank"><i class="fa fa-external-link"></i></a>
                     </div>

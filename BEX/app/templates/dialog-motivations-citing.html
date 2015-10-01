@@ -7,10 +7,10 @@
             <!-- START panel-->
             <div id="{{motivationId}}" class="panel panel-default">
                 <div class="panel-heading">
-                    {{motivation.colorStr}} ({{motivation.inTextRefPointers.length}})
-                    <paneltool tool-collapse="tool-collapse"></paneltool>
+                    <span class="large-text text-bold">{{motivation.colorStr}} ({{motivation.inTextRefPointers.length}})</span>
+                    <i class="pull-right collapse-btn" ng-click="isCollapsed = !isCollapsed" ng-class="{'fa fa-plus-square fa-2x': isCollapsed, 'fa fa-minus-square fa-2x': !isCollapsed}"></i>
                 </div>
-                <div collapse="{{motivationId}}" class="panel-wrapper">
+                <div collapse="isCollapsed" class="panel-wrapper">
                     <div class="panel-body">
                         <ul>
                             <li ng-repeat="irp in motivation.inTextRefPointers" ng-bind-html="empInTxtRefPointer(irp.sentenceTxt, irp.irpTxt)"></li>
