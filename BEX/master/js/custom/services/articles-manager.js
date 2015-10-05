@@ -856,7 +856,7 @@ myApp
 					        art.publicationYear = stringToInt(art.publicationYear.value);
 					        art.title = art.title.value;
 					        art.doi = articleDoi;
-					        art.globalCountValue = stringToInt(art.globalCountValue.value);
+					        art.globalCitations = stringToInt(art.globalCountValue.value);
 					        articlesResults.push(art); //aggiungo l'articolo, questo farà da trigger per il watchCollection nel controller degli articolo e la view si aggiornerà per magia (si aggiorna comunque perchè articles è passato per riferimento, ma con il watch aggiungo del comportamento )
 					        articlesNum = 1;
 					        completedArticles = 1;
