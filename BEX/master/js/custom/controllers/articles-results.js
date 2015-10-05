@@ -126,7 +126,7 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
                 //console.log("1.1 - PENDING REQUEST");
                 requestPendingDialog = ngDialog.open({
                     template: "app/templates/dialog-retrieving-results.html",
-                    closeByEscape: false,
+                    closeByEscape: true,
                     showClose: false,
                     closeByDocument: false
                     //todo: cancellare righe commentate
@@ -143,7 +143,7 @@ myApp.controller('ArticlesResultsController', ["$rootScope", "ngDialog", "Articl
                 //console.log("1.2 - REQUEST NOT PENDING");
                 self.articlesNum.value = ArticleManagerService.getArticlesNum();
                 if (requestPendingDialog) {
-                    $timeout(requestPendingDialog.close, 1300) //uso timeout per risolvere un problema di ngDialog (e anche per non flashare l'utente)
+                    $timeout(ngDialog.closeAll, 1300) //uso timeout per risolvere un problema di ngDialog (e anche per non flashare l'utente)
                 }
 
                 //se dall'abs finder non ci sono risultati mostro una notifica
