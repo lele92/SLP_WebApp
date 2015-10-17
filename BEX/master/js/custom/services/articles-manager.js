@@ -291,6 +291,11 @@ myApp
                 function(response) {
                     citedArticle.citingArticles = response.data.results.bindings;
 
+                    /* per aggirare il problema di bindings = [{ }] con la funzione SAMPLE */
+                    if (citedArticle.citingArticles.length == 1 && !citedArticle.citingArticles[0].doi) {
+	                    citedArticle.citingArticles = [];
+                    }
+
                     //per ogni articolo citante
                     for (var j in citedArticle.citingArticles) {
                         var citingArticle = citedArticle.citingArticles[j];
@@ -473,6 +478,11 @@ myApp
                 ArticlesInfoService.requestBiblioInfo(citingArticleExpression).then(
                     function(response){
                         var res = response.data.results.bindings;
+
+                        /* per aggirare il problema di bindings = [{ }] con la funzione SAMPLE */
+                        if (res.length == 1 && !res[0].doi) {
+                            res = [];
+                        }
 
                         //@guide per ogni elemento della bibliografia recupero gli autori e le info sui citation acts
                         for (var i in res) {

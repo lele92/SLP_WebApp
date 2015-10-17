@@ -135,18 +135,19 @@
 
    <!-- query: autori di un articolo -->
    <script id="query_articleAuthors" type="text/template">
-       select ?author (SAMPLE(?gn) as ?givenName) (SAMPLE(?fn) as ?familyName) (concat(SAMPLE(?gn), " ",SAMPLE(?fn)) as ?fullName)
+       select ?author ?index (SAMPLE(?gn) as ?givenName) (SAMPLE(?fn) as ?familyName) (concat(SAMPLE(?gn), " ",SAMPLE(?fn)) as ?fullName)
        where {
            <{{authorsList}}> a co:List;
                 co:item ?item.
 
            ?item a co:ListItem;
-                co:itemContent ?author.
+                co:itemContent ?author;
+                co:index ?index.
 
            ?author a foaf:Person;
                 foaf:givenName ?gn;
                 foaf:familyName ?fn.
-       } group by ?author
+       } group by ?author ?index order by ?index
    </script>
 
    <!-- query: numero di citation acts in entrata (raggruppati per colore) -->
@@ -232,7 +233,7 @@
 
    <!-- query: info sugli articoli citati (cito:cites, quindi articoli unici) da un articolo (partendo dall'expression)-->
    <script id="query_citedArticles" type="text/template">
-       select ?doi ?citedExpression ?articleWork ?articleExpression ?authorsList ?title ?publicationYear ?abstractTxt ?htmlItem ?globalCountValue ?globalCountDate
+       select (SAMPLE(?DOI) as ?doi) ?citedExpression ?articleWork ?articleExpression ?authorsList ?title ?publicationYear ?abstractTxt ?htmlItem ?globalCountValue ?globalCountDate
        where {
             <{{expression}}> cito:cites ?citedExpression.
 
@@ -240,7 +241,7 @@
                             dcterms:title ?title;
                             frbr:embodiment ?man;
                             fabio:hasPublicationYear ?publicationYear;
-                            prism:doi ?doi;
+                            prism:doi ?DOI;
                             frbr:realizationOf ?articleWork;
                             frbr:part [ a sro:Abstract;
                                             c4o:hasContent ?abstractTxt];
@@ -257,7 +258,7 @@
             ?man a fabio:Manifestation, fabio:WebPage;
                 dcterms:format <http://purl.org/NET/mediatypes/text/html>;
                 frbr:exemplar ?htmlItem.
-       }
+       } group by ?citedExpression ?articleWork ?articleExpression ?authorsList ?title ?publicationYear ?abstractTxt ?htmlItem ?globalCountValue ?globalCountDate
    </script>
 
    <!-- query: quante volte un citing entity cita un cited entity per un certo motivo (colore)-->
@@ -328,7 +329,7 @@
 
    <!-- query: info generiche sugli articoli citanti-->
    <script id="query_citingArticles" type="text/template">
-       select ?doi ?citingExp ?articleWork ?articleExpression ?title ?authorsList ?abstractTxt ?publicationYear ?htmlItem ?globalCountValue ?globalCountDate
+       select (SAMPLE(?DOI) as ?doi) ?citingExp ?articleWork ?articleExpression ?title ?authorsList ?abstractTxt ?publicationYear ?htmlItem ?globalCountValue ?globalCountDate
        where {
             ?citingExp a fabio:Expression;
                     cito:cites <{{citedExpression}}>;
@@ -336,7 +337,7 @@
                    frbr:part [ a sro:Abstract;
                                 c4o:hasContent ?abstractTxt];
                    frbr:embodiment ?man;
-                   prism:doi ?doi;
+                   prism:doi ?DOI;
                    fabio:hasPublicationYear ?publicationYear;
                    frbr:realizationOf ?articleWork;
                    c4o:hasGlobalCitationFrequency [ a c4o:GlobalCitationCount;
@@ -352,7 +353,7 @@
        ?man a fabio:Manifestation, fabio:WebPage;
                 dcterms:format <http://purl.org/NET/mediatypes/text/html>;
                 frbr:exemplar ?htmlItem.
-       }
+       } group by ?citingExp ?articleWork ?articleExpression ?title ?authorsList ?abstractTxt ?publicationYear ?htmlItem ?globalCountValue ?globalCountDate
    </script>
 
    <!-- query: info generiche su un articolo (partendo dall'expression) (id:title) -->
