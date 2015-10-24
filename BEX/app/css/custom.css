@@ -880,9 +880,20 @@
 }
 
 .article-pub-year {
-    font-size: 21px;
+     font-size: 21px;
+     font-weight: bold;
+     color: #5D9CEC;
+ }
+
+
+.article-global-cit-count {
+    font-size: 23px;
     font-weight: bold;
     color: #5D9CEC;
+}
+
+.article-global-cit-lbl {
+    font-size: 18px;
 }
 
 .highlighted-txt {
@@ -956,4 +967,8 @@ article-item .nav > li > a > tab-heading {
 .metrics-icon {
     font-size: 1.6em !important;
     vertical-align: middle !important;
+}
+
+.margin-left-sm {
+    margin-left: 5px;
 }

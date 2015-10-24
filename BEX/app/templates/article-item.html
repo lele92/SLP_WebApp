@@ -45,6 +45,14 @@
 
                 <span tooltip="show author articles" class="label label-author pointer animated bounceIn" ng-repeat="author in articleData.authors" ng-click="exploreAuthor(author.givenName.value, author.familyName.value)">  {{author.givenName.value}} {{author.familyName.value}} </span>
             </div>
+            <div>
+                <div class="circle-header" >
+                    <em tooltip="Global Citations"  tooltip-popup-delay="500" class="icon-globe biblio-round-icon"></em>
+                </div>
+
+                <span class="article-global-cit-count"> {{articleData.globalCitations}}</span> <span class="article-global-cit-lbl">Global Citations</span> <em class="icon-info margin-left-sm" tooltip="updated: {{articleData.globalCountDate.value }} ({{articleData.globalCountSource.value}})"></em>
+            </div>
+
         </div>
 
         <div  tooltip="Show details"  tooltip-popup-delay="500" align="center" class="show-article-info" ng-click="toggleArticleDetails(articleData)">
